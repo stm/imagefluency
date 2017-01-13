@@ -20,8 +20,9 @@
 # Project file name
 rquantae.Rproj
 
-# test images
+# test images and files
 img/
+test.R
 
 # produced vignettes
 vignettes/*.html
