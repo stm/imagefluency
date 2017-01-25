@@ -1,10 +1,17 @@
-## -----------------------
-##   vertical symmetry
-## -----------------------
-
 # 2do: what if image width / height cannot be divided by 2?
-#
+
 quantify_symmetry <- function(img){
+  sym_v <- sym_ver(img)
+  sym_h <- sym_hor(img)
+  results <- list(vertical = sym_v, horizontal = sym_h)
+    return(results)
+}
+
+sym_ver <- function(img){
+  ## -----------------------
+  ##   vertical symmetry
+  ## -----------------------
+
   # cut image into 2 equal pieces (horizontally, that means across the x axis)
   stimL <- img[ , 1:(stimW/2)]
   stimR <- img[ , (1 + stimW/2):stimW ]
@@ -21,8 +28,9 @@ quantify_symmetry <- function(img){
 
   # final symmetry: vertical (absolute correlation)
   sym_v <- abs(corrLR)
+}
 
-
+sym_hor <- function(img){
   ## -----------------------
   ##   horizontal symmetry
   ## -----------------------
@@ -44,9 +52,5 @@ quantify_symmetry <- function(img){
   # final symmetry: horizontal (absolute correlation)
   sym_h <- abs(corrUD)
 
-  ## -----------------------
-  ##   return results
-  ## -----------------------
-  return(list(vertical = sym_v, horizontal = sym_h))
 }
 
