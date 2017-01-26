@@ -2,7 +2,7 @@
 % Please edit documentation in R/symmetry.R
 \name{quantify_symmetry}
 \alias{quantify_symmetry}
-\title{quantify_symmetry}
+\title{Symmetry of an Image}
 \usage{
 quantify_symmetry(img)
 }
@@ -13,10 +13,11 @@ advance or each color channel has to be analyzed
 seperately.}
 }
 \value{
-a list of numeric values
+a list of numeric values (vertical and horizontal
+  symmetry)
 }
 \description{
-quantify_symmetry returns the vertical and horizontal
+\code{quantify_symmetry} returns the vertical and horizontal
 symmetry of an image. Values can range between 0 (not
 symmmetrical) and 1 (fully symmetrical).
 }
@@ -26,10 +27,14 @@ img <- matrix(0, nrow=100, ncol=100)
 img[21:60,31:70] <- 0.5
 img[71:90, 21:80] <- 1
 
-# show image
-OpenImageR::imageShow(img)
+# if you want to inspect the image
+# OpenImageR::imageShow(img)
 
 # get both vertical and horizontal symmetry
 quantify_symmetry(img)
+
+}
+\references{
+Mayer, S. & Landwehr, J. R. (2014). When Complexity is Symmetric: The Interplay of Two Core Determinants of Visual Aesthetics. \emph{Advances in Consumer Research}, \emph{42}, 608--609.
 }
 

@@ -7,7 +7,7 @@
 sym_ver(img)
 }
 \arguments{
-\item{img}{}
+\item{img}{A matrix of numeric values or integer values.}
 }
 \value{
 a numeric value between 0 and 1
@@ -17,4 +17,5 @@ sym_ver returns the vertical symmetry of a grayscale
 image matrix. To this end, the left and right image
 halves are correlated.
 }
+\keyword{internal}
 

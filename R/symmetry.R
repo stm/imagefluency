@@ -2,9 +2,9 @@
 # 2do: what if sd is zero (no corr possible because no variation due to the fact that there is no variation in one half of the image?)
 
 
-#' quantify_symmetry
+#' Symmetry of an Image
 #'
-#' quantify_symmetry returns the vertical and horizontal
+#' \code{quantify_symmetry} returns the vertical and horizontal
 #' symmetry of an image. Values can range between 0 (not
 #' symmmetrical) and 1 (fully symmetrical).
 #'
@@ -13,7 +13,8 @@
 #'   advance or each color channel has to be analyzed
 #'   seperately.
 #'
-#' @return a list of numeric values
+#' @return a list of numeric values (vertical and horizontal
+#'   symmetry)
 #' @export
 #'
 #' @examples
@@ -27,11 +28,13 @@
 #'
 #' # get both vertical and horizontal symmetry
 #' quantify_symmetry(img)
-quantify_symmetry <- function(img){
+#'
+#' @references Mayer, S. & Landwehr, J. R. (2014). When Complexity is Symmetric: The Interplay of Two Core Determinants of Visual Aesthetics. \emph{Advances in Consumer Research}, \emph{42}, 608--609.
+quantify_symmetry <- function(img) {
   sym_v <- sym_ver(img)
   sym_h <- sym_hor(img)
   results <- list(vertical = sym_v, horizontal = sym_h)
-    return(results)
+  return(results)
 }
 
 
@@ -44,7 +47,10 @@ quantify_symmetry <- function(img){
 #' @param img A matrix of numeric values or integer values.
 #'
 #' @return a numeric value between 0 and 1
-sym_ver <- function(img){
+#' @importFrom stats cor
+#' @keywords internal
+#' @export
+sym_ver <- function(img) {
   ## -----------------------
   ##   vertical symmetry
   ## -----------------------
@@ -53,19 +59,20 @@ sym_ver <- function(img){
   imgH <- dim(img)[1] # image height
   imgW <- dim(img)[2] # image width
 
-  # cut image into 2 equal pieces (row-wise / vertically, that means across the y axis)
-  stimL <- img[ , 1:(imgW/2)]
-  stimR <- img[ , (1 + imgW/2):imgW ]
+  # cut image into 2 equal pieces (row-wise / vertically,
+  # that means across the y axis)
+  stimL <- img[, 1:(imgW / 2)]
+  stimR <- img[, (1 + imgW / 2):imgW]
 
   # flip right image half
-  stimRfl <- OpenImageR::flipImage(stimR, mode = "horizontal")
+  stimRfl <- pracma::fliplr(stimR)
 
   # vectorize matrices
   pixL <- as.vector(stimL)
   pixR <- as.vector(stimRfl)
 
   # correlation of image halves
-  corrLR <- cor(pixL,pixR)
+  corrLR <- cor(pixL, pixR)
 
   # final symmetry: vertical (absolute correlation)
   return(abs(corrLR))
@@ -80,7 +87,10 @@ sym_ver <- function(img){
 #' @param img A matrix of numeric values or integer values.
 #'
 #' @return a numeric value between 0 and 1
-sym_hor <- function(img){
+#' @importFrom stats cor
+#' @keywords internal
+#' @export
+sym_hor <- function(img) {
   ## -----------------------
   ##   horizontal symmetry
   ## -----------------------
@@ -89,21 +99,21 @@ sym_hor <- function(img){
   imgH <- dim(img)[1] # image height
   imgW <- dim(img)[2] # image width
 
-  # cut image into 2 equal pieces (column-wise / horizontally, that means across the x axis)
-  stimU <- img[ 1:(imgH/2), ]
-  stimD <- img[ (1 + imgH/2):imgH, ]
+  # cut image into 2 equal pieces (column-wise /
+  # horizontally, that means across the x axis)
+  stimU <- img[1:(imgH / 2),]
+  stimD <- img[(1 + imgH / 2):imgH,]
 
   # flip lower image half
-  stimDfl <- OpenImageR::flipImage(stimD, mode = "vertical")
+  stimDfl <- pracma::flipud(stimD)
 
   # vectorize matrices
   pixU <- as.vector(stimU)
   pixD <- as.vector(stimDfl)
 
   # correlation of image halves
-  corrUD <- cor(pixU,pixD)
+  corrUD <- cor(pixU, pixD)
 
   # final symmetry: horizontal (absolute correlation)
   return(abs(corrUD))
 }
-
