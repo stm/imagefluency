@@ -86,6 +86,8 @@ sym_ver <- function(img) {
   imgH <- dim(img)[1] # image height
   imgW <- dim(img)[2] # image width
 
+  if (imgW < 4) stop("Image too small. Try an image with at least 4 pixels in width.", call. = FALSE)
+
   # cut image into 2 equal pieces (row-wise / vertically,
   # that means across the y axis)
   stimL <- img[, 1:(imgW / 2)]
@@ -129,6 +131,8 @@ sym_hor <- function(img) {
   # image dimensions
   imgH <- dim(img)[1] # image height
   imgW <- dim(img)[2] # image width
+
+  if (imgH < 4) stop("Image too small. Try an image with at least 4 pixels in height.", call. = FALSE)
 
   # cut image into 2 equal pieces (column-wise /
   # horizontally, that means across the x axis)
