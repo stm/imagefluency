@@ -4,9 +4,9 @@
 
 #' Symmetry of an Image
 #'
-#' \code{quantify_symmetry} returns the vertical and horizontal
-#' symmetry of an image. Values can range between 0 (not
-#' symmmetrical) and 1 (fully symmetrical).
+#' \code{quantify_symmetry} returns the vertical and
+#' horizontal symmetry of an image. Values can range between
+#' 0 (not symmmetrical) and 1 (fully symmetrical).
 #'
 #' @param img A matrix of numeric values or integer values.
 #'   Color images have to be converted to grayscale in
@@ -29,8 +29,22 @@
 #' # get both vertical and horizontal symmetry
 #' quantify_symmetry(img)
 #'
-#' @references Mayer, S. & Landwehr, J. R. (2014). When Complexity is Symmetric: The Interplay of Two Core Determinants of Visual Aesthetics. \emph{Advances in Consumer Research}, \emph{42}, 608--609.
+#' @references Mayer, S. & Landwehr, J. R. (2014). When
+#'   Complexity is Symmetric: The Interplay of Two Core
+#'   Determinants of Visual Aesthetics. \emph{Advances in
+#'   Consumer Research}, \emph{42}, 608--609.
 quantify_symmetry <- function(img) {
+  # input must be a matrix of numeric or integer values
+  if (!is.matrix(img)) {
+    stop("Input has to be a *matrix* of numeric or integer values",
+         call. = FALSE)
+  }
+  if (!(is.numeric(img) | is.integer(img))) {
+    stop("Input has to be a matrix of *numeric* or *integer* values",
+         call. = FALSE)
+  }
+
+
   sym_v <- sym_ver(img)
   sym_h <- sym_hor(img)
   results <- list(vertical = sym_v, horizontal = sym_h)
@@ -101,8 +115,8 @@ sym_hor <- function(img) {
 
   # cut image into 2 equal pieces (column-wise /
   # horizontally, that means across the x axis)
-  stimU <- img[1:(imgH / 2),]
-  stimD <- img[(1 + imgH / 2):imgH,]
+  stimU <- img[1:(imgH / 2), ]
+  stimD <- img[(1 + imgH / 2):imgH, ]
 
   # flip lower image half
   stimDfl <- pracma::flipud(stimD)
