@@ -4,22 +4,31 @@
 \alias{quantify_symmetry}
 \title{Symmetry of an Image}
 \usage{
-quantify_symmetry(img)
+quantify_symmetry(img, vertical = TRUE, horizontal = TRUE)
 }
 \arguments{
 \item{img}{A matrix of numeric values or integer values.
 Color images have to be converted to grayscale in
 advance or each color channel has to be analyzed
 seperately.}
+
+\item{vertical}{logical. Should the vertical symmetry be
+computed?}
+
+\item{horizontal}{logical. Should the horizontal symmetry
+be computed?}
 }
 \value{
 a list of numeric values (vertical and horizontal
   symmetry)
 }
 \description{
-\code{quantify_symmetry} returns the vertical and horizontal
-symmetry of an image. Values can range between 0 (not
-symmmetrical) and 1 (fully symmetrical).
+\code{quantify_symmetry} returns the vertical and
+horizontal symmetry of an image matrix \code{img}. Values
+can range between 0 (not symmmetrical) and 1 (fully
+symmetrical). If \code{vertical} or \code{horizontal} is
+set to \code{FALSE} then vertical or horizontal symmetry
+is not computed, respectively.
 }
 \examples{
 # construct sample image
@@ -35,6 +44,9 @@ quantify_symmetry(img)
 
 }
 \references{
-Mayer, S. & Landwehr, J. R. (2014). When Complexity is Symmetric: The Interplay of Two Core Determinants of Visual Aesthetics. \emph{Advances in Consumer Research}, \emph{42}, 608--609.
+Mayer, S. & Landwehr, J. R. (2014). When
+  Complexity is Symmetric: The Interplay of Two Core
+  Determinants of Visual Aesthetics. \emph{Advances in
+  Consumer Research}, \emph{42}, 608--609.
 }
 

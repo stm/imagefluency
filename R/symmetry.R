@@ -5,13 +5,20 @@
 #' Symmetry of an Image
 #'
 #' \code{quantify_symmetry} returns the vertical and
-#' horizontal symmetry of an image. Values can range between
-#' 0 (not symmmetrical) and 1 (fully symmetrical).
+#' horizontal symmetry of an image matrix \code{img}. Values
+#' can range between 0 (not symmmetrical) and 1 (fully
+#' symmetrical). If \code{vertical} or \code{horizontal} is
+#' set to \code{FALSE} then vertical or horizontal symmetry
+#' is not computed, respectively.
 #'
 #' @param img A matrix of numeric values or integer values.
 #'   Color images have to be converted to grayscale in
 #'   advance or each color channel has to be analyzed
 #'   seperately.
+#' @param vertical logical. Should the vertical symmetry be
+#'   computed?
+#' @param horizontal logical. Should the horizontal symmetry
+#'   be computed?
 #'
 #' @return a list of numeric values (vertical and horizontal
 #'   symmetry)
@@ -33,22 +40,28 @@
 #'   Complexity is Symmetric: The Interplay of Two Core
 #'   Determinants of Visual Aesthetics. \emph{Advances in
 #'   Consumer Research}, \emph{42}, 608--609.
-quantify_symmetry <- function(img) {
+quantify_symmetry <- function(img, vertical = TRUE, horizontal = TRUE) {
+
   # input must be a matrix of numeric or integer values
   if (!is.matrix(img)) {
-    stop("Input has to be a *matrix* of numeric or integer values",
-         call. = FALSE)
+    stop("Input has to be a *matrix* of numeric or integer values", call. = FALSE)
   }
   if (!(is.numeric(img) | is.integer(img))) {
-    stop("Input has to be a matrix of *numeric* or *integer* values",
-         call. = FALSE)
+    stop("Input has to be a matrix of *numeric* or *integer* values", call. = FALSE)
   }
 
+  # compute symmetry
+  if (vertical) sym_v <- sym_ver(img)
+  if (horizontal) sym_h <- sym_hor(img)
 
-  sym_v <- sym_ver(img)
-  sym_h <- sym_hor(img)
-  results <- list(vertical = sym_v, horizontal = sym_h)
-  return(results)
+  # return symmetry values
+  if (vertical == FALSE & horizontal == FALSE) {
+    stop("Both optional arguments cannot be FALSE Try setting option 'vertical' or 'horizontal' to TRUE.", call. = FALSE)
+  } else {
+    if (!vertical) return(list(horizontal = sym_h))
+    if (!horizontal) return(list(vertical = sym_v))
+    return(list(vertical = sym_v, horizontal = sym_h))
+  }
 }
 
 
@@ -61,7 +74,7 @@ quantify_symmetry <- function(img) {
 #' @param img A matrix of numeric values or integer values.
 #'
 #' @return a numeric value between 0 and 1
-#' @importFrom stats cor
+#' @importFrom stats sd cor
 #' @keywords internal
 #' @export
 sym_ver <- function(img) {
@@ -85,6 +98,10 @@ sym_ver <- function(img) {
   pixL <- as.vector(stimL)
   pixR <- as.vector(stimRfl)
 
+  # check whether sd in one of the halves is zero
+  if (sd(pixL) == 0) stop("No variation in left image half. Computation not possible.", call. = FALSE)
+  if (sd(pixR) == 0) stop("No variation in right image half. Computation not possible.", call. = FALSE)
+
   # correlation of image halves
   corrLR <- cor(pixL, pixR)
 
@@ -101,7 +118,7 @@ sym_ver <- function(img) {
 #' @param img A matrix of numeric values or integer values.
 #'
 #' @return a numeric value between 0 and 1
-#' @importFrom stats cor
+#' @importFrom stats sd cor
 #' @keywords internal
 #' @export
 sym_hor <- function(img) {
@@ -115,8 +132,8 @@ sym_hor <- function(img) {
 
   # cut image into 2 equal pieces (column-wise /
   # horizontally, that means across the x axis)
-  stimU <- img[1:(imgH / 2), ]
-  stimD <- img[(1 + imgH / 2):imgH, ]
+  stimU <- img[1:(imgH / 2),]
+  stimD <- img[(1 + imgH / 2):imgH,]
 
   # flip lower image half
   stimDfl <- pracma::flipud(stimD)
@@ -124,6 +141,10 @@ sym_hor <- function(img) {
   # vectorize matrices
   pixU <- as.vector(stimU)
   pixD <- as.vector(stimDfl)
+
+  # check whether sd in one of the halves is zero
+  if (sd(pixU) == 0) stop("No variation in upper image half. Computation not possible.", call. = FALSE)
+  if (sd(pixD) == 0) stop("No variation in lower image half. Computation not possible.", call. = FALSE)
 
   # correlation of image halves
   corrUD <- cor(pixU, pixD)
