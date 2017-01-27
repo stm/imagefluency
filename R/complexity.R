@@ -1,3 +1,6 @@
+#' @include utils.R
+NULL
+
 ## -----------------------
 ##      complexity
 ## -----------------------
@@ -33,6 +36,10 @@ quantify_complexity <- function(flname, rotate = FALSE, img = NULL){
   file.remove(paste0(file_wo_ext,".zip"))
 
   if (rotate) {
+
+    # check input
+    .check_input(img, f_call = "complexity")
+
     # image dimensions
     img_h <- dim(img)[1] # image height
     img_w <- dim(img)[2] # image width

@@ -18,3 +18,10 @@ Suggests:
     ggplot2,
     testthat
 RoxygenNote: 5.0.1
+Collate:
+    'utils.R'
+    'complexity.R'
+    'contrast.R'
+    'self-similarity.R'
+    'symmetry.R'
+    'typicality.R'

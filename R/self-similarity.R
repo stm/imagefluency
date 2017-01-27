@@ -1,3 +1,6 @@
+#' @include utils.R
+NULL
+
 ## -----------------------
 ##    self-similarity
 ## -----------------------
@@ -10,6 +13,9 @@
 # NOTE: this has to be a squared dimension (or at least a quadratic matrix)
 
 quantify_self_similarity <- function(img, full = FALSE, logplot = FALSE){
+
+  # check input
+  .check_input(img, f_call = "contrast")
 
   xs <- dim(img)[1] # image height
   ys <- dim(img)[2] # image width
