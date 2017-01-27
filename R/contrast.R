@@ -6,6 +6,10 @@
 # between [0, 1].
 
 quantify_contrast <- function(img, normalize = TRUE){
+
+  # check input
+  .check_input(img, f_call = "contrast")
+
   pixAll <- as.vector(img)
   if (normalize) pixAll <- pixAll / 255
 
