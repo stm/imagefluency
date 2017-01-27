@@ -1,17 +1,18 @@
 ## -----------------------
 ##      rms contrast
 ## -----------------------
-# RMS contrast is defined as the standard deviation of the pixel intensities
-# NOTE: function assumes that the image is matrix of normalized (grayscale)
-#       intensity values in the range between [0, 1].
+# RMS contrast is defined as the standard deviation of the
+# normalized (grayscale) intensity values in the range
+# between [0, 1].
 
-quantify_contrast <- function(img){
+quantify_contrast <- function(img, normalize = TRUE){
   pixAll <- as.vector(img)
-  # pixNorm <- pixAll / 255 # this is assumed by default
+  if (normalize) pixAll <- pixAll / 255
+
   # via built-in sd function
   return(list(contrast = sd(pixAll)))
 
-  # # alternative 1: vial normalization
+  # # alternative 1: via normalization
   # pixAllMean <- pixAll - mean(pixAll)
   # norm(pixAllMean,'2')/sqrt(length(pixAllMean))
 
