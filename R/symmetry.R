@@ -1,7 +1,3 @@
-# 2do: what if image width / height cannot be divided by 2?
-# 2do: what if sd is zero (no corr possible because no variation due to the fact that there is no variation in one half of the image?)
-
-
 #' Symmetry of an Image
 #'
 #' \code{quantify_symmetry} returns the vertical and
@@ -88,17 +84,18 @@ sym_ver <- function(img) {
 
   if (imgW < 4) stop("Image too small. Try an image with at least 4 pixels in width.", call. = FALSE)
 
-  # cut image into 2 equal pieces (row-wise / vertically,
-  # that means across the y axis)
-  stimL <- img[, 1:(imgW / 2)]
-  stimR <- img[, (1 + imgW / 2):imgW]
-
-  # flip right image half
-  stimRfl <- pracma::fliplr(stimR)
+  # Cut image into 2 equal pieces (row-wise / vertically,
+  # that means across the y axis) with flipped right half.
+  # Note: floor and ceiling control for images with a height
+  # that is not a multiple of 2; if that's the cas, the
+  # syntax below just eliminates the most middle row;
+  # otherwise, all data points are analyzed.
+  stimL <- img[, 1:floor(imgW / 2)]
+  stimR <- img[, imgW:(1 + ceiling(imgW / 2))]
 
   # vectorize matrices
   pixL <- as.vector(stimL)
-  pixR <- as.vector(stimRfl)
+  pixR <- as.vector(stimR)
 
   # check whether sd in one of the halves is zero
   if (sd(pixL) == 0) stop("No variation in left image half. Computation not possible.", call. = FALSE)
@@ -134,17 +131,19 @@ sym_hor <- function(img) {
 
   if (imgH < 4) stop("Image too small. Try an image with at least 4 pixels in height.", call. = FALSE)
 
-  # cut image into 2 equal pieces (column-wise /
-  # horizontally, that means across the x axis)
-  stimU <- img[1:(imgH / 2),]
-  stimD <- img[(1 + imgH / 2):imgH,]
-
-  # flip lower image half
-  stimDfl <- pracma::flipud(stimD)
+  # Cut image into 2 equal pieces (column-wise /
+  # horizontally, that means across the x axis) with flipped
+  # lower half.
+  # Note: floor and ceiling control for images with a height
+  # that is not a multiple of 2; if that's the cas, the
+  # syntax below just eliminates the most middle row;
+  # otherwise, all data points are analyzed.
+  stimU <- img[1:floor(imgH / 2),]
+  stimD <- img[imgH:(1 + ceiling(imgH / 2)),]
 
   # vectorize matrices
   pixU <- as.vector(stimU)
-  pixD <- as.vector(stimDfl)
+  pixD <- as.vector(stimD)
 
   # check whether sd in one of the halves is zero
   if (sd(pixU) == 0) stop("No variation in upper image half. Computation not possible.", call. = FALSE)
