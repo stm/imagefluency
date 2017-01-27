@@ -1,3 +1,6 @@
+#' @include utils.R
+NULL
+
 #' Symmetry of an Image
 #'
 #' \code{quantify_symmetry} returns the vertical and
@@ -38,13 +41,8 @@
 #'   Consumer Research}, \emph{42}, 608--609.
 quantify_symmetry <- function(img, vertical = TRUE, horizontal = TRUE) {
 
-  # input must be a matrix of numeric or integer values
-  if (!is.matrix(img)) {
-    stop("Input has to be a *matrix* of numeric or integer values", call. = FALSE)
-  }
-  if (!(is.numeric(img) | is.integer(img))) {
-    stop("Input has to be a matrix of *numeric* or *integer* values", call. = FALSE)
-  }
+  # check input
+  .check_input(img, f_call = "symmetry")
 
   # compute symmetry
   if (vertical) sym_v <- sym_ver(img)
