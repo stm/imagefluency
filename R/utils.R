@@ -1,3 +1,11 @@
+#' .check_input
+#'
+#' \code{.check_input} is a helper function of the \code{rquantae} package that checks whether the input is a matrix of numeric or integer values. Error message are thrown if that is not the case.
+#'
+#' @param img An object that needs to checked.
+#' @param f_call The name of the function inside which the \code{.check_input} is called.
+#'
+#' @return An error message if the check fails.
 #' @keywords internal
 .check_input <- function(img, f_call = NULL){
   if (f_call == "symmetry" | f_call == "contrast" | f_call == "typicality" | f_call == "self-similarity") {
