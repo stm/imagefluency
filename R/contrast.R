@@ -1,19 +1,62 @@
 #' @include utils.R
 NULL
 
-## -----------------------
-##      rms contrast
-## -----------------------
-# RMS contrast is defined as the standard deviation of the
-# normalized (grayscale) intensity values in the range
-# between [0, 1].
-
+#' RMS Contrast of an Image
+#'
+#' \code{quantify_contrast} returns the RMS contrast of an
+#' image matrix \code{img}. The RMS contrast is defined as
+#' the standard deviation of the normalized pixel intensity
+#' values. A higher value indicates higher contrast. \cr\cr
+#' As the function assumes that the pixel intensity values
+#' of the image \code{img} are in the range [0, 255], pixel
+#' normalization into [0, 1] is done by default. If
+#' \code{normalize} is set to \code{FALSE} no normalization
+#' is performed.
+#'
+#'
+#' @param img A matrix of numeric values or integer values.
+#'   Color images have to be converted to grayscale in
+#'   advance or each color channel has to be analyzed
+#'   seperately. The image is assumed to have its pixel
+#'   intensities \strong{not} normalized but to be in the
+#'   range [0, 255]
+#' @param normalize logical. Should pixel intensity
+#'   normalization into range [0, 1] be performed?
+#'
+#' @return a list of a numeric value (RMS contrast)
+#' @export
+#'
+#' @examples
+#' # construct sample image
+#' img <- matrix(0, nrow=100, ncol=100)
+#' img[21:80, 21:80] <- 255
+#'
+#' # if you want to inspect the image
+#' # OpenImageR::imageShow(img)
+#'
+#' # get contrast
+#' quantify_contrast(img)
+#'
+#' @references Peli, E. (1990). Contrast in complex images.
+#'   \emph{Journal of the Optical Society of America A},
+#'   \emph{7}, 2032--2040.
+#'   doi:\href{https://doi.org/10.1364/JOSAA.7.002032}{10.1364/JOSAA.7.002032}
+#'
+#'
+#' @importFrom stats sd
 quantify_contrast <- function(img, normalize = TRUE){
 
   # check input
   .check_input(img, f_call = "contrast")
 
+  ## -----------------------
+  ##      rms contrast
+  ## -----------------------
+
+
   pixAll <- as.vector(img)
+
+  # normalize image by default
   if (normalize) pixAll <- pixAll / 255
 
   # via built-in sd function
