@@ -2,6 +2,7 @@
 
 export(quantify_contrast)
 export(quantify_symmetry)
+export(quantify_typicality)
 export(sym_hor)
 export(sym_ver)
 importFrom(stats,cor)
