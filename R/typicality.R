@@ -59,13 +59,18 @@ quantify_typicality <- function(imglist, rescale = 1){
 
   # original resolution or different scaling level?
   if (rescale != 1) {
-    # image dimensions of first element (assumes the same for all elements)
-    img_h <- dim(imglist[[1]])[1] # image height
-    img_w <- dim(imglist[[1]])[2] # image width
-    imglist <- lapply(imglist, OpenImageR::resizeImage,
-                      width = rescale*img_w,
-                      height = rescale*img_h,
-                      method = "bilinear")
+    # Rescaling requires package "OpenImageR"
+    if (requireNamespace("OpenImageR", quietly = TRUE)) {
+      # image dimensions of first element (assumes the same for all elements)
+      img_h <- dim(imglist[[1]])[1] # image height
+      img_w <- dim(imglist[[1]])[2] # image width
+      imglist <- lapply(imglist, OpenImageR::resizeImage,
+                        width = rescale*img_w,
+                        height = rescale*img_h,
+                        method = "bilinear")
+    } else {
+      stop("Package 'OpenImageR' is required for rescaling but not installed on your system.")
+    }
   }
   # create matrix of vectorized intensity values
   imglist <- matrix(unlist(imglist), ncol = length(imglist), byrow = FALSE)
