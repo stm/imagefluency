@@ -15,7 +15,7 @@ NULL
 quantify_self_similarity <- function(img, full = FALSE, logplot = FALSE){
 
   # check input
-  .check_input(img, f_call = "contrast")
+  .check_input(img, f_call = "self-similarity")
 
   xs <- dim(img)[1] # image height
   ys <- dim(img)[2] # image width
