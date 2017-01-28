@@ -1,6 +1,30 @@
 #' @include utils.R
 NULL
 
+# 2do: idea / test: image compression via PCA (for images that are not in an uncompressed format)?
+# see http://www.aaronschlegel.com/image-compression-principal-component-analysis/
+
+rotate90 <- function(img) {
+  rot90 <- function(A) {
+    width <- dim(A)[2] # image width
+    A <- t(A) # transpose matrix
+    return(A[width:1,]) # flip matrix rows
+  }
+  #
+  if (class(img) == "matrix") {
+    return(rot90(img))
+  } else if (class(img) == "array") {
+    # create array with same number of arrays but flipped dimensions
+    out <- array(NA, dim = c(dim(img)[2], dim(img)[1], dim(img)[3]))
+    #
+    for (i in seq_len( dim(img)[3] )) {
+      # for each array dimension
+      out[, , i] <- rot90(img[, , i])
+    }
+    return(out)
+  }
+}
+
 ## -----------------------
 ##      complexity
 ## -----------------------
