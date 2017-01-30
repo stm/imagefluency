@@ -49,4 +49,10 @@ Mayer, S. & Landwehr, J. R. (2016). Measuring
   Design Research Society 50th Anniversary Conference}.
   Brighton, UK, 27–30 June 2016.
 }
+\seealso{
+\code{\link{quantify_symmetry}}\cr
+\code{\link{quantify_complexity}}\cr
+\code{\link{quantify_contrast}}\cr
+\code{\link{self-similarity}}
+}
 
