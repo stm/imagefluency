@@ -9,8 +9,8 @@ quantify_symmetry(img, vertical = TRUE, horizontal = TRUE)
 \arguments{
 \item{img}{A matrix of numeric values or integer values.
 Color images have to be converted to grayscale in
-advance or each color channel has to be analyzed
-seperately.}
+advance (function \code{rgb2gray}) or each color
+channel has to be analyzed seperately.}
 
 \item{vertical}{logical. Should the vertical symmetry be
 computed?}
@@ -24,11 +24,15 @@ a list of numeric values (vertical and horizontal
 }
 \description{
 \code{quantify_symmetry} returns the vertical and
-horizontal symmetry of an image matrix \code{img}. Values
-can range between 0 (not symmmetrical) and 1 (fully
-symmetrical). If \code{vertical} or \code{horizontal} is
-set to \code{FALSE} then vertical or horizontal symmetry
-is not computed, respectively.
+horizontal symmetry of an image matrix \code{img}.
+}
+\details{
+The function returns the vertical and horizontal
+  symmetry of an image matrix \code{img}. Values can
+  range between 0 (not symmmetrical) and 1 (fully
+  symmetrical). If \code{vertical} or \code{horizontal}
+  is set to \code{FALSE} then vertical or horizontal
+  symmetry is not computed, respectively.
 }
 \examples{
 # construct sample image
@@ -48,5 +52,12 @@ Mayer, S. & Landwehr, J. R. (2014). When
   Complexity is Symmetric: The Interplay of Two Core
   Determinants of Visual Aesthetics. \emph{Advances in
   Consumer Research}, \emph{42}, 608--609.
+}
+\seealso{
+\code{\link{rgb2gray}},
+  \code{\link{quantify_complexity}},
+  \code{\link{quantify_contrast}},
+  \code{\link{quantify_typicality}},
+  \code{\link{quantify_self_similarity}}
 }
 

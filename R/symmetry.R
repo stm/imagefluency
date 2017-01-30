@@ -4,16 +4,19 @@ NULL
 #' Symmetry of an Image
 #'
 #' \code{quantify_symmetry} returns the vertical and
-#' horizontal symmetry of an image matrix \code{img}. Values
-#' can range between 0 (not symmmetrical) and 1 (fully
-#' symmetrical). If \code{vertical} or \code{horizontal} is
-#' set to \code{FALSE} then vertical or horizontal symmetry
-#' is not computed, respectively.
+#' horizontal symmetry of an image matrix \code{img}.
+#'
+#' @details The function returns the vertical and horizontal
+#'   symmetry of an image matrix \code{img}. Values can
+#'   range between 0 (not symmmetrical) and 1 (fully
+#'   symmetrical). If \code{vertical} or \code{horizontal}
+#'   is set to \code{FALSE} then vertical or horizontal
+#'   symmetry is not computed, respectively.
 #'
 #' @param img A matrix of numeric values or integer values.
 #'   Color images have to be converted to grayscale in
-#'   advance or each color channel has to be analyzed
-#'   seperately.
+#'   advance (function \code{rgb2gray}) or each color
+#'   channel has to be analyzed seperately.
 #' @param vertical logical. Should the vertical symmetry be
 #'   computed?
 #' @param horizontal logical. Should the horizontal symmetry
@@ -35,6 +38,12 @@ NULL
 #' # get both vertical and horizontal symmetry
 #' quantify_symmetry(img)
 #'
+#' @seealso \code{\link{rgb2gray}},
+#'   \code{\link{quantify_complexity}},
+#'   \code{\link{quantify_contrast}},
+#'   \code{\link{quantify_typicality}},
+#'   \code{\link{quantify_self_similarity}}
+#'
 #' @references Mayer, S. & Landwehr, J. R. (2014). When
 #'   Complexity is Symmetric: The Interplay of Two Core
 #'   Determinants of Visual Aesthetics. \emph{Advances in
@@ -50,7 +59,7 @@ quantify_symmetry <- function(img, vertical = TRUE, horizontal = TRUE) {
 
   # return symmetry values
   if (vertical == FALSE & horizontal == FALSE) {
-    stop("Both optional arguments cannot be FALSE. Try setting option 'vertical' or 'horizontal' to TRUE.", call. = FALSE)
+    stop("Both optional arguments cannot be FALSE Try setting option 'vertical' or 'horizontal' to TRUE.", call. = FALSE)
   } else {
     if (!vertical) return(list(horizontal = sym_h))
     if (!horizontal) return(list(vertical = sym_v))

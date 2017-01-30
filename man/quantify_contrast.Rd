@@ -9,10 +9,10 @@ quantify_contrast(img, normalize = TRUE)
 \arguments{
 \item{img}{A matrix of numeric values or integer values.
 Color images have to be converted to grayscale in
-advance or each color channel has to be analyzed
-seperately. The image is assumed to have its pixel
-intensities \strong{not} normalized but to be in the
-range [0, 255]}
+advance (function \code{rgb2gray}) or each color
+channel has to be analyzed seperately. The image is
+assumed to have its pixel intensities \strong{not}
+normalized but to be in the range [0, 255]}
 
 \item{normalize}{logical. Should pixel intensity
 normalization into range [0, 1] be performed?}
@@ -22,14 +22,21 @@ a list of a numeric value (RMS contrast)
 }
 \description{
 \code{quantify_contrast} returns the RMS contrast of an
-image matrix \code{img}. The RMS contrast is defined as
-the standard deviation of the normalized pixel intensity
-values. A higher value indicates higher contrast. \cr\cr
-As the function assumes that the pixel intensity values
-of the image \code{img} are in the range [0, 255], pixel
-normalization into [0, 1] is done by default. If
-\code{normalize} is set to \code{FALSE} no normalization
-is performed.
+image matrix \code{img}. A higher value indicates higher
+contrast.
+}
+\details{
+The function returns the RMS contrast of an
+  image matrix \code{img}. The RMS contrast is defined as
+  the standard deviation of the normalized pixel
+  intensity values. A higher value indicates higher
+  contrast.
+
+  As the function assumes that the pixel intensity values
+  of the image \code{img} are in the range [0, 255],
+  pixel normalization into [0, 1] is done by default. If
+  \code{normalize} is set to \code{FALSE} no
+  normalization is performed.
 }
 \examples{
 # construct sample image
@@ -48,5 +55,12 @@ Peli, E. (1990). Contrast in complex images.
   \emph{Journal of the Optical Society of America A},
   \emph{7}, 2032--2040.
   doi:\href{https://doi.org/10.1364/JOSAA.7.002032}{10.1364/JOSAA.7.002032}
+}
+\seealso{
+\code{\link{rgb2gray}},
+  \code{\link{quantify_symmetry}},
+  \code{\link{quantify_complexity}},
+  \code{\link{quantify_typicality}},
+  \code{\link{quantify_self_similarity}}
 }
 
