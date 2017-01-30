@@ -53,6 +53,6 @@ Mayer, S. & Landwehr, J. R. (2016). Measuring
 \code{\link{quantify_symmetry}}\cr
 \code{\link{quantify_complexity}}\cr
 \code{\link{quantify_contrast}}\cr
-\code{\link{self-similarity}}
+\code{\link{quantify_self_similarity}}
 }
 
