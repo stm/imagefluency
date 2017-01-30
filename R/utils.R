@@ -1,9 +1,13 @@
 #' .check_input
 #'
-#' \code{.check_input} is a helper function of the \code{rquantae} package that checks whether the input is a matrix of numeric or integer values. Error message are thrown if that is not the case.
+#' \code{.check_input} is a helper function of the
+#' \code{rquantae} package that checks whether the input is
+#' a matrix of numeric or integer values. Error message are
+#' thrown if that is not the case.
 #'
 #' @param img An object that needs to checked.
-#' @param f_call The name of the function inside which the \code{.check_input} is called.
+#' @param f_call The name of the function inside which the
+#'   \code{.check_input} is called.
 #'
 #' @return An error message if the check fails.
 #' @keywords internal
@@ -23,12 +27,20 @@
 
 #' RGB to Gray Conversion
 #'
-#' \code{rgb2gray} transforms colors from RGB space (red/green/blue) into an matrix of grayscale values.
+#' \code{rgb2gray} transforms colors from RGB space
+#' (red/green/blue) into an matrix of grayscale values.
 #'
-#' @param img 3-dimensional array of numeric or integer values
+#' @param img 3-dimensional array of numeric or integer
+#'   values
 #'
 #' @return A matrix of grayscale values.
-#' @details The function takes a 3-dimensional array of numeric or integer values as input (\code{img}) and returns a matrix of grayscale values as output. The grayscale values are computed as \code{GRAY = 0.2989 * RED + 0.5870 * GREEN + 0.1140 * BLUE}.
+#'
+#' @details The function takes a 3-dimensional array of
+#'   numeric or integer values as input (\code{img}) and
+#'   returns a matrix of grayscale values as output. The
+#'   grayscale values are computed as \code{GRAY = 0.2989 *
+#'   RED + 0.5870 * GREEN + 0.1140 * BLUE}.
+#'
 #' @export
 #' @examples
 #' # construct a sample RGB image as array of random integers
