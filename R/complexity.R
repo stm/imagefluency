@@ -4,24 +4,37 @@ NULL
 # 2do: idea / test: image compression via PCA (for images that are not in an uncompressed format)?
 # see http://www.aaronschlegel.com/image-compression-principal-component-analysis/
 
-rotate90 <- function(img) {
-  rot90 <- function(A) {
-    width <- dim(A)[2] # image width
+rotate90 <- function(img, direction = "positive") {
+  rot90 <- function(A, dir = "positive") {
+    height <- dim(A)[1] # nrows / height
+    width <- dim(A)[2] # ncols / width
     A <- t(A) # transpose matrix
-    return(A[width:1,]) # flip matrix rows
+    if (dir == "positive") {
+      return(A[width:1, ]) # flip matrix rows
+    } else if (dir == "negative") {
+      return(A[, height:1]) # flip matrix rows
+    } else {
+      return(NA)
+    }
   }
   #
+  if (!(direction == "positive" | direction == "negative")) {
+    stop(paste0("'",direction,"' is an unknown input to parameter 'direction'. Try 'direction = positive' or 'direction = negative'."))
+  }
   if (class(img) == "matrix") {
-    return(rot90(img))
+    return(rot90(img, direction))
   } else if (class(img) == "array") {
     # create array with same number of arrays but flipped dimensions
     out <- array(NA, dim = c(dim(img)[2], dim(img)[1], dim(img)[3]))
     #
     for (i in seq_len( dim(img)[3] )) {
       # for each array dimension
-      out[, , i] <- rot90(img[, , i])
+      out[, , i] <- rot90(img[, , i], direction)
     }
     return(out)
+  }
+  else {
+    stop(paste0("Unknown input of type '", class(img),"' (has to be of typ 'matrix' or 'array')"), call. = FALSE)
   }
 }
 
@@ -47,11 +60,17 @@ rotate90 <- function(img) {
 
 quantify_complexity <- function(flname, rotate = FALSE, img = NULL){
 
+  if (!is.character(flname)) {
+    stop("Wrong type of input ('flname' has to be a character string)")
+  }
+
   # original file size
   orig_size <- file.size(flname)
+  if (is.na(orig_size)) stop("File not found. Did you forget to specify the filename extension?")
 
   # original file name without file extension (.bmp)
   file_wo_ext <- gsub("(.*)\\.bmp$", "\\1", flname)
+  if (file_wo_ext == flname) stop("Unsupported filename extension. Currently only the following image types are supported: .bmp")
 
   # zip-compress file and read file size of compressed file
   suppressWarnings(zip(zipfile = file_wo_ext, files = flname))
@@ -69,7 +88,11 @@ quantify_complexity <- function(flname, rotate = FALSE, img = NULL){
     img_w <- dim(img)[2] # image width
 
     # rotate image
-    img_rot <- OpenImageR::rotateFixed(img,90)
+    if (requireNamespace("OpenImageR", quietly = TRUE)) {
+      img_rot <- OpenImageR::rotateFixed(img,90)
+    } else {
+      img_rot <- rotate90(img)
+    }
     # write as uncompressed image file
     bmp(filename = paste0(file_wo_ext, "_rot.bmp"), width = img_w, height = img_h) # height and width switched because of rotation
     OpenImageR::imageShow(img_rot)
