@@ -19,3 +19,15 @@
     }
   } else stop("unknown input to f_call argument", call. = FALSE)
 }
+
+rgb2gray <- function(img) {
+  if (requireNamespace("OpenImageR", quietly = TRUE)) {
+    OpenImageR::rgb_2gray(img)
+  } else {
+    #0.2989 *     0.5870    0.1140
+    #redChannel = color(:, :, 1);
+    #greenChannel = color(:, :, 2);
+    #blueChannel = color(:, :, 3);
+    # gray = .299*redChannel + .587*greenChannel + .114*blueChannel
+  }
+}
