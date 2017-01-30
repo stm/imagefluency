@@ -9,8 +9,8 @@ quantify_typicality(imglist, rescale = 1)
 \arguments{
 \item{imglist}{A list of matrices with numeric values or
 integer values. Color images have to be converted to
-grayscale in advance or each color channel has to be
-analyzed seperately.}
+grayscale in advance (function \code{rgb2gray}) or each
+color channel has to be analyzed seperately.}
 
 \item{rescale}{numeric. Rescales the images prior to
 computing the typicality scores (per default no
@@ -25,12 +25,21 @@ a list with a matrix of numeric value (typicality
 \description{
 \code{quantify_typicality} returns the visual typicality
 of a list of image matrices \code{imglist} relative to
-each other. Higher values indicate larger typicality. The
-typicality score is computed as the correlation of a
-particular image with the average representation of all
-images, i.e. the mean of all images.\cr\cr Rescaling of
-the images prior to computing the typicality scores can
-be specified with the optional rescaling parameter.
+each other. Higher values indicate larger typicality.
+}
+\details{
+The function returns the visual typicality of a
+  list of image matrices \code{imglist} relative to each
+  other, while higher values are indicating larger
+  typicality.
+
+  The typicality score is computed as the correlation of
+  a particular image with the average representation of
+  all images, i.e. the mean of all images.
+
+  Rescaling of the images prior to computing the
+  typicality scores can be specified with the optional
+  rescaling parameter (must be a numeric value).
 }
 \examples{
 # construct a list of 20 sample images
@@ -47,12 +56,13 @@ Mayer, S. & Landwehr, J. R. (2016). Measuring
   design typicality -- a comparison of objective and
   subjective approaches. \emph{Proceedings of DRS 2016,
   Design Research Society 50th Anniversary Conference}.
-  Brighton, UK, 27–30 June 2016.
+  Brighton, UK, 27--30 June 2016.
 }
 \seealso{
-\code{\link{quantify_symmetry}}\cr
-\code{\link{quantify_complexity}}\cr
-\code{\link{quantify_contrast}}\cr
-\code{\link{quantify_self_similarity}}
+\code{\link{rgb2gray}},
+  \code{\link{quantify_symmetry}},
+  \code{\link{quantify_complexity}},
+  \code{\link{quantify_contrast}},
+  \code{\link{quantify_self_similarity}}
 }
 
