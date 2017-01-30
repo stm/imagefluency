@@ -16,7 +16,10 @@ Imports:
 Suggests:
     OpenImageR,
     ggplot2,
-    testthat
+    testthat,
+    grid,
+    readbitmap,
+    scales
 RoxygenNote: 5.0.1
 Collate:
     'utils.R'
