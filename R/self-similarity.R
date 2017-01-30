@@ -7,11 +7,94 @@ NULL
 # the degree to which the log-log power spectrum
 # falls with a slope of -2
 #
-# sfPlot inspired by Diederick C. Niehorster
-# see http://www.mathworks.com/matlabcentral/newsreader/view_original/799264
-#
-# NOTE: this has to be a squared dimension (or at least a quadratic matrix)
 
+#' Self-Similarity of an Image
+#'
+#' \code{quantify_self-similarity} returns the
+#' self-similarity of an image (i.e., the degree to which
+#' the log-log power spectrum of the image falls with a
+#' slope of -2).
+#'
+#' @details The function takes a matrix of numeric or
+#'   integer values representing an image as input and
+#'   returns the self-similarity of the image.
+#'   Self-similarity is computed via the slope of the
+#'   log-log power spectrum using OLS. A slope near
+#'   \code{-2} indicates fractal-like properties. Thus,
+#'   value for self-similarity that is return by the
+#'   function calculated as \code{self-similarity =
+#'   abs(slope + 2) * (-1)}. That is, the measure reaches
+#'   its maximum value of 0 for a slope of -2, and any
+#'   deviation from -2 results in negative values that are
+#'   more negative the higher the deviation from -2.
+#'
+#'   Per default, only the frequency range betwen 10 and 256
+#'   cycles per image is used for interpolation. Computation
+#'   for the full range can be set via the parameter
+#'   \code{full = TRUE}.
+#'
+#'   If \code{logplot} is set to \code{TRUE} then a log-log
+#'   plot of the power spectrum is performed. If the package
+#'   \code{ggplot2} is installed the plot includes the slope
+#'   of the OLS regression.
+#'
+#'
+#'
+#' @param img A matrix of numeric values or integer values.
+#'   Color images have to be converted to grayscale in
+#'   advance (function \code{rgb2gray}) or each color
+#'   channel has to be analyzed seperately.
+#' @param full logical. Should the full frequency range be
+#'   used for interpolation?
+#' @param logplot logical. Should the log-log power spectrum
+#'   of the image be plotted?
+#'
+#' @return a list of a numeric value (self-similarity)
+#' @export
+#'
+#' @note The function inspired by Matlab's sfPlot (by
+#'   Diederick C. Niehorster) see
+#'   \url{http://www.mathworks.com/matlabcentral/newsreader/view_original/799264}
+#'
+#'
+#' @importFrom stats coefficients fft lm
+#'
+#' @references Redies, C., Hasenstein, J., & Denzler, J.
+#'   (2007). Fractal-like image statistics in visual art:
+#'   Similarity to natural scenes. \emph{Spatial Vision},
+#'   \emph{21}, 137--148.
+#'   doi:\href{https://doi.org/10.1163/156856807782753921}{10.1163/156856807782753921}
+#'
+#'
+#' @examples
+#' # construct sample image
+#' img <- matrix(0, nrow=100, ncol=100)
+#' img[11:90,11:90] <- 0.25
+#' img[21:80, 21:80] <- 0.5
+#' img[31:70, 31:70] <- 0.75
+#' img[41:60, 41:60] <- 1
+#'
+#' # show image
+#' grid::grid.raster(img)
+#'
+#' # get self-similarity
+#' quantify_self_similarity(img)
+#'
+#' # ------------------------------
+#' # construct another sample image
+#' img2 <- matrix(runif(100*100), nrow=100, ncol=100)
+#'
+#' # show image
+#' grid::grid.raster(img2)
+#'
+#' # get self-similarity
+#' quantify_self_similarity(img2)
+#'
+#' @seealso \code{\link{rgb2gray}},
+#'   \code{\link{quantify_symmetry}},
+#'   \code{\link{quantify_complexity}},
+#'   \code{\link{quantify_contrast}},
+#'   \code{\link{quantify_typicality}}
 quantify_self_similarity <- function(img, full = FALSE, logplot = FALSE){
 
   # check input
@@ -73,7 +156,7 @@ quantify_self_similarity <- function(img, full = FALSE, logplot = FALSE){
   if (logplot) {
     xvals <- spat_freq
     yvals <- power_spec
-    if (requireNamespace("ggplot2", quietly = TRUE)) {
+    if (requireNamespace("ggplot2", quietly = TRUE) & requireNamespace("scales", quietly = TRUE)) {
       g <- ggplot2::ggplot(data = data.frame(xvals, yvals), ggplot2::aes(xvals, yvals)) +
         ggplot2::geom_line() +
         ggplot2::geom_smooth(method = lm, se = FALSE) +
