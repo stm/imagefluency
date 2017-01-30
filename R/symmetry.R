@@ -50,7 +50,7 @@ quantify_symmetry <- function(img, vertical = TRUE, horizontal = TRUE) {
 
   # return symmetry values
   if (vertical == FALSE & horizontal == FALSE) {
-    stop("Both optional arguments cannot be FALSE Try setting option 'vertical' or 'horizontal' to TRUE.", call. = FALSE)
+    stop("Both optional arguments cannot be FALSE. Try setting option 'vertical' or 'horizontal' to TRUE.", call. = FALSE)
   } else {
     if (!vertical) return(list(horizontal = sym_h))
     if (!horizontal) return(list(vertical = sym_v))
