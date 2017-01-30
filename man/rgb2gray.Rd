@@ -7,16 +7,22 @@
 rgb2gray(img)
 }
 \arguments{
-\item{img}{3-dimensional array of numeric or integer values}
+\item{img}{3-dimensional array of numeric or integer
+values}
 }
 \value{
 A matrix of grayscale values.
 }
 \description{
-\code{rgb2gray} transforms colors from RGB space (red/green/blue) into an matrix of grayscale values.
+\code{rgb2gray} transforms colors from RGB space
+(red/green/blue) into an matrix of grayscale values.
 }
 \details{
-The function takes a 3-dimensional array of numeric or integer values as input (\code{img}) and returns a matrix of grayscale values as output. The grayscale values are computed as \code{GRAY = 0.2989 * RED + 0.5870 * GREEN + 0.1140 * BLUE}.
+The function takes a 3-dimensional array of
+  numeric or integer values as input (\code{img}) and
+  returns a matrix of grayscale values as output. The
+  grayscale values are computed as \code{GRAY = 0.2989 *
+  RED + 0.5870 * GREEN + 0.1140 * BLUE}.
 }
 \examples{
 # construct a sample RGB image as array of random integers
