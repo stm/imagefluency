@@ -100,6 +100,11 @@ NULL
 #'   49--70.
 #'   doi:\href{https://doi.org/10.1348/000712610X498958}{10.1348/000712610X498958}
 #'
+#' @seealso \code{\link{quantify_symmetry}},
+#'   \code{\link{quantify_contrast}},
+#'   \code{\link{quantify_typicality}},
+#'   \code{\link{quantify_self_similarity}}
+#'
 #' @importFrom grDevices bmp dev.off
 #' @importFrom graphics plot
 #' @importFrom utils zip
