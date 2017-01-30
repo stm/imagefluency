@@ -53,3 +53,62 @@ rgb2gray <- function(img) {
     return(out)
   }
 }
+
+#' Matrix or Array Rotation by 90 Degrees
+#'
+#' @param img an array or a matrix
+#' @param direction The direction of rotation by 90 degrees.
+#'   The value can be "positive" (default) or "negative".
+#'
+#' @details The function takes an array or matrix as input
+#'   object (\code{img}) and returns the object rotated by
+#'   90 degrees. Per default, the rotation is done in the
+#'   mathematically positive direction (i.e.,
+#'   counterclockwise). Clockwise rotation (i.e.,
+#'   mathematically negative) can be specified by passing
+#'   the value \code{"negative"} to the \code{direction}
+#'   argument.
+#'
+#' @return an array or a matrix (rotated by 90 degrees)
+#' @export
+#'
+#' @examples
+#' # sample matrix
+#' img <- matrix(1:6, ncol = 2)
+#' img
+#'
+#' rotate90(img) # counterclockwise
+#' rotate90(img, direction = "negative") # clockwise
+rotate90 <- function(img, direction = "positive") {
+  rot90 <- function(A, dir = "positive") {
+    height <- dim(A)[1] # nrows / height
+    width <- dim(A)[2] # ncols / width
+    A <- t(A) # transpose matrix
+    if (dir == "positive") {
+      return(A[width:1, ]) # flip matrix rows
+    } else if (dir == "negative") {
+      return(A[, height:1]) # flip matrix rows
+    } else {
+      return(NA)
+    }
+  }
+  #
+  if (!(direction == "positive" | direction == "negative")) {
+    stop(paste0("'",direction,"' is an unknown input to parameter 'direction'. Try 'direction = positive' or 'direction = negative'."))
+  }
+  if (class(img) == "matrix") {
+    return(rot90(img, direction))
+  } else if (class(img) == "array") {
+    # create array with same number of arrays but flipped dimensions
+    out <- array(NA, dim = c(dim(img)[2], dim(img)[1], dim(img)[3]))
+    #
+    for (i in seq_len( dim(img)[3] )) {
+      # for each array dimension
+      out[, , i] <- rot90(img[, , i], direction)
+    }
+    return(out)
+  }
+  else {
+    stop(paste0("Unknown input of type '", class(img),"' (has to be of typ 'matrix' or 'array')"), call. = FALSE)
+  }
+}
