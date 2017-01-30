@@ -1,7 +1,7 @@
 Package: rquantae
 Type: Package
 Title: A toolbox for quantified aesthetics in R
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: person("Stefan", "Mayer", email = "smayer@wiwi.uni-frankfurt.de",
     role = c("aut", "cre"))
 Description: A toolbox for quantified aesthetics in R. It provides an
