@@ -93,10 +93,11 @@ Donderi, D. C. (2006). Visual complexity: A
   73--97.
   doi:\href{https://doi.org/10.1037/0033-2909.132.1.73}{10.1037/0033-2909.132.1.73}
 
-  Forsythe, A., Nadal, M., Sheehy, N., Cela-Conde, C. J.,
-  & Sawey, M. (2011). Predicting Beauty: Fractal
-  Dimension and Visual Complexity in Art. \emph{British
-  Journal of Psychology}, \emph{102}, 49--70.
+Forsythe, A., Nadal, M., Sheehy, N.,
+  Cela-Conde, C. J., & Sawey, M. (2011). Predicting
+  Beauty: Fractal Dimension and Visual Complexity in Art.
+  \emph{British Journal of Psychology}, \emph{102},
+  49--70.
   doi:\href{https://doi.org/10.1348/000712610X498958}{10.1348/000712610X498958}
 }
 
