@@ -7,14 +7,14 @@ Authors@R: person("Stefan", "Mayer", email = "smayer@wiwi.uni-frankfurt.de",
 Description: A toolbox for quantified aesthetics in R. It provides an
     implementation of five basic aesthetic principles that can be used to assess
     the aesthetic properties of an image. The properties are: symmetry,
-    simplicity, contrast, typicality, and self-similarity.
+    complexity (simplicity), contrast, typicality, and self-similarity.
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
-    OpenImageR,
     pracma
 Suggests:
+    OpenImageR,
     ggplot2,
     testthat
 RoxygenNote: 5.0.1
