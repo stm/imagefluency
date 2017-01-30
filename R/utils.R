@@ -58,7 +58,7 @@ rgb2gray <- function(img) {
 #'
 #' @param img an array or a matrix
 #' @param direction The direction of rotation by 90 degrees.
-#'   The value can be "positive" (default) or "negative".
+#'   The value can be \code{"positive"} (default) or \code{"negative"}.
 #'
 #' @details The function takes an array or matrix as input
 #'   object (\code{img}) and returns the object rotated by
