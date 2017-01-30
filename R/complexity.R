@@ -4,26 +4,100 @@
 #' @include utils.R
 NULL
 
-## -----------------------
-##      complexity
-## -----------------------
-# visual complexity simply is the size of the zip-compressed image file.
-# Thus, it is important that the original image is in an uncompressed format.
-#
-# The function takes the file path of an uncompressed image file as
-# input argument and returns the file size of the compressed image file.
-# Additionally, the uncompressed file size and the compression rate are returned.
-#
-# NOTE: If the file is in the same directory as the current working directory,
-# it is sufficient to pass just the file name as input to the function.
-#
-# Further, in the current version, the messages that are displayed by the zip
+# In the current version, the messages that are displayed by the zip
 # command are printed when calling the function (because zip calls system2, and
 # system2 uses stdout = "" and stderr = "" by default). Maybe something along
 # the lines of patching system2 would do the trick (see [1]), but for now, the
 # user just has to live with it.
 # [1] https://stackoverflow.com/questions/12416076/suppress-install-outputs-in-r/12504606
 
+
+#' Complexity of an image
+#'
+#' \code{quantify_complexity} returns the complexity of an
+#' image as the size of the zip-compressed image file. In
+#' the current version, only \code{.bmp} images are
+#' supported.
+#'
+#' @details The function returns the visual complexity of an
+#'   image. Visual complexity is calculated as the size of
+#'   the zip-compressed image file. Thus, it is important
+#'   that the original image is in an uncompressed format.
+#'
+#'   The function takes the file path \code{flname} of an
+#'   uncompressed image file as input argument and returns
+#'   the filesize of the zip-compressed image file.
+#'   Additionally, the uncompressed filesize and the
+#'   compression rate are returned.
+#'
+#'   The zip compression algorithm works line by line and
+#'   hence does not depict horizontal and vertical
+#'   redundancies equally. Thus, the function includes an
+#'   optional \code{rotate} parameter (default:
+#'   \code{FALSE}). Setting this parameter to \code{TRUE}
+#'   has the following effects: first, the image is loaded
+#'   via the \code{readbitmap} package (if \code{img} is
+#'   \code{NULL}, otherwise see below). Second, the image is
+#'   rotated by 90 degrees. Third, the rotated image is
+#'   written in the current working directory and a
+#'   zip-compressed version is created. Finally, the
+#'   complexity of the image is copmuted as the minimum of
+#'   the original image's filesize and the filesize of the
+#'   rotated image. All files that are created while the
+#'   function runs are automatically deleted once the
+#'   complexity score is calculated.
+#'
+#'   If the parameter \code{img} is not \code{NULL} but
+#'   contains an array or matrix of numeric or integer
+#'   values, this \code{img} is used for the rotation
+#'   instead of the original image.
+#'
+#'   In the current version, \strong{only \code{.bmp}
+#'   images} are supported.
+#'
+#' @param flname A character string containing the file path
+#'   of the image. If the image file is in the same
+#'   directory as the current working directory, it is
+#'   sufficient to pass just the filename as input to the
+#'   function.
+#' @param rotate logical. Should the compressed filesize of
+#'   the rotated image also be computed? (see details)
+#' @param img An array or matrix of numeric or integer
+#'   values representing an image.
+#'
+#' @return a list of numeric values: compressed filesize,
+#'   original filesize, ratio of compressed / original
+#'   filesize (i.e., the compression rate)
+#' @export
+#'
+#' @examples
+#' # Download Lena sample image (see http://eeweb.poly.edu/~yao/EL5123/SampleData.html)
+#' download.file("http://eeweb.poly.edu/~yao/EL5123/image/lena_gray.bmp", "Lena.bmp")
+#'
+#' # get complexity
+#' quantify_complexity("Lena.bmp")
+#'
+#' # get complexity (including rotated version)
+#' quantify_complexity("Lena.bmp", rotate = TRUE)
+#'
+#' # # get complexity (including rotated version)
+#' # # but specify image that to be rotated directly
+#' # img_lena <- readbitmap::read.bitmap("Lena.bmp")
+#' # quantify_complexity("Lena.bmp", rotate = TRUE, img = img_lena)
+#'
+#' # compute simplicity score
+#' lena_results <- quantify_complexity("Lena.bmp", rotate = TRUE)
+#' lena_results$original / lena_results$compressed # simplicity ratio
+#'
+#' @references Donderi, D. C. (2006). Visual complexity: A
+#'   Review. \emph{Psychological Bulletin}, \emph{132},
+#'   73--97.
+#'   doi:\href{https://doi.org/10.1037/0033-2909.132.1.73}{10.1037/0033-2909.132.1.73}
+#'
+#'
+#' @importFrom grDevices bmp dev.off
+#' @importFrom graphics plot
+#' @importFrom utils zip
 quantify_complexity <- function(flname, rotate = FALSE, img = NULL){
 
   if (!is.character(flname)) {
@@ -63,7 +137,7 @@ quantify_complexity <- function(flname, rotate = FALSE, img = NULL){
     if (is.null(img)) {
       # flnme is character (checked above)
       if (requireNamespace("readbitmap", quietly = TRUE)) {
-        img <- readbitmap::read.bitmap(path)
+        img <- readbitmap::read.bitmap(flname)
       } else {
         stop("Package 'readbitmap' not found but needed to load the .bmp image for rotation")
       }
