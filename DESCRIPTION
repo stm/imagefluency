@@ -2,6 +2,7 @@ Package: rquantae
 Type: Package
 Title: A toolbox for quantified aesthetics in R
 Version: 0.1.0
+Date: 2017-01-31
 Authors@R: person("Stefan", "Mayer", email = "smayer@wiwi.uni-frankfurt.de",
     role = c("aut", "cre"))
 Description: A toolbox for quantified aesthetics in R. It provides an
@@ -11,8 +12,11 @@ Description: A toolbox for quantified aesthetics in R. It provides an
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
+URL: https://github.com/stm/rquantae
+BugReports: https://github.com/stm/rquantae/issues
 Imports:
-    pracma
+    pracma,
+    quadprog
 Suggests:
     OpenImageR,
     ggplot2,
