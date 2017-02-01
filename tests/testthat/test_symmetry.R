@@ -47,6 +47,8 @@ test_that("quantify_symmetry detects symmetry for inverted image", {
 })
 
 test_that("quantify_symmetry only handles numeric matrices", {
-  expect_error(quantify_symmetry(matrix("foo", nrow = 10, ncol = 10)))
-  expect_error(quantify_symmetry(1:10))
+  expect_error(quantify_symmetry(matrix("foo", nrow = 10, ncol = 10)),
+               "Input img has to be a matrix of \\*numeric\\* or \\*integer\\* values")
+  expect_error(quantify_symmetry(1:10),
+               "Input img has to be a \\*matrix\\* of numeric or integer values")
 })
