@@ -4,20 +4,13 @@
 \alias{quantify_complexity}
 \title{Complexity of an image}
 \usage{
-quantify_complexity(flname, rotate = FALSE, img = NULL)
+quantify_complexity(imgfile, rotate = FALSE)
 }
 \arguments{
-\item{flname}{A character string containing the file path
-of the image. If the image file is in the same
-directory as the current working directory, it is
-sufficient to pass just the filename as input to the
-function.}
+\item{imgfile}{A character string containing the file name of the image or an array or a matrix of numeric or integer values representing the pre-loaded image.}
 
 \item{rotate}{logical. Should the compressed filesize of
 the rotated image also be computed? (see details)}
-
-\item{img}{An array or matrix of numeric or integer
-values representing an image.}
 }
 \value{
 a list of numeric values: compressed filesize,
@@ -26,32 +19,35 @@ a list of numeric values: compressed filesize,
 }
 \description{
 \code{quantify_complexity} returns the complexity of an
-image as the size of the zip-compressed image file. In
-the current version, only \code{.bmp} images are
-supported.
+image as the size of the zip-compressed image file.
+Supported images types are \code{.bmp}, \code{.png},
+\code{.jpg}, and \code{.jpeg}.
 }
 \details{
 The function returns the visual complexity of an
   image. Visual complexity is calculated as the size of
-  the zip-compressed image file. Thus, it is important
-  that the original image is in an uncompressed format.
+  the zip-compressed image file. Preferably, the input
+  is an uncompressed image file. If the input image is not an
+  uncompressed \code{.bmp} file, the function tries to
+  create an uncompressed version of the image.
 
-  The function takes the file path \code{flname} of an
-  uncompressed image file as input argument and returns
+  The function takes the file path of an image file or a pre-loaded image as input argument (\code{imgfile}) and returns
   the filesize of the zip-compressed image file.
   Additionally, the uncompressed filesize and the
-  compression rate are returned.
+  compression rate are returned. Note that permission to
+  read and write files in the specified directory path / working directory is
+  needed for this function to work properly.
 
   The zip compression algorithm works line by line and
   hence does not depict horizontal and vertical
-  redundancies equally. Thus, the function includes an
+  redundancies equally (see Example 1). Thus, the function includes an
   optional \code{rotate} parameter (default:
   \code{FALSE}). Setting this parameter to \code{TRUE}
   has the following effects: first, the image is loaded
-  via the \code{readbitmap} package (if \code{img} is
-  \code{NULL}, otherwise see below). Second, the image is
+  via the \code{readbitmap} package (if \code{imgfile} is
+  not a pre-loaded image). Second, the image is
   rotated by 90 degrees. Third, the rotated image is
-  written in the current working directory and a
+  written in the same directory as the input file (or the working directory) and a
   zip-compressed version is created. Finally, the
   complexity of the image is copmuted as the minimum of
   the original image's filesize and the filesize of the
@@ -59,17 +55,26 @@ The function returns the visual complexity of an
   function runs are automatically deleted once the
   complexity score is calculated.
 
-  If the parameter \code{img} is not \code{NULL} but
-  contains an array or matrix of numeric or integer
-  values, this \code{img} is used for the rotation
-  instead of the original image.
-
-  In the current version, \strong{only \code{.bmp}
-  images} are supported.
+  In the current version, only \code{.bmp}, \code{.png},
+  \code{.jpg}, and \code{.jpeg} images are supported.
 }
 \examples{
+# Example 1: pre-loaded image as input
+#
+# create sample image
+img <- matrix(0, nrow = 500, ncol = 500)
+img[, 201:300] <- 1
+
+# get complexity
+quantify_complexity(img)
+quantify_complexity(img, rotate = TRUE) # rotated file smaller (i.e., zip works line by line)
+
+
+# Example 2: image path as input
+#
 # Download Lena sample image (see http://eeweb.poly.edu/~yao/EL5123/SampleData.html)
-download.file("http://eeweb.poly.edu/~yao/EL5123/image/lena_gray.bmp", "Lena.bmp")
+download.file("http://eeweb.poly.edu/~yao/EL5123/image/lena_gray.bmp",
+   "Lena.bmp", mode = "wb")
 
 # get complexity
 quantify_complexity("Lena.bmp")
@@ -77,14 +82,12 @@ quantify_complexity("Lena.bmp")
 # get complexity (including rotated version)
 quantify_complexity("Lena.bmp", rotate = TRUE)
 
-# # get complexity (including rotated version)
-# # but specify image that to be rotated directly
-# img_lena <- readbitmap::read.bitmap("Lena.bmp")
-# quantify_complexity("Lena.bmp", rotate = TRUE, img = img_lena)
-
 # compute simplicity score
 lena_results <- quantify_complexity("Lena.bmp", rotate = TRUE)
 lena_results$original / lena_results$compressed # simplicity ratio
+
+# delete image of Lena
+file.remove("Lena.bmp")
 
 }
 \references{
