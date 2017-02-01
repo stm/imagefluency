@@ -24,7 +24,6 @@
   } else stop("unknown input to f_call argument", call. = FALSE)
 }
 
-
 #' RGB to Gray Conversion
 #'
 #' \code{rgb2gray} transforms colors from RGB space
@@ -39,7 +38,9 @@
 #'   numeric or integer values as input (\code{img}) and
 #'   returns a matrix of grayscale values as output. The
 #'   grayscale values are computed as \code{GRAY = 0.2989 *
-#'   RED + 0.5870 * GREEN + 0.1140 * BLUE}.
+#'   RED + 0.5870 * GREEN + 0.1140 * BLUE}. If the array has
+#'   a fourth dimension (i.e., alpha channel), the fourth
+#'   dimension is ignored.
 #'
 #' @export
 #' @examples
@@ -52,25 +53,31 @@
 #' # convert to gray
 #' img <- rgb2gray(imgColor)
 rgb2gray <- function(img) {
-  if (requireNamespace("OpenImageR", quietly = TRUE)) {
-    OpenImageR::rgb_2gray(img)
-  } else {
-    if (!is.array(img) | !is.numeric(img) | length(dim(img)) != 3 | dim(img)[3] != 3) {
-      stop("Invalid input (has to be a 3-dimensional array of numeric or integer values)")
-    }
-    redChannel <- img[, , 1]
-    greenChannel <- img[, , 2]
-    blueChannel <- img[, , 3]
-    out <- 0.2989 * redChannel + 0.5870 * greenChannel + 0.1140 * blueChannel
-    return(out)
+  if (is.null(dim(img))) {
+    stop("Invalid input (should be a 3-dimensional array of numeric or integer values)", call. = FALSE)
   }
+  if (!is.array(img) | !is.numeric(img) | length(dim(img)) != 3 | dim(img)[3] < 3 | dim(img)[3] > 4) {
+      stop("Invalid input (should be a 3-dimensional array of numeric or integer values)", call. = FALSE)
+  }
+  if (dim(img)[3] == 4) {
+      warning("Array with 4 dimensions, presumably with alpha channel. 4th dimension is ignored ...", call. = FALSE)
+  }
+
+  redChannel <- img[, , 1]
+  greenChannel <- img[, , 2]
+  blueChannel <- img[, , 3]
+  out <- 0.2989 * redChannel + 0.5870 * greenChannel + 0.1140 * blueChannel
+  return(out)
 }
 
 #' Matrix or Array Rotation by 90 Degrees
 #'
 #' @param img an array or a matrix
 #' @param direction The direction of rotation by 90 degrees.
-#'   The value can be \code{"positive"} (default) or \code{"negative"}.
+#'   The value can be \code{"positive"} (default) or
+#'   \code{"negative"}. Aliases are
+#'   \code{"counterclockwise"} and \code{"clockwise"},
+#'   respectively.
 #'
 #' @details The function takes an array or matrix as input
 #'   object (\code{img}) and returns the object rotated by
@@ -96,16 +103,16 @@ rotate90 <- function(img, direction = "positive") {
     height <- dim(A)[1] # nrows / height
     width <- dim(A)[2] # ncols / width
     A <- t(A) # transpose matrix
-    if (dir == "positive") {
+    if (dir == "positive" | dir == "counterclockwise") {
       return(A[width:1, ]) # flip matrix rows
-    } else if (dir == "negative") {
+    } else if (dir == "negative" | dir == "clockwise") {
       return(A[, height:1]) # flip matrix rows
     } else {
       return(NA)
     }
   }
   #
-  if (!(direction == "positive" | direction == "negative")) {
+  if (!(direction == "positive" | direction == "counterclockwise" | direction == "negative" | direction == "clockwise")) {
     stop(paste0("'",direction,"' is an unknown input to parameter 'direction'. Try 'direction = positive' or 'direction = negative'."))
   }
   if (class(img) == "matrix") {
@@ -121,6 +128,12 @@ rotate90 <- function(img, direction = "positive") {
     return(out)
   }
   else {
-    stop(paste0("Unknown input of type '", class(img),"' (has to be of typ 'matrix' or 'array')"), call. = FALSE)
+    stop(paste0("Unknown input of type '", class(img),"' (has to be of type 'matrix' or 'array')"), call. = FALSE)
   }
+}
+
+#' @keywords internal
+#' @importFrom stats runif
+.rand_string <- function(n = 6){
+  paste0(letters[round(runif(n, min = 1, max = 26))], collapse = "")
 }
