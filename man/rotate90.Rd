@@ -10,7 +10,10 @@ rotate90(img, direction = "positive")
 \item{img}{an array or a matrix}
 
 \item{direction}{The direction of rotation by 90 degrees.
-The value can be \code{"positive"} (default) or \code{"negative"}.}
+The value can be \code{"positive"} (default) or
+\code{"negative"}. Aliases are
+\code{"counterclockwise"} and \code{"clockwise"},
+respectively.}
 }
 \value{
 an array or a matrix (rotated by 90 degrees)
