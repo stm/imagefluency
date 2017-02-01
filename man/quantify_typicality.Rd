@@ -4,7 +4,7 @@
 \alias{quantify_typicality}
 \title{Typicality of Images relative to each other}
 \usage{
-quantify_typicality(imglist, rescale = 1)
+quantify_typicality(imglist, rescale = NULL)
 }
 \arguments{
 \item{imglist}{A list of matrices with numeric values or
