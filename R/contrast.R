@@ -59,6 +59,7 @@ quantify_contrast <- function(img, normalize = TRUE){
 
   # check input
   .check_input(img, f_call = "contrast")
+  if (!is.logical(normalize)) stop("parameter 'normalize' has to be a logical value (TRUE/FALSE)", call. = FALSE)
 
   ## -----------------------
   ##      rms contrast
@@ -66,6 +67,12 @@ quantify_contrast <- function(img, normalize = TRUE){
 
 
   pixAll <- as.vector(img)
+
+  # check if input is already normalized (or negative values)
+  if (min(pixAll) < 0) warning("Negative pixel intensity values in your image. Result might not be meaningful.", call. = FALSE)
+  if (min(pixAll) >= 0 & max(pixAll) <= 1 & normalize == TRUE) {
+    warning("Input image might already be normalized (all pixel intensity values between [0, 1]). Consider turning option 'normalize' to FALSE.", call. = FALSE)
+  }
 
   # normalize image by default
   if (normalize) pixAll <- pixAll / 255
