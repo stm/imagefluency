@@ -99,7 +99,20 @@ quantify_self_similarity <- function(img, full = FALSE, logplot = FALSE){
 
   # check input
   .check_input(img, f_call = "self-similarity")
+  if (!is.logical(full)) {
+    warning(paste0("full = '", full, "' is not a logical value (TRUE/FALSE). Automatically set to FALSE ..."), call. = FALSE)
+    full <- FALSE
+  }
+  if (!is.logical(logplot)) {
+    warning(paste0("logplot = '", logplot, "' is not a logical value (TRUE/FALSE). Skipping log-log plot ..."), call. = FALSE)
+    logplot <- FALSE
+  }
 
+  if (min(dim(img)) < 22) {
+    stop(paste0("Image has to be at least 22 pixels in each dimension. Input image has ",
+                dim(img)[2], " (width) x ", dim(img)[1], " (height)."),
+         call. = FALSE)
+  }
   xs <- dim(img)[1] # image height
   ys <- dim(img)[2] # image width
 
