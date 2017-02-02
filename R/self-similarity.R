@@ -58,6 +58,7 @@ NULL
 #'
 #'
 #' @importFrom stats coefficients fft lm
+#' @importFrom graphics plot
 #'
 #' @references Redies, C., Hasenstein, J., & Denzler, J.
 #'   (2007). Fractal-like image statistics in visual art:
