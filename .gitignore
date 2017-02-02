@@ -23,7 +23,6 @@ rquantae.Rproj
 # test images and files
 img/
 test.R
-Lena.bmp
 
 # produced vignettes
 vignettes/*.html
