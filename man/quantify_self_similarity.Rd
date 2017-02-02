@@ -19,7 +19,7 @@ used for interpolation?}
 of the image be plotted?}
 }
 \value{
-a list of a numeric value (self-similarity)
+a numeric value (self-similarity)
 }
 \description{
 \code{quantify_self-similarity} returns the

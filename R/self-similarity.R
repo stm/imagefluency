@@ -49,7 +49,7 @@ NULL
 #' @param logplot logical. Should the log-log power spectrum
 #'   of the image be plotted?
 #'
-#' @return a list of a numeric value (self-similarity)
+#' @return a numeric value (self-similarity)
 #' @export
 #'
 #' @note The function inspired by Matlab's sfPlot (by
@@ -196,5 +196,5 @@ quantify_self_similarity <- function(img, full = FALSE, logplot = FALSE){
   self_sim <- abs(slope + 2)*(-1)
 
   # return results
-  return(list(self_similarity = self_sim))
+  return(self_sim)
 }

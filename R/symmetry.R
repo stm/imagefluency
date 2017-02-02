@@ -22,7 +22,7 @@ NULL
 #' @param horizontal logical. Should the horizontal symmetry
 #'   be computed?
 #'
-#' @return a list of numeric values (vertical and horizontal
+#' @return a named vector of numeric values (vertical and horizontal
 #'   symmetry)
 #' @export
 #'
@@ -59,11 +59,12 @@ quantify_symmetry <- function(img, vertical = TRUE, horizontal = TRUE) {
 
   # return symmetry values
   if (vertical == FALSE & horizontal == FALSE) {
-    stop("Both optional arguments cannot be FALSE Try setting option 'vertical' or 'horizontal' to TRUE.", call. = FALSE)
+    warning("Both optional arguments cannot be FALSE. Try setting option 'vertical' or 'horizontal' to TRUE. Returning NA.", call. = FALSE)
+    return(NA)
   } else {
-    if (!vertical) return(list(horizontal = sym_h))
-    if (!horizontal) return(list(vertical = sym_v))
-    return(list(vertical = sym_v, horizontal = sym_h))
+    if (!vertical) return(c(horizontal = sym_h))
+    if (!horizontal) return(c(vertical = sym_v))
+    return(c(vertical = sym_v, horizontal = sym_h))
   }
 }
 

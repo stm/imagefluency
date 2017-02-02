@@ -19,7 +19,7 @@ computed?}
 be computed?}
 }
 \value{
-a list of numeric values (vertical and horizontal
+a named vector of numeric values (vertical and horizontal
   symmetry)
 }
 \description{

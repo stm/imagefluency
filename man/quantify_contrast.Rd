@@ -18,7 +18,7 @@ normalized but to be in the range [0, 255]}
 normalization into range [0, 1] be performed?}
 }
 \value{
-a list of a numeric value (RMS contrast)
+a numeric value (RMS contrast)
 }
 \description{
 \code{quantify_contrast} returns the RMS contrast of an

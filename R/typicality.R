@@ -1,3 +1,4 @@
+# idea: typicality(img, method = "correlation | feature_points | phash", ...)
 
 #' Typicality of Images relative to each other
 #'
@@ -29,7 +30,7 @@
 #'   \code{resizeImage} function from the \code{OpenImageR}
 #'   package (bilinear rescaling)
 #'
-#' @return a list with a matrix of numeric value (typicality
+#' @return a named matrix of numeric values (typicality
 #'   scores)
 #' @export
 #'
@@ -99,6 +100,6 @@ quantify_typicality <- function(imglist, rescale = NULL){
   img_mean <- rowMeans(imglist)
   output <- cor(imglist, img_mean)
   rownames(output) <- paste0("img", 1:nrow(output))
-  return(list(typicality = output))
+  return(typicality = output)
 }
 

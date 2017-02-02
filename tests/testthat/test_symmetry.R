@@ -7,8 +7,8 @@ test_that("quantify_symmetry detects perfect symmetry", {
   img1[41:60, 41:60] <- 1
 
   # img perfectly symmetric
-  expect_equal(quantify_symmetry(img1)$horizontal, 1)
-  expect_equal(quantify_symmetry(img1)$vertical, 1)
+  expect_equal(quantify_symmetry(img1)[1], c(vertical = 1))
+  expect_equal(quantify_symmetry(img1)[2], c(horizontal = 1))
 })
 
 test_that("quantify_symmetry detects horizontal symmetry", {
@@ -19,8 +19,8 @@ test_that("quantify_symmetry detects horizontal symmetry", {
   img2[11:40, 31:40] <- 1
 
   # img perfectly horizontally symmetric
-  expect_identical(quantify_symmetry(img2)$horizontal, 1)
-  expect_lt(quantify_symmetry(img2)$vertical, 1)
+  expect_lt(quantify_symmetry(img2)[1], c(vertical = 1))
+  expect_identical(quantify_symmetry(img2)[2], c(horizontal = 1))
 })
 
 test_that("quantify_symmetry detects vertical symmetry", {
@@ -31,8 +31,8 @@ test_that("quantify_symmetry detects vertical symmetry", {
   img3[31:40, 11:40] <- 1
 
   # img perfectly vertically symmetric
-  expect_identical(quantify_symmetry(img3)$vertical, 1)
-  expect_lt(quantify_symmetry(img3)$horizontal, 1)
+  expect_identical(quantify_symmetry(img3)[1], c(vertical = 1))
+  expect_lt(quantify_symmetry(img3)[2], c(horizontal = 1))
 })
 
 test_that("quantify_symmetry detects symmetry for inverted image", {

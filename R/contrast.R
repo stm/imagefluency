@@ -29,7 +29,7 @@ NULL
 #' @param normalize logical. Should pixel intensity
 #'   normalization into range [0, 1] be performed?
 #'
-#' @return a list of a numeric value (RMS contrast)
+#' @return a numeric value (RMS contrast)
 #' @export
 #'
 #' @examples
@@ -78,7 +78,7 @@ quantify_contrast <- function(img, normalize = TRUE){
   if (normalize) pixAll <- pixAll / 255
 
   # via built-in sd function
-  return(list(contrast = sd(pixAll)))
+  return(sd(pixAll))
 
   # # alternative 1: via normalization
   # pixAllMean <- pixAll - mean(pixAll)

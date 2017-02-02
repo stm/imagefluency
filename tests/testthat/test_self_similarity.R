@@ -25,11 +25,11 @@ test_that("quantify_self_similarity checks whether image is at least 22 pixels i
 test_that("quantify_self_similarity gives results you'd expect", {
   # result must be 0 or less than zero
   img <- matrix(runif(50*50, min = 0, max = 255), nrow = 50, ncol = 50)
-  expect_lte(as.numeric(quantify_self_similarity(img)), 0)
+  expect_lte(quantify_self_similarity(img), 0)
 
   #
   img <- matrix(0, nrow = 100, ncol = 100)
   img[, 1:50] <- 255
-  expect_equal(quantify_self_similarity(img), expected = list(self_similarity = -1.047962), tolerance = .00001, scale = 1)
+  expect_equal(quantify_self_similarity(img), expected = -1.047962, tolerance = .00001, scale = 1)
 })
 

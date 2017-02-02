@@ -30,12 +30,12 @@ test_that("quantify_typicality gives results you'd expect", {
   imgs[[2]] <- -imgs[[1]]
   imgs[[3]] <- -imgs[[1]]
   results <- quantify_typicality(imgs)
-  expect_equal(results$typicality[1], -results$typicality[2])
+  expect_equal(results[1], -results[2])
 
   imgs <- replicate(3, matrix(runif(100, min = 0, max = 255), nrow = 10, ncol = 10),
                     simplify = FALSE)
   imgs[[2]] <- imgs[[1]]
   results <- quantify_typicality(imgs)
-  expect_equal(results$typicality[1], results$typicality[2])
+  expect_equal(results[1], results[2])
 })
 

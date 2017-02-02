@@ -27,9 +27,9 @@ test_that("quantify_contrast checks whether parameter normalize is logical", {
 
 test_that("quantify_contrast gives results you'd expect", {
   img <- matrix(0, nrow = 100, ncol = 100)
-  expect_equal(quantify_contrast(img, normalize = FALSE), expected = list(contrast = 0))
+  expect_equal(quantify_contrast(img, normalize = FALSE), expected = 0)
 
   img <- matrix(rnorm(1000*1000) + 100, nrow = 1000, ncol = 1000)
-  expect_equal(quantify_contrast(img, normalize = FALSE), expected = list(contrast = 1), tolerance = .01, scale = 1)
+  expect_equal(quantify_contrast(img, normalize = FALSE), expected = 1, tolerance = .01, scale = 1)
 })
 

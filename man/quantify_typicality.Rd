@@ -19,7 +19,7 @@ rescaling is performed). Rescaling is performed by the
 package (bilinear rescaling)}
 }
 \value{
-a list with a matrix of numeric value (typicality
+a named matrix of numeric values (typicality
   scores)
 }
 \description{
