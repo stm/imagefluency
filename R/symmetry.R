@@ -106,8 +106,14 @@ sym_ver <- function(img) {
   pixR <- as.vector(stimR)
 
   # check whether sd in one of the halves is zero
-  if (sd(pixL) == 0) stop("No variation in left image half. Computation not possible.", call. = FALSE)
-  if (sd(pixR) == 0) stop("No variation in right image half. Computation not possible.", call. = FALSE)
+  if (sd(pixL) == 0) {
+    warning("No variation in left image half. Computation not possible. Returning NA.", call. = FALSE)
+    return(NA)
+  }
+  if (sd(pixR) == 0) {
+    warning("No variation in right image half. Computation not possible. Returning NA.", call. = FALSE)
+    return(NA)
+  }
 
   # correlation of image halves
   corrLR <- cor(pixL, pixR)
@@ -154,8 +160,14 @@ sym_hor <- function(img) {
   pixD <- as.vector(stimD)
 
   # check whether sd in one of the halves is zero
-  if (sd(pixU) == 0) stop("No variation in upper image half. Computation not possible.", call. = FALSE)
-  if (sd(pixD) == 0) stop("No variation in lower image half. Computation not possible.", call. = FALSE)
+  if (sd(pixU) == 0) {
+    warning("No variation in upper image half. Computation not possible. Returning NA.", call. = FALSE)
+    return(NA)
+  }
+  if (sd(pixD) == 0) {
+    warning("No variation in lower image half. Computation not possible. Returning NA.", call. = FALSE)
+    return(NA)
+  }
 
   # correlation of image halves
   corrUD <- cor(pixU, pixD)
