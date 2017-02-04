@@ -23,6 +23,11 @@ test_that("quantify_typicality checks whether parameter rescale is numeric", {
                "parameter 'rescale' must be numeric")
 })
 
+test_that("quantify_typicality checks whether all images have the same dimension", {
+  expect_error(quantify_typicality(list(matrix(1, 10, 10), matrix(1, 10, 9))),
+               "At least one image has a different dimension than the others, but all images dimensions have to be the same\\.")
+})
+
 
 test_that("quantify_typicality gives results you'd expect", {
   imgs <- replicate(3, matrix(runif(100, min = 0, max = 255), nrow = 10, ncol = 10),

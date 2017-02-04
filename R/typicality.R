@@ -75,6 +75,12 @@ quantify_typicality <- function(imglist, rescale = NULL){
     }
   }
 
+  # check whether all images have the same dimension
+  img_dims <- lapply(imglist, dim)
+  if (!(length(unique(img_dims)) == 1)) {
+    stop("At least one image has a different dimension than the others, but all images dimensions have to be the same.", call. = FALSE)
+  }
+
   # original resolution or different scaling level?
   if (!is.null(rescale)) {
     if (!is.numeric(rescale)) {
