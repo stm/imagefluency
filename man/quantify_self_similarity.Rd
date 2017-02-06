@@ -7,10 +7,13 @@
 quantify_self_similarity(img, full = FALSE, logplot = FALSE)
 }
 \arguments{
-\item{img}{A matrix of numeric values or integer values.
-Color images have to be converted to grayscale in
-advance (function \code{rgb2gray}) or each color
-channel has to be analyzed seperately.}
+\item{img}{A matrix of numeric values or integer values,
+preferably a square matrix. If the input matrix is not
+square, bilinear resizing to a square matrix is
+performade via the 'OpenImageR' package. Color images
+have to be converted to grayscale in advance (function
+\code{rgb2gray}) or each color channel has to be
+analyzed seperately.}
 
 \item{full}{logical. Should the full frequency range be
 used for interpolation?}
@@ -28,8 +31,8 @@ the log-log power spectrum of the image falls with a
 slope of -2).
 }
 \details{
-The function takes a matrix of numeric or
-  integer values representing an image as input and
+The function takes a (square) matrix of numeric
+  or integer values representing an image as input and
   returns the self-similarity of the image.
   Self-similarity is computed via the slope of the
   log-log power spectrum using OLS. A slope near

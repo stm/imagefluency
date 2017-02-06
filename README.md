@@ -22,4 +22,4 @@ devtools::install_github('stm/rquantae')
 Use the following link to report bugs/issues: <https://github.com/stm/rquantae/issues>
 
 ## Dependencies
-The `quantify_self_similarity` function relies on packages `pracma`, `quadprog`, and `magick`.
+The `quantify_complexity` function relies on `magick` package. The `quantify_self_similarity` function relies on the packages `OpenImageR`, `pracma`, and `quadprog`.

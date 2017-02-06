@@ -15,8 +15,8 @@ NULL
 #' the log-log power spectrum of the image falls with a
 #' slope of -2).
 #'
-#' @details The function takes a matrix of numeric or
-#'   integer values representing an image as input and
+#' @details The function takes a (square) matrix of numeric
+#'   or integer values representing an image as input and
 #'   returns the self-similarity of the image.
 #'   Self-similarity is computed via the slope of the
 #'   log-log power spectrum using OLS. A slope near
@@ -40,10 +40,13 @@ NULL
 #'
 #'
 #'
-#' @param img A matrix of numeric values or integer values.
-#'   Color images have to be converted to grayscale in
-#'   advance (function \code{rgb2gray}) or each color
-#'   channel has to be analyzed seperately.
+#' @param img A matrix of numeric values or integer values,
+#'   preferably a square matrix. If the input matrix is not
+#'   square, bilinear resizing to a square matrix is
+#'   performade via the 'OpenImageR' package. Color images
+#'   have to be converted to grayscale in advance (function
+#'   \code{rgb2gray}) or each color channel has to be
+#'   analyzed seperately.
 #' @param full logical. Should the full frequency range be
 #'   used for interpolation?
 #' @param logplot logical. Should the log-log power spectrum
@@ -57,6 +60,8 @@ NULL
 #'   \url{http://www.mathworks.com/matlabcentral/newsreader/view_original/799264}
 #'
 #'
+#'
+#'
 #' @importFrom stats coefficients fft lm
 #' @importFrom graphics plot
 #'
@@ -65,6 +70,8 @@ NULL
 #'   Similarity to natural scenes. \emph{Spatial Vision},
 #'   \emph{21}, 137--148.
 #'   doi:\href{https://doi.org/10.1163/156856807782753921}{10.1163/156856807782753921}
+#'
+#'
 #'
 #'
 #' @examples
@@ -116,6 +123,22 @@ quantify_self_similarity <- function(img, full = FALSE, logplot = FALSE){
   }
   xs <- dim(img)[1] # image height
   ys <- dim(img)[2] # image width
+
+  # check for squared matrix
+  if (xs != ys) {
+    if (requireNamespace("OpenImageR", quietly = TRUE)) {
+    img <- OpenImageR::resizeImage(img, width = min(xs, ys),
+                                   height = min(xs, ys),
+                                   method = "bilinear")
+    xs <- dim(img)[1]
+    ys <- dim(img)[2]
+
+    warning("The input image was not squared. Rescaling to a squared matrix was performed.",
+         call. = FALSE)
+    } else {
+      stop("Package 'OpenImageR' is required but not installed on your system.", call. = FALSE)
+    }
+  }
 
   # apply fft2
   img_fft <- fft(img)
