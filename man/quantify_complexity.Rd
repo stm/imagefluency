@@ -12,13 +12,13 @@ file name of the image (or URL) or an 3-dimensional
 array of numeric values representing the pre-loaded
 image.}
 
-\item{rotate}{logical. Should the compressed filesize of
+\item{rotate}{logical. Should the compressed file size of
 the rotated image also be computed? (see details)}
 }
 \value{
-a list of numeric values: compressed filesize,
-  original filesize, ratio of compressed / original
-  filesize (i.e., the compression rate)
+a list of numeric values: compressed file size,
+  original file size, ratio of compressed / original
+  file size (i.e., the compression rate)
 }
 \description{
 \code{quantify_complexity} returns the complexity of an
@@ -34,8 +34,8 @@ The function returns the visual complexity of an
 
   The function takes the file path of an image file (or URL) or a
   pre-loaded image as input argument (\code{imgfile}) and
-  returns the filesize of the zip-compressed image file.
-  Additionally, the uncompressed filesize and the
+  returns the file size of the zip-compressed image file.
+  Additionally, the uncompressed file size and the
   compression rate are returned. Note that permission to
   read and write files in the specified directory path /
   working directory is needed for this function to work
@@ -51,7 +51,7 @@ The function returns the visual complexity of an
   the working directory and a zip-compressed version is
   created. Finally, the complexity of the image is
   computed as the minimum of the original image's
-  filesize and the filesize of the rotated image. All
+  file size and the file size of the rotated image. All
   files that are created while the function runs are
   automatically deleted once the complexity score is
   calculated.

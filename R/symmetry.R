@@ -95,7 +95,7 @@ sym_ver <- function(img) {
   # Cut image into 2 equal pieces (row-wise / vertically,
   # that means across the y axis) with flipped right half.
   # Note: floor and ceiling control for images with a height
-  # that is not a multiple of 2; if that's the cas, the
+  # that is not a multiple of 2; if that's the case, the
   # syntax below just eliminates the most middle row;
   # otherwise, all data points are analyzed.
   stimL <- img[, 1:floor(imgW / 2)]
