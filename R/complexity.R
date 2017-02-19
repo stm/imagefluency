@@ -154,7 +154,7 @@ quantify_complexity <- function(imgfile, rotate = FALSE){
     if (rotate) {
       flname_rot <- paste0(flname, "_rot")
 
-      message("... trying to rotate the image ...")
+      # message("... trying to rotate the image ...")
       # write rotated image
       magick::image_write(magick::image_rotate(img, degrees = 90), path = paste0(flname_rot, ".bmp"), format = "bmp")
 
