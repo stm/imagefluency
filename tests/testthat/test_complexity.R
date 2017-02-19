@@ -14,12 +14,6 @@ test_that("quantify_complexity warns if rotate is not a logical value", {
                  "rotate = 'yes' is not a logical value \\(TRUE\\/FALSE\\)\\. Skipping rotation \\.\\.\\.")
 })
 
-test_that("quantify_complexity warns if input is not a bmp image", {
-  expect_warning(quantify_complexity(array(0, dim = c(10, 10, 3))),
-                 "Input image might not be uncompressed\\. Interpret results with caution\\.")
-})
-
-
 test_that("quantify_complexity works as intended", {
   set.seed(2787)
   redChannel <- matrix(round(runif(250*250, min = 0, max = 1)), nrow = 250, ncol = 250)
@@ -27,8 +21,7 @@ test_that("quantify_complexity works as intended", {
   blueChannel <- matrix(round(runif(250*250, min = 0, max = 1)), nrow = 250, ncol = 250)
   img <- array(c(redChannel, greenChannel, blueChannel), dim = c(dim(redChannel), 3))
   # magick::image_read(img)
-  expect_warning(results <- quantify_complexity(img),
-                 "Input image might not be uncompressed\\. Interpret results with caution\\.")
+  results <- quantify_complexity(img)
 
   expect_equal(results$compressed, 28990, tolerance = 100, scale = 1)
   expect_equal(results$original, 188138, tolerance = 100, scale = 1)
@@ -42,8 +35,7 @@ test_that("quantify_complexity works as intended", {
   blueChannel <- matrix(0, nrow = 300, ncol = 300)
   img <- array(c(redChannel, greenChannel, blueChannel), dim = c(dim(redChannel), 3))
   # magick::image_read(img)
-  expect_warning(results <- quantify_complexity(img),
-                 "Input image might not be uncompressed\\. Interpret results with caution\\.")
+  results <- quantify_complexity(img)
 
   expect_equal(results$compressed, 552, tolerance = 10, scale = 1)
   expect_equal(results$original, 270138, tolerance = 100, scale = 1)
