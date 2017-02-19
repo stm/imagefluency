@@ -69,17 +69,19 @@ NULL
 #' @export
 #'
 #' @examples
-#' # Example: URL as input
-#' # sample image is a Lenna (http://www.lenna.org)
-#' # an uncompressed version can be found at http://www.hlevkin.com/TestImages/classic.htm
-#' quantify_complexity("http://www.hlevkin.com/TestImages/lenna.bmp")
-#' quantify_complexity("http://www.hlevkin.com/TestImages/lenna.bmp", rotate = TRUE)
+#' # Example image with high complexity: img_trees
+#' #
+#' # display image
+#' grid::grid.raster(img_trees)
+#' # get complexity
+#' quantify_complexity(img_trees)
 #'
-#' # example image with high complexity
-#' # http://www.hlevkin.com/TestImages/barbara.bmp
-#'
-#' # example image with low complexity
-#' # http://www.hlevkin.com/TestImages/baboon.bmp
+#' # Example image with low complexity: img_sky
+#' #
+#' # display image
+#' grid::grid.raster(img_sky)
+#' # get complexity
+#' quantify_complexity(img_sky)
 #'
 #' @references Donderi, D. C. (2006). Visual complexity: A
 #'   Review. \emph{Psychological Bulletin}, \emph{132},
@@ -127,8 +129,8 @@ quantify_complexity <- function(imgfile, rotate = FALSE){
     img <- magick::image_read(imgfile)
     imginfo <- magick::image_info(img)
 
-    isBMP <- grepl("^BMP", as.character(imginfo[1]))
-    if (!isBMP) warning("Input image might not be uncompressed. Interpret results with caution.", call. = FALSE)
+    # isBMP <- grepl("^BMP", as.character(imginfo[1]))
+    # if (!isBMP) warning("Input image might not be uncompressed. Interpret results with caution.", call. = FALSE)
 
     # write bmp image
     magick::image_write(img, path = paste0(flname, ".bmp"), format = "bmp")

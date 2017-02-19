@@ -42,13 +42,22 @@ The function returns the visual typicality of a
   rescaling parameter (must be a numeric value).
 }
 \examples{
-# construct a list of 20 sample images
-imgs <- replicate(20,
-  matrix(runif(100, min = 0, max = 255), nrow = 10, ncol = 10),
-  simplify = FALSE)
+# Example images depicting valleys: img_valley_green, img_valley_white
+# Example image depicting fireworks: img_fireworks
+#
+# display images
+grid::grid.raster(img_valley_green)
+grid::grid.raster(img_valley_white)
+grid::grid.raster(img_fireworks)
 
-# get typicality scores
-quantify_typicality(imgs)
+# create image set as list
+imglist <- list(img_fireworks, img_valley_green, img_valley_white)
+
+# convert to grayscale
+imglist_grayscale <- lapply(imglist, rgb2gray)
+
+# get typicality
+quantify_typicality(imglist_grayscale)
 
 }
 \references{

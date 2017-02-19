@@ -35,16 +35,23 @@ The function returns the vertical and horizontal
   symmetry is not computed, respectively.
 }
 \examples{
-# construct sample image
-img <- matrix(0, nrow=100, ncol=100)
-img[21:60,31:70] <- 0.5
-img[71:90, 21:80] <- 1
+# Example image with high vertical symmetry: img_rails
+#
+# display image
+grid::grid.raster(img_rails)
+# convert to grayscale
+rails_grayscale <- rgb2gray(img_rails)
+# get symmetry
+quantify_symmetry(rails_grayscale)
 
-# if you want to inspect the image
-# OpenImageR::imageShow(img)
-
-# get both vertical and horizontal symmetry
-quantify_symmetry(img)
+# Example image with low vertical symmetry: img_bridge
+#
+# display image
+grid::grid.raster(img_bridge)
+# convert to grayscale
+bridge_grayscale <- rgb2gray(img_bridge)
+# get symmetry
+quantify_symmetry(bridge_grayscale)
 
 }
 \references{

@@ -1,3 +1,7 @@
+rquantae 0.1.2
+==============
+* exemplary images included in package as data
+
 rquantae 0.1.1
 ==============
 * complete rewrite of complexity function based on `magick` package

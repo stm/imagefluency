@@ -20,8 +20,10 @@
 # Project file name
 rquantae.Rproj
 
-# test images and files
-img/
+# raw example files
+/data-raw/
+
+# test files
 test.R
 
 # produced vignettes

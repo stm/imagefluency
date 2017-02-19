@@ -60,28 +60,23 @@ The function inspired by Matlab's sfPlot (by
   \url{http://www.mathworks.com/matlabcentral/newsreader/view_original/799264}
 }
 \examples{
-# construct sample image
-img <- matrix(0, nrow=100, ncol=100)
-img[11:90,11:90] <- 0.25
-img[21:80, 21:80] <- 0.5
-img[31:70, 31:70] <- 0.75
-img[41:60, 41:60] <- 1
-
-# show image
-grid::grid.raster(img)
-
+# Example image with high self-similarity: img_romanesco
+#
+# display image
+grid::grid.raster(img_romanesco)
+# convert to grayscale
+romanesco_grayscale <- rgb2gray(img_romanesco)
 # get self-similarity
-quantify_self_similarity(img)
+quantify_self_similarity(romanesco_grayscale)
 
-# ------------------------------
-# construct another sample image
-img2 <- matrix(runif(100*100), nrow=100, ncol=100)
-
-# show image
-grid::grid.raster(img2)
-
+# Example image with low self-similarity: img_office
+#
+# display image
+grid::grid.raster(img_office)
+# convert to grayscale
+office_grayscale <- rgb2gray(img_office)
 # get self-similarity
-quantify_self_similarity(img2)
+quantify_self_similarity(office_grayscale)
 
 }
 \references{

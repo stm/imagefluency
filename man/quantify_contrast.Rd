@@ -39,15 +39,23 @@ The function returns the RMS contrast of an
   normalization is performed.
 }
 \examples{
-# construct sample image
-img <- matrix(0, nrow=100, ncol=100)
-img[21:80, 21:80] <- 255
-
-# if you want to inspect the image
-# OpenImageR::imageShow(img)
-
+# Example image with high contrast: img_berries
+#
+# display image
+grid::grid.raster(img_berries)
+# convert to grayscale
+berries_grayscale <- rgb2gray(img_berries)
 # get contrast
-quantify_contrast(img)
+quantify_contrast(berries_grayscale, normalize = FALSE)
+
+# Example image with low contrast: img_bike
+#
+# display image
+grid::grid.raster(img_bike)
+# convert to grayscale
+bike_grayscale <- rgb2gray(img_bike)
+# get contrast
+quantify_contrast(bike_grayscale, normalize = FALSE)
 
 }
 \references{

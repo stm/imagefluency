@@ -63,17 +63,19 @@ The function returns the visual complexity of an
   \code{magick} package to write (and read) images.
 }
 \examples{
-# Example: URL as input
-# sample image is a Lenna (http://www.lenna.org)
-# an uncompressed version can be found at http://www.hlevkin.com/TestImages/classic.htm
-quantify_complexity("http://www.hlevkin.com/TestImages/lenna.bmp")
-quantify_complexity("http://www.hlevkin.com/TestImages/lenna.bmp", rotate = TRUE)
+# Example image with high complexity: img_trees
+#
+# display image
+grid::grid.raster(img_trees)
+# get complexity
+quantify_complexity(img_trees)
 
-# example image with high complexity
-# http://www.hlevkin.com/TestImages/barbara.bmp
-
-# example image with low complexity
-# http://www.hlevkin.com/TestImages/baboon.bmp
+# Example image with low complexity: img_sky
+#
+# display image
+grid::grid.raster(img_sky)
+# get complexity
+quantify_complexity(img_sky)
 
 }
 \references{

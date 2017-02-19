@@ -1,8 +1,8 @@
 Package: rquantae
 Type: Package
 Title: A toolbox for quantified aesthetics in R
-Version: 0.1.1
-Date: 2017-02-06
+Version: 0.1.2
+Date: 2017-02-19
 Authors@R: person("Stefan", "Mayer", email = "smayer@wiwi.uni-frankfurt.de",
     role = c("aut", "cre"))
 Description: A toolbox for quantified aesthetics in R. It provides an
@@ -14,6 +14,8 @@ Encoding: UTF-8
 LazyData: true
 URL: https://github.com/stm/rquantae
 BugReports: https://github.com/stm/rquantae/issues
+Depends:
+    R (>= 2.10)
 Imports:
     pracma,
     quadprog,
@@ -29,6 +31,7 @@ Collate:
     'utils.R'
     'complexity.R'
     'contrast.R'
+    'data.R'
     'self-similarity.R'
     'symmetry.R'
     'typicality.R'

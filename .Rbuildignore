@@ -2,3 +2,5 @@
 ^\.Rproj\.user$   # used for temporary files.
 test.R
 rquantae.Rproj
+^data-raw$
+^img$
