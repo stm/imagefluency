@@ -4,18 +4,13 @@
 \alias{quantify_contrast}
 \title{RMS Contrast of an Image}
 \usage{
-quantify_contrast(img, normalize = TRUE)
+quantify_contrast(img)
 }
 \arguments{
 \item{img}{A matrix of numeric values or integer values.
 Color images have to be converted to grayscale in
 advance (function \code{rgb2gray}) or each color
-channel has to be analyzed seperately. The image is
-assumed to have its pixel intensities \strong{not}
-normalized but to be in the range [0, 255]}
-
-\item{normalize}{logical. Should pixel intensity
-normalization into range [0, 1] be performed?}
+channel has to be analyzed seperately.}
 }
 \value{
 a numeric value (RMS contrast)
@@ -30,13 +25,8 @@ The function returns the RMS contrast of an
   image matrix \code{img}. The RMS contrast is defined as
   the standard deviation of the normalized pixel
   intensity values. A higher value indicates higher
-  contrast.
-
-  As the function assumes that the pixel intensity values
-  of the image \code{img} are in the range [0, 255],
-  pixel normalization into [0, 1] is done by default. If
-  \code{normalize} is set to \code{FALSE} no
-  normalization is performed.
+  contrast. The image is automatically normalized if
+  necessary (i.e., normalization into range [0, 1]).
 }
 \examples{
 # Example image with high contrast: img_berries
@@ -46,7 +36,7 @@ grid::grid.raster(img_berries)
 # convert to grayscale
 berries_grayscale <- rgb2gray(img_berries)
 # get contrast
-quantify_contrast(berries_grayscale, normalize = FALSE)
+quantify_contrast(berries_grayscale)
 
 # Example image with low contrast: img_bike
 #
@@ -55,7 +45,7 @@ grid::grid.raster(img_bike)
 # convert to grayscale
 bike_grayscale <- rgb2gray(img_bike)
 # get contrast
-quantify_contrast(bike_grayscale, normalize = FALSE)
+quantify_contrast(bike_grayscale)
 
 }
 \references{

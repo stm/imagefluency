@@ -11,23 +11,14 @@ NULL
 #'   image matrix \code{img}. The RMS contrast is defined as
 #'   the standard deviation of the normalized pixel
 #'   intensity values. A higher value indicates higher
-#'   contrast.
-#'
-#'   As the function assumes that the pixel intensity values
-#'   of the image \code{img} are in the range [0, 255],
-#'   pixel normalization into [0, 1] is done by default. If
-#'   \code{normalize} is set to \code{FALSE} no
-#'   normalization is performed.
+#'   contrast. The image is automatically normalized if
+#'   necessary (i.e., normalization into range [0, 1]).
 #'
 #'
 #' @param img A matrix of numeric values or integer values.
 #'   Color images have to be converted to grayscale in
 #'   advance (function \code{rgb2gray}) or each color
-#'   channel has to be analyzed seperately. The image is
-#'   assumed to have its pixel intensities \strong{not}
-#'   normalized but to be in the range [0, 255]
-#' @param normalize logical. Should pixel intensity
-#'   normalization into range [0, 1] be performed?
+#'   channel has to be analyzed seperately.
 #'
 #' @return a numeric value (RMS contrast)
 #' @export
@@ -40,7 +31,7 @@ NULL
 #' # convert to grayscale
 #' berries_grayscale <- rgb2gray(img_berries)
 #' # get contrast
-#' quantify_contrast(berries_grayscale, normalize = FALSE)
+#' quantify_contrast(berries_grayscale)
 #'
 #' # Example image with low contrast: img_bike
 #' #
@@ -49,12 +40,13 @@ NULL
 #' # convert to grayscale
 #' bike_grayscale <- rgb2gray(img_bike)
 #' # get contrast
-#' quantify_contrast(bike_grayscale, normalize = FALSE)
+#' quantify_contrast(bike_grayscale)
 #'
 #' @references Peli, E. (1990). Contrast in complex images.
 #'   \emph{Journal of the Optical Society of America A},
 #'   \emph{7}, 2032--2040.
 #'   doi:\href{https://doi.org/10.1364/JOSAA.7.002032}{10.1364/JOSAA.7.002032}
+#'
 #'
 #' @seealso \code{\link{rgb2gray}},
 #'   \code{\link{quantify_symmetry}},
@@ -63,11 +55,10 @@ NULL
 #'   \code{\link{quantify_self_similarity}}
 #'
 #' @importFrom stats sd
-quantify_contrast <- function(img, normalize = TRUE){
+quantify_contrast <- function(img){
 
   # check input
   .check_input(img, f_call = "contrast")
-  if (!is.logical(normalize)) stop("parameter 'normalize' has to be a logical value (TRUE/FALSE)", call. = FALSE)
 
   ## -----------------------
   ##      rms contrast
@@ -76,16 +67,22 @@ quantify_contrast <- function(img, normalize = TRUE){
 
   pixAll <- as.vector(img)
 
-  # check if input is already normalized (or negative values)
-  if (min(pixAll) < 0) warning("Negative pixel intensity values in your image. Result might not be meaningful.", call. = FALSE)
-  if (min(pixAll) >= 0 & max(pixAll) <= 1 & normalize == TRUE) {
-    warning("Input image might already be normalized (all pixel intensity values between [0, 1]). Consider turning option 'normalize' to FALSE.", call. = FALSE)
+  # check range of input values
+  if (min(pixAll) < 0) {
+    warning("Negative pixel intensity values in your image. Corresponding pixels set to 0.", call. = FALSE)
+    pixAll[pixAll < 0] <- 0
+  }
+  if (max(pixAll) > 255) {
+    warning("Pixel intensity values > 255 in your image. Corresponding pixels set to 255.", call. = FALSE)
+    pixAll[pixAll > 255] <- 255
   }
 
-  # normalize image by default
-  if (normalize) pixAll <- pixAll / 255
+  # normalize image if necessary
+  if (max(pixAll) > 1) {
+    pixAll <- pixAll / 255
+  }
 
-  # via built-in sd function
+  # RMS via built-in sd function
   return(sd(pixAll))
 
   # # alternative 1: via normalization
