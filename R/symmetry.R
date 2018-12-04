@@ -15,7 +15,7 @@ NULL
 #'   As the perceptual mirror axis is not necessarily exactly in the middle of a
 #'   picture, the function estimates in a first step several symmetry values
 #'   with different positions for the mirror axis. To this end, the mirror axis
-#'   is automatically shifted up to 5% (default) of the image width to the left
+#'   is automatically shifted up to 5\% (default) of the image width to the left
 #'   and to the right (in the case of vertical symmetry; analogously for
 #'   horizontal symmetry). In the second step, the overall symmetry score is
 #'   computed as the maximum of the symmetry scores given the different mirror
@@ -23,7 +23,7 @@ NULL
 #'
 #'   Advanced users can change the shift range with the optional parameter
 #'   \code{shift_range}, which takes a numeric decimal as input. The default
-#'   \code{shift_range = 0.05} (i.e., 5%).
+#'   \code{shift_range = 0.05} (i.e., 5\%).
 #'
 #'   For color images, the default is that first a maximal symmetry score (as
 #'   explained above) is obtained per color channel (parameter \code{per_channel
