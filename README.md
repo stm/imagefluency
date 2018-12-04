@@ -9,21 +9,21 @@ The main functions are:
 * `img_contrast()`  to get the visual contrast of an image.
 * `img_complexity()`  to get the visual complexity of an image (equals
    1 minus image simplicity)
-* `img_self_similarity()`  to get the visual self-similarity of an image.
+* `img_self_similarity()`  to get the visual self-similarity of an image
 * `img_simplicity()`  function to get the visual simplicity of an image (equals
    1 minus image complexity).
 * `img_symmetry()`  to get the vertical and horizontal symmetry of an
    image.
 * `img_typicality()`  to get the visual typicality of a list of images relative
-   to each other.
+   to each other
 
 Other helpful functions are:
 
 * `img_read()`  wrapper function to read images using `read.bitmap()` from the
-  [readbitmap](https://github.com/jefferis/readbitmap) package.
+  [readbitmap](https://github.com/jefferis/readbitmap) package
 * `run_imagefluency()`  to launch a Shiny app for an interactive demo of the
-   main functions.
-* `rgb2gray()`  convert images from RGB into grayscale.
+   main functions
+* `rgb2gray()`  convert images from RGB into grayscale
 
 
 The main author is [Stefan Mayer](http://github.com/stm/).

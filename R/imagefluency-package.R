@@ -1,27 +1,27 @@
 #' @details \emph{The main functions are:}
 #' \itemize{
-#'   \item \code{\link[imagefluency]{img_contrast}()} to get the visual contrast of an
-#'   image.
-#'   \item \code{\link[imagefluency]{img_complexity}()} to get the visual complexity of
+#'   \item \code{\link[imagefluency]{img_contrast}} to get the visual contrast of an
+#'   image
+#'   \item \code{\link[imagefluency]{img_complexity}} to get the visual complexity of
 #'   an image (equals 1 minus image simplicity)
-#'   \item \code{\link[imagefluency]{img_self_similarity}()} to get the visual
-#'   self-similarity of an image.
-#'   \item \code{\link[imagefluency]{img_simplicity}()} to get the visual simplicity
-#'   of an image (equals 1 minus image complexity).
-#'   \item \code{\link[imagefluency]{img_symmetry}()} to get the vertical and
-#'   horizontal symmetry of an image.
-#'   \item \code{\link[imagefluency]{img_typicality}()} to get the visual typicality
-#'   of a list of images relative to each other.
-#'   }
+#'   \item \code{\link[imagefluency]{img_self_similarity}} to get the visual
+#'   self-similarity of an image
+#'   \item \code{\link[imagefluency]{img_simplicity}} to get the visual simplicity
+#'   of an image (equals 1 minus image complexity)
+#'   \item \code{\link[imagefluency]{img_symmetry}} to get the vertical and
+#'   horizontal symmetry of an image
+#'   \item \code{\link[imagefluency]{img_typicality}} to get the visual typicality
+#'   of a list of images relative to each other
+#' }
 #' \emph{Other helpful functions are:}
-#'   \itemize{
-#'   \item \code{\link[imagefluency]{img_read}()} wrapper function
-#'   to read images using
-#'   \item \code{\link[imagefluency]{run_imagefluency}()} to launch a Shiny app
-#'   for an interactive demo of what can be done with the `imagefluency` package.
-#'   \code{\link[readbitmap:read.bitmap]{readbitmap::read.bitmap}()}.
-#'   \item \code{\link[imagefluency]{rgb2gray}()} to convert images from
-#'   RGB into grayscale. }
+#' \itemize{
+#'   \item \code{\link[imagefluency]{img_read}} wrapper function
+#'   to read images using \code{\link[readbitmap:read.bitmap]{readbitmap::read.bitmap}}
+#'   \item \code{\link[imagefluency]{run_imagefluency}} to launch a Shiny app
+#'   for an interactive demo of the main functions
+#'   \item \code{\link[imagefluency]{rgb2gray}} to convert images from
+#'   RGB into grayscale
+#' }
 #'
 #'
 #' @references Mayer, S. & Landwehr, J, R. (2018). Quantifying Visual Aesthetics
