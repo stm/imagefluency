@@ -1,93 +1,136 @@
-# idea: typicality(img, method = "correlation | feature_points | phash", ...)
+#' @include utils.R
+NULL
 
-#' Typicality of Images relative to each other
+# 2do: different typicality algorithms (img, method = "correlation | feature_points | phash", ...)
+# feature points via shiny app point marker
+
+#' Typicality of images relative to each other
 #'
-#' \code{quantify_typicality} returns the visual typicality
-#' of a list of image matrices \code{imglist} relative to
-#' each other. Higher values indicate larger typicality.
+#' \code{img_typicality} returns the visual typicality of a list of images
+#' relative to each other. Higher values indicate larger typicality.
 #'
-#' @details The function returns the visual typicality of a
-#'   list of image matrices \code{imglist} relative to each
-#'   other, while higher values are indicating larger
-#'   typicality.
+#' @details The function returns the visual typicality of a \emph{list} of image
+#'   arrays or matrices \code{imglist} relative to each other, while higher
+#'   values are indicating larger typicality.
 #'
-#'   The typicality score is computed as the correlation of
-#'   a particular image with the average representation of
-#'   all images, i.e. the mean of all images.
+#'   The typicality score is computed as the correlation of a particular image
+#'   with the average representation of all images, i.e. the mean of all images.
+#'   For color images, the weighed average between each color channel's values
+#'   is computed. If the images have different dimensions they are automatically
+#'   resized to the smallest height and width.
 #'
-#'   Rescaling of the images prior to computing the
-#'   typicality scores can be specified with the optional
-#'   rescaling parameter (must be a numeric value).
+#'   Rescaling of the images prior to computing the typicality scores can be
+#'   specified with the optional rescaling parameter (must be a numeric value).
+#'   Most users won't need any rescaling and can use the default (\code{rescale
+#'   = NULL}). See Mayer & Landwehr (2018) for more details.
 #'
 #'
-#' @param imglist A list of matrices with numeric values or
-#'   integer values. Color images have to be converted to
-#'   grayscale in advance (function \code{rgb2gray}) or each
-#'   color channel has to be analyzed seperately.
-#' @param rescale numeric. Rescales the images prior to
-#'   computing the typicality scores (per default no
-#'   rescaling is performed). Rescaling is performed by the
-#'   \code{resizeImage} function from the \code{OpenImageR}
-#'   package (bilinear rescaling)
+#' @param imglist A \emph{list} of arrays or matrices with numeric values. Use
+#'   e.g. \code{\link{img_read}()} to read image files into \code{R} (see
+#'   example).
+#' @param rescale numeric. Rescales the images prior to computing the typicality
+#'   scores (per default no rescaling is performed). Rescaling is performed by
+#'   \code{OpenImageR}'s \code{\link[OpenImageR]{resizeImage}} function
+#'   (bilinear rescaling)
 #'
-#' @return a named matrix of numeric values (typicality
-#'   scores)
+#' @return a named matrix of numeric values (typicality scores)
 #' @export
 #'
 #' @examples
-#' # Example images depicting valleys: img_valley_green, img_valley_white
-#' # Example image depicting fireworks: img_fireworks
+#' # Example images depicting valleys: valley_green, valley_white
+#' # Example image depicting fireworks: fireworks
+#' valley_green <- img_read(
+#'     system.file("example_images", "valley_green.jpg", package = "imagefluency")
+#'   )
+#' valley_white <- img_read(
+#'     system.file("example_images", "valley_white.jpg", package = "imagefluency")
+#'   )
+#' fireworks <- img_read(
+#'     system.file("example_images", "fireworks.jpg", package = "imagefluency")
+#'   )
 #' #
 #' # display images
-#' grid::grid.raster(img_valley_green)
-#' grid::grid.raster(img_valley_white)
-#' grid::grid.raster(img_fireworks)
+#' grid::grid.raster(valley_green)
+#' grid::grid.raster(valley_white)
+#' grid::grid.raster(fireworks)
 #'
 #' # create image set as list
-#' imglist <- list(img_fireworks, img_valley_green, img_valley_white)
-#'
-#' # convert to grayscale
-#' imglist_grayscale <- lapply(imglist, rgb2gray)
+#' imglist <- list(fireworks, valley_green, valley_white)
 #'
 #' # get typicality
-#' quantify_typicality(imglist_grayscale)
+#' img_typicality(imglist)
 #'
-#' @references Mayer, S. & Landwehr, J. R. (2016). Measuring
-#'   design typicality -- a comparison of objective and
-#'   subjective approaches. \emph{Proceedings of DRS 2016,
-#'   Design Research Society 50th Anniversary Conference}.
-#'   Brighton, UK, 27--30 June 2016.
+#' @references Mayer, S. & Landwehr, J. R. (2018). Objective measures of design
+#'   typicality. \emph{Design Studies}, \emph{54}, 146--161.
+#'   doi:\href{https://doi.org/10.1016/j.destud.2017.09.004}{10.1016/j.destud.2017.09.004}
 #'
-#' @seealso \code{\link{rgb2gray}},
-#'   \code{\link{quantify_symmetry}},
-#'   \code{\link{quantify_complexity}},
-#'   \code{\link{quantify_contrast}},
-#'   \code{\link{quantify_self_similarity}}
+#'
+#'
+#' @seealso \code{\link{img_read}}, \code{\link{img_contrast}},
+#'    \code{\link{img_complexity}}, \code{\link{img_self_similarity}}
+#'   \code{\link{img_simplicity}}, \code{\link{img_symmetry}}
 #' @importFrom stats cor
-quantify_typicality <- function(imglist, rescale = NULL){
+img_typicality <- function(imglist, rescale = NULL){
 
   # check input
+  #
+  # input list?
   if (!is.list(imglist)) {
     stop("Input has to be a *list* of image matrices", call. = FALSE)
   }
+  #
+  # at least 2 images?
   if (length(imglist) < 2) {
     warning("The function needs at least 2 images in the input list. Returning NA.", call. = FALSE)
     return(list(typicality = NA))
   }
   #tryCatch(lapply(imglist, .check_input, "typicality"), error = function(err) {stop("errorinside", call. = FALSE)})
+  #
+  #
   for (elmnt in seq_along(imglist)) {
-    if (!is.matrix( imglist[[elmnt]] )) {
-      stop(paste("List element",elmnt,"has to be a *matrix* of numeric or integer values"))
+    # input not matrix or array?
+    if (is.null(dim( imglist[[elmnt]] ))) {
+      stop(paste("List element",elmnt,"has to be a *matrix* or a 3-dimensional *array* of numeric or integer values"))
     }
-    if (!(is.numeric( imglist[[elmnt]] ) | is.integer( imglist[[elmnt]] ))) {
-      stop(paste("List element",elmnt,"has to be a matrix of *numeric* or *integer* values"), call. = FALSE)
+    # input a matrix?
+    if (is.matrix( imglist[[elmnt]] )) {
+      # must be numeric or integer
+      if (!(is.numeric( imglist[[elmnt]] ) | is.integer( imglist[[elmnt]] ))) {
+        stop(paste("List element",elmnt,"has to be a matrix or a 3-dimensional array of *numeric* or *integer* values"))
+      }
+      imgtype <- "gray"
+    } else if (is.array( imglist[[elmnt]] )) {
+      # must be 3-dimensional array of integers or numeric values
+      if (!is.numeric( imglist[[elmnt]] ) | length(dim( imglist[[elmnt]] )) != 3 | !(dim( imglist[[elmnt]] )[3] == 3 | dim( imglist[[elmnt]] )[3] == 4)) {
+        stop(paste("List element",elmnt,"is an invalid array (should be a 3-dimensional array of numeric or integer values)"))
+      }
+      if (dim( imglist[[elmnt]] )[3] == 4) {
+        warning(paste("List element",elmnt,"is an array with 4 dimensions, presumably with alpha channel. 4th dimension is ignored ..."), call. = FALSE)
+      }
+      imgtype <- "rgb"
     }
   }
 
-  # check whether all images have the same dimension
-  img_dims <- lapply(imglist, dim)
-  if (!(length(unique(img_dims)) == 1)) {
-    stop("At least one image has a different dimension than the others, but all images dimensions have to be the same.", call. = FALSE)
+  # resize images same image dimension
+  # using the smallest width and height over all pics
+  if (imgtype == "gray") {
+    dims <- vapply(imglist, dim, numeric(2))
+  } else if (imgtype == "rgb") {
+    dims <- vapply(imglist, dim, numeric(3))
+  } else {
+    stop("Image dimensions could not be determined.", call. = FALSE)
+  }
+  minH <- min(dims[1,])
+  minW <- min(dims[2,])
+  # check whether all images already have the same dimension, otherwise resize
+  if (!(all(dims[-3, ] == c(minH, minW)))) {
+    # Resizing requires package "OpenImageR"
+    if (requireNamespace("OpenImageR", quietly = TRUE)) {
+      imglist <- lapply(imglist, OpenImageR::resizeImage,
+                                  width = minW, height = minH, method = "bilinear")
+    } else {
+      stop("Package 'OpenImageR' is required not installed on your system.", call. = FALSE)
+    }
   }
 
   # original resolution or different scaling level?
@@ -110,7 +153,30 @@ quantify_typicality <- function(imglist, rescale = NULL){
       }
     }
   }
-  # create matrix of vectorized intensity values
+
+  if (imgtype == "rgb") {
+    # split image into channels
+    redChannels <- lapply(imglist, function(x) x[, , 1])
+    greenChannels <- lapply(imglist, function(x) x[, , 2])
+    blueChannels <- lapply(imglist, function(x) x[, , 3])
+    #
+    out <- 0.2989 * .typ(redChannels) + 0.5870 * .typ(greenChannels) + 0.1140 * .typ(blueChannels)
+    return(out)
+    #
+  } else return(.typ(imglist))
+}
+
+
+#' .typ
+#'
+#' Returns the typicality of a list of images as the correlation with the mean image.
+#'
+#' @param imglist  A list of matrices with numeric values or
+#'   integer values.
+#'
+#' @return a numeric value (RMS contrast)
+#' @keywords internal
+.typ <- function(imglist){
   imglist <- matrix(unlist(imglist), ncol = length(imglist), byrow = FALSE)
   img_mean <- rowMeans(imglist)
   output <- cor(imglist, img_mean)
