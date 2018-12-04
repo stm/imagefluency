@@ -36,4 +36,3 @@ imgColor <- array(c(imgRed, imgGreen, imgBlue), dim = c(10, 10, 3))
 # convert to gray
 img <- rgb2gray(imgColor)
 }
-

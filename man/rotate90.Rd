@@ -39,4 +39,3 @@ img
 rotate90(img) # counterclockwise
 rotate90(img, direction = "negative") # clockwise
 }
-

@@ -1,27 +1,31 @@
-#' .check_input
+#' Read bitmap image (bmp, jpg, png, tiff)
 #'
-#' \code{.check_input} is a helper function of the
-#' \code{rquantae} package that checks whether the input is
-#' a matrix of numeric or integer values. Error message are
-#' thrown if that is not the case.
+#' Wrapper for readbitmap's \code{\link[readbitmap]{read.bitmap}} function. The
+#' function currently allows reading in images in \code{bmp}, \code{jpg} /
+#' \code{jpeg}, \code{png}, or \code{tif} / \code{tiff} format.
 #'
-#' @param img An object that needs to checked.
-#' @param f_call The name of the function inside which the
-#'   \code{.check_input} is called.
+#' @details For details, see the \code{\link[readbitmap]{read.bitmap}}
+#'   documentation.
 #'
-#' @return An error message if the check fails.
-#' @keywords internal
-.check_input <- function(img, f_call = NULL){
-  if (is.null(f_call)) stop("You have to specify function for the f_call argument.", call. = FALSE)
-  if (f_call == "symmetry" | f_call == "contrast" | f_call == "typicality" | f_call == "self-similarity") {
-    # input must be a matrix of numeric or integer values
-    if (!is.matrix(img)) {
-      stop("Input img has to be a *matrix* of numeric or integer values", call. = FALSE)
-    }
-    if (!(is.numeric(img) | is.integer(img))) {
-      stop("Input img has to be a matrix of *numeric* or *integer* values", call. = FALSE)
-    }
-  } else stop("unknown input to f_call argument", call. = FALSE)
+#'
+#' @param path Path to the image file.
+#' @param ... Additional parameters that are passed to
+#'   \code{\link[readbitmap]{read.bitmap}} and the underlying image reader
+#'   packages.
+#'
+#' @return Objects returned by \code{\link[bmp]{read.bmp}},
+#'   \code{\link[jpeg]{readJPEG}}, \code{\link[png]{readPNG}}, or
+#'   \code{\link[tiff]{readTIFF}}. See their documentation for details.
+#' @export
+#'
+#' @seealso \code{\link[readbitmap]{read.bitmap}}, \code{\link[bmp]{read.bmp}},
+#'   \code{\link[jpeg]{readJPEG}}, \code{\link[png]{readPNG}},
+#'   \code{\link[tiff]{readTIFF}}
+#'
+#' @examples
+#' todo
+img_read <- function(path, ...){
+  readbitmap::read.bitmap(f = path, ...)
 }
 
 #' RGB to Gray Conversion
@@ -57,10 +61,10 @@ rgb2gray <- function(img) {
     stop("Invalid input (should be a 3-dimensional array of numeric or integer values)", call. = FALSE)
   }
   if (!is.array(img) | !is.numeric(img) | length(dim(img)) != 3 | dim(img)[3] < 3 | dim(img)[3] > 4) {
-      stop("Invalid input (should be a 3-dimensional array of numeric or integer values)", call. = FALSE)
+    stop("Invalid input (should be a 3-dimensional array of numeric or integer values)", call. = FALSE)
   }
   if (dim(img)[3] == 4) {
-      warning("Array with 4 dimensions, presumably with alpha channel. 4th dimension is ignored ...", call. = FALSE)
+    warning("Array with 4 dimensions, presumably with alpha channel. 4th dimension is ignored ...", call. = FALSE)
   }
 
   redChannel <- img[, , 1]
@@ -131,6 +135,48 @@ rotate90 <- function(img, direction = "positive") {
     stop(paste0("Unknown input of type '", class(img),"' (has to be of type 'matrix' or 'array')"), call. = FALSE)
   }
 }
+
+
+#' .check_input
+#'
+#' \code{.check_input} is a helper function of the
+#' \code{rquantae} package that checks whether the input is
+#' a matrix of numeric or integer values. Error message are
+#' thrown if that is not the case.
+#'
+#' @param img An object that needs to checked.
+#' @param f_call The name of the function inside which the
+#'   \code{.check_input} is called.
+#'
+#' @return An error message if the check fails.
+#' @keywords internal
+.check_input <- function(img, f_call = NULL){
+  if (is.null(f_call)) stop("You have to specify a function for the f_call argument.", call. = FALSE)
+  if (f_call == "symmetry" | f_call == "contrast" | f_call == "self-similarity") {
+    # input not matrix or array?
+    if (is.null(dim(img))) {
+      stop("Invalid input (should be a matrix or a 3-dimensional array of numeric or integer values)", call. = FALSE)
+    }
+    # input a matrix?
+    if (is.matrix(img)) {
+      # must be numeric or integer
+      if (!(is.numeric(img) | is.integer(img))) {
+        stop("Input img has to be a matrix or array of *numeric* or *integer* values", call. = FALSE)
+      }
+      return("gray")
+    } else if (is.array(img)) {
+      # must be 3-dimensional array of integers or numeric values
+      if (!is.numeric(img) | length(dim(img)) != 3 | !(dim(img)[3] == 3 | dim(img)[3] == 4)) {
+        stop("Invalid array (should be a 3-dimensional array of numeric or integer values)", call. = FALSE)
+      }
+      if (dim(img)[3] == 4) {
+        warning("Array with 4 dimensions, presumably with alpha channel. 4th dimension is ignored ...", call. = FALSE)
+      }
+      return("rgb")
+    }
+  } else stop("unknown input to f_call argument", call. = FALSE)
+}
+
 
 #' @keywords internal
 #' @importFrom stats runif
