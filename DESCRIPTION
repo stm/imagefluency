@@ -1,22 +1,23 @@
-Package: rquantae
+Package: imagefluency
 Type: Package
-Title: A toolbox for quantified aesthetics in R
-Version: 0.1.2
-Date: 2017-02-25
-Authors@R: person("Stefan", "Mayer", email = "smayer@wiwi.uni-frankfurt.de",
+Title: Image Fluency Scores in R
+Version: 0.2.0
+Date: 2018-12-03
+Authors@R: person("Stefan", "Mayer", email = "stefan@mayer-de.com",
     role = c("aut", "cre"))
-Description: A toolbox for quantified aesthetics in R. It provides an
-    implementation of five basic aesthetic principles that can be used to assess
-    the aesthetic properties of an image. The properties are: symmetry,
-    complexity (simplicity), contrast, typicality, and self-similarity.
+Description: A package for image fluency scores in R. Helps to get scores for
+    several basic aesthetic principles that facilitate fluent cognitive
+    processing of images: contrast, complexity / simplicity, self-similarity,
+    symmetry, and typicality.
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
-URL: https://github.com/stm/rquantae
-BugReports: https://github.com/stm/rquantae/issues
+URL: https://github.com/stm/imagefluency
+BugReports: https://github.com/stm/imagefluency/issues
 Depends:
-    R (>= 2.10)
+    R (>= 3.2.3)
 Imports:
+    readbitmap,
     pracma,
     quadprog,
     magick,
@@ -26,12 +27,15 @@ Suggests:
     ggplot2,
     scales,
     testthat
-RoxygenNote: 5.0.1
-Collate:
-    'utils.R'
+RoxygenNote: 6.1.1
+Collate: 
     'complexity.R'
+    'utils.R'
     'contrast.R'
     'data.R'
+    'imagefluency-package.R'
+    'imagefluencyApp.R'
     'self-similarity.R'
+    'simplicity.R'
     'symmetry.R'
     'typicality.R'
