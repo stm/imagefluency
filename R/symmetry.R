@@ -23,7 +23,7 @@ NULL
 #'
 #'   Advanced users can change the shift range with the optional parameter
 #'   \code{shift_range}, which takes a numeric decimal as input. The default
-#'   \code{shift_range = 0.05} (i.e., 5%).
+#'   \code{shift_range = 0.05} (i.e., 5\%).
 #'
 #'   For color images, the default is that first a maximal symmetry score (as
 #'   explained above) is obtained per color channel (parameter \code{per_channel
