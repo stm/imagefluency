@@ -8,100 +8,104 @@ NULL
 # falls with a slope of -2
 #
 
-#' Self-Similarity of an Image
+#' Image self-similarity
 #'
-#' \code{quantify_self-similarity} returns the
-#' self-similarity of an image (i.e., the degree to which
-#' the log-log power spectrum of the image falls with a
-#' slope of -2).
+#' \code{img_self_similarity} returns the self-similarity of an image (i.e., the
+#' degree to which the log-log power spectrum of the image falls with a slope of
+#' -2). Higher values indicate higher image self-similarity.
 #'
-#' @details The function takes a (square) matrix of numeric
-#'   or integer values representing an image as input and
-#'   returns the self-similarity of the image.
-#'   Self-similarity is computed via the slope of the
-#'   log-log power spectrum using OLS. A slope near
-#'   \code{-2} indicates fractal-like properties. Thus,
-#'   value for self-similarity that is return by the
-#'   function calculated as \code{self-similarity =
-#'   abs(slope + 2) * (-1)}. That is, the measure reaches
-#'   its maximum value of 0 for a slope of -2, and any
-#'   deviation from -2 results in negative values that are
-#'   more negative the higher the deviation from -2.
+#' @details The function takes a (square) array or matrix of numeric or integer
+#'   values representing an image as input and returns the self-similarity of
+#'   the image. Self-similarity is computed via the slope of the log-log power
+#'   spectrum using OLS. A slope near \code{-2} indicates fractal-like
+#'   properties (see Redies et al., 2007; Simoncell & Olshausen, 2001). Thus,
+#'   value for self-similarity that is return by the function calculated as
+#'   \code{self-similarity = abs(slope + 2) * (-1)}. That is, the measure
+#'   reaches its maximum value of 0 for a slope of -2, and any deviation from -2
+#'   results in negative values that are more negative the higher the deviation
+#'   from -2. For color images, the weighed average between each color channel's
+#'   values is computed (cf. Mayer & Landwehr 2018).
 #'
-#'   Per default, only the frequency range betwen 10 and 256
-#'   cycles per image is used for interpolation. Computation
-#'   for the full range can be set via the parameter
-#'   \code{full = TRUE}.
+#'   Per default, only the frequency range betwen 10 and 256 cycles per image is
+#'   used for interpolation. Computation for the full range can be set via the
+#'   parameter \code{full = TRUE}.
 #'
-#'   If \code{logplot} is set to \code{TRUE} then a log-log
-#'   plot of the power spectrum is performed. If the package
-#'   \code{ggplot2} is installed the plot includes the slope
-#'   of the OLS regression.
+#'   If \code{logplot} is set to \code{TRUE} then a log-log plot of the power
+#'   spectrum is performed. If the package \code{ggplot2} is installed the plot
+#'   includes the slope of the OLS regression. Note that this option is
+#'   currently implemented for grayscale images.
+#'
+#'   It is possible to get the raw regression slope (instead of the transformed
+#'   value which indicates self-similarity) by using the option \code{raw =
+#'   TRUE}.
+#'
+#'   For color images, the weighed average between each color channel's values
+#'   is computed.
 #'
 #'
-#'
-#' @param img A matrix of numeric values or integer values,
-#'   preferably a square matrix. If the input matrix is not
-#'   square, bilinear resizing to a square matrix is
-#'   performade via the 'OpenImageR' package. Color images
-#'   have to be converted to grayscale in advance (function
-#'   \code{rgb2gray}) or each color channel has to be
-#'   analyzed seperately.
-#' @param full logical. Should the full frequency range be
-#'   used for interpolation?
-#' @param logplot logical. Should the log-log power spectrum
-#'   of the image be plotted?
+#' @param img An image in form of a matrix or array of numeric values,
+#'   preferably by square size. If the input is not square, bilinear resizing to
+#'   a square size is performade using the
+#'   \code{\link[OpenImageR:resizeImage]{OpenImageR}} package. Use e.g.
+#'   \code{\link{img_read}()} to read an image file into \code{R}.
+#' @param full logical. Should the full frequency range be used for
+#'   interpolation? (default: \code{FALSE})
+#' @param logplot logical. Should the log-log power spectrum of the image be
+#'   plotted? (default: \code{FALSE})
+#' @param raw logical. Should the raw value of the regression slope be returned?
+#'   (default: \code{FALSE})
 #'
 #' @return a numeric value (self-similarity)
 #' @export
 #'
-#' @note The function inspired by Matlab's sfPlot (by
-#'   Diederick C. Niehorster) see
+#' @note The function inspired by Matlab's sfPlot (by Diederick C. Niehorster)
+#'   see
 #'   \url{http://www.mathworks.com/matlabcentral/newsreader/view_original/799264}
-#'
-#'
 #'
 #'
 #' @importFrom stats coefficients fft lm
 #' @importFrom graphics plot
 #'
-#' @references Redies, C., Hasenstein, J., & Denzler, J.
-#'   (2007). Fractal-like image statistics in visual art:
-#'   Similarity to natural scenes. \emph{Spatial Vision},
-#'   \emph{21}, 137--148.
+#' @references Mayer, S. & Landwehr, J, R. (2018). Quantifying Visual Aesthetics
+#'   Based on Processing Fluency Theory: Four Algorithmic Measures for
+#'   Antecedents of Aesthetic Preferences. \emph{Psychology of Aesthetics,
+#'   Creativity, and the Arts}, \emph{12}(4), 399--431.
+#'   doi:\href{https://doi.org/10.1037/aca0000187}{10.1037/aca0000187}
+#'
+#' @references Redies, C., Hasenstein, J., & Denzler, J. (2007). Fractal-like
+#'   image statistics in visual art: Similarity to natural scenes. \emph{Spatial
+#'   Vision}, \emph{21}, 137--148.
 #'   doi:\href{https://doi.org/10.1163/156856807782753921}{10.1163/156856807782753921}
 #'
 #'
+#' @references Simoncelli, E. P., & Olshausen, B. A. (2001). Natural image
+#'   statistics and neural representation. \emph{Annual Review of Neuroscience},
+#'   \emph{24}, 1193--1216.
+#'   doi:\href{http://dx.doi.org/10.1146/annurev.neuro.24.1.1193}{10.1146/annurev.neuro.24.1.1193}
 #'
 #'
 #' @examples
-#' # Example image with high self-similarity: img_romanesco
-#' #
+#' # Example image with high self-similarity: romanesco
+#' romanesco <- img_read(system.file("example_images", "romanesco.jpg", package = "imagefluency"))
 #' # display image
-#' grid::grid.raster(img_romanesco)
-#' # convert to grayscale
-#' romanesco_grayscale <- rgb2gray(img_romanesco)
+#' grid::grid.raster(romanesco)
 #' # get self-similarity
-#' quantify_self_similarity(romanesco_grayscale)
+#' img_self_similarity(romanesco)
 #'
-#' # Example image with low self-similarity: img_office
-#' #
+#' # Example image with low self-similarity: office
+#' office <- img_read(system.file("example_images", "office.jpg", package = "imagefluency"))
 #' # display image
-#' grid::grid.raster(img_office)
-#' # convert to grayscale
-#' office_grayscale <- rgb2gray(img_office)
+#' grid::grid.raster(office)
 #' # get self-similarity
-#' quantify_self_similarity(office_grayscale)
+#' img_self_similarity(office)
 #'
-#' @seealso \code{\link{rgb2gray}},
-#'   \code{\link{quantify_symmetry}},
-#'   \code{\link{quantify_complexity}},
-#'   \code{\link{quantify_contrast}},
-#'   \code{\link{quantify_typicality}}
-quantify_self_similarity <- function(img, full = FALSE, logplot = FALSE){
+#' @seealso \code{\link{img_read}}, \code{\link{img_contrast}},
+#'   \code{\link{img_complexity}}, \code{\link{img_simplicity}},
+#'   \code{\link{img_symmetry}}, \code{\link{img_typicality}},
+img_self_similarity <- function(img, full = FALSE, logplot = FALSE, raw=FALSE){
 
   # check input
-  .check_input(img, f_call = "self-similarity")
+  imgtype <- .check_input(img, f_call = "self-similarity")
   if (!is.logical(full)) {
     warning(paste0("full = '", full, "' is not a logical value (TRUE/FALSE). Automatically set to FALSE ..."), call. = FALSE)
     full <- FALSE
@@ -110,7 +114,79 @@ quantify_self_similarity <- function(img, full = FALSE, logplot = FALSE){
     warning(paste0("logplot = '", logplot, "' is not a logical value (TRUE/FALSE). Skipping log-log plot ..."), call. = FALSE)
     logplot <- FALSE
   }
+  if (!is.logical(raw)) {
+    warning(paste0("raw = '", logplot, "' is not a logical value (TRUE/FALSE). Automatically set to FALSE ..."), call. = FALSE)
+    raw <- FALSE
+  }
 
+  # compute self-similarity
+  if (imgtype == "rgb") {
+    # split image into channels
+    redChannel <- img[, , 1]
+    greenChannel <- img[, , 2]
+    blueChannel <- img[, , 3]
+    #
+    outR <- .selfsim(redChannel, full, raw)
+    outG <- .selfsim(greenChannel, full, raw)
+    outB <- .selfsim(blueChannel, full, raw)
+
+    out <- 0.2989 * outR$self_sim + 0.5870 * outG$self_sim + 0.1140 * outB$self_sim
+  } else {
+    outGray <- .selfsim(img, full, raw)
+    out <- outGray$self_sim
+  }
+
+  # plot
+  if (logplot) {
+    # currently only supported for grayscale images
+    if (imgtype == "gray") {
+      xvals <- outGray$xvals
+      yvals <- outGray$yvals
+      if (requireNamespace("ggplot2", quietly = TRUE) & requireNamespace("scales", quietly = TRUE)) {
+        g <- ggplot2::ggplot(data = data.frame(xvals, yvals), ggplot2::aes(xvals, yvals)) +
+          ggplot2::geom_line() +
+          ggplot2::geom_smooth(method = lm, se = FALSE) +
+          ggplot2::scale_x_log10(
+            breaks = scales::trans_breaks("log10", function(x) 10^x),
+            labels = scales::trans_format("log10", scales::math_format(10^.x))
+          ) +
+          ggplot2::scale_y_log10(
+            breaks = scales::trans_breaks("log10", function(x) 10^x),
+            labels = scales::trans_format("log10", scales::math_format(10^.x))
+          ) + ggplot2::annotation_logticks() +
+          ggplot2::labs(x = "Spatial frequency (cycles/image)", y = "Energy") +
+          ggplot2::theme_bw()
+        suppressWarnings(print(g))
+      } else {
+        plot(xvals, yvals, log = "xy",
+             type = "l",
+             xlab = "Spatial frequency (cycles/image)",
+             ylab = "Energy")
+      }
+    } else warning("Plot option currently only supports grayscale images. No plot is shown.", call. = FALSE)
+  }
+
+  # return self-similarity
+  return(out)
+}
+
+
+#' .selfsim
+#'
+#' Returns the self-similarity of an image matrix as the degree to which the slope of the log-log power spectrum falls with power according to the value of 2.
+#'
+#' @param img A matrix of numeric values or integer values, preferably
+#'   by square size.
+#' @param full logical. Should the full frequency range be used for
+#'   interpolation?
+#' @param logplot logical. Should the log-log power spectrum of the image be
+#'   plotted?
+#' @param raw logical. Should the raw value of the regression slope be returned?
+#'
+#'
+#' @return a numeric value (self-similarity)
+#' @keywords internal
+.selfsim <- function(img, full, raw){
   if (min(dim(img)) < 22) {
     stop(paste0("Image has to be at least 22 pixels in each dimension. Input image has ",
                 dim(img)[2], " (width) x ", dim(img)[1], " (height)."),
@@ -122,14 +198,14 @@ quantify_self_similarity <- function(img, full = FALSE, logplot = FALSE){
   # check for squared matrix
   if (xs != ys) {
     if (requireNamespace("OpenImageR", quietly = TRUE)) {
-    img <- OpenImageR::resizeImage(img, width = min(xs, ys),
-                                   height = min(xs, ys),
-                                   method = "bilinear")
-    xs <- dim(img)[1]
-    ys <- dim(img)[2]
+      img <- OpenImageR::resizeImage(img, width = min(xs, ys),
+                                     height = min(xs, ys),
+                                     method = "bilinear")
+      xs <- dim(img)[1]
+      ys <- dim(img)[2]
 
-    warning("The input image was not squared. Rescaling to a squared matrix was performed.",
-         call. = FALSE)
+      # warning("The input image was not squared. Rescaling to a squared matrix was performed.",
+      #        call. = FALSE)
     } else {
       stop("Package 'OpenImageR' is required but not installed on your system.", call. = FALSE)
     }
@@ -185,35 +261,13 @@ quantify_self_similarity <- function(img, full = FALSE, logplot = FALSE){
   slope <- unname(coefficients(lm(Yt ~ Xt))[2])
   # sprintf("%.4f",slope)
 
-  if (logplot) {
-    xvals <- spat_freq
-    yvals <- power_spec
-    if (requireNamespace("ggplot2", quietly = TRUE) & requireNamespace("scales", quietly = TRUE)) {
-      g <- ggplot2::ggplot(data = data.frame(xvals, yvals), ggplot2::aes(xvals, yvals)) +
-        ggplot2::geom_line() +
-        ggplot2::geom_smooth(method = lm, se = FALSE) +
-        ggplot2::scale_x_log10(
-          breaks = scales::trans_breaks("log10", function(x) 10^x),
-          labels = scales::trans_format("log10", scales::math_format(10^.x))
-        ) +
-        ggplot2::scale_y_log10(
-          breaks = scales::trans_breaks("log10", function(x) 10^x),
-          labels = scales::trans_format("log10", scales::math_format(10^.x))
-        ) + ggplot2::annotation_logticks() +
-        ggplot2::labs(x = "Spatial frequency (cycles/image)", y = "Energy") +
-        ggplot2::theme_bw()
-      print(g)
-    } else {
-      plot(xvals, yvals, log = "xy",
-           type = "l",
-           xlab = "Spatial frequency (cycles/image)",
-           ylab = "Energy")
-    }
+  # self-similarity is the degree to which slope is -2
+  if (raw == TRUE) {
+    self_sim <- slope
+  } else {
+    self_sim <- abs(slope + 2)*(-1)
   }
 
-  # self-similarity is the degree to which slope is -2
-  self_sim <- abs(slope + 2)*(-1)
-
   # return results
-  return(self_sim)
+  return(list(self_sim = self_sim, xvals=Xt, yvals=Yt))
 }
