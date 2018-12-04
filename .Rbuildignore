@@ -1,6 +1,4 @@
+^test\.R$
+^imagefluency\.Rproj$
 ^.*\.Rproj$       # Automatically added by RStudio,
 ^\.Rproj\.user$   # used for temporary files.
-test.R
-rquantae.Rproj
-^data-raw$
-^img$

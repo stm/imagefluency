@@ -1,4 +1,4 @@
 library(testthat)
-library(rquantae)
+library(imagefluency)
 
-test_check("rquantae")
+test_check("imagefluency")

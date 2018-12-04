@@ -11,12 +11,12 @@ Description: A package for image fluency scores in R. Helps to get scores for
     symmetry, and typicality.
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
-LazyData: true
 URL: https://github.com/stm/imagefluency
 BugReports: https://github.com/stm/imagefluency/issues
 Depends:
     R (>= 3.2.3)
 Imports:
+    R.utils,
     readbitmap,
     pracma,
     quadprog,
@@ -26,13 +26,13 @@ Suggests:
     grid,
     ggplot2,
     scales,
+    shiny,
     testthat
 RoxygenNote: 6.1.1
 Collate: 
-    'complexity.R'
     'utils.R'
+    'complexity.R'
     'contrast.R'
-    'data.R'
     'imagefluency-package.R'
     'imagefluencyApp.R'
     'self-similarity.R'
