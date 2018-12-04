@@ -21,7 +21,7 @@ run_imagefluency <- function() {
     stop("Could not find shiny app directory. Try re-installing `imagefluency`.", call. = FALSE)
   }
 
-  if (!requireNamespace("shiny", quietly = TRUE)) {
+  if (requireNamespace("shiny", quietly = TRUE)) {
     shiny::runApp(appDir, display.mode = "normal")
   } else {
     stop("Package 'shiny' is required but not installed on your system.", call. = FALSE)
