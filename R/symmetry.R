@@ -209,7 +209,6 @@ img_symmetry <- function(img, vertical = TRUE, horizontal = TRUE, ...) {
 #' @param img A matrix of numeric values or integer values.
 #'
 #' @return a numeric value between 0 and 1
-#' @importFrom stats sd cor
 #' @keywords internal
 .sym_mirror <- function(img) {
   ## -------------------------------
@@ -236,17 +235,17 @@ img_symmetry <- function(img, vertical = TRUE, horizontal = TRUE, ...) {
   pixR <- as.vector(stimR)
 
   # check whether sd in one of the halves is zero
-  if (sd(pixL) == 0) {
+  if (stats::sd(pixL) == 0) {
     stop("No variation in left image half. Computation not possible.", call. = FALSE)
     # return(NA)
   }
-  if (sd(pixR) == 0) {
+  if (stats::sd(pixR) == 0) {
     stop("No variation in right image half. Computation not possible.", call. = FALSE)
     # return(NA)
   }
 
   # correlation of image halves
-  corrLR <- cor(pixL, pixR)
+  corrLR <- stats::cor(pixL, pixR)
 
   # final symmetry: vertical (absolute correlation)
   return(abs(corrLR))

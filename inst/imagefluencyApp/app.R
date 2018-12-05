@@ -1,20 +1,20 @@
-#' @include utils.R
+#' @include utils.R complexity.R contrast.R self-similarity.R simplicity.R symmetry.R typicality.R
 NULL
 
 # default (demo) image
 defaultimage <- system.file("imagefluencyApp", "www", "rails.jpg", package = "imagefluency")
 
-shinyApp(
+shiny::shinyApp(
 
   # Define UI
-  ui = fluidPage(title="Image fluency",
+  ui = shiny::fluidPage(title="Image fluency",
 
                   # Application title
-                  h4("Image fluency"),
+                  shiny::h4("Image fluency"),
 
                   # Sidebar with a slider input for number of bins
-                  sidebarLayout(
-                    sidebarPanel(
+                  shiny::sidebarLayout(
+                    shiny::sidebarPanel(
                       # # see https://stackoverflow.com/a/22475216
                       # tags$head(tags$style(type="text/css", "
                       #                      #loadmessage {
@@ -61,13 +61,13 @@ shinyApp(
                       #   }
                       # "))),
 
-                      fileInput(inputId = "file",
+                      shiny::fileInput(inputId = "file",
                                 label = "Choose own image",
                                 multiple = FALSE,
                                 accept = c("image/png", "image/jpeg", "image/jpg", "image/bmp", "image/tiff")
 
                       ),
-                      checkboxGroupInput(inputId = "statistic",
+                      shiny::checkboxGroupInput(inputId = "statistic",
                                          label = "Fluency statistic",
                                          choices = c("Contrast" = "contr",
                                                      "Self-similarity" = "selfsim",
@@ -76,30 +76,30 @@ shinyApp(
                                          )
 
                       ),
-                      tags$small(span("(Typicality not implemented yet)", style="color:gray")),
-                      hr(),
-                      actionButton(inputId = "calcfluency", label = "Calculate"),
-                      br(),
-                      tags$small("(might take a while)")
+                      shiny::tags$small(shiny::span("(Typicality not implemented yet)", style="color:gray")),
+                      shiny::hr(),
+                      shiny::actionButton(inputId = "calcfluency", label = "Calculate"),
+                      shiny::br(),
+                      shiny::tags$small("(might take a while)")
                     ),
 
                     # Show a plot of the generated distribution
-                    mainPanel(
+                    shiny::mainPanel(
                       # tags$style(type="text/css", "img{display: block; margin-left: auto; margin-right: auto;}"),
-                      tags$style(type="text/css", "img{max-width: 100%;}"),
-                      tableOutput(outputId = "imgfluency"),
-                      tags$small(span(textOutput(outputId = "demo"), style="color:gray")),
+                      shiny::tags$style(type="text/css", "img{max-width: 100%;}"),
+                      shiny::tableOutput(outputId = "imgfluency"),
+                      shiny::tags$small(shiny::span(shiny::textOutput(outputId = "demo"), style="color:gray")),
                       imageOutput(outputId = "img")
                     )
                   ),
-                  hr(),
-                  div(style="text-align:center; color:gray", tags$small("(c) 2018 Stefan Mayer (Goethe University Frankfurt)"))
+                  shiny::hr(),
+                  shiny::div(style="text-align:center; color:gray", shiny::tags$small("(c) 2018 Stefan Mayer (Goethe University Frankfurt)"))
   ),
 
   server = function(input, output, session) {
 
     # get image
-    imagepath <- reactive({
+    imagepath <- shiny::reactive({
       ## require that something was uploaded
       # req(input$file)
 
@@ -111,20 +111,20 @@ shinyApp(
     })
 
     # displayimage
-    output$img <- renderImage({
+    output$img <- shiny::renderImage({
       list(src = imagepath(), width = paste0(input$width,"%"))
     },deleteFile = FALSE)
 
     # inform about demo image
-    output$demo <- renderText({
+    output$demo <- shiny::renderText({
       if(is.null(input$file)) "(Demo image)"
     })
 
 
-    calc <- reactiveValues(contr = FALSE, selfsim = FALSE, simpl = FALSE, sym = FALSE)
-    flu <- reactiveValues(contr = NA, selfsim = NA, simpl = NA, sym = NA)
+    calc <- shiny::reactiveValues(contr = FALSE, selfsim = FALSE, simpl = FALSE, sym = FALSE)
+    flu <- shiny::reactiveValues(contr = NA, selfsim = NA, simpl = NA, sym = NA)
 
-    observeEvent(input$calcfluency,{
+    shiny::observeEvent(input$calcfluency,{
       # read image
       img <- img_read(imagepath())
 
@@ -143,14 +143,14 @@ shinyApp(
         # do calculation only if turned on
         if ("contr" %in% input$statistic) {
           # print("calculating contrast")
-          showModal(modalDialog("Calculating contrast", footer=NULL))
+          shiny::showModal(shiny::modalDialog("Calculating contrast", footer=NULL))
           i_contr <- tryCatch(img_contrast(img), error = function(err) err)
           if (inherits(i_contr, "error")) {
             flu$contr <- "computation not possible"
           } else {
             flu$contr <- sprintf("%.3f", i_contr)
           }
-          removeModal()
+          shiny::removeModal()
         } else {flu$contr <- NA}
       }
 
@@ -159,14 +159,14 @@ shinyApp(
         calc$selfsim <- is.selfsim
         if ("selfsim" %in% input$statistic) {
           # print("calculating selfsim")
-          showModal(modalDialog("Calculating self-similarity", footer=NULL))
+          shiny::showModal(shiny::modalDialog("Calculating self-similarity", footer=NULL))
           i_selfsim <- tryCatch(suppressWarnings(as.numeric(img_self_similarity(img))), error = function(err) err)
           if (inherits(i_selfsim, "error")) {
             flu$selfsim <- "computation not possible"
           } else {
             flu$selfsim <- sprintf("%.3f", i_selfsim)
           }
-          removeModal()
+          shiny::removeModal()
         } else {flu$selfsim <- NA}
       }
 
@@ -175,14 +175,14 @@ shinyApp(
         calc$simpl <- is.simpl
         if ("simpl" %in% input$statistic) {
           # print("calculating simplicity")
-          showModal(modalDialog("Calculating simplicity", footer=NULL))
+          shiny::showModal(shiny::modalDialog("Calculating simplicity", footer=NULL))
           i_simpl <- tryCatch(img_simplicity(img), error = function(err) err)
           if (inherits(i_simpl, "error")) {
             flu$simpl <- "computation not possible"
           } else {
             flu$simpl <- sprintf("%.3f", i_simpl)
           }
-          removeModal()
+          shiny::removeModal()
         } else {flu$simpl <- NA}
       }
 
@@ -191,21 +191,21 @@ shinyApp(
         calc$sym <- is.sym
         if ("sym" %in% input$statistic) {
           # print("calculating symmetry")
-          showModal(modalDialog("Calculating symmetry", footer=NULL))
+          shiny::showModal(shiny::modalDialog("Calculating symmetry", footer=NULL))
           i_sym <- tryCatch(img_symmetry(img, horizontal = FALSE), error = function(err) err)
           if (inherits(i_sym, "error")) {
             flu$sym <- "computation not possible"
           } else {
             flu$sym <- sprintf("%.3f", i_sym)
           }
-          removeModal()
+          shiny::removeModal()
         } else {flu$sym <- NA}
       }
     })
 
     # reset everything if a new file is uploaded
-    observeEvent(input$file, {
-      updateCheckboxGroupInput(session, inputId = "statistic", selected = "")
+    shiny::observeEvent(input$file, {
+      shiny::updateCheckboxGroupInput(session, inputId = "statistic", selected = "")
       # checkbox states
       calc$contr <- FALSE
       calc$selfsim <- FALSE
@@ -219,7 +219,7 @@ shinyApp(
     })
 
 
-    output$imgfluency <- renderTable({
+    output$imgfluency <- shiny::renderTable({
       # display nothing if nothing is calculated yet
       #
       # req(input$calcfluency)

@@ -69,7 +69,6 @@ NULL
 #' @seealso \code{\link{img_read}}, \code{\link{img_contrast}},
 #'    \code{\link{img_complexity}}, \code{\link{img_self_similarity}}
 #'   \code{\link{img_simplicity}}, \code{\link{img_symmetry}}
-#' @importFrom stats cor
 img_typicality <- function(imglist, rescale = NULL){
 
   # check input
@@ -179,7 +178,7 @@ img_typicality <- function(imglist, rescale = NULL){
 .typ <- function(imglist){
   imglist <- matrix(unlist(imglist), ncol = length(imglist), byrow = FALSE)
   img_mean <- rowMeans(imglist)
-  output <- cor(imglist, img_mean)
+  output <- stats::cor(imglist, img_mean)
   rownames(output) <- paste0("img", 1:nrow(output))
   return(typicality = output)
 }

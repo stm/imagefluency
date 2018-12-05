@@ -47,7 +47,6 @@ NULL
 #'   \code{\link{img_symmetry}}, \code{\link{img_typicality}},
 #'
 #'
-#' @importFrom stats sd
 img_contrast <- function(img){
 
   # check input
@@ -98,7 +97,7 @@ img_contrast <- function(img){
   }
 
   # RMS via built-in sd function
-  return(sd(pixAll))
+  return(stats::sd(pixAll))
 
   # # alternative 1: via normalization
   # pixAllMean <- pixAll - mean(pixAll)

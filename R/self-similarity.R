@@ -63,9 +63,6 @@ NULL
 #'   \url{http://www.mathworks.com/matlabcentral/newsreader/view_original/799264}
 #'
 #'
-#' @importFrom stats coefficients fft lm
-#' @importFrom graphics plot
-#'
 #' @references Mayer, S. & Landwehr, J, R. (2018). Quantifying Visual Aesthetics
 #'   Based on Processing Fluency Theory: Four Algorithmic Measures for
 #'   Antecedents of Aesthetic Preferences. \emph{Psychology of Aesthetics,
@@ -145,7 +142,7 @@ img_self_similarity <- function(img, full = FALSE, logplot = FALSE, raw=FALSE){
       if (requireNamespace("ggplot2", quietly = TRUE) & requireNamespace("scales", quietly = TRUE)) {
         g <- ggplot2::ggplot(data = data.frame(xvals, yvals), ggplot2::aes(xvals, yvals)) +
           ggplot2::geom_line() +
-          ggplot2::geom_smooth(method = lm, se = FALSE) +
+          ggplot2::geom_smooth(method = stats::lm, se = FALSE) +
           ggplot2::scale_x_log10(
             breaks = scales::trans_breaks("log10", function(x) 10^x),
             labels = scales::trans_format("log10", scales::math_format(10^.x))
@@ -158,7 +155,7 @@ img_self_similarity <- function(img, full = FALSE, logplot = FALSE, raw=FALSE){
           ggplot2::theme_bw()
         suppressWarnings(print(g))
       } else {
-        plot(xvals, yvals, log = "xy",
+        graphics::plot(xvals, yvals, log = "xy",
              type = "l",
              xlab = "Spatial frequency (cycles/image)",
              ylab = "Energy")
@@ -212,7 +209,7 @@ img_self_similarity <- function(img, full = FALSE, logplot = FALSE, raw=FALSE){
   }
 
   # apply fft2
-  img_fft <- fft(img)
+  img_fft <- stats::fft(img)
   # shift center
   img_fft_shifted <- pracma::circshift(img_fft, floor(dim(img_fft)/2))
   img_fft_shifted <- abs(img_fft_shifted)^2
@@ -258,7 +255,7 @@ img_self_similarity <- function(img, full = FALSE, logplot = FALSE, raw=FALSE){
   Yt <- log(power_spec[seq(lmrange[1], lmrange[2])])
 
   # calculate slope of regression
-  slope <- unname(coefficients(lm(Yt ~ Xt))[2])
+  slope <- unname(stats::coefficients(stats::lm(Yt ~ Xt))[2])
   # sprintf("%.4f",slope)
 
   # self-similarity is the degree to which slope is -2

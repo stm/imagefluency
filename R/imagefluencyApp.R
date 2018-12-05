@@ -8,7 +8,6 @@ NULL
 #'
 #' @export
 #'
-#' @import shiny
 #'
 #' @examples
 #' ## Only run this example in interactive R sessions
