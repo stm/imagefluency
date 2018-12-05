@@ -25,6 +25,7 @@ test_that("img_typicality checks whether parameter rescale is numeric", {
 
 
 test_that("img_typicality gives results you'd expect", {
+  set.seed(2787)
   imgs <- replicate(3, matrix(runif(100, min = 0, max = 255), nrow = 10, ncol = 10),
                     simplify = FALSE)
   imgs[[2]] <- -imgs[[1]]

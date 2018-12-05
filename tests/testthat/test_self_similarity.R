@@ -8,6 +8,7 @@ test_that("img_self_similarity only handles numeric matrices", {
 })
 
 test_that("img_self_similarity checks whether optional parameter are logical", {
+  set.seed(2787)
   img <- matrix(runif(100*100, min = 0, max = 255), nrow = 100, ncol = 100)
   expect_warning(img_self_similarity(img, full = "yes"),
                  "full = 'yes' is not a logical value \\(TRUE\\/FALSE\\)\\. Automatically set to FALSE \\.\\.\\.")
@@ -23,6 +24,7 @@ test_that("img_self_similarity checks whether image is at least 22 pixels in eac
 })
 
 test_that("img_self_similarity gives results you'd expect", {
+  set.seed(2787)
   # result must be 0 or less than zero
   img <- matrix(runif(50*50, min = 0, max = 255), nrow = 50, ncol = 50)
   expect_lte(img_self_similarity(img), 0)

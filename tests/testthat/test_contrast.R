@@ -20,6 +20,7 @@ test_that("img_contrast warns if input contains values > 255", {
 })
 
 test_that("img_contrast gives results you'd expect", {
+  set.seed(2787)
   img <- matrix(0, nrow = 100, ncol = 100)
   expect_equal(img_contrast(img), expected = 0)
 
