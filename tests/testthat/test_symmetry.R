@@ -1,17 +1,17 @@
-context("quantify_symmetry")
+context("img_symmetry")
 
-test_that("quantify_symmetry detects perfect symmetry", {
+test_that("img_symmetry detects perfect symmetry", {
   # construct sample image
   # img1: perfectly symmetric image (both horiz. & vert.)
   img1 <- matrix(0, nrow = 100, ncol = 100)
   img1[41:60, 41:60] <- 1
 
   # img perfectly symmetric
-  expect_equal(quantify_symmetry(img1)[1], c(vertical = 1))
-  expect_equal(quantify_symmetry(img1)[2], c(horizontal = 1))
+  expect_equal(img_symmetry(img1)[1], c(vertical = 1))
+  expect_equal(img_symmetry(img1)[2], c(horizontal = 1))
 })
 
-test_that("quantify_symmetry detects horizontal symmetry", {
+test_that("img_symmetry detects horizontal symmetry", {
   # construct sample image
   # img2: horizontally symmetric image
   img2 <- matrix(0, nrow = 50, ncol = 50)
@@ -19,11 +19,11 @@ test_that("quantify_symmetry detects horizontal symmetry", {
   img2[11:40, 31:40] <- 1
 
   # img perfectly horizontally symmetric
-  expect_lt(quantify_symmetry(img2)[1], c(vertical = 1))
-  expect_identical(quantify_symmetry(img2)[2], c(horizontal = 1))
+  expect_lt(img_symmetry(img2)[1], c(vertical = 1))
+  expect_identical(img_symmetry(img2)[2], c(horizontal = 1))
 })
 
-test_that("quantify_symmetry detects vertical symmetry", {
+test_that("img_symmetry detects vertical symmetry", {
   # construct sample image
   # img3: vertically symmetric image
   img3 <- matrix(0, nrow = 50, ncol = 50)
@@ -31,11 +31,11 @@ test_that("quantify_symmetry detects vertical symmetry", {
   img3[31:40, 11:40] <- 1
 
   # img perfectly vertically symmetric
-  expect_identical(quantify_symmetry(img3)[1], c(vertical = 1))
-  expect_lt(quantify_symmetry(img3)[2], c(horizontal = 1))
+  expect_identical(img_symmetry(img3)[1], c(vertical = 1))
+  expect_lt(img_symmetry(img3)[2], c(horizontal = 1))
 })
 
-test_that("quantify_symmetry detects symmetry for inverted image", {
+test_that("img_symmetry detects symmetry for inverted image", {
   # img1
   img1 <- matrix(0, nrow = 100, ncol = 100)
   img1[41:60, 41:60] <- 1
@@ -43,12 +43,12 @@ test_that("quantify_symmetry detects symmetry for inverted image", {
     # img2: inverse of image 1 (should have the same symmetry)
   img2 <- 1 - img1
 
-  expect_equal(quantify_symmetry(img1), quantify_symmetry(img2))
+  expect_equal(img_symmetry(img1), img_symmetry(img2))
 })
 
-test_that("quantify_symmetry only handles numeric matrices", {
-  expect_error(quantify_symmetry(matrix("foo", nrow = 10, ncol = 10)),
-               "Input img has to be a matrix of \\*numeric\\* or \\*integer\\* values")
-  expect_error(quantify_symmetry(1:10),
-               "Input img has to be a \\*matrix\\* of numeric or integer values")
+test_that("img_symmetry only handles numeric matrices", {
+  expect_error(img_symmetry(matrix("foo", nrow = 10, ncol = 10)),
+               "Input img has to be a matrix or array of \\*numeric\\* or \\*integer\\* values")
+  expect_error(img_symmetry(1:10),
+               "Invalid input \\(should be a matrix or a 3-dimensional array of numeric or integer values\\)")
 })

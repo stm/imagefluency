@@ -65,3 +65,14 @@ test_that("rotate90 correctly rotates clockwise and counterclockwise", {
     , dim = c(2, 2, 3)))
 })
 
+context("img_read")
+
+test_that("img_read loads demo image without error", {
+  expect_error({
+    path <- system.file("example_images", "rails.jpg", package = "imagefluency")
+    img_read(path)
+  }, NA)
+})
+
+
+
