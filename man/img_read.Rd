@@ -28,7 +28,8 @@ For details, see the \code{\link[readbitmap]{read.bitmap}}
   documentation.
 }
 \examples{
-todo
+## Example image with high vertical symmetry: rails
+rails <- img_read(system.file("example_images", "rails.jpg", package = "imagefluency"))
 }
 \seealso{
 \code{\link[readbitmap]{read.bitmap}}, \code{\link[bmp]{read.bmp}},

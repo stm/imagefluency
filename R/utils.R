@@ -23,7 +23,8 @@
 #'   \code{\link[tiff]{readTIFF}}
 #'
 #' @examples
-#' todo
+#' ## Example image with high vertical symmetry: rails
+#' rails <- img_read(system.file("example_images", "rails.jpg", package = "imagefluency"))
 img_read <- function(path, ...){
   readbitmap::read.bitmap(f = path, ...)
 }
@@ -179,7 +180,6 @@ rotate90 <- function(img, direction = "positive") {
 
 
 #' @keywords internal
-#' @importFrom stats runif
 .rand_string <- function(n = 6){
-  paste0(letters[round(runif(n, min = 1, max = 26))], collapse = "")
+  paste0(letters[round(stats::runif(n, min = 1, max = 26))], collapse = "")
 }
