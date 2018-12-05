@@ -1,3 +1,4 @@
+^shinyapps_io$
 ^test\.R$
 ^imagefluency\.Rproj$
 ^.*\.Rproj$       # Automatically added by RStudio,

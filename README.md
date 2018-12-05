@@ -2,7 +2,7 @@
 
 **imagefluency** is an simple R package for image fluency scores. The
 package allows to get scores for several basic aesthetic principles that
-facilitate fluent cognitive processing of images.
+facilitate fluent cognitive processing of images. If you want to try it out before installing, you can find an interactive Shiny app [here](https://mayer.shinyapps.io/imagefluency/) (alpha version).
     
 The main functions are:
 
@@ -21,7 +21,7 @@ Other helpful functions are:
 
 * `img_read()`  wrapper function to read images using `read.bitmap()` from the
   [readbitmap](https://github.com/jefferis/readbitmap) package
-* `run_imagefluency()`  to launch a Shiny app for an interactive demo of the
+* `run_imagefluency()`  to launch a Shiny app locally on your computer for an interactive demo of the
    main functions
 * `rgb2gray()`  convert images from RGB into grayscale
 
