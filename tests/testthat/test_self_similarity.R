@@ -32,6 +32,6 @@ test_that("img_self_similarity gives results you'd expect", {
   #
   img <- matrix(0, nrow = 100, ncol = 100)
   img[, 1:50] <- 255
-  expect_equal(img_self_similarity(img), expected = -1.047962, tolerance = .00001, scale = 1)
+  expect_equal(img_self_similarity(img), expected = -1.05, tolerance = .025, scale = 1)
 })
 
