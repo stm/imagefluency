@@ -1,7 +1,6 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
 language: R
-sudo: false
 cache: packages
 
 r:
@@ -9,13 +8,12 @@ r:
   - release
 
 os:
-  - linux
   - osx
-    brew_packages: imagemagick
+  - linux
 
 addons:
-   apt:
-     packages:
+  apt:
+    packages:
       - libmagick++-dev
 
 notifications:
