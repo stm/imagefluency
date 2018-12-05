@@ -2,6 +2,7 @@
 
 language: R
 cache: packages
+sudo: false
 
 r:
   - oldrel
@@ -10,6 +11,7 @@ r:
 os:
   - osx
   - linux
+  - windows
 
 addons:
   apt:
