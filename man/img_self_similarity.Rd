@@ -35,12 +35,12 @@ The function takes a (square) array or matrix of numeric or integer
   values representing an image as input and returns the self-similarity of
   the image. Self-similarity is computed via the slope of the log-log power
   spectrum using OLS. A slope near \code{-2} indicates fractal-like
-  properties (see Redies et al., 2007; Simoncell & Olshausen, 2001). Thus,
+  properties (see Redies et al., 2007; Simoncelli & Olshausen, 2001). Thus,
   value for self-similarity that is return by the function calculated as
   \code{self-similarity = abs(slope + 2) * (-1)}. That is, the measure
   reaches its maximum value of 0 for a slope of -2, and any deviation from -2
   results in negative values that are more negative the higher the deviation
-  from -2. For color images, the weighed average between each color channel's
+  from -2. For color images, the weighted average between each color channel's
   values is computed (cf. Mayer & Landwehr 2018).
 
   Per default, only the frequency range betwen 10 and 256 cycles per image is
@@ -60,9 +60,7 @@ The function takes a (square) array or matrix of numeric or integer
   is computed.
 }
 \note{
-The function inspired by Matlab's sfPlot (by Diederick C. Niehorster)
-  see
-  \url{http://www.mathworks.com/matlabcentral/newsreader/view_original/799264}
+The function inspired by Matlab's sfPlot (by Diederick C. Niehorster).
 }
 \examples{
 # Example image with high self-similarity: romanesco

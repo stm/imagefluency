@@ -4,7 +4,7 @@
 \alias{.selfsim}
 \title{.selfsim}
 \usage{
-.selfsim(img, full, raw)
+.selfsim(img, full, raw, logplot)
 }
 \arguments{
 \item{img}{A matrix of numeric values or integer values, preferably

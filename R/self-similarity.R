@@ -18,12 +18,12 @@ NULL
 #'   values representing an image as input and returns the self-similarity of
 #'   the image. Self-similarity is computed via the slope of the log-log power
 #'   spectrum using OLS. A slope near \code{-2} indicates fractal-like
-#'   properties (see Redies et al., 2007; Simoncell & Olshausen, 2001). Thus,
+#'   properties (see Redies et al., 2007; Simoncelli & Olshausen, 2001). Thus,
 #'   value for self-similarity that is return by the function calculated as
 #'   \code{self-similarity = abs(slope + 2) * (-1)}. That is, the measure
 #'   reaches its maximum value of 0 for a slope of -2, and any deviation from -2
 #'   results in negative values that are more negative the higher the deviation
-#'   from -2. For color images, the weighed average between each color channel's
+#'   from -2. For color images, the weighted average between each color channel's
 #'   values is computed (cf. Mayer & Landwehr 2018).
 #'
 #'   Per default, only the frequency range betwen 10 and 256 cycles per image is
@@ -58,9 +58,7 @@ NULL
 #' @return a numeric value (self-similarity)
 #' @export
 #'
-#' @note The function inspired by Matlab's sfPlot (by Diederick C. Niehorster)
-#'   see
-#'   \url{http://www.mathworks.com/matlabcentral/newsreader/view_original/799264}
+#' @note The function inspired by Matlab's sfPlot (by Diederick C. Niehorster).
 #'
 #'
 #' @references Mayer, S. & Landwehr, J, R. (2018). Quantifying Visual Aesthetics
@@ -123,13 +121,13 @@ img_self_similarity <- function(img, full = FALSE, logplot = FALSE, raw=FALSE){
     greenChannel <- img[, , 2]
     blueChannel <- img[, , 3]
     #
-    outR <- .selfsim(redChannel, full, raw)
-    outG <- .selfsim(greenChannel, full, raw)
-    outB <- .selfsim(blueChannel, full, raw)
+    outR <- .selfsim(redChannel, full, raw, logplot)
+    outG <- .selfsim(greenChannel, full, raw, logplot)
+    outB <- .selfsim(blueChannel, full, raw, logplot)
 
     out <- 0.2989 * outR$self_sim + 0.5870 * outG$self_sim + 0.1140 * outB$self_sim
   } else {
-    outGray <- .selfsim(img, full, raw)
+    outGray <- .selfsim(img, full, raw, logplot)
     out <- outGray$self_sim
   }
 
@@ -139,10 +137,13 @@ img_self_similarity <- function(img, full = FALSE, logplot = FALSE, raw=FALSE){
     if (imgtype == "gray") {
       xvals <- outGray$xvals
       yvals <- outGray$yvals
+      coord1 <- outGray$coord1
+      coord2 <- outGray$coord2
       if (requireNamespace("ggplot2", quietly = TRUE) & requireNamespace("scales", quietly = TRUE)) {
         g <- ggplot2::ggplot(data = data.frame(xvals, yvals), ggplot2::aes(xvals, yvals)) +
           ggplot2::geom_line() +
-          ggplot2::geom_smooth(method = stats::lm, se = FALSE) +
+          # ggplot2::geom_smooth(method = stats::lm, se = FALSE) +
+          ggplot2::geom_segment(ggplot2::aes(x=coord1[1], y=coord1[2], xend=coord2[1], yend=coord2[2]), color = "red") +
           ggplot2::scale_x_log10(
             breaks = scales::trans_breaks("log10", function(x) 10^x),
             labels = scales::trans_format("log10", scales::math_format(10^.x))
@@ -159,6 +160,7 @@ img_self_similarity <- function(img, full = FALSE, logplot = FALSE, raw=FALSE){
              type = "l",
              xlab = "Spatial frequency (cycles/image)",
              ylab = "Energy")
+        graphics::segments(x0=coord1[1], y0=coord1[2], x1=coord2[1], y1=coord2[2], col="red")
       }
     } else warning("Plot option currently only supports grayscale images. No plot is shown.", call. = FALSE)
   }
@@ -183,7 +185,7 @@ img_self_similarity <- function(img, full = FALSE, logplot = FALSE, raw=FALSE){
 #'
 #' @return a numeric value (self-similarity)
 #' @keywords internal
-.selfsim <- function(img, full, raw){
+.selfsim <- function(img, full, raw, logplot){
   if (min(dim(img)) < 22) {
     stop(paste0("Image has to be at least 22 pixels in each dimension. Input image has ",
                 dim(img)[2], " (width) x ", dim(img)[1], " (height)."),
@@ -195,8 +197,12 @@ img_self_similarity <- function(img, full = FALSE, logplot = FALSE, raw=FALSE){
   # check for squared matrix
   if (xs != ys) {
     if (requireNamespace("OpenImageR", quietly = TRUE)) {
-      img <- OpenImageR::resizeImage(img, width = min(xs, ys),
-                                     height = min(xs, ys),
+      square_dim <- min(xs, ys)
+      if (square_dim %% 2 == 1) { # odd size
+        square_dim <- square_dim - 1
+      }
+      img <- OpenImageR::resizeImage(img, width = square_dim,
+                                     height = square_dim,
                                      method = "bilinear")
       xs <- dim(img)[1]
       ys <- dim(img)[2]
@@ -251,12 +257,17 @@ img_self_similarity <- function(img, full = FALSE, logplot = FALSE, raw=FALSE){
   # overall possible frequencies (i.e., all frequencies)
   spat_freq <-  seq( 1, floor( min(dim(img)) / 2 ) )
 
-  Xt <- log(spat_freq[seq(lmrange[1], lmrange[2])])
-  Yt <- log(power_spec[seq(lmrange[1], lmrange[2])])
+  Xt <- spat_freq[seq(lmrange[1], lmrange[2])]
+  Xt_log <- log(Xt)
+  Yt <- power_spec[seq(lmrange[1], lmrange[2])]
+  Yt_log <- log(Yt)
 
   # calculate slope of regression
-  slope <- unname(stats::coefficients(stats::lm(Yt ~ Xt))[2])
+  regr <- stats::lm(Yt_log ~ Xt_log)
+  slope <- unname(stats::coefficients(regr)[2])
   # sprintf("%.4f",slope)
+  coord1 <- unname(c(lmrange[1], exp(stats::fitted(regr)[1])))
+  coord2 <- unname(c(lmrange[2], exp(utils::tail(stats::fitted(regr),1))))
 
   # self-similarity is the degree to which slope is -2
   if (raw == TRUE) {
@@ -266,5 +277,6 @@ img_self_similarity <- function(img, full = FALSE, logplot = FALSE, raw=FALSE){
   }
 
   # return results
-  return(list(self_sim = self_sim, xvals=Xt, yvals=Yt))
+  if(logplot) return(list(self_sim = self_sim, xvals=spat_freq, yvals=power_spec, coord1=coord1, coord2=coord2))
+  if(!logplot) return(list(self_sim = self_sim))
 }
