@@ -24,7 +24,7 @@ The function returns the RMS contrast of an image \code{img}. The
   automatically normalized if necessary (i.e., normalization into range [0,
   1]).
 
-  For color images, the weighed average between each color channel's values
+  For color images, the weighted average between each color channel's values
   is computed.
 }
 \examples{

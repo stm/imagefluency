@@ -15,7 +15,7 @@ NULL
 #'
 #'   The typicality score is computed as the correlation of a particular image
 #'   with the average representation of all images, i.e. the mean of all images.
-#'   For color images, the weighed average between each color channel's values
+#'   For color images, the weighted average between each color channel's values
 #'   is computed. If the images have different dimensions they are automatically
 #'   resized to the smallest height and width.
 #'

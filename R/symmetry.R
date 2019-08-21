@@ -27,7 +27,7 @@ NULL
 #'
 #'   For color images, the default is that first a maximal symmetry score (as
 #'   explained above) is obtained per color channel (parameter \code{per_channel
-#'   = TRUE}). Subsequently, a weighed average between each color channel's
+#'   = TRUE}). Subsequently, a weighted average between each color channel's
 #'   maximal score is computed as the image's overall symmetry. Advanced users
 #'   can reverse this order by setting \code{per_channel = FALSE}. This results
 #'   in first computing the weighted averages for each position of the mirror
