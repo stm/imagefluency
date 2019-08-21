@@ -110,10 +110,9 @@ rotate90 <- function(img, direction = "positive") {
     A <- t(A) # transpose matrix
     if (dir == "positive" | dir == "counterclockwise") {
       return(A[width:1, ]) # flip matrix rows
-    } else if (dir == "negative" | dir == "clockwise") {
+    }
+    if (dir == "negative" | dir == "clockwise") {
       return(A[, height:1]) # flip matrix rows
-    } else {
-      return(NA)
     }
   }
   #
