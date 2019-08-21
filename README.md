@@ -48,17 +48,19 @@ Use the following link to report bugs/issues: <https://github.com/stm/imagefluen
 ```r
 # visual contrast
 #
-# read image
-bike <- img_read(”bike.jpg”) # berries.jpg
+# example image file (from package): bike.jpg
+bike_location <- system.file("example_images", "bike.jpg", package = "imagefluency")
+# read image from file
+bike <- img_read(bike_location)
 # get contrast
 img_contrast(bike)
 
 # visual symmetry
 #
 # read image
-bridge <- img_read(”bridge.jpg”) # rails.jpg
-# get symmetry
-img_symmetry(bridge, horizontal = FALSE)
+rails <- img_read(system.file("example_images", "rails.jpg", package = "imagefluency"))
+# get only vertical symmetry
+img_symmetry(rails, horizontal = FALSE)
 ```
 
 See the functions' help files (e.g., `?img_symmetry` for more details.
