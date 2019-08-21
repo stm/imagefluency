@@ -2,9 +2,9 @@ Package: imagefluency
 Type: Package
 Title: Image Fluency Scores in R
 Version: 0.2.0
-Date: 2018-12-03
-Authors@R: person("Stefan", "Mayer", email = "stefan@mayer-de.com",
-    role = c("aut", "cre"))
+Date: 2019-08-19
+Authors@R: person(given = "Stefan", family = "Mayer", email = "stefan@mayer-de.com",
+    role = c("aut", "cre"), comment = c(ORCID = "0000-0003-0034-7090"))
 Description: A package for image fluency scores in R. Helps to get scores for
     several basic aesthetic principles that facilitate fluent cognitive
     processing of images: contrast, complexity / simplicity, self-similarity,

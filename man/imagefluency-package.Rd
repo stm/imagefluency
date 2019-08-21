@@ -57,7 +57,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Stefan Mayer \email{stefan@mayer-de.com}
+\strong{Maintainer}: Stefan Mayer \email{stefan@mayer-de.com} (0000-0003-0034-7090)
 
 }
 \keyword{internal}
