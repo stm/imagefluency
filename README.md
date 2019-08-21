@@ -23,11 +23,11 @@ The main functions are:
 
 Other helpful functions are:
 
-* `img_read()`  wrapper function to read images using `read.bitmap()` from the
+* `img_read()`  wrapper function to read images into R using `read.bitmap()` from the
   [readbitmap](https://github.com/jefferis/readbitmap) package
 * `run_imagefluency()`  to launch a Shiny app locally on your computer for an interactive demo of the
    main functions
-* `rgb2gray()`  convert images from RGB into grayscale
+* `rgb2gray()`  convert images from RGB into grayscale (might speed up computation)
 
 
 The main author is [Stefan Mayer](http://github.com/stm/).
@@ -42,6 +42,26 @@ if (!require("devtools")) install.packages("devtools")
 devtools::install_github('stm/imagefluency')
 ```
 Use the following link to report bugs/issues: <https://github.com/stm/imagefluency/issues>
+
+## Example usage
+
+```r
+# visual contrast
+#
+# read image
+bike <- img_read(”bike.jpg”) # berries.jpg
+# get contrast
+img_contrast(bike)
+
+# visual symmetry
+#
+# read image
+bridge <- img_read(”bridge.jpg”) # rails.jpg
+# get symmetry
+img_symmetry(bridge, horizontal = FALSE)
+```
+
+See the functions' help files (e.g., `?img_symmetry` for more details.
 
 ## Citation
 
