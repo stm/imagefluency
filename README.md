@@ -34,7 +34,7 @@ The main author is [Stefan Mayer](http://github.com/stm/).
 
 ## Installation
 
-To download the lastest version from Github use the `install_github` function of the `devtools` package.
+To download the latest version from Github use the `install_github` function of the `devtools` package.
 ```r
 # install devtools if necessary
 if (!require("devtools")) install.packages("devtools")
