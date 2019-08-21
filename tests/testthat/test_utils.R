@@ -75,4 +75,43 @@ test_that("img_read loads demo image without error", {
 })
 
 
+context(".check_input")
 
+test_that(".check_input gives results only for known function calls", {
+  img <- matrix(1:4, 2)
+  expect_error(
+    .check_input(img),
+    "You have to specify a function for the f_call argument\\."
+  )
+  expect_error(
+    .check_input(img, f_call = "foo"),
+    "unknown input to f_call argument"
+  )
+})
+
+
+
+test_that(".check_input returns error for non 3-dimensional arrays", {
+  img <- array(1:24, dim = c(2, 2, 3, 2))
+  expect_error(
+    .check_input(img, f_call = "contrast"),
+    "Invalid array \\(should be a 3-dimensional array of numeric or integer values\\)"
+  )
+})
+
+test_that(".check_input warns if presumed alpha channel is present", {
+  img <- array(1:16, dim = c(2, 2, 4))
+  expect_warning(
+    .check_input(img, f_call = "contrast"),
+    "Array with 4 dimensions, presumably with alpha channel\\. 4th dimension is ignored \\.\\.\\."
+  )
+})
+
+
+test_that(".check_input returns rgb for arrays", {
+  img <- array(c(matrix(1:4, 2), matrix(5:8, 2), matrix(9:12, 2)), dim = c(2, 2, 3))
+  expect_equal(
+    .check_input(img, f_call="contrast"),
+    "rgb"
+    )
+})
