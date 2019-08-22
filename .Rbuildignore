@@ -1,7 +1,8 @@
 ^\.travis\.yml$
 ^shinyapps_io$
 ^test\.R$
-^imagefluency\.Rproj$
+^imagefluency_devel\.Rproj$
 ^.*\.Rproj$       # Automatically added by RStudio,
 ^\.Rproj\.user$   # used for temporary files.
 ^cran-comments\.md$
+^CRAN-RELEASE$

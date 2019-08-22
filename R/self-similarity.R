@@ -31,8 +31,8 @@ NULL
 #'   parameter \code{full = TRUE}.
 #'
 #'   If \code{logplot} is set to \code{TRUE} then a log-log plot of the power
-#'   spectrum is performed. If the package \code{ggplot2} is installed the plot
-#'   includes the slope of the OLS regression. Note that this option is
+#'   spectrum is additionally shown. If the package \code{ggplot2} is installed
+#'   the plot includes the slope of the OLS regression. Note that this option is
 #'   currently implemented for grayscale images.
 #'
 #'   It is possible to get the raw regression slope (instead of the transformed
@@ -168,6 +168,9 @@ img_self_similarity <- function(img, full = FALSE, logplot = FALSE, raw=FALSE){
   # return self-similarity
   return(out)
 }
+
+# fix "no visible binding for global variable '.x'" NOTE (from scales package)
+if(getRversion() >= "2.15.1")  utils::globalVariables(c(".x"))
 
 
 #' .selfsim

@@ -48,8 +48,8 @@ The function takes a (square) array or matrix of numeric or integer
   parameter \code{full = TRUE}.
 
   If \code{logplot} is set to \code{TRUE} then a log-log plot of the power
-  spectrum is performed. If the package \code{ggplot2} is installed the plot
-  includes the slope of the OLS regression. Note that this option is
+  spectrum is additionally shown. If the package \code{ggplot2} is installed
+  the plot includes the slope of the OLS regression. Note that this option is
   currently implemented for grayscale images.
 
   It is possible to get the raw regression slope (instead of the transformed

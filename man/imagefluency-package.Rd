@@ -6,7 +6,7 @@
 \alias{imagefluency-package}
 \title{imagefluency: Image Fluency Scores in R}
 \description{
-A package for image fluency scores in R. Helps to get scores for
+Image statistics based on processing fluency. The functions provide scores for
     several basic aesthetic principles that facilitate fluent cognitive
     processing of images: contrast, complexity / simplicity, self-similarity,
     symmetry, and typicality.
