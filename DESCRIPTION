@@ -5,11 +5,11 @@ Version: 0.2.0
 Date: 2019-08-19
 Authors@R: person(given = "Stefan", family = "Mayer", email = "stefan@mayer-de.com",
     role = c("aut", "cre"), comment = c(ORCID = "0000-0003-0034-7090"))
-Description: A package for image fluency scores in R. Helps to get scores for
+Description: Image statistics based on processing fluency. The functions provide scores for
     several basic aesthetic principles that facilitate fluent cognitive
     processing of images: contrast, complexity / simplicity, self-similarity,
     symmetry, and typicality.
-License: GPL-3 + file LICENSE
+License: GPL-3
 Encoding: UTF-8
 URL: https://github.com/stm/imagefluency
 BugReports: https://github.com/stm/imagefluency/issues
