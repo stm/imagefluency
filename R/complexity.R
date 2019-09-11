@@ -5,8 +5,6 @@ NULL
 # see http://www.aaronschlegel.com/image-compression-principal-component-analysis/
 #
 # alternative: entropy as measure
-#
-# use R's native tempfile()
 
 #' Image complexity
 #'
@@ -34,19 +32,14 @@ NULL
 #'   redundancies equally, the function includes an optional \code{rotate}
 #'   parameter (default: \code{FALSE}). Setting this parameter to \code{TRUE}
 #'   has the following effects: first, the image is rotated by 90 degrees.
-#'   Second, the rotated image is written in the working directory and a
-#'   compressed version is created. Finally, the overall compressed image's file
-#'   size is computed as the minimum of the original image's file size and the
-#'   file size of the rotated image. All files that are created while the
-#'   function runs are automatically deleted once the complexity score is
-#'   calculated.
+#'   Second, a compressed version of the rotated image is created. Finally,
+#'   the overall compressed image's file size is computed as the minimum of
+#'   the original image's file size and the file size of the rotated image.
 #'
 #'   As \code{R}'s built-in \code{bmp} device creates (a) indexed instead of
 #'   True Color images and (b) creates files with different file sizes depending
 #'   on the operating system, the function relies on the \code{magick} package
-#'   to write (and read) images. Thus, for the current version, permission to
-#'   read and write files in the specified directory path / working directory is
-#'   needed for this function to work properly.
+#'   to write (and read) images.
 #'
 #' @param imgfile Either a character string containing the path to the image
 #'   file (or URL) or an an image in form of a matrix (grayscale image) or array
@@ -65,15 +58,20 @@ NULL
 #' @examples
 #' # Example image with high complexity: trees
 #' trees <- img_read(system.file("example_images", "trees.jpg", package = "imagefluency"))
-#' # display image
-#' grid::grid.raster(trees)
+#' #
+#' ## uncomment to display
+#' # grid::grid.raster(trees)
+#' #
 #' # get complexity
 #' img_complexity(trees)
 #'
+#'
 #' # Example image with low complexity: sky
 #' sky <- img_read(system.file("example_images", "sky.jpg", package = "imagefluency"))
-#' # display image
-#' grid::grid.raster(sky)
+#' #
+#' ## display image
+#' # grid::grid.raster(sky)
+#' #
 #' # get complexity
 #' img_complexity(sky)
 #'
@@ -144,7 +142,7 @@ img_complexity <- function(imgfile, algorithm = "zip", rotate = FALSE){
 #' @return a numeric value (ratio compressed/uncompressed file size).
 #' @keywords internal
 .compl <- function(img, algorithm, rotate) {
-  flname <- .rand_string()
+  flname <- file.path(tempdir(), .rand_string())
 
   # imginfo <- magick::image_info(img)
 
@@ -223,6 +221,9 @@ img_complexity <- function(imgfile, algorithm = "zip", rotate = FALSE){
     # update result: minimum of both compressed file sizes of original and rotated img
     compressed_size <- min(compressed_size, compressed_size_rot)
   }
+
+  # remove initial tempfile
+
 
   # return ratio between compressed and original (bmp) size (i.e., compression rate)
   return(compressed_size/orig_size)
