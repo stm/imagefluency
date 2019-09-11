@@ -2,8 +2,6 @@
 title: "imagefluency"
 subtitle: "Image Statistics Based on Processing Fluency"
 date: "`r format(Sys.Date(), '%B %d, %Y')`"
-resoure_files:
-  - example_images/
 output:
   rmarkdown::html_vignette
 vignette: >
@@ -38,18 +36,6 @@ figure figcaption {
 
 ```{r setup, include=FALSE}
 library(imagefluency)
-
-# bike <- system.file("example_images", "bike.jpg", package = "imagefluency")
-# berries <- system.file("example_images", "berries.jpg", package = "imagefluency")
-# bridge <- system.file("example_images", "bridge.jpg", package = "imagefluency")
-# fireworks <- system.file("example_images", "fireworks.jpg", package = "imagefluency")
-# office <- system.file("example_images", "office.jpg", package = "imagefluency")
-# rails <- system.file("example_images", "rails.jpg", package = "imagefluency")
-# romanesco <- system.file("example_images", "romanesco.jpg", package = "imagefluency")
-# sky <- system.file("example_images", "sky.jpg", package = "imagefluency")
-# trees <- system.file("example_images", "trees.jpg", package = "imagefluency")
-# valley_green <- system.file("example_images", "valley_green.jpg", package = "imagefluency")
-# valley_white <- system.file("example_images", "valley_white.jpg", package = "imagefluency")
 
 bike <- "./../inst/example_images/bike.jpg"
 berries <- "./../inst/example_images/berries.jpg"
