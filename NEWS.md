@@ -1,6 +1,12 @@
-imagefluency 0.2.0
-==============
-major update
+# imagefluency 0.2.1
+
+* new package vignette
+* new package website
+* some under the hood code improvements
+
+# imagefluency 0.2.0
+
+Major update
 * new package name: imagefluency
 * shorter, more intuitive function names: img_* instead of quantify_*
 * now works directly on color images
@@ -8,14 +14,14 @@ major update
 * different compression algorithms for complexity
 * interactive shiny app (alpha)
 
-imagefluency 0.1.2
-==============
+# imagefluency 0.1.2
+
 * exemplary images included in package as data
 
-imagefluency 0.1.1
-==============
+# imagefluency 0.1.1
+
 * complete rewrite of complexity function based on `magick` package
 
-imagefluency 0.1.0
-==============
+# imagefluency 0.1.0
+
 * first version on github
