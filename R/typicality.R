@@ -10,8 +10,9 @@ NULL
 #' relative to each other. Higher values indicate larger typicality.
 #'
 #' @details The function returns the visual typicality of a \emph{list} of image
-#'   arrays or matrices \code{imglist} relative to each other, while higher
-#'   values are indicating larger typicality.
+#'   arrays or matrices \code{imglist} relative to each other. Values can range
+#'   between -1 (inversely typical) over 0 (not typical) to 1 (perfectly typical).
+#'   That is, higher absolute values indicate a larger typicality.
 #'
 #'   The typicality score is computed as the correlation of a particular image
 #'   with the average representation of all images, i.e. the mean of all images.
@@ -49,10 +50,10 @@ NULL
 #'     system.file("example_images", "fireworks.jpg", package = "imagefluency")
 #'   )
 #' #
-#' # display images
-#' grid::grid.raster(valley_green)
-#' grid::grid.raster(valley_white)
-#' grid::grid.raster(fireworks)
+#' ## uncomment to display images
+#' # grid::grid.raster(valley_green)
+#' # grid::grid.raster(valley_white)
+#' # grid::grid.raster(fireworks)
 #'
 #' # create image set as list
 #' imglist <- list(fireworks, valley_green, valley_white)

@@ -30,15 +30,19 @@ The function returns the RMS contrast of an image \code{img}. The
 \examples{
 # Example image with relatively high contrast: berries
 berries <- img_read(system.file("example_images", "berries.jpg", package = "imagefluency"))
-# display image
-grid::grid.raster(berries)
+#
+## uncomment to display image
+# grid::grid.raster(berries)
+#
 # get contrast
 img_contrast(berries)
 
 # Example image with relatively low contrast: bike
 bike <- img_read(system.file("example_images", "bike.jpg", package = "imagefluency"))
-# display image
-grid::grid.raster(bike)
+#
+## display image
+# grid::grid.raster(bike)
+#
 # get contrast
 img_contrast(bike)
 
