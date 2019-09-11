@@ -93,7 +93,7 @@ shiny::shinyApp(
                     )
                   ),
                   shiny::hr(),
-                  shiny::div(style="text-align:center; color:gray", shiny::tags$small("(c) 2018 Stefan Mayer (Goethe University Frankfurt)"))
+                  shiny::div(style="text-align:center; color:gray", shiny::tags$small("(c) 2019 Stefan Mayer (University of Tübingen)"))
   ),
 
   server = function(input, output, session) {
