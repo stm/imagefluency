@@ -1,6 +1,9 @@
-## imagefluency: Image Fluency Scores in R
+## imagefluency: Image Statistics Based on Processing Fluency
 
+<!-- badges: start -->
 [![Travis build status](https://travis-ci.org/stm/imagefluency.svg?branch=master)](https://travis-ci.org/stm/imagefluency)
+[![CRAN status](https://www.r-pkg.org/badges/version/imagefluency)](https://cran.r-project.org/package=imagefluency)
+  <!-- badges: end -->
 
 ## Overview
 
@@ -25,20 +28,25 @@ Other helpful functions are:
 
 * `img_read()`  wrapper function to read images into R using `read.bitmap()` from the
   [readbitmap](https://github.com/jefferis/readbitmap) package
+* `rgb2gray()`  convert images from RGB into grayscale (might speed up computation)
 * `run_imagefluency()`  to launch a Shiny app locally on your computer for an interactive demo of the
    main functions
-* `rgb2gray()`  convert images from RGB into grayscale (might speed up computation)
 
 
 The main author is [Stefan Mayer](http://github.com/stm/).
 
 ## Installation
 
-To download the latest version from Github use the `install_github` function of the `devtools` package.
+You can install the current stable version from CRAN.
+```r
+install.packages("imagefluency")
+```
+
+To download the latest development version from Github use the `install_github` function of the `devtools` package.
 ```r
 # install devtools if necessary
 if (!require("devtools")) install.packages("devtools")
-# install imagefluency
+# install imagefluency from github
 devtools::install_github('stm/imagefluency')
 ```
 Use the following link to report bugs/issues: <https://github.com/stm/imagefluency/issues>
@@ -63,7 +71,7 @@ rails <- img_read(system.file("example_images", "rails.jpg", package = "imageflu
 img_symmetry(rails, horizontal = FALSE)
 ```
 
-See the functions' help files (e.g., `?img_symmetry` for more details.
+See the package [vignette](https://stm.github.io/imagefluency/articles/imagefluency.html) for more details (or type `vignette("imagefluency", package = "imagefluency")` into the R console).
 
 ## Citation
 
