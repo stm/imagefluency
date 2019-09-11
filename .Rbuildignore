@@ -6,3 +6,7 @@
 ^\.Rproj\.user$   # used for temporary files.
 ^cran-comments\.md$
 ^CRAN-RELEASE$
+^docs$
+^_pkgdown\.yml$
+^doc$
+^Meta$

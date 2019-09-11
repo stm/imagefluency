@@ -1,0 +1,59 @@
+authors:
+  Stefan Mayer:
+    href: https://github.com/stm
+
+home:
+  links:
+  - text: View source code
+    href: https://github.com/stm/imagefluency
+
+template:
+  params:
+    bootswatch: lumen
+
+reference:
+- title: Main functions
+  contents:
+  - img_complexity
+  - img_contrast
+  - img_self_similarity
+  - img_simplicity
+  - img_symmetry
+  - img_typicality
+
+- title: Other helpful functions
+  contents:
+  - img_read
+  - rgb2gray
+  - rotate90
+
+- title: Shiny app (alpha)
+  contents:
+  - run_imagefluency
+
+
+navbar:
+  structure:
+    left:
+    - home
+    - intro
+    - reference
+    - articles
+    - news
+    right: github
+  components:
+    home:
+      icon: fas fa-home fa-lg
+      href: index.html
+    reference:
+      text: Reference
+      href: reference/index.html
+    intro:
+      text: Get started
+      href: articles/imagefluency.html
+    news:
+      text: Changelog
+      href: news/index.html
+    github:
+      icon: fab fa-github fa-lg
+      href: https://github.com/stm/imagefluency
