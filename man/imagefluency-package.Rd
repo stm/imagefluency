@@ -4,12 +4,14 @@
 \name{imagefluency-package}
 \alias{imagefluency}
 \alias{imagefluency-package}
-\title{imagefluency: Image Fluency Scores in R}
+\title{imagefluency: Image Statistics Based on Processing Fluency}
 \description{
-Image statistics based on processing fluency. The functions provide scores for
-    several basic aesthetic principles that facilitate fluent cognitive
-    processing of images: contrast, complexity / simplicity, self-similarity,
-    symmetry, and typicality.
+Get image statistics based on processing fluency theory. The
+    functions provide scores for several basic aesthetic principles that
+    facilitate fluent cognitive processing of images: contrast,
+    complexity / simplicity, self-similarity, symmetry, and typicality.
+    See Mayer & Landwehr (2018) <doi:10.1037/aca0000187> and Mayer & Landwehr
+    (2018) <doi:10.31219/osf.io/gtbhw> for the theoretical background of the methods.
 }
 \details{
 \emph{The main functions are:}
@@ -46,12 +48,12 @@ Mayer, S. & Landwehr, J, R. (2018). Quantifying Visual Aesthetics
 
 Mayer, S. & Landwehr, J. R. (2018). Objective measures of design
   typicality. \emph{Design Studies}, \emph{54}, 146--161.
-  doi:\href{https://doi.org/10.1016/j.destud.2017.09.004}{10.1016/j.destud.2017.09.004}
+  doi:\href{https://doi.org/10.31219/osf.io/gtbhw}{10.31219/osf.io/gtbhw}
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/stm/imagefluency}
+  \item \url{https://stm.github.io/imagefluency}
   \item Report bugs at \url{https://github.com/stm/imagefluency/issues}
 }
 
