@@ -11,7 +11,7 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 bibliography: imagefluency.bib
-csl: apa_numbered.csl
+csl: http://www.zotero.org/styles/springer-socpsych-brackets
 link-citations: yes
 ---
 
