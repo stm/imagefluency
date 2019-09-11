@@ -77,13 +77,13 @@ Possible applications include:
 
 * stimulus selection in experiments (e.g., testing brand logos, evaluate product designs, online display ads)
 * as control variables in statistical or prediction models
-* linking image fluency sorces to outcomes of interest (e.g., how should a typical product packaging look like, do simpler images get more or less attention on a website, ...)
+* linking image fluency scores to outcomes of interest (e.g., how should a typical product packaging look like, do simpler images get more or less attention on a website, ...)
 * (interpretable) image features in simple machine learning models, e.g. SVM image classifier
 
 
 ## Theoretical background
 
-The most prevailing explanation for how low-level image features affect humann judgments is based on processing fluency theory [@Reber2004].
+The most prevailing explanation for how low-level image features affect human judgments is based on processing fluency theory [@Reber2004].
 Processing fluency describes the ease of processing a stimulus [@Schwarz2004], which happens instantaneously and automatically [@Graf2015].
 Higher processing fluency results in a gut-level positive affective response [@Winkielman2001].
 Notably, a rich body of literature has shown that processing fluency effects have an impact on a variety of judgmental domains in our everyday life, including how much we like things, how much we consider statements to be true, how trustworthy we judge a person, how risky we think something is, or whether we buy a product or not (for a review, see @Alter2009).
@@ -108,7 +108,7 @@ Extracting image features for contrast, self-similarity, simplicity, symmetry, a
 * `img_symmetry()` vertical and horizontal symmetry of an image
 * `img_typicality()` visual typicality of a list of images relative to each other
 
-### Other helpful functios
+### Other helpful functions
 
 * `img_read()`  reads bitmap images into R
 * `rgb2gray()`  converts images from RGB into grayscale (might speed up computation)
