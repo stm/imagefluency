@@ -4,9 +4,11 @@
 ^imagefluency_devel\.Rproj$
 ^.*\.Rproj$       # Automatically added by RStudio,
 ^\.Rproj\.user$   # used for temporary files.
-^cran-comments\.md$
 ^CRAN-RELEASE$
 ^docs$
 ^_pkgdown\.yml$
 ^doc$
 ^Meta$
+^cran_version_notes\.txt$
+^imagefluency\.svg$
+^logo\.png$

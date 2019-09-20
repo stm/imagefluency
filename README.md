@@ -1,4 +1,4 @@
-## imagefluency: Image Statistics Based on Processing Fluency
+## imagefluency: Image Statistics Based on Processing Fluency <img src="man/figures/logo.png" align="right" />
 
 <!-- badges: start -->
 [![Travis build status](https://travis-ci.org/stm/imagefluency.svg?branch=master)](https://travis-ci.org/stm/imagefluency)

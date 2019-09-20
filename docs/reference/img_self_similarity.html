@@ -8,6 +8,13 @@
 
 <title>Image self-similarity — img_self_similarity • imagefluency</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -39,6 +46,7 @@
 <meta property="og:description" content="img_self_similarity returns the self-similarity of an image (i.e., the
 degree to which the log-log power spectrum of the image falls with a slope of
 -2). Higher values indicate higher image self-similarity." />
+<meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -207,23 +215,23 @@ plotted? (default: <code>FALSE</code>)</p></td>
   <code><a href='img_symmetry.html'>img_symmetry</a></code>, <code><a href='img_typicality.html'>img_typicality</a></code>,</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Example image with high self-similarity: romanesco</span>
+    <pre class="examples"><span class='co'># Example image with high self-similarity: romanesco</span>
 <span class='no'>romanesco</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='img_read.html'>img_read</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"example_images"</span>, <span class='st'>"romanesco.jpg"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"imagefluency"</span>))
 <span class='co'>#</span>
-<span class='co'>## uncomment to display image</span>
-<span class='co'># grid::grid.raster(romanesco)</span>
+<span class='co'># display image</span>
+<span class='kw pkg'>grid</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/r/grid/grid.raster.html'>grid.raster</a></span>(<span class='no'>romanesco</span>)
 <span class='co'>#</span>
 <span class='co'># get self-similarity</span>
-<span class='fu'>img_self_similarity</span>(<span class='no'>romanesco</span>)</div><div class='output co'>#&gt; [1] -0.03420536</div><div class='input'>
+<span class='fu'>img_self_similarity</span>(<span class='no'>romanesco</span>)
+
 <span class='co'># Example image with low self-similarity: office</span>
 <span class='no'>office</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='img_read.html'>img_read</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"example_images"</span>, <span class='st'>"office.jpg"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"imagefluency"</span>))
 <span class='co'>#</span>
-<span class='co'>## display image</span>
-<span class='co'># grid::grid.raster(office)</span>
+<span class='co'># display image</span>
+<span class='kw pkg'>grid</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/r/grid/grid.raster.html'>grid.raster</a></span>(<span class='no'>office</span>)
 <span class='co'>#</span>
 <span class='co'># get self-similarity</span>
-<span class='fu'>img_self_similarity</span>(<span class='no'>office</span>)</div><div class='output co'>#&gt; [1] -1.219072</div><div class='input'>
-</div></pre>
+<span class='fu'>img_self_similarity</span>(<span class='no'>office</span>)</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
