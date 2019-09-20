@@ -35,3 +35,7 @@ vignettes/*.pdf
 inst/doc
 doc
 Meta
+imagefluency.svg
+logo.png
+cran_version_notes.txt
+cran-comments.md
