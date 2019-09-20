@@ -51,8 +51,8 @@ NULL
 #' # Example image with high vertical symmetry: rails
 #' rails <- img_read(system.file("example_images", "rails.jpg", package = "imagefluency"))
 #' #
-#' ## uncomment to display image
-#' # grid::grid.raster(rails)
+#' # display image
+#' grid::grid.raster(rails)
 #' #
 #' # get symmetry
 #' img_symmetry(rails)
@@ -60,8 +60,8 @@ NULL
 #' # Example image with low vertical symmetry: bridge
 #' bridge <- img_read(system.file("example_images", "bridge.jpg", package = "imagefluency"))
 #' #
-#' ## display image
-#' # grid::grid.raster(bridge)
+#' # display image
+#' grid::grid.raster(bridge)
 #' #
 #' # get symmetry
 #' img_symmetry(bridge)

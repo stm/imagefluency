@@ -50,10 +50,10 @@ NULL
 #'     system.file("example_images", "fireworks.jpg", package = "imagefluency")
 #'   )
 #' #
-#' ## uncomment to display images
-#' # grid::grid.raster(valley_green)
-#' # grid::grid.raster(valley_white)
-#' # grid::grid.raster(fireworks)
+#' # display images
+#' grid::grid.raster(valley_green)
+#' grid::grid.raster(valley_white)
+#' grid::grid.raster(fireworks)
 #'
 #' # create image set as list
 #' imglist <- list(fireworks, valley_green, valley_white)

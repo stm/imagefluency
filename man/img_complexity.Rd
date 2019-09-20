@@ -62,8 +62,8 @@ The function returns the visual complexity of an image. Visual
 # Example image with high complexity: trees
 trees <- img_read(system.file("example_images", "trees.jpg", package = "imagefluency"))
 #
-## uncomment to display
-# grid::grid.raster(trees)
+# display image
+grid::grid.raster(trees)
 #
 # get complexity
 img_complexity(trees)
@@ -72,8 +72,8 @@ img_complexity(trees)
 # Example image with low complexity: sky
 sky <- img_read(system.file("example_images", "sky.jpg", package = "imagefluency"))
 #
-## display image
-# grid::grid.raster(sky)
+# display image
+grid::grid.raster(sky)
 #
 # get complexity
 img_complexity(sky)

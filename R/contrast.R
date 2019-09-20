@@ -26,8 +26,8 @@ NULL
 #' # Example image with relatively high contrast: berries
 #' berries <- img_read(system.file("example_images", "berries.jpg", package = "imagefluency"))
 #' #
-#' ## uncomment to display image
-#' # grid::grid.raster(berries)
+#' # display image
+#' grid::grid.raster(berries)
 #' #
 #' # get contrast
 #' img_contrast(berries)
@@ -35,8 +35,8 @@ NULL
 #' # Example image with relatively low contrast: bike
 #' bike <- img_read(system.file("example_images", "bike.jpg", package = "imagefluency"))
 #' #
-#' ## display image
-#' # grid::grid.raster(bike)
+#' # display image
+#' grid::grid.raster(bike)
 #' #
 #' # get contrast
 #' img_contrast(bike)

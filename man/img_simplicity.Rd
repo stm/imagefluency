@@ -39,8 +39,8 @@ Image simplicity is calculated as 1 minus the ratio between the
 # Example image with low simplicity: trees
 trees <- img_read(system.file("example_images", "trees.jpg", package = "imagefluency"))
 #
-## uncomment to display image
-# grid::grid.raster(trees)
+# display image
+grid::grid.raster(trees)
 #
 # get complexity
 img_simplicity(trees)
@@ -48,8 +48,8 @@ img_simplicity(trees)
 # Example image with high simplicity: sky
 sky <- img_read(system.file("example_images", "sky.jpg", package = "imagefluency"))
 #
-## display image
-# grid::grid.raster(sky)
+# display image
+grid::grid.raster(sky)
 #
 # get complexity
 img_simplicity(sky)

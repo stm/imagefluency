@@ -83,8 +83,8 @@ NULL
 #' # Example image with high self-similarity: romanesco
 #' romanesco <- img_read(system.file("example_images", "romanesco.jpg", package = "imagefluency"))
 #' #
-#' ## uncomment to display image
-#' # grid::grid.raster(romanesco)
+#' # display image
+#' grid::grid.raster(romanesco)
 #' #
 #' # get self-similarity
 #' img_self_similarity(romanesco)
@@ -92,8 +92,8 @@ NULL
 #' # Example image with low self-similarity: office
 #' office <- img_read(system.file("example_images", "office.jpg", package = "imagefluency"))
 #' #
-#' ## display image
-#' # grid::grid.raster(office)
+#' # display image
+#' grid::grid.raster(office)
 #' #
 #' # get self-similarity
 #' img_self_similarity(office)
