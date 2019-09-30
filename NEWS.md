@@ -1,3 +1,5 @@
+# imagefluency (development version)
+
 # imagefluency 0.2.1
 
 * new package vignette
