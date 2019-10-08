@@ -3,9 +3,10 @@
 <!-- badges: start -->
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![Travis build status](https://travis-ci.org/stm/imagefluency.svg?branch=master)](https://travis-ci.org/stm/imagefluency)
+[![codecov](https://codecov.io/github/stm/imagefluency/branch/master/graphs/badge.svg)](https://codecov.io/github/stm/imagefluency)
 [![CRAN status](https://www.r-pkg.org/badges/version/imagefluency)](https://cran.r-project.org/package=imagefluency)
 [![CRAN downloads](http://cranlogs.r-pkg.org/badges/imagefluency)](https://cran.r-project.org/package=imagefluency)
-[![codecov](https://codecov.io/github/stm/imagefluency/branch/master/graphs/badge.svg)](https://codecov.io/github/stm/imagefluency)
+
   <!-- badges: end -->
 
 ## Overview
@@ -74,7 +75,9 @@ rails <- img_read(system.file("example_images", "rails.jpg", package = "imageflu
 img_symmetry(rails, horizontal = FALSE)
 ```
 
-See the package [vignette](https://stm.github.io/imagefluency/articles/imagefluency.html) for more details (or type `vignette("imagefluency", package = "imagefluency")` into the R console).
+## Documentation
+
+See the package [vignette](https://stm.github.io/imagefluency/articles/imagefluency.html) for a detailled introduction (or type `vignette("imagefluency", package = "imagefluency")` into the R console) and the [reference page](https://stm.github.io/imagefluency/reference/index.html) for details on each function.
 
 ## Citation
 
