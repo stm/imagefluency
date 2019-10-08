@@ -114,7 +114,7 @@ img_self_similarity <- function(img, full = FALSE, logplot = FALSE, raw=FALSE){
     logplot <- FALSE
   }
   if (!is.logical(raw)) {
-    warning(paste0("raw = '", logplot, "' is not a logical value (TRUE/FALSE). Automatically set to FALSE ..."), call. = FALSE)
+    warning(paste0("raw = '", raw, "' is not a logical value (TRUE/FALSE). Automatically set to FALSE ..."), call. = FALSE)
     raw <- FALSE
   }
 
