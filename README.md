@@ -1,8 +1,10 @@
 ## imagefluency: Image Statistics Based on Processing Fluency <img src="man/figures/logo.png" align="right" />
 
 <!-- badges: start -->
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![Travis build status](https://travis-ci.org/stm/imagefluency.svg?branch=master)](https://travis-ci.org/stm/imagefluency)
 [![CRAN status](https://www.r-pkg.org/badges/version/imagefluency)](https://cran.r-project.org/package=imagefluency)
+[![CRAN downloads](http://cranlogs.r-pkg.org/badges/imagefluency)](https://cran.r-project.org/package=imagefluency)
   <!-- badges: end -->
 
 ## Overview
