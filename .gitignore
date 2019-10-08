@@ -19,6 +19,7 @@ imagefluency_devel.Rproj
 /data-raw/
 # test files
 test.R
+/tests/testthat/Rplots.pdf
 # produced vignettes
 vignettes/*.html
 vignettes/*.pdf

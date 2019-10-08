@@ -19,7 +19,7 @@ test_that("img_contrast warns if input contains values > 255", {
                  "Pixel intensity values > 255 in your image\\. Corresponding pixels set to 255\\.")
 })
 
-test_that("img_contrast gives results you'd expect", {
+test_that("img_contrast gives results you'd expect (grayscale)", {
   set.seed(2787)
   img <- matrix(0, nrow = 100, ncol = 100)
   expect_equal(img_contrast(img), expected = 0)
@@ -28,3 +28,18 @@ test_that("img_contrast gives results you'd expect", {
   expect_equal(img_contrast(img), expected = 1/255, tolerance = .01, scale = 1)
 })
 
+test_that("img_contrast gives results you'd expect", {
+  # RGB image
+  red <- matrix(0, nrow = 20, ncol = 20)
+  green <- matrix(100, nrow = 20, ncol = 20)
+  blue <- matrix(255, nrow = 20, ncol = 20)
+  imgRGB <- array(c(red, green, blue), dim = c(20, 20, 3))
+  expect_equal(img_contrast(imgRGB), expected = 0)
+
+  set.seed(2787)
+  red <- matrix(c(rnorm(5*5)+50,rnorm(5*5)+200), nrow = 50, ncol = 50)
+  green <- matrix(c(rnorm(5*5)+50,rnorm(5*5)+200), nrow = 50, ncol = 50)
+  blue <- matrix(c(rnorm(5*5)+50,rnorm(5*5)+200), nrow = 50, ncol = 50)
+  imgRGB <- array(c(red, green, blue), dim = c(50, 20, 3))
+  expect_equal(img_contrast(imgRGB), expected = 0.2936195, tolerance = .0001, scale = 1)
+})

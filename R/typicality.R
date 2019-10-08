@@ -115,10 +115,8 @@ img_typicality <- function(imglist, rescale = NULL){
   # using the smallest width and height over all pics
   if (imgtype == "gray") {
     dims <- vapply(imglist, dim, numeric(2))
-  } else if (imgtype == "rgb") {
-    dims <- vapply(imglist, dim, numeric(3))
   } else {
-    stop("Image dimensions could not be determined.", call. = FALSE)
+    dims <- vapply(imglist, dim, numeric(3))
   }
   minH <- min(dims[1,])
   minW <- min(dims[2,])
@@ -129,7 +127,7 @@ img_typicality <- function(imglist, rescale = NULL){
       imglist <- lapply(imglist, OpenImageR::resizeImage,
                                   width = minW, height = minH, method = "bilinear")
     } else {
-      stop("Package 'OpenImageR' is required not installed on your system.", call. = FALSE)
+      stop("Package 'OpenImageR' is required but not installed on your system.", call. = FALSE)
     }
   }
 
