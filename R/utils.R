@@ -119,9 +119,9 @@ rotate90 <- function(img, direction = "positive") {
   if (!(direction == "positive" | direction == "counterclockwise" | direction == "negative" | direction == "clockwise")) {
     stop(paste0("'",direction,"' is an unknown input to parameter 'direction'. Try 'direction = positive' or 'direction = negative'."))
   }
-  if (class(img) == "matrix") {
+  if (inherits(img, "matrix")) {
     return(rot90(img, direction))
-  } else if (class(img) == "array") {
+  } else if (inherits(img, "array")) {
     # create array with same number of arrays but flipped dimensions
     out <- array(NA, dim = c(dim(img)[2], dim(img)[1], dim(img)[3]))
     #
