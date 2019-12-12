@@ -30,11 +30,6 @@ test_that("img_self_similarity gives results you'd expect (grayscale)", {
   # result must be 0 or less than zero
   img <- matrix(runif(599*599, min = 0, max = 255), nrow = 599, ncol = 599)
   expect_lte(img_self_similarity(img), 0)
-
-  #
-  img <- matrix(0, nrow = 100, ncol = 100)
-  img[, 1:50] <- 255
-  expect_equal(img_self_similarity(img), expected = -1.047962, tolerance = .00001, scale = 1)
 })
 
 test_that("img_self_similarity gives results you'd expect", {
