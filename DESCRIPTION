@@ -1,8 +1,8 @@
 Package: imagefluency
 Type: Package
 Title: Image Statistics Based on Processing Fluency
-Version: 0.2.2
-Date: 2019-12-12
+Version: 0.2.3
+Date: 2020-08-01
 Authors@R: person(given = "Stefan", family = "Mayer", email = "stefan@mayer-de.com",
     role = c("aut", "cre"), comment = c(ORCID = "0000-0003-0034-7090"))
 Description: Get image statistics based on processing fluency theory. The

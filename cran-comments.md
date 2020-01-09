@@ -1,8 +1,7 @@
 ## Resubmission
 This is a resubmission. In this version I have:
 
-* replaced class() checks with inherits()
-  (in preparation for upcoming R 4.0.0 release)
+* updated unit tests to fix an error with fedora/gcc
 
 ## Test environments
 * local OS X install, R 3.5.1

@@ -1,5 +1,9 @@
 # imagefluency
 
+# imagefluency 0.2.3
+
+* updated unit tests
+
 # imagefluency 0.2.2
 
 * under-the-hood-changes in preparation for upcoming R 4.0.0 release

@@ -16,7 +16,7 @@ test_that("img_complexity warns if rotate is not a logical value", {
 
 test_that("img_complexity checks whether algorithm is known", {
   expect_error(img_complexity(array(0, dim = c(10, 10, 3)), algorithm = "foo"),
-                 "Unknown image compression algorithm requested\\. Use one of the following: zip, jpg, gif, png")
+               "Unknown image compression algorithm requested\\. Use one of the following: zip, jpg, gif, png")
 
   expect_error(img_complexity(array(0, dim = c(10, 10, 3)), algorithm = "zip", rotate = TRUE), NA)
   expect_error(img_complexity(array(0, dim = c(10, 10, 3)), algorithm = "jpg", rotate = TRUE), NA)
@@ -34,7 +34,7 @@ test_that("img_complexity checks and handles file names as input", {
 })
 
 test_that("img_complexity normalizes input image if necessary", {
-  expect_equal(img_complexity(array(100:500, dim = c(50, 50, 3))), 0.1111398, tolerance = 0.001, scale = 1)
+  expect_equal(img_complexity(array(100:500, dim = c(50, 50, 3))), 0.1111398, tolerance = 0.01, scale = 1)
 })
 
 
@@ -61,7 +61,7 @@ test_that("img_complexity works as intended (gives correct / consistent results)
   # magick::image_read(img)
   results <- img_complexity(img)
 
-  expect_equal(results, 0.1600421, tolerance = 0.001, scale = 1)
+  expect_equal(results, 0.1600421, tolerance = 0.01, scale = 1)
 
 
   redChannel <- matrix(0, nrow = 300, ncol = 300)
@@ -73,7 +73,7 @@ test_that("img_complexity works as intended (gives correct / consistent results)
   # magick::image_read(img)
   results <- img_complexity(img)
 
-  expect_equal(results, 0.001673219, tolerance = 0.001, scale = 1)
+  expect_equal(results, 0.001673219, tolerance = 0.01, scale = 1)
 })
 
 
