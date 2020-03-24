@@ -83,7 +83,7 @@
       <h1>imagefluency</h1>
             <h3 class="subtitle">Image Statistics Based on Processing Fluency</h3>
             
-            <h4 class="date">January 09, 2020</h4>
+            <h4 class="date">March 24, 2020</h4>
       
       
       <div class="hidden name"><code>imagefluency.Rmd</code></div>
@@ -171,13 +171,13 @@ figure figcaption {
 <h3 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h3>
 <p>You can install the current stable version from CRAN.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"imagefluency"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"imagefluency"</span>)</span></code></pre></div>
 <p>To download the latest development version from Github use the <code>install_github</code> function of the <code>devtools</code> package.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># install devtools if necessary</span></a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="st">"devtools"</span>)) <span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"devtools"</span>)</a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="co"># install imagefluency from github</span></a>
-<a class="sourceLine" id="cb2-4" title="4">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">'stm/imagefluency'</span>)</a></code></pre></div>
-<p>After installation, the <code>imagefluency</code> package is loaded the usual way by calling <code><a href="https://rdrr.io/r/base/library.html">library(imagefluency)</a></code>. The <code><a href="../reference/img_read.html">img_read()</a></code> function can be used to read an image into R. Just like with reading in a dataset, <code><a href="../reference/img_read.html">img_read()</a></code> expects the path to the file as input, e.g., <code>img_read(C:/Users/myname/Documents/myimage.jpg)</code>. Currently supported file formats are bmp, jpg, png, and tif.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># install devtools if necessary</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="st">"devtools"</span>)) <span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"devtools"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co"># install imagefluency from github</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a>devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">'stm/imagefluency'</span>)</span></code></pre></div>
+<p>After installation, the <code>imagefluency</code> package is loaded the usual way by calling <code><a href="https://rdrr.io/r/base/library.html">library(imagefluency)</a></code>. The <code><a href="../reference/img_read.html">img_read()</a></code> function can be used to read an image into R. Just like with reading in a dataset, <code><a href="../reference/img_read.html">img_read()</a></code> expects the path to the file as input, e.g., <code><a href="../reference/img_read.html">img_read("C:/Users/myname/Documents/myimage.jpg")</a></code>. Currently supported file formats are bmp, jpg, png, and tif.</p>
 <p>Use the following link to report bugs/issues: <a href="https://github.com/stm/imagefluency/issues" class="uri">https://github.com/stm/imagefluency/issues</a></p>
 </div>
 </div>
@@ -186,24 +186,24 @@ figure figcaption {
 <a href="#using-imagefluency" class="anchor"></a>Using imagefluency</h2>
 <p><code>imagefluency</code> allows to get scores for five image features that facilitate fluent processing of images: contrast, complexity / simplicity, self-similarity, symmetry, and typicality.</p>
 <p>To use the imagefluency package, first load the library.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(imagefluency)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(imagefluency)</span></code></pre></div>
 <div id="contrast" class="section level3">
 <h3 class="hasAnchor">
 <a href="#contrast" class="anchor"></a>Contrast</h3>
 <p>The function <code><a href="../reference/img_contrast.html">img_contrast()</a></code> returns the contrast of an image. Most research defines contrast in images as the root-mean-squared (RMS) contrast which is the standard deviation of the normalized pixel intensity values <span class="citation">[<a href="#ref-Peli1990" role="doc-biblioref">10</a>]</span>: <span class="math inline">\(\sqrt{\frac{1}{M N}\sum_{i=0}^{N-1}\sum_{j=0}^{M - 1}(I_{ij} - \bar{I})^2}\)</span>. The RMS of an image as a measure for visual contrast has been shown to predict human contrast detection thresholds well <span class="citation">[<a href="#ref-Frazor2006" role="doc-biblioref">11</a>]</span>. Therefore, the function calculates contrast by computing the RMS contrast of the input image. Consequently, a higher value indicates higher contrast. The image is normalized if necessary (i.e., normalization into range [0, 1]). For color images, a weighted average between color the channels is computed (cf. <span class="citation">[<a href="#ref-MayerPACA2018" role="doc-biblioref">8</a>]</span>).</p>
 <p>Note that in the following, example images that come with the package are used. Moreover, the images can be displayed using the <code>grid.raster()</code> function from the <code>grid</code> package.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># Example image with relatively high contrast: berries</span></a>
-<a class="sourceLine" id="cb4-2" title="2">berries &lt;-<span class="st"> </span><span class="kw"><a href="../reference/img_read.html">img_read</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"example_images"</span>, <span class="st">"berries.jpg"</span>, <span class="dt">package =</span> <span class="st">"imagefluency"</span>))</a>
-<a class="sourceLine" id="cb4-3" title="3"><span class="co"># display image</span></a>
-<a class="sourceLine" id="cb4-4" title="4">grid<span class="op">::</span><span class="kw"><a href="https://rdrr.io/r/grid/grid.raster.html">grid.raster</a></span>(berries)</a>
-<a class="sourceLine" id="cb4-5" title="5"><span class="co"># get contrast</span></a>
-<a class="sourceLine" id="cb4-6" title="6"><span class="kw"><a href="../reference/img_contrast.html">img_contrast</a></span>(berries)</a></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># Example image with relatively low contrast: bike</span></a>
-<a class="sourceLine" id="cb5-2" title="2">bike &lt;-<span class="st"> </span><span class="kw"><a href="../reference/img_read.html">img_read</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"example_images"</span>, <span class="st">"bike.jpg"</span>, <span class="dt">package =</span> <span class="st">"imagefluency"</span>))</a>
-<a class="sourceLine" id="cb5-3" title="3"><span class="co"># display image</span></a>
-<a class="sourceLine" id="cb5-4" title="4">grid<span class="op">::</span><span class="kw"><a href="https://rdrr.io/r/grid/grid.raster.html">grid.raster</a></span>(bike)</a>
-<a class="sourceLine" id="cb5-5" title="5"><span class="co"># get contrast</span></a>
-<a class="sourceLine" id="cb5-6" title="6"><span class="kw"><a href="../reference/img_contrast.html">img_contrast</a></span>(bike)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Example image with relatively high contrast: berries</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>berries &lt;-<span class="st"> </span><span class="kw"><a href="../reference/img_read.html">img_read</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"example_images"</span>, <span class="st">"berries.jpg"</span>, <span class="dt">package =</span> <span class="st">"imagefluency"</span>))</span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="co"># display image</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>grid<span class="op">::</span><span class="kw"><a href="https://rdrr.io/r/grid/grid.raster.html">grid.raster</a></span>(berries)</span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="co"># get contrast</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="kw"><a href="../reference/img_contrast.html">img_contrast</a></span>(berries)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Example image with relatively low contrast: bike</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>bike &lt;-<span class="st"> </span><span class="kw"><a href="../reference/img_read.html">img_read</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"example_images"</span>, <span class="st">"bike.jpg"</span>, <span class="dt">package =</span> <span class="st">"imagefluency"</span>))</span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="co"># display image</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a>grid<span class="op">::</span><span class="kw"><a href="https://rdrr.io/r/grid/grid.raster.html">grid.raster</a></span>(bike)</span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="co"># get contrast</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="kw"><a href="../reference/img_contrast.html">img_contrast</a></span>(bike)</span></code></pre></div>
 <p>Calculating the contrast scores for the two images gives the following result:</p>
 <center>
 <figure><img src="../inst/example_images/bike.jpg"><figcaption>
@@ -220,18 +220,18 @@ score: 0.29
 <p>The function takes the file path of an image file (or URL) or a pre-loaded image as input argument and returns the ratio of the compressed divided by the uncompressed image file size. The complexity values are naturally interpretable and can range between almost 0 (virtually completely compressed image, thus extremely simple image) and 1 (no compression possible, thus extremely complex image). The function offers to use different image compression algorithms like <code>jpg</code>, <code>gif</code>, or <code>png</code> with <code>algorithm = "zip"</code> as default (for a discussion about the different algorithms, see <span class="citation">[<a href="#ref-MayerPACA2018" role="doc-biblioref">8</a>]</span>).</p>
 <p>As most compression algorithms do not depict horizontal and vertical redundancies equally, the function includes an optional <code>rotate</code> parameter (default: <code>FALSE</code>). Setting this parameter to <code>TRUE</code> additionally creates a compressed version of the <em>rotated</em> image. The overall compressed image’s file size is computed as the minimum of the original image’s file size and the file size of the rotated image.</p>
 <p>The function <code><a href="../reference/img_simplicity.html">img_simplicity()</a></code> returns the visual simplicity of an image. Image simplicity is the complement to image complexity and therefore calculated as 1 minus the complexity score (i.e., the compression rate). Values can range between 0 (no compression possible, thus extremely complex image) and almost 1 (virtually completely compressed image, thus extremely simple image).</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># Example image with high complexity: trees</span></a>
-<a class="sourceLine" id="cb6-2" title="2">trees &lt;-<span class="st"> </span><span class="kw"><a href="../reference/img_read.html">img_read</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"example_images"</span>, <span class="st">"trees.jpg"</span>, <span class="dt">package =</span> <span class="st">"imagefluency"</span>))</a>
-<a class="sourceLine" id="cb6-3" title="3"><span class="co"># display image</span></a>
-<a class="sourceLine" id="cb6-4" title="4">grid<span class="op">::</span><span class="kw"><a href="https://rdrr.io/r/grid/grid.raster.html">grid.raster</a></span>(trees)</a>
-<a class="sourceLine" id="cb6-5" title="5"><span class="co"># get complexity</span></a>
-<a class="sourceLine" id="cb6-6" title="6"><span class="kw"><a href="../reference/img_complexity.html">img_complexity</a></span>(trees)</a></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co"># Example image with low complexity: sky</span></a>
-<a class="sourceLine" id="cb7-2" title="2">sky &lt;-<span class="st"> </span><span class="kw"><a href="../reference/img_read.html">img_read</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"example_images"</span>, <span class="st">"sky.jpg"</span>, <span class="dt">package =</span> <span class="st">"imagefluency"</span>))</a>
-<a class="sourceLine" id="cb7-3" title="3"><span class="co"># display image</span></a>
-<a class="sourceLine" id="cb7-4" title="4">grid<span class="op">::</span><span class="kw"><a href="https://rdrr.io/r/grid/grid.raster.html">grid.raster</a></span>(sky)</a>
-<a class="sourceLine" id="cb7-5" title="5"><span class="co"># get complexity</span></a>
-<a class="sourceLine" id="cb7-6" title="6"><span class="kw"><a href="../reference/img_complexity.html">img_complexity</a></span>(sky)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># Example image with high complexity: trees</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>trees &lt;-<span class="st"> </span><span class="kw"><a href="../reference/img_read.html">img_read</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"example_images"</span>, <span class="st">"trees.jpg"</span>, <span class="dt">package =</span> <span class="st">"imagefluency"</span>))</span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="co"># display image</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>grid<span class="op">::</span><span class="kw"><a href="https://rdrr.io/r/grid/grid.raster.html">grid.raster</a></span>(trees)</span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="co"># get complexity</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="kw"><a href="../reference/img_complexity.html">img_complexity</a></span>(trees)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># Example image with low complexity: sky</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>sky &lt;-<span class="st"> </span><span class="kw"><a href="../reference/img_read.html">img_read</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"example_images"</span>, <span class="st">"sky.jpg"</span>, <span class="dt">package =</span> <span class="st">"imagefluency"</span>))</span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="co"># display image</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>grid<span class="op">::</span><span class="kw"><a href="https://rdrr.io/r/grid/grid.raster.html">grid.raster</a></span>(sky)</span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="co"># get complexity</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="kw"><a href="../reference/img_complexity.html">img_complexity</a></span>(sky)</span></code></pre></div>
 <p>Calculating the complexity scores for the two images gives the following result:</p>
 <center>
 <figure><img src="../inst/example_images/trees.jpg"><figcaption>
@@ -247,18 +247,18 @@ score: 0.47
 <p>The function <code><a href="../reference/img_self_similarity.html">img_self_similarity()</a></code> returns the self-similarity of an image. Self-similarity can be measured with the Fourier power spectrum of an image. Previous research has identified that the spectral power of natural scenes falls with spatial frequencies (<span class="math inline">\(f\)</span>) according to a power law (<span class="math inline">\(\frac{1}{f^p}\)</span>) with values of <span class="math inline">\(p\)</span> near the value 2, which indicates scale invariance (for a review, see <span class="citation">[<a href="#ref-Simoncelli2001" role="doc-biblioref">14</a>]</span>). Therefore, the function computes self-similarity via the slope of the log-log power spectrum of the image using OLS.</p>
 <p>The value for self-similarity that is returned by the function is calculated as <span class="math inline">\(\text{self-similarity} = |\text{slope} + 2| * (-1)\)</span>. That is, the measure reaches its maximum value of 0 for a slope of <span class="math inline">\(-2\)</span>, and any deviation from <span class="math inline">\(-2\)</span> results in negative values that are more negative the higher the deviation from <span class="math inline">\(-2\)</span>. Thus, the range of the self-similarity scores is <span class="math inline">\(-\infty\)</span> to <span class="math inline">\(0\)</span>. For color images, the weighted average between each color channel’s values is computed.</p>
 <p>It is possible to get the raw regression slope (instead of the transformed value which indicates self-similarity) by using the option <code>raw = TRUE</code>. More options include the possibility to plot the log-log power spectrum (<code>logplot = TRUE</code>) and to base the computation of the slope on the full frequency spectrum (<code>full = TRUE</code>). See the function’s help file for details (i.e., <code><a href="../reference/img_self_similarity.html">?img_self_similarity</a></code>).</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="co"># Example image with high self-similarity: romanesco</span></a>
-<a class="sourceLine" id="cb8-2" title="2">romanesco &lt;-<span class="st"> </span><span class="kw"><a href="../reference/img_read.html">img_read</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"example_images"</span>, <span class="st">"romanesco.jpg"</span>, <span class="dt">package =</span> <span class="st">"imagefluency"</span>))</a>
-<a class="sourceLine" id="cb8-3" title="3"><span class="co"># display image</span></a>
-<a class="sourceLine" id="cb8-4" title="4">grid<span class="op">::</span><span class="kw"><a href="https://rdrr.io/r/grid/grid.raster.html">grid.raster</a></span>(romanesco)</a>
-<a class="sourceLine" id="cb8-5" title="5"><span class="co"># get self-similarity</span></a>
-<a class="sourceLine" id="cb8-6" title="6"><span class="kw"><a href="../reference/img_self_similarity.html">img_self_similarity</a></span>(romanesco)</a></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="co"># Example image with low self-similarity: office</span></a>
-<a class="sourceLine" id="cb9-2" title="2">office &lt;-<span class="st"> </span><span class="kw"><a href="../reference/img_read.html">img_read</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"example_images"</span>, <span class="st">"office.jpg"</span>, <span class="dt">package =</span> <span class="st">"imagefluency"</span>))</a>
-<a class="sourceLine" id="cb9-3" title="3"><span class="co"># display image</span></a>
-<a class="sourceLine" id="cb9-4" title="4">grid<span class="op">::</span><span class="kw"><a href="https://rdrr.io/r/grid/grid.raster.html">grid.raster</a></span>(office)</a>
-<a class="sourceLine" id="cb9-5" title="5"><span class="co"># get self-similarity</span></a>
-<a class="sourceLine" id="cb9-6" title="6"><span class="kw"><a href="../reference/img_self_similarity.html">img_self_similarity</a></span>(office)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># Example image with high self-similarity: romanesco</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>romanesco &lt;-<span class="st"> </span><span class="kw"><a href="../reference/img_read.html">img_read</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"example_images"</span>, <span class="st">"romanesco.jpg"</span>, <span class="dt">package =</span> <span class="st">"imagefluency"</span>))</span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="co"># display image</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a>grid<span class="op">::</span><span class="kw"><a href="https://rdrr.io/r/grid/grid.raster.html">grid.raster</a></span>(romanesco)</span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="co"># get self-similarity</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="kw"><a href="../reference/img_self_similarity.html">img_self_similarity</a></span>(romanesco)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># Example image with low self-similarity: office</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>office &lt;-<span class="st"> </span><span class="kw"><a href="../reference/img_read.html">img_read</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"example_images"</span>, <span class="st">"office.jpg"</span>, <span class="dt">package =</span> <span class="st">"imagefluency"</span>))</span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="co"># display image</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a>grid<span class="op">::</span><span class="kw"><a href="https://rdrr.io/r/grid/grid.raster.html">grid.raster</a></span>(office)</span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="co"># get self-similarity</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="kw"><a href="../reference/img_self_similarity.html">img_self_similarity</a></span>(office)</span></code></pre></div>
 <p>Calculating the self-similarity scores for the two images gives the result below. The score for the romanesco broccoli is much closer to the maximum possible value of 0, hence much more self-similar.</p>
 <center>
 <figure><img src="../inst/example_images/romanesco.jpg"><figcaption>
@@ -274,18 +274,18 @@ score: -1.22
 <p>The function <code><a href="../reference/img_symmetry.html">img_symmetry()</a></code> returns the vertical and horizontal symmetry of an image as a numeric value between 0 (not symmetrical) and 1 (perfectly symmetrical).</p>
 <p>Symmetry is computed as the correlation of corresponding image halves (i.e., the pairwise correlation of the corresponding pixels, cf. <span class="citation">[<a href="#ref-Mayer2014" role="doc-biblioref">15</a>]</span>). As the perceptual mirror axis is not necessarily exactly in the middle of a picture, the function detects in a first step the ‘optimal’ mirror axis by estimating several symmetry values with different positions for the mirror axis. To this end, the mirror axis is automatically shifted up to 5% and to the right (in the case of vertical symmetry; analogously for horizontal symmetry). In the second step, the overall symmetry score is computed as the maximum of the symmetry scores given the different mirror axes. For color images, the weighted average between each color channel’s values is computed. See <span class="citation">[<a href="#ref-MayerPACA2018" role="doc-biblioref">8</a>]</span> for details.</p>
 <p>The function further has two optional logical parameters: <code>vertical</code> and <code>horizontal</code> (both <code>TRUE</code> by default). If one of the parameter is set to <code>FALSE</code>, the vertical or horizontal symmetry is not computed, respectively. See the function’s help file (i.e., <code><a href="../reference/img_symmetry.html">?img_symmetry</a></code>) for information about the additional options <code>shift_range</code> and <code>per_channel</code>.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="co"># Example image with high vertical symmetry: rails</span></a>
-<a class="sourceLine" id="cb10-2" title="2">rails &lt;-<span class="st"> </span><span class="kw"><a href="../reference/img_read.html">img_read</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"example_images"</span>, <span class="st">"rails.jpg"</span>, <span class="dt">package =</span> <span class="st">"imagefluency"</span>))</a>
-<a class="sourceLine" id="cb10-3" title="3"><span class="co"># display image</span></a>
-<a class="sourceLine" id="cb10-4" title="4">grid<span class="op">::</span><span class="kw"><a href="https://rdrr.io/r/grid/grid.raster.html">grid.raster</a></span>(rails)</a>
-<a class="sourceLine" id="cb10-5" title="5"><span class="co"># get only vertical symmetry</span></a>
-<a class="sourceLine" id="cb10-6" title="6"><span class="kw"><a href="../reference/img_symmetry.html">img_symmetry</a></span>(rails, <span class="dt">horizontal =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="co"># Example image with low vertical symmetry: bridge</span></a>
-<a class="sourceLine" id="cb11-2" title="2">bridge &lt;-<span class="st"> </span><span class="kw"><a href="../reference/img_read.html">img_read</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"example_images"</span>, <span class="st">"bridge.jpg"</span>, <span class="dt">package =</span> <span class="st">"imagefluency"</span>))</a>
-<a class="sourceLine" id="cb11-3" title="3"><span class="co"># display image</span></a>
-<a class="sourceLine" id="cb11-4" title="4">grid<span class="op">::</span><span class="kw"><a href="https://rdrr.io/r/grid/grid.raster.html">grid.raster</a></span>(bridge)</a>
-<a class="sourceLine" id="cb11-5" title="5"><span class="co"># get only vertical symmetry</span></a>
-<a class="sourceLine" id="cb11-6" title="6"><span class="kw"><a href="../reference/img_symmetry.html">img_symmetry</a></span>(bridge, <span class="dt">horizontal =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># Example image with high vertical symmetry: rails</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>rails &lt;-<span class="st"> </span><span class="kw"><a href="../reference/img_read.html">img_read</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"example_images"</span>, <span class="st">"rails.jpg"</span>, <span class="dt">package =</span> <span class="st">"imagefluency"</span>))</span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="co"># display image</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a>grid<span class="op">::</span><span class="kw"><a href="https://rdrr.io/r/grid/grid.raster.html">grid.raster</a></span>(rails)</span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="co"># get only vertical symmetry</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="kw"><a href="../reference/img_symmetry.html">img_symmetry</a></span>(rails, <span class="dt">horizontal =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># Example image with low vertical symmetry: bridge</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>bridge &lt;-<span class="st"> </span><span class="kw"><a href="../reference/img_read.html">img_read</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"example_images"</span>, <span class="st">"bridge.jpg"</span>, <span class="dt">package =</span> <span class="st">"imagefluency"</span>))</span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="co"># display image</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a>grid<span class="op">::</span><span class="kw"><a href="https://rdrr.io/r/grid/grid.raster.html">grid.raster</a></span>(bridge)</span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="co"># get only vertical symmetry</span></span>
+<span id="cb11-6"><a href="#cb11-6"></a><span class="kw"><a href="../reference/img_symmetry.html">img_symmetry</a></span>(bridge, <span class="dt">horizontal =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 <p>Calculating the vertical symmetry scores for the two images gives the following result:</p>
 <center>
 <figure><img src="../inst/example_images/rails.jpg"><figcaption>
@@ -302,17 +302,17 @@ score: 0.48
 <p>The typicality score is computed as the correlation of a particular image with the average representation of all images, i.e., the mean of all images <span class="citation">[<a href="#ref-Perrett1994" role="doc-biblioref">16</a>]</span>. That is, the typicality of an image can not be assessed in isolation, but only in comparison to set of images from the same category.</p>
 <p>For color images, the weighted average between each color channel’s values is computed. If the images have different dimensions they are automatically resized to the smallest height and width. Rescaling of the images prior to computing the typicality scores can be specified with the optional rescaling parameter (must be a numeric value). With rescaling it is possible to assess typicality at different perceptual levels (see <span class="citation">[<a href="#ref-MayerDS2018" role="doc-biblioref">17</a>]</span> for details). Most users won’t need any rescaling and can use the default (<code>rescale = NULL</code>).</p>
 <p>The following example shows three images of which two depict valleys in the mountains and one depicts fireworks. Therefore, the fireworks image is in comparison rather low in typicality in this set of images (i.e., atypical). It is important to note that an image’s typicality score highly depends on the reference set to which the image is compared to.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="co"># Example images depicting valleys: valley_white, valley_green</span></a>
-<a class="sourceLine" id="cb12-2" title="2"><span class="co"># Example image depicting fireworks: fireworks</span></a>
-<a class="sourceLine" id="cb12-3" title="3">valley_white &lt;-<span class="st"> </span><span class="kw"><a href="../reference/img_read.html">img_read</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"example_images"</span>, <span class="st">"valley_white.jpg"</span>, <span class="dt">package =</span> <span class="st">"imagefluency"</span>))</a>
-<a class="sourceLine" id="cb12-4" title="4">valley_green &lt;-<span class="st"> </span><span class="kw"><a href="../reference/img_read.html">img_read</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"example_images"</span>, <span class="st">"valley_green.jpg"</span>, <span class="dt">package =</span> <span class="st">"imagefluency"</span>))</a>
-<a class="sourceLine" id="cb12-5" title="5">fireworks &lt;-<span class="st"> </span><span class="kw"><a href="../reference/img_read.html">img_read</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"example_images"</span>, <span class="st">"fireworks.jpg"</span>, <span class="dt">package =</span> <span class="st">"imagefluency"</span>))</a>
-<a class="sourceLine" id="cb12-6" title="6"></a>
-<a class="sourceLine" id="cb12-7" title="7"><span class="co"># create image set as list</span></a>
-<a class="sourceLine" id="cb12-8" title="8">imglist &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(valley_white, fireworks, valley_green)</a>
-<a class="sourceLine" id="cb12-9" title="9"></a>
-<a class="sourceLine" id="cb12-10" title="10"><span class="co"># get typicality</span></a>
-<a class="sourceLine" id="cb12-11" title="11"><span class="kw"><a href="../reference/img_typicality.html">img_typicality</a></span>(imglist)</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># Example images depicting valleys: valley_white, valley_green</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="co"># Example image depicting fireworks: fireworks</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a>valley_white &lt;-<span class="st"> </span><span class="kw"><a href="../reference/img_read.html">img_read</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"example_images"</span>, <span class="st">"valley_white.jpg"</span>, <span class="dt">package =</span> <span class="st">"imagefluency"</span>))</span>
+<span id="cb12-4"><a href="#cb12-4"></a>valley_green &lt;-<span class="st"> </span><span class="kw"><a href="../reference/img_read.html">img_read</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"example_images"</span>, <span class="st">"valley_green.jpg"</span>, <span class="dt">package =</span> <span class="st">"imagefluency"</span>))</span>
+<span id="cb12-5"><a href="#cb12-5"></a>fireworks &lt;-<span class="st"> </span><span class="kw"><a href="../reference/img_read.html">img_read</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"example_images"</span>, <span class="st">"fireworks.jpg"</span>, <span class="dt">package =</span> <span class="st">"imagefluency"</span>))</span>
+<span id="cb12-6"><a href="#cb12-6"></a></span>
+<span id="cb12-7"><a href="#cb12-7"></a><span class="co"># create image set as list</span></span>
+<span id="cb12-8"><a href="#cb12-8"></a>imglist &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(valley_white, fireworks, valley_green)</span>
+<span id="cb12-9"><a href="#cb12-9"></a></span>
+<span id="cb12-10"><a href="#cb12-10"></a><span class="co"># get typicality</span></span>
+<span id="cb12-11"><a href="#cb12-11"></a><span class="kw"><a href="../reference/img_typicality.html">img_typicality</a></span>(imglist)</span></code></pre></div>
 <p>Calculating the typicality scores for the three images gives the following result:</p>
 <center>
 <figure><img src="../inst/example_images/valley_white.jpg"><figcaption>

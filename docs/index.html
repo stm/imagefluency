@@ -127,32 +127,32 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install the current stable version from CRAN.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"imagefluency"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"imagefluency"</span>)</span></code></pre></div>
 <p>To download the latest development version from Github use the <code>install_github</code> function of the <code>devtools</code> package.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># install devtools if necessary</span></a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="st">"devtools"</span>)) <span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"devtools"</span>)</a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="co"># install imagefluency from github</span></a>
-<a class="sourceLine" id="cb2-4" title="4">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">'stm/imagefluency'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># install devtools if necessary</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="st">"devtools"</span>)) <span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"devtools"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co"># install imagefluency from github</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a>devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">'stm/imagefluency'</span>)</span></code></pre></div>
 <p>Use the following link to report bugs/issues: <a href="https://github.com/stm/imagefluency/issues" class="uri">https://github.com/stm/imagefluency/issues</a></p>
 </div>
 <div id="example-usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example-usage" class="anchor"></a>Example usage</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># visual contrast</span></a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="co">#</span></a>
-<a class="sourceLine" id="cb3-3" title="3"><span class="co"># example image file (from package): bike.jpg</span></a>
-<a class="sourceLine" id="cb3-4" title="4">bike_location &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"example_images"</span>, <span class="st">"bike.jpg"</span>, <span class="dt">package =</span> <span class="st">"imagefluency"</span>)</a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="co"># read image from file</span></a>
-<a class="sourceLine" id="cb3-6" title="6">bike &lt;-<span class="st"> </span><span class="kw"><a href="reference/img_read.html">img_read</a></span>(bike_location)</a>
-<a class="sourceLine" id="cb3-7" title="7"><span class="co"># get contrast</span></a>
-<a class="sourceLine" id="cb3-8" title="8"><span class="kw"><a href="reference/img_contrast.html">img_contrast</a></span>(bike)</a>
-<a class="sourceLine" id="cb3-9" title="9"></a>
-<a class="sourceLine" id="cb3-10" title="10"><span class="co"># visual symmetry</span></a>
-<a class="sourceLine" id="cb3-11" title="11"><span class="co">#</span></a>
-<a class="sourceLine" id="cb3-12" title="12"><span class="co"># read image</span></a>
-<a class="sourceLine" id="cb3-13" title="13">rails &lt;-<span class="st"> </span><span class="kw"><a href="reference/img_read.html">img_read</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"example_images"</span>, <span class="st">"rails.jpg"</span>, <span class="dt">package =</span> <span class="st">"imagefluency"</span>))</a>
-<a class="sourceLine" id="cb3-14" title="14"><span class="co"># get only vertical symmetry</span></a>
-<a class="sourceLine" id="cb3-15" title="15"><span class="kw"><a href="reference/img_symmetry.html">img_symmetry</a></span>(rails, <span class="dt">horizontal =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># visual contrast</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="co">#</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="co"># example image file (from package): bike.jpg</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a>bike_location &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"example_images"</span>, <span class="st">"bike.jpg"</span>, <span class="dt">package =</span> <span class="st">"imagefluency"</span>)</span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="co"># read image from file</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>bike &lt;-<span class="st"> </span><span class="kw"><a href="reference/img_read.html">img_read</a></span>(bike_location)</span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="co"># get contrast</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="kw"><a href="reference/img_contrast.html">img_contrast</a></span>(bike)</span>
+<span id="cb3-9"><a href="#cb3-9"></a></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="co"># visual symmetry</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="co">#</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="co"># read image</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a>rails &lt;-<span class="st"> </span><span class="kw"><a href="reference/img_read.html">img_read</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"example_images"</span>, <span class="st">"rails.jpg"</span>, <span class="dt">package =</span> <span class="st">"imagefluency"</span>))</span>
+<span id="cb3-14"><a href="#cb3-14"></a><span class="co"># get only vertical symmetry</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a><span class="kw"><a href="reference/img_symmetry.html">img_symmetry</a></span>(rails, <span class="dt">horizontal =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 </div>
 <div id="documentation" class="section level2">
 <h2 class="hasAnchor">
@@ -163,7 +163,7 @@
 <h2 class="hasAnchor">
 <a href="#citation" class="anchor"></a>Citation</h2>
 <p>If you want to cite this package in a scientific journal or in any other context, run the following code in your <code>R</code> console:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">utils<span class="op">::</span><span class="kw"><a href="https://rdrr.io/r/utils/citation.html">citation</a></span>(<span class="dt">package =</span> <span class="st">"imagefluency"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>utils<span class="op">::</span><span class="kw"><a href="https://rdrr.io/r/utils/citation.html">citation</a></span>(<span class="dt">package =</span> <span class="st">"imagefluency"</span>)</span></code></pre></div>
 <p>There is currently a publication in preparation corresponding this package and the citation will be updated once it’s published.</p>
 </div>
 <div id="dependencies" class="section level2">

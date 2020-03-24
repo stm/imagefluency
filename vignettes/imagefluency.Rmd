@@ -133,7 +133,7 @@ devtools::install_github('stm/imagefluency')
 After installation, the `imagefluency` package is loaded the usual way by calling `library(imagefluency)`.
 The `img_read()` function can be used to read an image into R.
 Just like with reading in a dataset, `img_read()` expects the path to the file as input,
-e.g., `img_read(C:/Users/myname/Documents/myimage.jpg)`.
+e.g., `img_read("C:/Users/myname/Documents/myimage.jpg")`.
 Currently supported file formats are bmp, jpg, png, and tif.
 
 Use the following link to report bugs/issues: <https://github.com/stm/imagefluency/issues>
