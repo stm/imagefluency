@@ -1,7 +1,7 @@
 ## imagefluency: Image Statistics Based on Processing Fluency <img src="man/figures/logo.png" align="right" />
 
 <!-- badges: start -->
-[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/)
 [![Travis build status](https://travis-ci.org/stm/imagefluency.svg?branch=master)](https://travis-ci.org/stm/imagefluency)
 [![codecov](https://codecov.io/github/stm/imagefluency/branch/master/graphs/badge.svg)](https://codecov.io/github/stm/imagefluency)
 [![CRAN status](https://www.r-pkg.org/badges/version/imagefluency)](https://cran.r-project.org/package=imagefluency)
@@ -13,7 +13,7 @@
 
 **imagefluency** is an simple R package for image fluency scores. The
 package allows to get scores for several basic aesthetic principles that
-facilitate fluent cognitive processing of images. If you want to try it out before installing, you can find an interactive Shiny app [here](http://mayer.shinyapps.io/imagefluency/) (alpha version).
+facilitate fluent cognitive processing of images. If you want to try it out before installing, you can find an interactive Shiny app [here](https://mayer.shinyapps.io/imagefluency/) (alpha version).
     
 The main functions are:
 
@@ -37,7 +37,7 @@ Other helpful functions are:
    main functions
 
 
-The main author is [Stefan Mayer](http://github.com/stm/).
+The main author is [Stefan Mayer](https://github.com/stm/).
 
 ## Installation
 

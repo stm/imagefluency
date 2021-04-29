@@ -55,7 +55,7 @@ Mayer, S. & Landwehr, J. R. (2018). Objective measures of design
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://stm.github.io/imagefluency}
+  \item \url{https://stm.github.io/imagefluency/}
   \item Report bugs at \url{https://github.com/stm/imagefluency/issues}
 }
 
