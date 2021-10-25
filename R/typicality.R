@@ -106,6 +106,7 @@ img_typicality <- function(imglist, rescale = NULL){
       }
       if (dim( imglist[[elmnt]] )[3] == 4) {
         warning(paste("List element",elmnt,"is an array with 4 dimensions, presumably with alpha channel. 4th dimension is ignored ..."), call. = FALSE)
+        imglist[[elmnt]] <- imglist[[elmnt]][,,-4]
       }
       imgtype <- "rgb"
     }
