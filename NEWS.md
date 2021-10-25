@@ -1,5 +1,14 @@
 # imagefluency
 
+# imagefluency 0.2.4
+
+* fix alpha channel throwing error with typicality
+
+# imagefluency 0.2.3
+
+* fixes shiny app directory issue
+* url fixes
+
 # imagefluency 0.2.3
 
 * updated unit tests
