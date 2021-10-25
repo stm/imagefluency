@@ -1,4 +1,3 @@
-^\.travis\.yml$
 ^shinyapps_io$
 ^test\.R$
 ^imagefluency_devel\.Rproj$
@@ -14,3 +13,4 @@
 ^imagefluency\.svg$
 ^logo\.png$
 ^cran-comments\.md$
+^\.github$
