@@ -1,11 +1,8 @@
+url: https://stm.github.io/imagefluency/
+
 authors:
   Stefan Mayer:
-    href: https://github.com/stm
-
-home:
-  links:
-  - text: View source code
-    href: https://github.com/stm/imagefluency
+    href: https://github.com/stm/
 
 template:
   params:
@@ -38,19 +35,18 @@ navbar:
     - home
     - intro
     - reference
-    - articles
     - news
     right: github
   components:
     home:
       icon: fas fa-home fa-lg
       href: index.html
-    reference:
-      text: Reference
-      href: reference/index.html
     intro:
       text: Get started
       href: articles/imagefluency.html
+    reference:
+      text: Reference
+      href: reference/index.html
     news:
       text: Changelog
       href: news/index.html
