@@ -1,11 +1,11 @@
 ---
-title: "imagefluency"
-subtitle: "Image Statistics Based on Processing Fluency"
+title: "Getting started"
+subtitle: "imagefluency: Image Statistics Based on Processing Fluency"
 date: "`r format(Sys.Date(), '%B %d, %Y')`"
 output:
   rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{introduction}
+  %\VignetteIndexEntry{Getting started}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 bibliography: imagefluency.bib
