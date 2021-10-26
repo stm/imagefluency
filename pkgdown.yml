@@ -3,7 +3,7 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   imagefluency: imagefluency.html
-last_built: 2021-10-25T16:42Z
+last_built: 2021-10-26T09:30Z
 urls:
   reference: https://stm.github.io/imagefluency//reference
   article: https://stm.github.io/imagefluency//articles
