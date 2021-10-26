@@ -104,3 +104,7 @@ doi: [10.1037/aca0000187](https://doi.org/10.1037/aca0000187)
 * Mayer, S. & Landwehr, J. R. (2018). Objective measures of design
 typicality. *Design Studies*, *54*, 146--161.
 doi: [10.1016/j.destud.2017.09.004](https://doi.org/10.1016/j.destud.2017.09.004)
+
+## Code of Conduct
+
+Please note that this project is released with a [Contributor Code of Conduct](https://stm.github.io/imagefluency/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
