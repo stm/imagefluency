@@ -1,0 +1,121 @@
+---
+title: "Analyzing many images at once"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output:
+  rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{batch-processing}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+<style>
+figure {
+    display: inline-block;
+    horizontal-align: center;
+    margin: 2px;
+}
+figure img {
+    vertical-align: bottom;
+}
+figure figcaption {
+    text-align: center;
+}
+</style>
+
+```{r setup, include=FALSE}
+library(imagefluency)
+
+bike <- './../inst/example_images/bike.jpg'
+berries <- './../inst/example_images/berries.jpg'
+bridge <- './../inst/example_images/bridge.jpg'
+fireworks <- './../inst/example_images/fireworks.jpg'
+office <- './../inst/example_images/office.jpg'
+rails <- './../inst/example_images/rails.jpg'
+romanesco <- './../inst/example_images/romanesco.jpg'
+sky <- './../inst/example_images/sky.jpg'
+trees <- './../inst/example_images/trees.jpg'
+valley_green <- './../inst/example_images/valley_green.jpg'
+valley_white <- './../inst/example_images/valley_white.jpg'
+
+imglist <- list(img_read(valley_white), img_read(fireworks), img_read(valley_green))
+
+mypath <- system.file("example_images", package = "imagefluency")
+
+```
+
+The [getting started vignette](getting-started.html) explains how to apply the core functions of the `imagefluency` package to an image. However, often you want to analyze several images at once. The following tutorial provides a walkthrough of batch-analyzing images with the `imagefluency` package.
+
+### Reading all images from a folder
+
+Before we can start analyzing the images, we need to load them into R. In this example, we choose to read all images that are shipped with the `imagefluency` package. However, you can replace the file path with any file path on your computer.
+
+Next, we read the file names of all images that satisfy a specific pattern using `list.files()`. In our case we want the file names of all files that have `.jpg` as their file extension. Thus, we specify `pattern = '*.jpg$'` (the `$` sign at the end ensures that we only find files that _end_ with `.jpg`; a file like `image1.jpg.png` would therefore not be listed). Multiple patterns could also be specified (e.g., `pattern = '*.jpg$|*.png$')`. Note that we do _not_ already load the images into our R session here. Instead, using `list.files()` we just extract the file paths to the images.
+
+```{r}
+# path to images (here: example images from the imagefluency package)
+# 
+# --NOTE: replace with your folder of interest, e.g.
+#         mypath <- "C:/Users/NAME/Documents/Project/images/" 
+mypath <- system.file("example_images", package = "imagefluency")
+
+# read filenames of images
+# --NOTE: change file ending accordingly!
+fileNames <- list.files(mypath, pattern = '*.jpg$', full.names = TRUE)
+```
+
+
+```{r}
+# install imagefluency package if not already installed
+if (!require("imagefluency")) install.packages("imagefluency")
+# load imagefluency package
+library(imagefluency)
+
+
+# dataframe to store results 
+results <- data.frame(filename = basename(fileNames),
+                      contrast = NA, selfsimilarity = NA, simplicity = NA,
+                      symmetry = NA, typicality = NA)
+
+# big loop over all images
+for(i in seq_along(fileNames)){
+  # print loop number
+  cat('** Estimating scores for image',i,'**\n')
+  
+  # 1. read image into R
+  img <- img_read(fileNames[i])
+  
+  # 2. convert image to grayscale to speed up computation (optional)
+  # --NOTE: remove comment sign in the following line to apply grayscale conversion
+  # img <- rgb2gray(img)
+  
+  # 3. estimate imagefluency scores (except typicality)
+  #    and store the results
+  results$contrast[i] <- tryCatch(img_contrast(img), error = function(err) NA)
+  results$selfsimilarity[i] <- tryCatch(img_self_similarity(img), error = function(err) NA)
+  results$simplicity[i] <- tryCatch(img_simplicity(fileNames[i]), error = function(err) NA)
+  results$symmetry[i] <- tryCatch(img_symmetry(img, horizontal = FALSE), error = function(err) NA)
+}
+
+# 4. get image typicality scores
+# --NOTE: image typicality is estimated relative to all other images, hence,
+#         the following might take quite a while
+# 
+# first read all images at once
+# -- NOTE: if you have to many images, you might run into memory problems
+allimg <- lapply(fileNames, img_read)
+
+# now estimate the typicality and store the results
+results$typicality <- img_typicality(allimg)
+
+# save the results to file
+write.csv(results, file = paste0(mypath, 'imagefluency_scores.csv'), row.names = FALSE)
+```
+
