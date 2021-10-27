@@ -2,8 +2,10 @@ pandoc: 2.7.3
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
+  batch-processing: batch-processing.html
+  getting-started: getting-started.html
   imagefluency: imagefluency.html
-last_built: 2021-10-26T09:32Z
+last_built: 2021-10-27T15:17Z
 urls:
   reference: https://stm.github.io/imagefluency//reference
   article: https://stm.github.io/imagefluency//articles
