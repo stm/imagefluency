@@ -203,13 +203,14 @@ The following code example demonstrates shortly how to achieve this. Essentially
 
 ```{r}
 # detect cores for multi-core processing
-ncores <- parallel::detectCores()
+# ncores <- parallel::detectCores()
+ncores <- parallelly::availableCores()
 
 # read images with multi-core lapply and progress bar
-allImages <- pbmcapply::pbmclapply(fileNames, img_read_no_error)
+allImages <- pbmcapply::pbmclapply(fileNames, img_read_no_error, mc.cores = ncores)
 
 # compute image fluency scores 
-results <- pbmcapply::pbmclapply(allImages, img_fluency_scores)
+results <- pbmcapply::pbmclapply(allImages, img_fluency_scores, mc.cores = ncores)
 
 # convert results to data frame and add file names
 results <- do.call(rbind, results)
