@@ -4,8 +4,7 @@ pkgdown_sha: ~
 articles:
   batch-processing: batch-processing.html
   getting-started: getting-started.html
-  imagefluency: imagefluency.html
-last_built: 2021-10-27T15:17Z
+last_built: 2021-10-28T20:32Z
 urls:
   reference: https://stm.github.io/imagefluency//reference
   article: https://stm.github.io/imagefluency//articles

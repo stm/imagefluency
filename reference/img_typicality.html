@@ -94,28 +94,16 @@ relative to each other. Higher values indicate larger typicality." />
   </a>
 </li>
 <li>
-  <a href="../articles/imagefluency.html">Get started</a>
+  <a href="../articles/getting-started.html">Getting started</a>
+</li>
+<li>
+  <a href="../articles/batch-processing.html">Analyzing multiple images</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/batch-processing.html">Analyzing many images at once</a>
-    </li>
-    <li>
-      <a href="../articles/getting-started.html">Getting started</a>
-    </li>
-  </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -198,7 +186,7 @@ scores (per default no rescaling is performed). Rescaling is performed by
   <code><a href='img_simplicity.html'>img_simplicity</a></code>, <code><a href='img_symmetry.html'>img_symmetry</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Example images depicting valleys: valley_green, valley_white</span>
+    <pre class="examples"><span class='co'># Example images depicting valleys: valley_green, valley_white</span>
 <span class='co'># Example image depicting fireworks: fireworks</span>
 <span class='va'>valley_green</span> <span class='op'>&lt;-</span> <span class='fu'><a href='img_read.html'>img_read</a></span><span class='op'>(</span>
     <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"example_images"</span>, <span class='st'>"valley_green.jpg"</span>, package <span class='op'>=</span> <span class='st'>"imagefluency"</span><span class='op'>)</span>
@@ -212,19 +200,16 @@ scores (per default no rescaling is performed). Rescaling is performed by
 <span class='co'>#</span>
 <span class='co'># display images</span>
 <span class='fu'>grid</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/grid/grid.raster.html'>grid.raster</a></span><span class='op'>(</span><span class='va'>valley_green</span><span class='op'>)</span>
-</div><div class='input'><span class='fu'>grid</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/grid/grid.raster.html'>grid.raster</a></span><span class='op'>(</span><span class='va'>valley_white</span><span class='op'>)</span>
-</div><div class='input'><span class='fu'>grid</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/grid/grid.raster.html'>grid.raster</a></span><span class='op'>(</span><span class='va'>fireworks</span><span class='op'>)</span>
-</div><div class='img'><img src='img_typicality-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>grid</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/grid/grid.raster.html'>grid.raster</a></span><span class='op'>(</span><span class='va'>valley_white</span><span class='op'>)</span>
+<span class='fu'>grid</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/grid/grid.raster.html'>grid.raster</a></span><span class='op'>(</span><span class='va'>fireworks</span><span class='op'>)</span>
+
 <span class='co'># create image set as list</span>
 <span class='va'>imglist</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>fireworks</span>, <span class='va'>valley_green</span>, <span class='va'>valley_white</span><span class='op'>)</span>
 
 <span class='co'># get typicality</span>
 <span class='fu'>img_typicality</span><span class='op'>(</span><span class='va'>imglist</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;           [,1]
-#&gt; img1 0.3989660
-#&gt; img2 0.7215712
-#&gt; img3 0.7458308</div><div class='input'>
-</div></pre>
+
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

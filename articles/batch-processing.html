@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Analyzing many images at once • imagefluency</title>
+<title>Analyzing multiple images at once • imagefluency</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,8 +17,8 @@
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Analyzing many images at once">
-<meta property="og:description" content="imagefluency">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Analyzing multiple images at once">
+<meta property="og:description" content="Learn how to analyze multiple images at once with the imagefluency package.">
 <meta property="og:image" content="https://stm.github.io/imagefluency/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -51,28 +51,16 @@
   </a>
 </li>
 <li>
-  <a href="../articles/imagefluency.html">Get started</a>
+  <a href="../articles/getting-started.html">Getting started</a>
+</li>
+<li>
+  <a href="../articles/batch-processing.html">Analyzing multiple images</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/batch-processing.html">Analyzing many images at once</a>
-    </li>
-    <li>
-      <a href="../articles/getting-started.html">Getting started</a>
-    </li>
-  </ul>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -95,9 +83,9 @@
       </header><script src="batch-processing_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Analyzing many images at once</h1>
+      <h1 data-toc-skip>Analyzing multiple images at once</h1>
             
-            <h4 class="date">October 27, 2021</h4>
+            <h4 class="date">October 28, 2021</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/stm/imagefluency/blob/master/vignettes/batch-processing.Rmd"><code>vignettes/batch-processing.Rmd</code></a></small>
       <div class="hidden name"><code>batch-processing.Rmd</code></div>
@@ -120,11 +108,11 @@ figure figcaption {
 }
 </style>
 <p>The <a href="getting-started.html">getting started vignette</a> explains how to apply the core functions of the <code>imagefluency</code> package to an image. However, often you want to analyze several images at once. The following tutorial provides a walkthrough of batch-analyzing images with the <code>imagefluency</code> package.</p>
-<div id="reading-all-images-from-a-folder" class="section level3">
-<h3 class="hasAnchor">
-<a href="#reading-all-images-from-a-folder" class="anchor"></a>Reading all images from a folder</h3>
+<div id="reading-all-images-from-a-folder" class="section level2">
+<h2 class="hasAnchor">
+<a href="#reading-all-images-from-a-folder" class="anchor"></a>Reading all images from a folder</h2>
 <p>Before we can start analyzing the images, we need to load them into R. In this example, we choose to read all images that are shipped with the <code>imagefluency</code> package. However, you can replace the file path with any file path on your computer.</p>
-<p>Next, we read the file names of all images that satisfy a specific pattern using <code><a href="https://rdrr.io/r/base/list.files.html">list.files()</a></code>. In our case we want the file names of all files that have <code>.jpg</code> as their file extension. Thus, we specify <code>pattern = '*.jpg$'</code> (the <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> sign at the end ensures that we only find files that <em>end</em> with <code>.jpg</code>; a file like <code>image1.jpg.png</code> would therefore not be listed). Multiple patterns could also be specified (e.g., <code>pattern = '*.jpg$|*.png$')</code>. Note that we do <em>not</em> already load the images into our R session here. Instead, using <code><a href="https://rdrr.io/r/base/list.files.html">list.files()</a></code> we just extract the file paths to the images.</p>
+<p>Next, we read the file names of all images that satisfy a specific pattern using <code><a href="https://rdrr.io/r/base/list.files.html">list.files()</a></code>. In our case, we want the file names of all files that have <code>.jpg</code> as their file extension. Thus, we specify <code>pattern = '*.jpg$'</code>. The <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> sign at the end ensures that we only find files that <em>end</em> with <code>.jpg</code>, a file like <code>image1.jpg.png</code> would therefore not be listed. Multiple patterns could also be specified (e.g., <code>pattern = '*.jpg$|*.png$')</code>. Note that we do <em>not</em> actually load the images into our R session here. Instead, using <code><a href="https://rdrr.io/r/base/list.files.html">list.files()</a></code> we just extract the images’ file paths for later use.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># path to images (here: example images from the imagefluency package)</span>
 <span class="co"># </span>
@@ -135,21 +123,30 @@ figure figcaption {
 <span class="co"># read filenames of images</span>
 <span class="co"># --NOTE: change file ending accordingly!</span>
 <span class="va">fileNames</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="va">mypath</span>, pattern <span class="op">=</span> <span class="st">'*.jpg$'</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="setting-up-the-analysis" class="section level2">
+<h2 class="hasAnchor">
+<a href="#setting-up-the-analysis" class="anchor"></a>Setting up the analysis</h2>
+<p>In the next step, we load the <code>imagefluency</code> package and create a data frame to store the results. In this tutorial, we’ll use a simple for loop to iterate over all images in the folder, get the image fluency scores, and write the results into the data frame. This is the simplest approach if you have many images and might run into memory issues when loading all images at once.</p>
+<p>Of course, it is also possible to run the analyses using <code><a href="https://rdrr.io/r/base/lapply.html">lapply()</a></code> or <code><a href="https://purrr.tidyverse.org/reference/map.html">purrr::map()</a></code> or their parallel counterparts (see <a href="#speeding-up">speeding up your analysis</a>).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install imagefluency package if not already installed</span>
-<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="https://stm.github.io/imagefluency/">"imagefluency"</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"imagefluency"</span><span class="op">)</span>
-<span class="co"># load imagefluency package</span>
+<code class="sourceCode R"><span class="co"># load imagefluency package</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://stm.github.io/imagefluency/">imagefluency</a></span><span class="op">)</span>
 
-
-<span class="co"># dataframe to store results </span>
+<span class="co"># data frame to store results </span>
 <span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html">basename</a></span><span class="op">(</span><span class="va">fileNames</span><span class="op">)</span>,
                       contrast <span class="op">=</span> <span class="cn">NA</span>, selfsimilarity <span class="op">=</span> <span class="cn">NA</span>, simplicity <span class="op">=</span> <span class="cn">NA</span>,
-                      symmetry <span class="op">=</span> <span class="cn">NA</span>, typicality <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span>
-
-<span class="co"># big loop over all images</span>
+                      symmetry <span class="op">=</span> <span class="cn">NA</span>, typicality <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="big-loop" class="section level2">
+<h2 class="hasAnchor">
+<a href="#big-loop" class="anchor"></a>Looping over all images</h2>
+<p>Now it’s time to calculate the image fluency scores! To this end, we create a big loop that iterates over all image files. Within the loop, first, the image is read into R. Next the scores for contrast, self-similarity, simplicity, and symmetry are computed for each image. The results are stored in the <code>results</code> data frame we created before.</p>
+<p>We use <code><a href="https://rdrr.io/r/base/conditions.html">tryCatch()</a></code> in the loop so that the loop does not break if there are any errors with a specific image. Instead, the result is simply an <code>NA</code> if there is an error. Note that we only compute vertical symmetry in the code below. Optionally, you can also convert all images to grayscale to speed up the computation.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># big loop over all images</span>
 <span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">fileNames</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
-  <span class="co"># print loop number</span>
+  <span class="co"># print loop info</span>
   <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">'** Estimating scores for image'</span>,<span class="va">i</span>,<span class="st">'**\n'</span><span class="op">)</span>
   
   <span class="co"># 1. read image into R</span>
@@ -159,44 +156,371 @@ figure figcaption {
   <span class="co"># --NOTE: remove comment sign in the following line to apply grayscale conversion</span>
   <span class="co"># img &lt;- rgb2gray(img)</span>
   
-  <span class="co"># 3. estimate imagefluency scores (except typicality)</span>
+  <span class="co"># 3. estimate image fluency scores (except typicality)</span>
   <span class="co">#    and store the results</span>
-  <span class="va">results</span><span class="op">$</span><span class="va">contrast</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op">(</span><span class="fu"><a href="../reference/img_contrast.html">img_contrast</a></span><span class="op">(</span><span class="va">img</span><span class="op">)</span>, error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">err</span><span class="op">)</span> <span class="cn">NA</span><span class="op">)</span>
-  <span class="va">results</span><span class="op">$</span><span class="va">selfsimilarity</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op">(</span><span class="fu"><a href="../reference/img_self_similarity.html">img_self_similarity</a></span><span class="op">(</span><span class="va">img</span><span class="op">)</span>, error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">err</span><span class="op">)</span> <span class="cn">NA</span><span class="op">)</span>
-  <span class="va">results</span><span class="op">$</span><span class="va">simplicity</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op">(</span><span class="fu"><a href="../reference/img_simplicity.html">img_simplicity</a></span><span class="op">(</span><span class="va">fileNames</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span>, error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">err</span><span class="op">)</span> <span class="cn">NA</span><span class="op">)</span>
-  <span class="va">results</span><span class="op">$</span><span class="va">symmetry</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op">(</span><span class="fu"><a href="../reference/img_symmetry.html">img_symmetry</a></span><span class="op">(</span><span class="va">img</span>, horizontal <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>, error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">err</span><span class="op">)</span> <span class="cn">NA</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="co">#&gt; ** Estimating scores for image 1 **</span>
-<span class="co">#&gt; ** Estimating scores for image 2 **</span>
-<span class="co">#&gt; ** Estimating scores for image 3 **</span>
-<span class="co">#&gt; ** Estimating scores for image 4 **</span>
-<span class="co">#&gt; ** Estimating scores for image 5 **</span>
-<span class="co">#&gt; ** Estimating scores for image 6 **</span>
-<span class="co">#&gt; ** Estimating scores for image 7 **</span>
-<span class="co">#&gt; ** Estimating scores for image 8 **</span>
-<span class="co">#&gt; ** Estimating scores for image 9 **</span>
-<span class="co">#&gt; ** Estimating scores for image 10 **</span>
-<span class="co">#&gt; ** Estimating scores for image 11 **</span>
-
-<span class="co"># 4. get image typicality scores</span>
+  <span class="va">results</span><span class="op">$</span><span class="va">contrast</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op">(</span><span class="fu"><a href="../reference/img_contrast.html">img_contrast</a></span><span class="op">(</span><span class="va">img</span><span class="op">)</span>, error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="cn">NA</span><span class="op">)</span>
+  <span class="va">results</span><span class="op">$</span><span class="va">selfsimilarity</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op">(</span><span class="fu"><a href="../reference/img_self_similarity.html">img_self_similarity</a></span><span class="op">(</span><span class="va">img</span><span class="op">)</span>, error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="cn">NA</span><span class="op">)</span>
+  <span class="va">results</span><span class="op">$</span><span class="va">simplicity</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op">(</span><span class="fu"><a href="../reference/img_simplicity.html">img_simplicity</a></span><span class="op">(</span><span class="va">fileNames</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span>, error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="cn">NA</span><span class="op">)</span>
+  <span class="va">results</span><span class="op">$</span><span class="va">symmetry</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op">(</span><span class="fu"><a href="../reference/img_symmetry.html">img_symmetry</a></span><span class="op">(</span><span class="va">img</span>, horizontal <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>, error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="cn">NA</span><span class="op">)</span>
+<span class="op">}</span></code></pre></div>
+<pre><code>&gt; ** Estimating scores for image 1 **
+&gt; ** Estimating scores for image 2 **
+&gt; ** Estimating scores for image 3 **
+&gt; ** Estimating scores for image 4 **
+&gt; ** Estimating scores for image 5 **
+&gt; ** Estimating scores for image 6 **
+&gt; ** Estimating scores for image 7 **
+&gt; ** Estimating scores for image 8 **
+&gt; ** Estimating scores for image 9 **
+&gt; ** Estimating scores for image 10 **
+&gt; ** Estimating scores for image 11 **</code></pre>
+</div>
+<div id="typ" class="section level2">
+<h2 class="hasAnchor">
+<a href="#typ" class="anchor"></a>Special case typicality</h2>
+<p>You might have noticed that we didn’t compute typicality in the code above. The reason is that typicality is not a characteristic of a single image itself, but can only be computed relative to a <em>set</em> of images. Thus, we cannot use the loop construct from above. Instead, we read all images at once into memory and compute typicality. Note that depending on the number and size of the images, you might run into memory problems. If that’s the case, you either have to use a computer with a larger memory or reduce the image set accordingly.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># 4. get image typicality scores</span>
 <span class="co"># --NOTE: image typicality is estimated relative to all other images, hence,</span>
 <span class="co">#         the following might take quite a while</span>
 <span class="co"># </span>
 <span class="co"># first read all images at once</span>
-<span class="co"># -- NOTE: if you have to many images, you might run into memory problems</span>
-<span class="va">allimg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">fileNames</span>, <span class="va">img_read</span><span class="op">)</span>
+<span class="co"># -- NOTE: if you have too many images, you might run into memory problems</span>
+<span class="va">allImages</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">fileNames</span>, <span class="va">img_read</span><span class="op">)</span>
 
-<span class="co"># now estimate the typicality and store the results</span>
-<span class="va">results</span><span class="op">$</span><span class="va">typicality</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/img_typicality.html">img_typicality</a></span><span class="op">(</span><span class="va">allimg</span><span class="op">)</span>
-
-<span class="co"># save the results to file</span>
+<span class="co"># now estimate typicality and store the results (only numeric vector without names)</span>
+<span class="va">results</span><span class="op">$</span><span class="va">typicality</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">as.vector</a></span><span class="op">(</span><span class="fu"><a href="../reference/img_typicality.html">img_typicality</a></span><span class="op">(</span><span class="va">allImages</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="saving-the-results" class="section level2">
+<h2 class="hasAnchor">
+<a href="#saving-the-results" class="anchor"></a>Saving the results</h2>
+<p>All done! We have now computed all image fluency scores. Let’s have a look at the results.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">results</span>, digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">filename</th>
+<th align="right">contrast</th>
+<th align="right">selfsimilarity</th>
+<th align="right">simplicity</th>
+<th align="right">symmetry</th>
+<th align="right">typicality</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">berries.jpg</td>
+<td align="right">0.287</td>
+<td align="right">-1.784</td>
+<td align="right">0.187</td>
+<td align="right">0.524</td>
+<td align="right">0.478</td>
+</tr>
+<tr class="even">
+<td align="left">bike.jpg</td>
+<td align="right">0.082</td>
+<td align="right">-0.159</td>
+<td align="right">0.399</td>
+<td align="right">0.419</td>
+<td align="right">0.234</td>
+</tr>
+<tr class="odd">
+<td align="left">bridge.jpg</td>
+<td align="right">0.256</td>
+<td align="right">-1.112</td>
+<td align="right">0.234</td>
+<td align="right">0.480</td>
+<td align="right">0.437</td>
+</tr>
+<tr class="even">
+<td align="left">fireworks.jpg</td>
+<td align="right">0.175</td>
+<td align="right">-1.036</td>
+<td align="right">0.431</td>
+<td align="right">0.658</td>
+<td align="right">-0.130</td>
+</tr>
+<tr class="odd">
+<td align="left">office.jpg</td>
+<td align="right">0.227</td>
+<td align="right">-1.217</td>
+<td align="right">0.188</td>
+<td align="right">0.171</td>
+<td align="right">0.347</td>
+</tr>
+<tr class="even">
+<td align="left">rails.jpg</td>
+<td align="right">0.364</td>
+<td align="right">-0.578</td>
+<td align="right">0.536</td>
+<td align="right">0.955</td>
+<td align="right">0.797</td>
+</tr>
+<tr class="odd">
+<td align="left">romanesco.jpg</td>
+<td align="right">0.292</td>
+<td align="right">-0.032</td>
+<td align="right">0.363</td>
+<td align="right">0.825</td>
+<td align="right">0.281</td>
+</tr>
+<tr class="even">
+<td align="left">sky.jpg</td>
+<td align="right">0.081</td>
+<td align="right">-1.562</td>
+<td align="right">0.580</td>
+<td align="right">0.647</td>
+<td align="right">0.053</td>
+</tr>
+<tr class="odd">
+<td align="left">trees.jpg</td>
+<td align="right">0.189</td>
+<td align="right">-0.551</td>
+<td align="right">0.105</td>
+<td align="right">0.191</td>
+<td align="right">0.281</td>
+</tr>
+<tr class="even">
+<td align="left">valley_green.jpg</td>
+<td align="right">0.246</td>
+<td align="right">-0.507</td>
+<td align="right">0.252</td>
+<td align="right">0.803</td>
+<td align="right">0.633</td>
+</tr>
+<tr class="odd">
+<td align="left">valley_white.jpg</td>
+<td align="right">0.188</td>
+<td align="right">-0.590</td>
+<td align="right">0.191</td>
+<td align="right">0.601</td>
+<td align="right">0.579</td>
+</tr>
+</tbody>
+</table>
+<p>If everything worked, we can save the results e.g. into a <code>.csv</code> file.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># save the results into the image folder</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.csv</a></span><span class="op">(</span><span class="va">results</span>, file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">mypath</span>, <span class="st">'imagefluency_scores.csv'</span><span class="op">)</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="speeding-up" class="section level1">
+<h1 class="hasAnchor">
+<a href="#speeding-up" class="anchor"></a>Speeding up the analysis</h1>
+<p>If you plan to include typicality in your image analysis next to other metrics, there is no need for the big loop from <a href="#big-loop">before</a>. The reason is that you load all images into memory when computing typicality anyway. Thus, we can also do this step right at the beginning of our analysis and compute all image fluency scores from there.</p>
+<div id="reading-all-images-into-memory-using-lapply" class="section level2">
+<h2 class="hasAnchor">
+<a href="#reading-all-images-into-memory-using-lapply" class="anchor"></a>Reading all images into memory using lapply()</h2>
+<p>In the example below, I’ll use base R’s <code><a href="https://rdrr.io/r/base/lapply.html">lapply()</a></code> function to read all images. However, you can of course use purrr’s <code>map()</code> function just as well.</p>
+<p>Using <code><a href="https://rdrr.io/r/base/lapply.html">lapply()</a></code> is very simple: We tell R to apply the <code><a href="../reference/img_read.html">img_read()</a></code> function to every element in the <code>fileNames</code> object. The result is a list where every list element contains an image matrix. Thus, this object might be very big!</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># read all images at once into memory</span>
+<span class="va">allImages</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">fileNames</span>, <span class="va">img_read</span><span class="op">)</span></code></pre></div>
+<p>The above code works perfectly fine if every image can be read without problems (which is usually the case). However, if we want to have a more robust version, we can also define a custom <code><a href="../reference/img_read.html">img_read()</a></code> function that includes error handling with <code>tryCatch</code>.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># define custom image read function that catches errors and returns NA</span>
+<span class="va">img_read_no_error</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">img</span><span class="op">)</span> <span class="op">{</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op">(</span><span class="fu"><a href="../reference/img_read.html">img_read</a></span><span class="op">(</span><span class="va">img</span><span class="op">)</span>, error<span class="op">=</span><span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="cn">NA</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="co"># read images with custom function</span>
+<span class="va">allImages</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">fileNames</span>, <span class="va">img_read_no_error</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="computing-image-fluency-scores-using-lapply" class="section level2">
+<h2 class="hasAnchor">
+<a href="#computing-image-fluency-scores-using-lapply" class="anchor"></a>Computing image fluency scores using lapply()</h2>
+<p>Once we have all images read into memory, we can compute the image fluency scores for all images. To facilitate the process for contrast, self-similarity, simplicity, and symmetry, we define a function that computes the scores for a given image, and then apply the function to all images.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># define function that computes all image fluency scores except typicality</span>
+<span class="va">img_fluency_scores</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">img</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">contr</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op">(</span><span class="fu"><a href="../reference/img_contrast.html">img_contrast</a></span><span class="op">(</span><span class="va">img</span><span class="op">)</span>, error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="cn">NA</span><span class="op">)</span>
+  <span class="va">selfsim</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op">(</span><span class="fu"><a href="../reference/img_self_similarity.html">img_self_similarity</a></span><span class="op">(</span><span class="va">img</span><span class="op">)</span>, error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="cn">NA</span><span class="op">)</span>
+  <span class="va">simpl</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op">(</span><span class="fu"><a href="../reference/img_simplicity.html">img_simplicity</a></span><span class="op">(</span><span class="va">img</span><span class="op">)</span>, error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="cn">NA</span><span class="op">)</span>
+  <span class="va">sym</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op">(</span><span class="fu"><a href="../reference/img_symmetry.html">img_symmetry</a></span><span class="op">(</span><span class="va">img</span>, horizontal <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>, error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="cn">NA</span><span class="op">)</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>contrast <span class="op">=</span> <span class="va">contr</span>, 
+              selfsimilarity <span class="op">=</span> <span class="va">selfsim</span>,
+              simplicity <span class="op">=</span> <span class="va">simpl</span>,
+              symmetry <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unname.html">unname</a></span><span class="op">(</span><span class="va">sym</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="co"># apply function to images</span>
+<span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">allImages</span>, <span class="va">img_fluency_scores</span><span class="op">)</span></code></pre></div>
+<p>Once that’s done, we can convert the results into a data frame and add the images’ file names.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># convert results to data frame and add file names</span>
+<span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">results</span><span class="op">)</span>
+<span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html">basename</a></span><span class="op">(</span><span class="va">fileNames</span><span class="op">)</span>, <span class="va">results</span><span class="op">)</span></code></pre></div>
+<p>In the final step, we add the typicality scores as in the <a href="#typ">previous</a> section and look at the results.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># compute and add typicality to results</span>
+<span class="va">results</span><span class="op">$</span><span class="va">typicality</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">as.vector</a></span><span class="op">(</span><span class="fu"><a href="../reference/img_typicality.html">img_typicality</a></span><span class="op">(</span><span class="va">allImages</span><span class="op">)</span><span class="op">)</span>
+
+<span class="co"># print a nicely formatted results table</span>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">results</span>, digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">filename</th>
+<th align="right">contrast</th>
+<th align="right">selfsimilarity</th>
+<th align="right">simplicity</th>
+<th align="right">symmetry</th>
+<th align="right">typicality</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">berries.jpg</td>
+<td align="right">0.287</td>
+<td align="right">-1.784</td>
+<td align="right">0.187</td>
+<td align="right">0.524</td>
+<td align="right">0.478</td>
+</tr>
+<tr class="even">
+<td align="left">bike.jpg</td>
+<td align="right">0.082</td>
+<td align="right">-0.159</td>
+<td align="right">0.399</td>
+<td align="right">0.419</td>
+<td align="right">0.234</td>
+</tr>
+<tr class="odd">
+<td align="left">bridge.jpg</td>
+<td align="right">0.256</td>
+<td align="right">-1.112</td>
+<td align="right">0.234</td>
+<td align="right">0.480</td>
+<td align="right">0.437</td>
+</tr>
+<tr class="even">
+<td align="left">fireworks.jpg</td>
+<td align="right">0.175</td>
+<td align="right">-1.036</td>
+<td align="right">0.431</td>
+<td align="right">0.658</td>
+<td align="right">-0.130</td>
+</tr>
+<tr class="odd">
+<td align="left">office.jpg</td>
+<td align="right">0.227</td>
+<td align="right">-1.217</td>
+<td align="right">0.188</td>
+<td align="right">0.171</td>
+<td align="right">0.347</td>
+</tr>
+<tr class="even">
+<td align="left">rails.jpg</td>
+<td align="right">0.364</td>
+<td align="right">-0.578</td>
+<td align="right">0.536</td>
+<td align="right">0.955</td>
+<td align="right">0.797</td>
+</tr>
+<tr class="odd">
+<td align="left">romanesco.jpg</td>
+<td align="right">0.292</td>
+<td align="right">-0.032</td>
+<td align="right">0.363</td>
+<td align="right">0.825</td>
+<td align="right">0.281</td>
+</tr>
+<tr class="even">
+<td align="left">sky.jpg</td>
+<td align="right">0.081</td>
+<td align="right">-1.562</td>
+<td align="right">0.580</td>
+<td align="right">0.647</td>
+<td align="right">0.053</td>
+</tr>
+<tr class="odd">
+<td align="left">trees.jpg</td>
+<td align="right">0.189</td>
+<td align="right">-0.551</td>
+<td align="right">0.105</td>
+<td align="right">0.191</td>
+<td align="right">0.281</td>
+</tr>
+<tr class="even">
+<td align="left">valley_green.jpg</td>
+<td align="right">0.246</td>
+<td align="right">-0.507</td>
+<td align="right">0.252</td>
+<td align="right">0.803</td>
+<td align="right">0.633</td>
+</tr>
+<tr class="odd">
+<td align="left">valley_white.jpg</td>
+<td align="right">0.188</td>
+<td align="right">-0.590</td>
+<td align="right">0.192</td>
+<td align="right">0.601</td>
+<td align="right">0.579</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="parallel-processing-with-multiple-cores" class="section level1">
+<h1 class="hasAnchor">
+<a href="#parallel-processing-with-multiple-cores" class="anchor"></a>Parallel processing with multiple cores</h1>
+<p>Above code using <code><a href="https://rdrr.io/r/base/lapply.html">lapply()</a></code> should be faster than the approach of using first a big loop and then again reading in all images to compute typicality. However, we might gain a much larger increase in speed, by using parallelized versions of <code><a href="https://rdrr.io/r/base/lapply.html">lapply()</a></code> or <code><a href="https://purrr.tidyverse.org/reference/map.html">purrr::map()</a></code>, respectively.</p>
+<p>The following code example demonstrates shortly how to achieve this. Essentially, all you have to do is to replace all instances of <code><a href="https://rdrr.io/r/base/lapply.html">lapply()</a></code> from before with <code><a href="https://rdrr.io/r/parallel/mclapply.html">parallel::mclapply()</a></code> (<em>m</em>ulti-<em>c</em>ore lapply). In the example below, however, I’ll use <code><a href="https://rdrr.io/pkg/pbmcapply/man/pbmclapply.html">pbmcapply::pbmclapply</a></code> which adds a progress bar (<em>pb</em>) to the multi-core lapply.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># detect cores for multi-core processing</span>
+<span class="va">ncores</span> <span class="op">&lt;-</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html">detectCores</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="co"># read images with multi-core lapply and progress bar</span>
+<span class="va">allImages</span> <span class="op">&lt;-</span> <span class="fu">pbmcapply</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pbmcapply/man/pbmclapply.html">pbmclapply</a></span><span class="op">(</span><span class="va">fileNames</span>, <span class="va">img_read_no_error</span><span class="op">)</span>
+
+<span class="co"># compute image fluency scores </span>
+<span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">pbmcapply</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pbmcapply/man/pbmclapply.html">pbmclapply</a></span><span class="op">(</span><span class="va">allImages</span>, <span class="va">img_fluency_scores</span><span class="op">)</span>
+
+<span class="co"># convert results to data frame and add file names</span>
+<span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">results</span><span class="op">)</span>
+<span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html">basename</a></span><span class="op">(</span><span class="va">fileNames</span><span class="op">)</span>, <span class="va">results</span><span class="op">)</span>
+
+<span class="co"># compute and add typicality to results</span>
+<span class="va">results</span><span class="op">$</span><span class="va">typicality</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">as.vector</a></span><span class="op">(</span><span class="fu"><a href="../reference/img_typicality.html">img_typicality</a></span><span class="op">(</span><span class="va">allImages</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p>Let’s do a quick comparison of the computing time when computing the four image fluency scores with and without multi-core processing. Note that with increasing file size or number of images, this speed bump will become larger. We ‘simulate’ this by reading in the images 10 times.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># read images 10 times </span>
+<span class="va">allImages</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">fileNames</span>, <span class="fl">10</span><span class="op">)</span>, <span class="va">img_read_no_error</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">'Number of images:'</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">allImages</span><span class="op">)</span>, <span class="st">'\n'</span><span class="op">)</span></code></pre></div>
+<pre><code>&gt; Number of images: 110</code></pre>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># compute imgagefluency scores using lapply()</span>
+<span class="fu">tictoc</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">tic</a></span><span class="op">(</span><span class="st">"lapply"</span><span class="op">)</span>
+<span class="va">results_lapply</span> <span class="op">&lt;-</span> <span class="fu">pbmcapply</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pbmcapply/man/pbmclapply.html">pbmclapply</a></span><span class="op">(</span><span class="va">allImages</span>, <span class="va">img_fluency_scores</span><span class="op">)</span>
+<span class="fu">tictoc</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">toc</a></span><span class="op">(</span>log<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<pre><code>&gt; lapply: 8.086 sec elapsed</code></pre>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># compute imgagefluency scores using multi-core lapply()</span>
+<span class="fu">tictoc</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">tic</a></span><span class="op">(</span><span class="st">"pbmclapply"</span><span class="op">)</span>
+<span class="va">results_pbmclapply</span> <span class="op">&lt;-</span> <span class="fu">pbmcapply</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pbmcapply/man/pbmclapply.html">pbmclapply</a></span><span class="op">(</span><span class="va">allImages</span>, <span class="va">img_fluency_scores</span>,
+                                            mc.cores <span class="op">=</span> <span class="va">ncores</span><span class="op">)</span>
+<span class="fu">tictoc</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">toc</a></span><span class="op">(</span>log<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<pre><code>&gt; pbmclapply: 8.049 sec elapsed</code></pre>
+<p>We can see that the multi-core approach is 1 times faster (in this single test run) than the single-core approach! Let’s see how <code><a href="https://rdrr.io/pkg/furrr/man/future_map.html">furrr::future_map()</a></code> compares to this.</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
+<span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html">plan</a></span><span class="op">(</span><span class="st">'multisession'</span><span class="op">)</span>
+
+<span class="fu">tictoc</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">tic</a></span><span class="op">(</span><span class="st">'future_map'</span><span class="op">)</span>
+<span class="va">results_future_map</span> <span class="op">&lt;-</span> <span class="va">allImages</span> <span class="op">%&gt;%</span> <span class="fu">furrr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/furrr/man/future_map.html">future_map</a></span><span class="op">(</span><span class="va">img_fluency_scores</span>,
+                                      .progress <span class="op">=</span> <span class="cn">TRUE</span>,
+                                      .options <span class="op">=</span> <span class="fu">furrr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/furrr/man/furrr_options.html">furrr_options</a></span><span class="op">(</span>seed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
+<span class="fu">tictoc</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">toc</a></span><span class="op">(</span>log<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<pre><code>&gt; future_map: 9.451 sec elapsed</code></pre>
+<p>Finally, we confirm that all results are the same.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="kw">all.equal</span>(results_lapply, results_pbmclapply)</span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="op">&gt;</span><span class="st"> </span>[<span class="dv">1</span>] <span class="ot">TRUE</span></span>
+<span id="cb22-3"><a href="#cb22-3"></a><span class="kw">all.equal</span>(results_lapply, results_future_map)</span>
+<span id="cb22-4"><a href="#cb22-4"></a><span class="op">&gt;</span><span class="st"> </span>[<span class="dv">1</span>] <span class="ot">TRUE</span></span></code></pre></div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-      </div>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
+</div>
 
 </div>
 
