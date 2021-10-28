@@ -28,22 +28,27 @@ reference:
   contents:
   - run_imagefluency
 
-
 navbar:
   structure:
     left:
     - home
     - intro
+    - batch-processing
+    - articles
     - reference
     - news
     right: github
   components:
+    articles: ~
     home:
       icon: fas fa-home fa-lg
       href: index.html
     intro:
-      text: Get started
-      href: articles/imagefluency.html
+      text: Getting started
+      href: articles/getting-started.html
+    batch-processing:
+      text: Analyzing multiple images
+      href: articles/batch-processing.html
     reference:
       text: Reference
       href: reference/index.html

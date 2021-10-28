@@ -1,6 +1,7 @@
 ---
 title: "Getting started"
 subtitle: "imagefluency: Image Statistics Based on Processing Fluency"
+description: "Getting started with the imagefluency package."
 date: "`r format(Sys.Date(), '%B %d, %Y')`"
 output:
   rmarkdown::html_vignette
@@ -18,6 +19,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+options(rmarkdown.html_vignette.check_title = FALSE)
 ```
 
 <style>
@@ -49,7 +51,8 @@ trees <- './../inst/example_images/trees.jpg'
 valley_green <- './../inst/example_images/valley_green.jpg'
 valley_white <- './../inst/example_images/valley_white.jpg'
 
-imglist <- list(img_read(valley_white), img_read(fireworks), img_read(valley_green))
+imglist <- list(img_read(valley_white), img_read(fireworks),
+                img_read(valley_green))
 ```
 
 

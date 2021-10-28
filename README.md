@@ -42,15 +42,15 @@ The main author is [Stefan Mayer](https://github.com/stm/).
 
 You can install the current stable version from CRAN.
 ```r
-install.packages("imagefluency")
+install.packages('imagefluency')
 ```
 
-To download the latest development version from Github use the `install_github` function of the `devtools` package.
+To download the latest development version from Github use the `install_github` function of the `remotes` package.
 ```r
-# install devtools if necessary
-if (!require("devtools")) install.packages("devtools")
+# install remotes if necessary
+if (!require('remotes')) install.packages('remotes')
 # install imagefluency from github
-devtools::install_github('stm/imagefluency')
+remotes::install_github('stm/imagefluency')
 ```
 Use the following link to report bugs/issues: <https://github.com/stm/imagefluency/issues>
 
@@ -60,7 +60,7 @@ Use the following link to report bugs/issues: <https://github.com/stm/imagefluen
 # visual contrast
 #
 # example image file (from package): bike.jpg
-bike_location <- system.file("example_images", "bike.jpg", package = "imagefluency")
+bike_location <- system.file('example_images', 'bike.jpg', package = 'imagefluency')
 # read image from file
 bike <- img_read(bike_location)
 # get contrast
@@ -69,14 +69,16 @@ img_contrast(bike)
 # visual symmetry
 #
 # read image
-rails <- img_read(system.file("example_images", "rails.jpg", package = "imagefluency"))
+rails <- img_read(system.file('example_images', 'rails.jpg', package = 'imagefluency'))
 # get only vertical symmetry
 img_symmetry(rails, horizontal = FALSE)
 ```
 
 ## Documentation
 
-See the package [vignette](https://stm.github.io/imagefluency/articles/imagefluency.html) for a detailled introduction (or type `vignette("imagefluency", package = "imagefluency")` into the R console) and the [reference page](https://stm.github.io/imagefluency/reference/index.html) for details on each function.
+See the [getting started vignette](https://stm.github.io/imagefluency/articles/getting-started.html) for a detailed introduction (or type `vignette('getting-started', package = 'imagefluency')` into the R console) and the [reference page](https://stm.github.io/imagefluency/reference/index.html) for details on each function. 
+
+If you are analyzing a larger number of images, make sure to read the tutorial on how to [analyze multiple imeages at once](https://stm.github.io/imagefluency/articles/batch-processing.html).
 
 ## Citation
 
@@ -84,7 +86,7 @@ If you want to cite this package in a scientific journal or in any other
 context, run the following code in your `R` console:
 
 ``` r
-utils::citation(package = "imagefluency")
+utils::citation(package = 'imagefluency')
 ```
 There is currently a publication in preparation corresponding this
 package and the citation will be updated once it’s published.

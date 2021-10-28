@@ -3,6 +3,7 @@
 # imagefluency 0.2.4
 
 * fix alpha channel throwing error with typicality
+* new vignette on analyzing multiple images at once
 
 # imagefluency 0.2.3
 
