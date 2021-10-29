@@ -130,7 +130,7 @@ To download the latest development version from Github use the `install_github` 
 # install remotes if necessary
 if (!require('remotes')) install.packages('remotes')
 # install imagefluency from github
-devtools::install_github('stm/imagefluency')
+remotes::install_github('stm/imagefluency')
 ```
 
 After installation, the `imagefluency` package is loaded the usual way by calling `library(imagefluency)`.
