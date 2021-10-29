@@ -13,7 +13,8 @@ Description: Get image statistics based on processing fluency theory. The
 License: GPL-3
 Encoding: UTF-8
 URL: https://stm.github.io/imagefluency/,
-    https://github.com/stm/imagefluency/
+    https://github.com/stm/imagefluency/,
+    https://doi.org/10.5281/zenodo.5614666
 BugReports: https://github.com/stm/imagefluency/issues/
 Depends:
     R (>= 3.2.3)

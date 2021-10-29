@@ -6,6 +6,7 @@
 [![codecov test coverage](https://codecov.io/gh/stm/imagefluency/branch/master/graph/badge.svg)](https://app.codecov.io/gh/stm/imagefluency?branch=main)
 [![CRAN status](https://www.r-pkg.org/badges/version/imagefluency)](https://cran.r-project.org/package=imagefluency)
 [![CRAN downloads](http://cranlogs.r-pkg.org/badges/imagefluency)](https://cran.r-project.org/package=imagefluency)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5614666.svg)](https://doi.org/10.5281/zenodo.5614666)
 <!-- badges: end -->
 
 ## Overview
@@ -82,20 +83,28 @@ If you are analyzing a larger number of images, make sure to read the tutorial o
 
 ## Citation
 
-If you want to cite this package in a scientific journal or in any other
-context, run the following code in your `R` console:
+To cite **imagefluency** in publications use:
 
-``` r
-utils::citation(package = 'imagefluency')
+> Mayer, S. (2021). *imagefluency: Image Statistics Based on Processing Fluency*. R package version 0.2.4. doi:  [10.5281/zenodo.5614666](https://doi.org/10.5281/zenodo.5614666)
+
+A BibTeX entry is:
 ```
-There is currently a publication in preparation corresponding this
-package and the citation will be updated once it’s published.
-
-
+@software{,
+  author       = {Stefan Mayer},
+  title        = {imagefluency: Image Statistics Based on Processing 
+                   Fluency},
+  year         = 2021,
+  version      = {0.2.4},
+  doi          = {10.5281/zenodo.5614666},
+  url          = {https://github.com/stm/imagefluency}
+}
+```
 ## Dependencies
 The `img_complexity` function relies on the packages [R.utils](https://cran.r-project.org/package=R.utils) and [magick](https://github.com/ropensci/magick). The `img_self_similarity` function relies on the packages [OpenImageR](https://github.com/mlampros/OpenImageR), [pracma](https://cran.r-project.org/package=pracma), and [quadprog](https://cran.r-project.org/package=quadprog). The `img_read` function relies on the [readbitmap](https://github.com/jefferis/readbitmap) package. The `run_imagefluency` shiny app depends on [shiny](https://github.com/rstudio/shiny).
 
-## References
+## Further references
+
+To learn more about the different image fluency metrics, see the following publications:
 
 * Mayer, S. & Landwehr, J, R. (2018). Quantifying Visual Aesthetics
 Based on Processing Fluency Theory: Four Algorithmic Measures for
