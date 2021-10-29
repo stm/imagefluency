@@ -78,7 +78,7 @@ img_symmetry(rails, horizontal = FALSE)
 
 See the [getting started vignette](https://stm.github.io/imagefluency/articles/getting-started.html) for a detailed introduction (or type `vignette('getting-started', package = 'imagefluency')` into the R console) and the [reference page](https://stm.github.io/imagefluency/reference/index.html) for details on each function. 
 
-If you are analyzing a larger number of images, make sure to read the tutorial on how to [analyze multiple imeages at once](https://stm.github.io/imagefluency/articles/batch-processing.html).
+If you are analyzing a larger number of images, make sure to read the tutorial on how to [analyze multiple images at once](https://stm.github.io/imagefluency/articles/batch-processing.html).
 
 ## Citation
 

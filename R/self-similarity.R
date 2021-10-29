@@ -45,7 +45,7 @@ NULL
 #'
 #' @param img An image in form of a matrix or array of numeric values,
 #'   preferably by square size. If the input is not square, bilinear resizing to
-#'   a square size is performade using the
+#'   a square size is performed using the
 #'   \code{\link[OpenImageR:resizeImage]{OpenImageR}} package. Use e.g.
 #'   \code{\link{img_read}()} to read an image file into \code{R}.
 #' @param full logical. Should the full frequency range be used for

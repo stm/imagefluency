@@ -135,7 +135,7 @@ If you plan to include typicality in your image analysis next to other metrics, 
 
 ## Reading all images into memory using lapply()
 
-In the example below, I'll use base R's `lapply()` function to read all images. However, you can of course use purrr's `map()` function just as well.
+In the example below, I'll use base R's `lapply()` function to read all images. However, you can of course use `purrr::map()` just as well.
 
 Using `lapply()` is very simple: We tell R to apply the `img_read()` function to every element in the `fileNames` object. The result is a list where every list element contains an image matrix. Thus, this object might be very big!
 
