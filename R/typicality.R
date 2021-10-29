@@ -179,7 +179,7 @@ img_typicality <- function(imglist, rescale = NULL){
   imglist <- matrix(unlist(imglist), ncol = length(imglist), byrow = FALSE)
   img_mean <- rowMeans(imglist)
   output <- stats::cor(imglist, img_mean)
-  rownames(output) <- paste0("img", 1:nrow(output))
+  rownames(output) <- paste0("img", seq_len(nrow(output)))
   return(typicality = output)
 }
 
