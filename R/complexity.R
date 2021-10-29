@@ -19,7 +19,7 @@ NULL
 #'   The function takes the file path of an image file (or URL) or a pre-loaded
 #'   image as input argument (\code{imgfile}) and returns the ratio of the
 #'   compressed divided by the uncompressed image file size. Values can range
-#'   between almost 0 (virtually completely compressed image, thus extremly
+#'   between almost 0 (virtually completely compressed image, thus extremely
 #'   simple image) and 1 (no compression possible, thus extremely complex
 #'   image).
 #'
