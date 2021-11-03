@@ -5,8 +5,7 @@ authors:
     href: https://github.com/stm/
 
 template:
-  params:
-    bootswatch: lumen
+  bootswatch: lumen
 
 reference:
 - title: Main functions
