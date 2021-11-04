@@ -91,8 +91,7 @@ A BibTeX entry is:
 ```
 @software{,
   author       = {Stefan Mayer},
-  title        = {imagefluency: Image Statistics Based on Processing 
-                   Fluency},
+  title        = {imagefluency: Image Statistics Based on Processing Fluency},
   year         = 2021,
   version      = {0.2.4},
   doi          = {10.5281/zenodo.5614666},
