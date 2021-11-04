@@ -51,8 +51,15 @@ To download the latest development version from Github use the `install_github` 
 # install remotes if necessary
 if (!require('remotes')) install.packages('remotes')
 # install imagefluency from github
+remotes::install_github('stm/imagefluency')
+```
+
+Optionally, if you have `rmarkdown` installed, you can also have your system build the the vignettes when downloading from GitHub.
+```r
+# install from github with vignettes (needs rmarkdown installed)
 remotes::install_github('stm/imagefluency', build_vignettes = TRUE)
 ```
+
 Use the following link to report bugs/issues: <https://github.com/stm/imagefluency/issues>
 
 ## Example usage
