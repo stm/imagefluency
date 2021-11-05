@@ -11,9 +11,10 @@
 
 ## Overview
 
-**imagefluency** is an simple R package for image fluency scores. The
+**imagefluency** is a simple R package for image fluency scores. The
 package allows to get scores for several basic aesthetic principles that
-facilitate fluent cognitive processing of images. If you want to try it out before installing, you can find an interactive Shiny app [here](https://mayer.shinyapps.io/imagefluency/) (alpha version).
+facilitate fluent cognitive processing of images.
+If you want to try it out before installing, you can find an interactive Shiny app [here](https://mayer.shinyapps.io/imagefluency/) (alpha version).
     
 The main functions are:
 
