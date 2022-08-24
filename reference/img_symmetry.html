@@ -142,30 +142,24 @@ symmetry (see details).</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Example image with high vertical symmetry: rails</span></span></span>
-<span class="r-in"><span><span class="va">rails</span> <span class="op">&lt;-</span> <span class="fu"><a href="img_read.html">img_read</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"example_images"</span>, <span class="st">"rails.jpg"</span>, package <span class="op">=</span> <span class="st">"imagefluency"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co"># display image</span></span></span>
-<span class="r-in"><span><span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/grid.raster.html" class="external-link">grid.raster</a></span><span class="op">(</span><span class="va">rails</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co"># get symmetry</span></span></span>
-<span class="r-in"><span><span class="fu">img_symmetry</span><span class="op">(</span><span class="va">rails</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   vertical horizontal </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  0.9550184  0.1230524 </span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Example image with low vertical symmetry: bridge</span></span></span>
-<span class="r-in"><span><span class="va">bridge</span> <span class="op">&lt;-</span> <span class="fu"><a href="img_read.html">img_read</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"example_images"</span>, <span class="st">"bridge.jpg"</span>, package <span class="op">=</span> <span class="st">"imagefluency"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co"># display image</span></span></span>
-<span class="r-in"><span><span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/grid.raster.html" class="external-link">grid.raster</a></span><span class="op">(</span><span class="va">bridge</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="img_symmetry-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co"># get symmetry</span></span></span>
-<span class="r-in"><span><span class="fu">img_symmetry</span><span class="op">(</span><span class="va">bridge</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   vertical horizontal </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  0.4802899  0.2525909 </span>
-<span class="r-in"><span></span></span>
-</code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># Example image with high vertical symmetry: rails</span></span>
+<span><span class="va">rails</span> <span class="op">&lt;-</span> <span class="fu"><a href="img_read.html">img_read</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"example_images"</span>, <span class="st">"rails.jpg"</span>, package <span class="op">=</span> <span class="st">"imagefluency"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co"># display image</span></span>
+<span><span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/grid.raster.html" class="external-link">grid.raster</a></span><span class="op">(</span><span class="va">rails</span><span class="op">)</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co"># get symmetry</span></span>
+<span><span class="fu">img_symmetry</span><span class="op">(</span><span class="va">rails</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Example image with low vertical symmetry: bridge</span></span>
+<span><span class="va">bridge</span> <span class="op">&lt;-</span> <span class="fu"><a href="img_read.html">img_read</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"example_images"</span>, <span class="st">"bridge.jpg"</span>, package <span class="op">=</span> <span class="st">"imagefluency"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co"># display image</span></span>
+<span><span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/grid.raster.html" class="external-link">grid.raster</a></span><span class="op">(</span><span class="va">bridge</span><span class="op">)</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co"># get symmetry</span></span>
+<span><span class="fu">img_symmetry</span><span class="op">(</span><span class="va">bridge</span><span class="op">)</span></span>
+<span></span></code></pre></div>
     </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
