@@ -67,7 +67,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/stm/imagefluency" class="external-link">
+  <a href="https://github.com/stm/imagefluency/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -100,7 +100,7 @@
 figure {
     display: inline-block;
     horizontal-align: center;
-    margin: 2;
+    margin: 2px;
 }
 figure img {
     vertical-align: bottom;
@@ -500,7 +500,7 @@ figure figcaption {
 <span><span class="fu">tictoc</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span>log<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <pre eval="F"><code>&gt; pbmclapply: 2.44 sec elapsed</code></pre>
 <p>We can see that the multi-core approach is <!-- # github actions does not support multi-core processing, thus editing result manually
-0.97
+1
 --> around 2 times faster (in this single test run) than the single-core approach! Let’s see how <code><a href="https://furrr.futureverse.org/reference/future_map.html" class="external-link">furrr::future_map()</a></code> compares to this.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
