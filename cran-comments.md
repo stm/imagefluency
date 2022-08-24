@@ -1,13 +1,13 @@
 ## Resubmission
 This is a resubmission. In this version I have:
 
-* updated unit tests to fix an error with fedora/gcc
+* updated roxygen2 to use HTML5 for documentation pages
+* added a new vignette on analyzing multiple images at once
+* fixed a minor error (alpha channel throwing error with typicality)
 
 ## Test environments
-* local OS X install, R 3.5.1
-* local windows install, R version 3.6.1
-* ubuntu 16.04 (on travis-ci), R version 3.6.1
-* win-builder (devel and release)
+* local macOS 11.6 install, R 4.1.0
+via gh-actions: macOS, windows, ubuntu (devel and release)
 
 ## R CMD check results
 There were no ERRORs, WARNINGs, or NOTEs.
