@@ -1,69 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://stm.github.io/imagefluency//index.html</loc>
+    <loc>https://stm.github.io/imagefluency/404.html</loc>
   </url>
   <url>
-    <loc>https://stm.github.io/imagefluency//reference/dot-check_input.html</loc>
+    <loc>https://stm.github.io/imagefluency/CODE_OF_CONDUCT.html</loc>
   </url>
   <url>
-    <loc>https://stm.github.io/imagefluency//reference/dot-compl.html</loc>
+    <loc>https://stm.github.io/imagefluency/articles/batch-processing.html</loc>
   </url>
   <url>
-    <loc>https://stm.github.io/imagefluency//reference/dot-contr.html</loc>
+    <loc>https://stm.github.io/imagefluency/articles/getting-started.html</loc>
   </url>
   <url>
-    <loc>https://stm.github.io/imagefluency//reference/dot-selfsim.html</loc>
+    <loc>https://stm.github.io/imagefluency/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://stm.github.io/imagefluency//reference/dot-shift_axis.html</loc>
+    <loc>https://stm.github.io/imagefluency/authors.html</loc>
   </url>
   <url>
-    <loc>https://stm.github.io/imagefluency//reference/dot-sym.html</loc>
+    <loc>https://stm.github.io/imagefluency/index.html</loc>
   </url>
   <url>
-    <loc>https://stm.github.io/imagefluency//reference/dot-sym_mirror.html</loc>
+    <loc>https://stm.github.io/imagefluency/news/index.html</loc>
   </url>
   <url>
-    <loc>https://stm.github.io/imagefluency//reference/dot-typ.html</loc>
+    <loc>https://stm.github.io/imagefluency/reference/dot-check_input.html</loc>
   </url>
   <url>
-    <loc>https://stm.github.io/imagefluency//reference/imagefluency-package.html</loc>
+    <loc>https://stm.github.io/imagefluency/reference/dot-compl.html</loc>
   </url>
   <url>
-    <loc>https://stm.github.io/imagefluency//reference/img_complexity.html</loc>
+    <loc>https://stm.github.io/imagefluency/reference/dot-contr.html</loc>
   </url>
   <url>
-    <loc>https://stm.github.io/imagefluency//reference/img_contrast.html</loc>
+    <loc>https://stm.github.io/imagefluency/reference/dot-selfsim.html</loc>
   </url>
   <url>
-    <loc>https://stm.github.io/imagefluency//reference/img_read.html</loc>
+    <loc>https://stm.github.io/imagefluency/reference/dot-shift_axis.html</loc>
   </url>
   <url>
-    <loc>https://stm.github.io/imagefluency//reference/img_self_similarity.html</loc>
+    <loc>https://stm.github.io/imagefluency/reference/dot-sym.html</loc>
   </url>
   <url>
-    <loc>https://stm.github.io/imagefluency//reference/img_simplicity.html</loc>
+    <loc>https://stm.github.io/imagefluency/reference/dot-sym_mirror.html</loc>
   </url>
   <url>
-    <loc>https://stm.github.io/imagefluency//reference/img_symmetry.html</loc>
+    <loc>https://stm.github.io/imagefluency/reference/dot-typ.html</loc>
   </url>
   <url>
-    <loc>https://stm.github.io/imagefluency//reference/img_typicality.html</loc>
+    <loc>https://stm.github.io/imagefluency/reference/imagefluency-package.html</loc>
   </url>
   <url>
-    <loc>https://stm.github.io/imagefluency//reference/rgb2gray.html</loc>
+    <loc>https://stm.github.io/imagefluency/reference/img_complexity.html</loc>
   </url>
   <url>
-    <loc>https://stm.github.io/imagefluency//reference/rotate90.html</loc>
+    <loc>https://stm.github.io/imagefluency/reference/img_contrast.html</loc>
   </url>
   <url>
-    <loc>https://stm.github.io/imagefluency//reference/run_imagefluency.html</loc>
+    <loc>https://stm.github.io/imagefluency/reference/img_read.html</loc>
   </url>
   <url>
-    <loc>https://stm.github.io/imagefluency//articles/batch-processing.html</loc>
+    <loc>https://stm.github.io/imagefluency/reference/img_self_similarity.html</loc>
   </url>
   <url>
-    <loc>https://stm.github.io/imagefluency//articles/getting-started.html</loc>
+    <loc>https://stm.github.io/imagefluency/reference/img_simplicity.html</loc>
+  </url>
+  <url>
+    <loc>https://stm.github.io/imagefluency/reference/img_symmetry.html</loc>
+  </url>
+  <url>
+    <loc>https://stm.github.io/imagefluency/reference/img_typicality.html</loc>
+  </url>
+  <url>
+    <loc>https://stm.github.io/imagefluency/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://stm.github.io/imagefluency/reference/rgb2gray.html</loc>
+  </url>
+  <url>
+    <loc>https://stm.github.io/imagefluency/reference/rotate90.html</loc>
+  </url>
+  <url>
+    <loc>https://stm.github.io/imagefluency/reference/run_imagefluency.html</loc>
   </url>
 </urlset>

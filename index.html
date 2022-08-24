@@ -31,6 +31,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -43,7 +45,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">imagefluency</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.4</span>
       </span>
     </div>
 
@@ -70,7 +72,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/stm/imagefluency">
+  <a href="https://github.com/stm/imagefluency" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -88,17 +90,15 @@
       </header><div class="row">
   <div class="contents col-md-9">
 
-<div id="imagefluency-image-statistics-based-on-processing-fluency-" class="section level2">
-<h2 class="hasAnchor">
-<a href="#imagefluency-image-statistics-based-on-processing-fluency-" class="anchor"></a>imagefluency: Image Statistics Based on Processing Fluency <img src="reference/figures/logo.png" align="right">
+<div class="section level2">
+<h2 id="imagefluency-image-statistics-based-on-processing-fluency-">imagefluency: Image Statistics Based on Processing Fluency <img src="reference/figures/logo.png" align="right"><a class="anchor" aria-label="anchor" href="#imagefluency-image-statistics-based-on-processing-fluency-"></a>
 </h2>
 <!-- badges: start -->
-
 </div>
-<div id="overview" class="section level2">
-<h2 class="hasAnchor">
-<a href="#overview" class="anchor"></a>Overview</h2>
-<p><strong>imagefluency</strong> is a simple R package for image fluency scores. The package allows to get scores for several basic aesthetic principles that facilitate fluent cognitive processing of images. If you want to try it out before installing, you can find an interactive Shiny app <a href="https://mayer.shinyapps.io/imagefluency/">here</a> (alpha version).</p>
+<div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
+<p><strong>imagefluency</strong> is a simple R package for image fluency scores. The package allows to get scores for several basic aesthetic principles that facilitate fluent cognitive processing of images. If you want to try it out before installing, you can find an interactive Shiny app <a href="https://mayer.shinyapps.io/imagefluency/" class="external-link">here</a> (alpha version).</p>
 <p>The main functions are:</p>
 <ul>
 <li>
@@ -117,65 +117,63 @@
 <p>Other helpful functions are:</p>
 <ul>
 <li>
-<code><a href="reference/img_read.html">img_read()</a></code> wrapper function to read images into R using <code>read.bitmap()</code> from the <a href="https://github.com/jefferis/readbitmap">readbitmap</a> package</li>
+<code><a href="reference/img_read.html">img_read()</a></code> wrapper function to read images into R using <code>read.bitmap()</code> from the <a href="https://github.com/jefferis/readbitmap" class="external-link">readbitmap</a> package</li>
 <li>
 <code><a href="reference/rgb2gray.html">rgb2gray()</a></code> convert images from RGB into grayscale (might speed up computation)</li>
 <li>
 <code><a href="reference/run_imagefluency.html">run_imagefluency()</a></code> to launch a Shiny app locally on your computer for an interactive demo of the main functions</li>
 </ul>
-<p>The main author is <a href="https://github.com/stm/">Stefan Mayer</a>.</p>
+<p>The main author is <a href="https://github.com/stm/" class="external-link">Stefan Mayer</a>.</p>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <p>You can install the current stable version from CRAN.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">'imagefluency'</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'imagefluency'</span><span class="op">)</span></span></code></pre></div>
 <p>To download the latest development version from Github use the <code>install_github</code> function of the <code>remotes</code> package.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install remotes if necessary</span>
-<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="https://remotes.r-lib.org">'remotes'</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">'remotes'</span><span class="op">)</span>
-<span class="co"># install imagefluency from github</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'stm/imagefluency'</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install remotes if necessary</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://remotes.r-lib.org" class="external-link">'remotes'</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'remotes'</span><span class="op">)</span></span>
+<span><span class="co"># install imagefluency from github</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'stm/imagefluency'</span><span class="op">)</span></span></code></pre></div>
 <p>Optionally, if you have <code>rmarkdown</code> installed, you can also have your system build the the vignettes when downloading from GitHub.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install from github with vignettes (needs rmarkdown installed)</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'stm/imagefluency'</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p>Use the following link to report bugs/issues: <a href="https://github.com/stm/imagefluency/issues" class="uri">https://github.com/stm/imagefluency/issues</a></p>
+<code class="sourceCode R"><span><span class="co"># install from github with vignettes (needs rmarkdown installed)</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'stm/imagefluency'</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p>Use the following link to report bugs/issues: <a href="https://github.com/stm/imagefluency/issues" class="external-link uri">https://github.com/stm/imagefluency/issues</a></p>
 </div>
-<div id="example-usage" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example-usage" class="anchor"></a>Example usage</h2>
+<div class="section level2">
+<h2 id="example-usage">Example usage<a class="anchor" aria-label="anchor" href="#example-usage"></a>
+</h2>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># visual contrast</span>
-<span class="co">#</span>
-<span class="co"># example image file (from package): bike.jpg</span>
-<span class="va">bike_location</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">'example_images'</span>, <span class="st">'bike.jpg'</span>, package <span class="op">=</span> <span class="st">'imagefluency'</span><span class="op">)</span>
-<span class="co"># read image from file</span>
-<span class="va">bike</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/img_read.html">img_read</a></span><span class="op">(</span><span class="va">bike_location</span><span class="op">)</span>
-<span class="co"># get contrast</span>
-<span class="fu"><a href="reference/img_contrast.html">img_contrast</a></span><span class="op">(</span><span class="va">bike</span><span class="op">)</span>
-
-<span class="co"># visual symmetry</span>
-<span class="co">#</span>
-<span class="co"># read image</span>
-<span class="va">rails</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/img_read.html">img_read</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">'example_images'</span>, <span class="st">'rails.jpg'</span>, package <span class="op">=</span> <span class="st">'imagefluency'</span><span class="op">)</span><span class="op">)</span>
-<span class="co"># get only vertical symmetry</span>
-<span class="fu"><a href="reference/img_symmetry.html">img_symmetry</a></span><span class="op">(</span><span class="va">rails</span>, horizontal <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># visual contrast</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co"># example image file (from package): bike.jpg</span></span>
+<span><span class="va">bike_location</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">'example_images'</span>, <span class="st">'bike.jpg'</span>, package <span class="op">=</span> <span class="st">'imagefluency'</span><span class="op">)</span></span>
+<span><span class="co"># read image from file</span></span>
+<span><span class="va">bike</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/img_read.html">img_read</a></span><span class="op">(</span><span class="va">bike_location</span><span class="op">)</span></span>
+<span><span class="co"># get contrast</span></span>
+<span><span class="fu"><a href="reference/img_contrast.html">img_contrast</a></span><span class="op">(</span><span class="va">bike</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># visual symmetry</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co"># read image</span></span>
+<span><span class="va">rails</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/img_read.html">img_read</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">'example_images'</span>, <span class="st">'rails.jpg'</span>, package <span class="op">=</span> <span class="st">'imagefluency'</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co"># get only vertical symmetry</span></span>
+<span><span class="fu"><a href="reference/img_symmetry.html">img_symmetry</a></span><span class="op">(</span><span class="va">rails</span>, horizontal <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="documentation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#documentation" class="anchor"></a>Documentation</h2>
+<div class="section level2">
+<h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
+</h2>
 <p>See the <a href="https://stm.github.io/imagefluency/articles/getting-started.html">getting started vignette</a> for a detailed introduction and the <a href="https://stm.github.io/imagefluency/reference/index.html">reference page</a> for details on each function.</p>
 <p>If you are analyzing a larger number of images, make sure to read the tutorial on how to <a href="https://stm.github.io/imagefluency/articles/batch-processing.html">analyze multiple images at once</a>.</p>
 </div>
-<div id="citation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#citation" class="anchor"></a>Citation</h2>
+<div class="section level2">
+<h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
+</h2>
 <p>To cite <strong>imagefluency</strong> in publications use:</p>
-<blockquote>
-<p>Mayer, S. (2021). <em>imagefluency: Image Statistics Based on Processing Fluency</em>. R package version 0.2.4. doi: <a href="https://doi.org/10.5281/zenodo.5614666">10.5281/zenodo.5614666</a></p>
-</blockquote>
+<blockquote><p>Mayer, S. (2021). <em>imagefluency: Image Statistics Based on Processing Fluency</em>. R package version 0.2.4. doi: <a href="https://doi.org/10.5281/zenodo.5614666" class="external-link">10.5281/zenodo.5614666</a></p></blockquote>
 <p>A BibTeX entry is:</p>
 <pre><code>@software{,
   author       = {Stefan Mayer},
@@ -186,23 +184,23 @@
   url          = {https://github.com/stm/imagefluency}
 }</code></pre>
 </div>
-<div id="dependencies" class="section level2">
-<h2 class="hasAnchor">
-<a href="#dependencies" class="anchor"></a>Dependencies</h2>
-<p>The <code>img_complexity</code> function relies on the packages <a href="https://cran.r-project.org/package=R.utils">R.utils</a> and <a href="https://github.com/ropensci/magick">magick</a>. The <code>img_self_similarity</code> function relies on the packages <a href="https://github.com/mlampros/OpenImageR">OpenImageR</a>, <a href="https://cran.r-project.org/package=pracma">pracma</a>, and <a href="https://cran.r-project.org/package=quadprog">quadprog</a>. The <code>img_read</code> function relies on the <a href="https://github.com/jefferis/readbitmap">readbitmap</a> package. The <code>run_imagefluency</code> shiny app depends on <a href="https://github.com/rstudio/shiny">shiny</a>.</p>
+<div class="section level2">
+<h2 id="dependencies">Dependencies<a class="anchor" aria-label="anchor" href="#dependencies"></a>
+</h2>
+<p>The <code>img_complexity</code> function relies on the packages <a href="https://cran.r-project.org/package=R.utils" class="external-link">R.utils</a> and <a href="https://github.com/ropensci/magick" class="external-link">magick</a>. The <code>img_self_similarity</code> function relies on the packages <a href="https://github.com/mlampros/OpenImageR" class="external-link">OpenImageR</a>, <a href="https://cran.r-project.org/package=pracma" class="external-link">pracma</a>, and <a href="https://cran.r-project.org/package=quadprog" class="external-link">quadprog</a>. The <code>img_read</code> function relies on the <a href="https://github.com/jefferis/readbitmap" class="external-link">readbitmap</a> package. The <code>run_imagefluency</code> shiny app depends on <a href="https://github.com/rstudio/shiny" class="external-link">shiny</a>.</p>
 </div>
-<div id="further-references" class="section level2">
-<h2 class="hasAnchor">
-<a href="#further-references" class="anchor"></a>Further references</h2>
+<div class="section level2">
+<h2 id="further-references">Further references<a class="anchor" aria-label="anchor" href="#further-references"></a>
+</h2>
 <p>To learn more about the different image fluency metrics, see the following publications:</p>
 <ul>
-<li><p>Mayer, S. &amp; Landwehr, J, R. (2018). Quantifying Visual Aesthetics Based on Processing Fluency Theory: Four Algorithmic Measures for Antecedents of Aesthetic Preferences. <em>Psychology of Aesthetics, Creativity, and the Arts</em>, <em>12</em>(4), 399–431. doi: <a href="https://doi.org/10.1037/aca0000187">10.1037/aca0000187</a></p></li>
-<li><p>Mayer, S. &amp; Landwehr, J. R. (2018). Objective measures of design typicality. <em>Design Studies</em>, <em>54</em>, 146–161. doi: <a href="https://doi.org/10.1016/j.destud.2017.09.004">10.1016/j.destud.2017.09.004</a></p></li>
+<li><p>Mayer, S. &amp; Landwehr, J, R. (2018). Quantifying Visual Aesthetics Based on Processing Fluency Theory: Four Algorithmic Measures for Antecedents of Aesthetic Preferences. <em>Psychology of Aesthetics, Creativity, and the Arts</em>, <em>12</em>(4), 399–431. doi: <a href="https://doi.org/10.1037/aca0000187" class="external-link">10.1037/aca0000187</a></p></li>
+<li><p>Mayer, S. &amp; Landwehr, J. R. (2018). Objective measures of design typicality. <em>Design Studies</em>, <em>54</em>, 146–161. doi: <a href="https://doi.org/10.1016/j.destud.2017.09.004" class="external-link">10.1016/j.destud.2017.09.004</a></p></li>
 </ul>
 </div>
-<div id="code-of-conduct" class="section level2">
-<h2 class="hasAnchor">
-<a href="#code-of-conduct" class="anchor"></a>Code of Conduct</h2>
+<div class="section level2">
+<h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
+</h2>
 <p>Please note that this project is released with a <a href="https://stm.github.io/imagefluency/CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 </div>
 
@@ -210,57 +208,67 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=imagefluency">https://​cloud.r-project.org/​package=imagefluency</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/stm/imagefluency/">https://​github.com/​stm/​imagefluency/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/stm/imagefluency/issues/">https://​github.com/​stm/​imagefluency/​issues/​</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=imagefluency" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/stm/imagefluency/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/stm/imagefluency/issues/" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
+<li><a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a></li>
 </ul>
 </div>
+
 <div class="community">
-<h2>Community</h2>
+<h2 data-toc-skip>Community</h2>
 <ul class="list-unstyled">
 <li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
 </ul>
 </div>
-<div class="developers">
-<h2>Developers</h2>
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li>
-<a href="https://github.com/stm/">Stefan Mayer</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-0034-7090" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="authors.html#citation">Citing imagefluency</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.repostatus.org/"><img src="http://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active – The project has reached a stable, usable state and is being actively developed."></a></li>
-<li><a href="https://github.com/stm/imagefluency/actions"><img src="https://github.com/stm/imagefluency/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://app.codecov.io/gh/stm/imagefluency?branch=main"><img src="https://codecov.io/gh/stm/imagefluency/branch/master/graph/badge.svg" alt="codecov test coverage"></a></li>
-<li><a href="https://cran.r-project.org/package=imagefluency"><img src="https://www.r-pkg.org/badges/version/imagefluency" alt="CRAN status"></a></li>
-<li><a href="https://cran.r-project.org/package=imagefluency"><img src="http://cranlogs.r-pkg.org/badges/imagefluency" alt="CRAN downloads"></a></li>
-<li><a href="https://doi.org/10.5281/zenodo.5614666"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.5614666.svg" alt="DOI"></a></li>
+<li>
+<a href="https://github.com/stm/" class="external-link">Stefan Mayer</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-0034-7090" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://www.repostatus.org/" class="external-link"><img src="http://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active – The project has reached a stable, usable state and is being actively developed."></a></li>
+<li><a href="https://github.com/stm/imagefluency/actions" class="external-link"><img src="https://github.com/stm/imagefluency/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://app.codecov.io/gh/stm/imagefluency?branch=main" class="external-link"><img src="https://codecov.io/gh/stm/imagefluency/branch/master/graph/badge.svg" alt="codecov test coverage"></a></li>
+<li><a href="https://cran.r-project.org/package=imagefluency" class="external-link"><img src="https://www.r-pkg.org/badges/version/imagefluency" alt="CRAN status"></a></li>
+<li><a href="https://cran.r-project.org/package=imagefluency" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/imagefluency" alt="CRAN downloads"></a></li>
+<li><a href="https://doi.org/10.5281/zenodo.5614666" class="external-link"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.5614666.svg" alt="DOI"></a></li>
+</ul>
 </div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://github.com/stm/">Stefan Mayer</a>.</p>
+  <p></p>
+<p>Developed by <a href="https://github.com/stm/" class="external-link">Stefan Mayer</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -268,6 +276,8 @@
 
   
 
+
+  
 
   </body>
 </html>
