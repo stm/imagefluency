@@ -48,24 +48,18 @@ NULL
 #'
 #' @references Donderi, D. C. (2006). Visual complexity: A Review.
 #'   \emph{Psychological Bulletin}, \emph{132}, 73--97.
-#'   doi:\href{https://doi.org/10.1037/0033-2909.132.1.73}{10.1037/0033-2909.132.1.73}
-#'
-#'
-#'
+#'   \doi{10.1037/0033-2909.132.1.73}
 #'
 #' @references Forsythe, A., Nadal, M., Sheehy, N., Cela-Conde, C. J., & Sawey,
 #'   M. (2011). Predicting Beauty: Fractal Dimension and Visual Complexity in
 #'   Art. \emph{British Journal of Psychology}, \emph{102}, 49--70.
-#'   doi:\href{https://doi.org/10.1348/000712610X498958}{10.1348/000712610X498958}
-#'
-#'
-#'
+#'   \doi{10.1348/000712610X498958}
 #'
 #' @references Mayer, S. & Landwehr, J, R. (2018). Quantifying Visual Aesthetics
 #'   Based on Processing Fluency Theory: Four Algorithmic Measures for
 #'   Antecedents of Aesthetic Preferences. \emph{Psychology of Aesthetics,
 #'   Creativity, and the Arts}, \emph{12}(4), 399--431.
-#'   doi:\href{https://doi.org/10.1037/aca0000187}{10.1037/aca0000187}
+#'   \doi{10.1037/aca0000187}
 #'
 #'
 #' @seealso \code{\link{img_read}}, \code{\link{img_complexity}},

@@ -68,7 +68,7 @@ img_typicality(imglist)
 \references{
 Mayer, S. & Landwehr, J. R. (2018). Objective measures of design
   typicality. \emph{Design Studies}, \emph{54}, 146--161.
-  doi:\href{https://doi.org/10.1016/j.destud.2017.09.004}{10.1016/j.destud.2017.09.004}
+  \doi{10.1016/j.destud.2017.09.004}
 }
 \seealso{
 \code{\link{img_read}}, \code{\link{img_contrast}},

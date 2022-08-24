@@ -74,7 +74,7 @@ NULL
 #'   Based on Processing Fluency Theory: Four Algorithmic Measures for
 #'   Antecedents of Aesthetic Preferences. \emph{Psychology of Aesthetics,
 #'   Creativity, and the Arts}, \emph{12}(4), 399--431.
-#'   doi:\href{https://doi.org/10.1037/aca0000187}{10.1037/aca0000187}
+#'   \doi{10.1037/aca0000187}
 img_symmetry <- function(img, vertical = TRUE, horizontal = TRUE, ...) {
 
   # check options

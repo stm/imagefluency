@@ -50,7 +50,7 @@ img_contrast(bike)
 \references{
 Peli, E. (1990). Contrast in complex images. \emph{Journal of the
   Optical Society of America A}, \emph{7}, 2032--2040.
-  doi:\href{https://doi.org/10.1364/JOSAA.7.002032}{10.1364/JOSAA.7.002032}
+  \doi{10.1364/JOSAA.7.002032}
 }
 \seealso{
 \code{\link{img_read}}, \code{\link{img_complexity}},

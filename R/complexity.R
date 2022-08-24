@@ -77,18 +77,18 @@ NULL
 #'
 #' @references Donderi, D. C. (2006). Visual complexity: A Review.
 #'   \emph{Psychological Bulletin}, \emph{132}, 73--97.
-#'   doi:\href{https://doi.org/10.1037/0033-2909.132.1.73}{10.1037/0033-2909.132.1.73}
+#'   \doi{10.1037/0033-2909.132.1.73}
 #'
 #' @references Forsythe, A., Nadal, M., Sheehy, N., Cela-Conde, C. J., & Sawey,
 #'   M. (2011). Predicting Beauty: Fractal Dimension and Visual Complexity in
 #'   Art. \emph{British Journal of Psychology}, \emph{102}, 49--70.
-#'   doi:\href{https://doi.org/10.1348/000712610X498958}{10.1348/000712610X498958}
+#'   \doi{10.1348/000712610X498958}
 #'
 #' @references Mayer, S. & Landwehr, J, R. (2018). Quantifying Visual Aesthetics
 #'   Based on Processing Fluency Theory: Four Algorithmic Measures for
 #'   Antecedents of Aesthetic Preferences. \emph{Psychology of Aesthetics,
 #'   Creativity, and the Arts}, \emph{12}(4), 399--431.
-#'   doi:\href{https://doi.org/10.1037/aca0000187}{10.1037/aca0000187}
+#'   \doi{10.1037/aca0000187}
 #'
 #'
 #' @seealso \code{\link{img_read}}, \code{\link{img_contrast}},
@@ -228,28 +228,3 @@ img_complexity <- function(imgfile, algorithm = "zip", rotate = FALSE){
   # return ratio between compressed and original (bmp) size (i.e., compression rate)
   return(compressed_size/orig_size)
 }
-
-
-# # not in use yet
-# img_entropy <- function(img) {
-#
-#   binMin <- 0
-#   binMax <- 1
-#   if (max(img) > 1) binMax <- 255
-#
-#   # calculate histogram (with 256 bins as in Matlab)
-#   imgHist <- hist(as.vector(img), breaks = seq(binMin, binMax, length.out = 256), plot = FALSE)$density
-#   #imgHist <- hist(img, breaks = seq(binMin, binMax, length.out = 256), plot = FALSE)$counts
-#
-#   # remove zero entries
-#   imgHist[imgHist==0] <- NA
-#   imgHist <- na.omit(imgHist)
-#
-#   # normalize
-#   imgNorm <- imgHist
-#   #imgNorm <- imgHist / sum(imgHist)
-#
-#   # entropy
-#   entr <- -sum(imgNorm * log2(imgNorm))
-#   return(entr)
-# }
