@@ -39,17 +39,17 @@ figure figcaption {
 ```{r setup, include=FALSE}
 library(imagefluency)
 
-bike <- './../inst/example_images/bike.jpg'
-berries <- './../inst/example_images/berries.jpg'
-bridge <- './../inst/example_images/bridge.jpg'
-fireworks <- './../inst/example_images/fireworks.jpg'
-office <- './../inst/example_images/office.jpg'
-rails <- './../inst/example_images/rails.jpg'
-romanesco <- './../inst/example_images/romanesco.jpg'
-sky <- './../inst/example_images/sky.jpg'
-trees <- './../inst/example_images/trees.jpg'
-valley_green <- './../inst/example_images/valley_green.jpg'
-valley_white <- './../inst/example_images/valley_white.jpg'
+bike <- 'example_images/bike.jpg'
+berries <- 'example_images/berries.jpg'
+bridge <- 'example_images/bridge.jpg'
+fireworks <- 'example_images/fireworks.jpg'
+office <- 'example_images/office.jpg'
+rails <- 'example_images/rails.jpg'
+romanesco <- 'example_images/romanesco.jpg'
+sky <- 'example_images/sky.jpg'
+trees <- 'example_images/trees.jpg'
+valley_green <- 'example_images/valley_green.jpg'
+valley_white <- 'example_images/valley_white.jpg'
 
 imglist <- list(img_read(valley_white), img_read(fireworks),
                 img_read(valley_green))
