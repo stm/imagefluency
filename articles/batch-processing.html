@@ -82,7 +82,7 @@
 
       
 
-      </header><div class="row">
+      </header><script src="batch-processing_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Analyzing multiple images at once</h1>
@@ -500,7 +500,7 @@ figure figcaption {
 <span><span class="fu">tictoc</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span>log<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <pre eval="F"><code>&gt; pbmclapply: 2.44 sec elapsed</code></pre>
 <p>We can see that the multi-core approach is <!-- # github actions does not support multi-core processing, thus editing result manually
-1
+0.98
 --> around 2 times faster (in this single test run) than the single-core approach! Let’s see how <code><a href="https://furrr.futureverse.org/reference/future_map.html" class="external-link">furrr::future_map()</a></code> compares to this.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
@@ -513,10 +513,10 @@ figure figcaption {
 <span><span class="fu">tictoc</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span>log<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <pre eval="F"><code>&gt; future_map: 2.98 sec elapsed</code></pre>
 <p>Finally, we confirm that all results are the same.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all.equal</span>(results_lapply, results_pbmclapply)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> [<span class="dv">1</span>] <span class="cn">TRUE</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">all.equal</span>(results_lapply, results_future_map)</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> [<span class="dv">1</span>] <span class="cn">TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="kw">all.equal</span>(results_lapply, results_pbmclapply)</span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="op">&gt;</span><span class="st"> </span>[<span class="dv">1</span>] <span class="ot">TRUE</span></span>
+<span id="cb22-3"><a href="#cb22-3"></a><span class="kw">all.equal</span>(results_lapply, results_future_map)</span>
+<span id="cb22-4"><a href="#cb22-4"></a><span class="op">&gt;</span><span class="st"> </span>[<span class="dv">1</span>] <span class="ot">TRUE</span></span></code></pre></div>
 </div>
   </div>
 

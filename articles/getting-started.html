@@ -82,7 +82,7 @@
 
       
 
-      </header><div class="row">
+      </header><script src="getting-started_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Getting started</h1>
@@ -117,7 +117,7 @@ figure figcaption {
 <h3 id="motivation-why-create-yet-another-r-package">Motivation: Why create yet another R package<a class="anchor" aria-label="anchor" href="#motivation-why-create-yet-another-r-package"></a>
 </h3>
 <p>Over the last decades, the amount of data generated is growing rapidly, predominantly due to digitalization. Most of today’s data is unstructured, and this share is increasing. Given that unstructured data is rich, these data could provide rich insights for scientific research from a variety of fields and practice alike. Especially images (i.e., visual stimuli) are recognized as valuable source of information.</p>
-<p>At the same time, vision research and research in psychology shows that even simple changes in low-level image features (like symmetry, contrast, or complexity) can have a tremendous effect on a variety of human judgments. As an example, a statement like “Nut bread is healthier than potato bread” is more likely to be perceived as true when presented in a color that is easy to read against a white background (high contrast) instead of being presented in a color that is difficult to read against a white background (low contrast; cf. <span class="citation">[<a href="#ref-Hansen2008" role="doc-biblioref">1</a>]</span>). Thus, it might be useful to estimate and control for differences in such low-level visual features in any research that includes visual stimuli.</p>
+<p>At the same time, vision research and research in psychology shows that even simple changes in low-level image features (like symmetry, contrast, or complexity) can have a tremendous effect on a variety of human judgments. As an example, a statement like “Nut bread is healthier than potato bread” is more likely to be perceived as true when presented in a color that is easy to read against a white background (high contrast) instead of being presented in a color that is difficult to read against a white background (low contrast; cf. <span class="citation">[<a href="#ref-Hansen2008" role="doc-biblioref">1</a>]</span>). Thus, it might be useful to estimate and control for differences in such low-level visual features in any research that includes visual stimuli.</p>
 <p><strong>imagefluency</strong> is an simple <code>R</code> package for such low-level image scores based on processing fluency theory. The package allows to get scores for several basic aesthetic principles that facilitate fluent cognitive processing of images: contrast, complexity / simplicity, self-similarity, symmetry, and typicality.</p>
 </div>
 <div class="section level3">
@@ -198,7 +198,7 @@ figure figcaption {
 <div class="section level3">
 <h3 id="contrast">Contrast<a class="anchor" aria-label="anchor" href="#contrast"></a>
 </h3>
-<p>The function <code><a href="../reference/img_contrast.html">img_contrast()</a></code> returns the contrast of an image. Most research defines contrast in images as the root-mean-squared (RMS) contrast which is the standard deviation of the normalized pixel intensity values <span class="citation">[<a href="#ref-Peli1990" role="doc-biblioref">10</a>]</span>: <span class="math inline">\(\sqrt{\frac{1}{M N}\sum_{i=0}^{N-1}\sum_{j=0}^{M - 1}(I_{ij} - \bar{I})^2}\)</span>. The RMS of an image as a measure for visual contrast has been shown to predict human contrast detection thresholds well <span class="citation">[<a href="#ref-Frazor2006" role="doc-biblioref">11</a>]</span>. Therefore, the function calculates contrast by computing the RMS contrast of the input image. Consequently, a higher value indicates higher contrast. The image is normalized if necessary (i.e., normalization into range [0, 1]). For color images, a weighted average between color the channels is computed (cf. <span class="citation">[<a href="#ref-MayerPACA2018" role="doc-biblioref">8</a>]</span>).</p>
+<p>The function <code><a href="../reference/img_contrast.html">img_contrast()</a></code> returns the contrast of an image. Most research defines contrast in images as the root-mean-squared (RMS) contrast which is the standard deviation of the normalized pixel intensity values <span class="citation">[<a href="#ref-Peli1990" role="doc-biblioref">10</a>]</span>: <span class="math inline">\(\sqrt{\frac{1}{M N}\sum_{i=0}^{N-1}\sum_{j=0}^{M - 1}(I_{ij} - \bar{I})^2}\)</span>. The RMS of an image as a measure for visual contrast has been shown to predict human contrast detection thresholds well <span class="citation">[<a href="#ref-Frazor2006" role="doc-biblioref">11</a>]</span>. Therefore, the function calculates contrast by computing the RMS contrast of the input image. Consequently, a higher value indicates higher contrast. The image is normalized if necessary (i.e., normalization into range [0, 1]). For color images, a weighted average between color the channels is computed (cf. <span class="citation">[<a href="#ref-MayerPACA2018" role="doc-biblioref">8</a>]</span>).</p>
 <p>Note that in the following, example images that come with the package are used. Moreover, the images can be displayed using the <code>grid.raster()</code> function from the <code>grid</code> package.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Example image with relatively high contrast: berries</span></span>
@@ -286,7 +286,7 @@ score: -1.22
 <h3 id="symmetry">Symmetry<a class="anchor" aria-label="anchor" href="#symmetry"></a>
 </h3>
 <p>The function <code><a href="../reference/img_symmetry.html">img_symmetry()</a></code> returns the vertical and horizontal symmetry of an image as a numeric value between 0 (not symmetrical) and 1 (perfectly symmetrical).</p>
-<p>Symmetry is computed as the correlation of corresponding image halves (i.e., the pairwise correlation of the corresponding pixels, cf. <span class="citation">[<a href="#ref-Mayer2014" role="doc-biblioref">15</a>]</span>). As the perceptual mirror axis is not necessarily exactly in the middle of a picture, the function detects in a first step the ‘optimal’ mirror axis by estimating several symmetry values with different positions for the mirror axis. To this end, the mirror axis is automatically shifted up to 5% and to the right (in the case of vertical symmetry; analogously for horizontal symmetry). In the second step, the overall symmetry score is computed as the maximum of the symmetry scores given the different mirror axes. For color images, the weighted average between each color channel’s values is computed. See <span class="citation">[<a href="#ref-MayerPACA2018" role="doc-biblioref">8</a>]</span> for details.</p>
+<p>Symmetry is computed as the correlation of corresponding image halves (i.e., the pairwise correlation of the corresponding pixels, cf. <span class="citation">[<a href="#ref-Mayer2014" role="doc-biblioref">15</a>]</span>). As the perceptual mirror axis is not necessarily exactly in the middle of a picture, the function detects in a first step the ‘optimal’ mirror axis by estimating several symmetry values with different positions for the mirror axis. To this end, the mirror axis is automatically shifted up to 5% and to the right (in the case of vertical symmetry; analogously for horizontal symmetry). In the second step, the overall symmetry score is computed as the maximum of the symmetry scores given the different mirror axes. For color images, the weighted average between each color channel’s values is computed. See <span class="citation">[<a href="#ref-MayerPACA2018" role="doc-biblioref">8</a>]</span> for details.</p>
 <p>The function further has two optional logical parameters: <code>vertical</code> and <code>horizontal</code> (both <code>TRUE</code> by default). If one of the parameter is set to <code>FALSE</code>, the vertical or horizontal symmetry is not computed, respectively. See the function’s help file (i.e., <code><a href="../reference/img_symmetry.html">?img_symmetry</a></code>) for information about the additional options <code>shift_range</code> and <code>per_channel</code>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Example image with high vertical symmetry: rails</span></span>
@@ -351,90 +351,57 @@ score: 0.72
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <small>
-<div id="refs" class="references csl-bib-body" line-spacing="2">
-<div id="ref-Hansen2008" class="csl-entry">
-<div class="csl-left-margin">1. </div>
-<div class="csl-right-inline">Hansen, J., Dechêne, A., &amp; Wänke, M. (2008). Discrepant fluency increases subjective truth. <em>Journal of Experimental Social Psychology</em>, <em>44</em>(3), 687–691. <a href="https://doi.org/10.1016/j.jesp.2007.04.005" class="external-link">https://doi.org/10.1016/j.jesp.2007.04.005</a>
+<div id="refs">
+<div id="ref-Hansen2008">
+<p>1. Hansen, J., Dechêne, A., &amp; Wänke, M. (2008). Discrepant fluency increases subjective truth. <em>Journal of Experimental Social Psychology</em>, <em>44</em>(3), 687–691. <a href="https://doi.org/10.1016/j.jesp.2007.04.005" class="external-link">https://doi.org/10.1016/j.jesp.2007.04.005</a></p>
 </div>
+<div id="ref-Reber2004">
+<p>2. Reber, R., Schwarz, N., &amp; Winkielman, P. (2004). Processing fluency and aesthetic pleasure: Is beauty in the perceiver’s processing experience? <em>Personality and Social Psychology Review</em>, <em>8</em>(4), 364–382. <a href="https://doi.org/10.1207/s15327957pspr0804_3" class="external-link">https://doi.org/10.1207/s15327957pspr0804_3</a></p>
 </div>
-<div id="ref-Reber2004" class="csl-entry">
-<div class="csl-left-margin">2. </div>
-<div class="csl-right-inline">Reber, R., Schwarz, N., &amp; Winkielman, P. (2004). Processing fluency and aesthetic pleasure: Is beauty in the perceiver’s processing experience? <em>Personality and Social Psychology Review</em>, <em>8</em>(4), 364–382. <a href="https://doi.org/10.1207/s15327957pspr0804_3" class="external-link">https://doi.org/10.1207/s15327957pspr0804_3</a>
+<div id="ref-Schwarz2004">
+<p>3. Schwarz, N. (2004). Metacognitive experiences in consumer judgment and decision making. <em>Journal of Consumer Psychology</em>, <em>14</em>(4), 332–348. <a href="https://doi.org/10.1207/s15327663jcp1404_2" class="external-link">https://doi.org/10.1207/s15327663jcp1404_2</a></p>
 </div>
+<div id="ref-Graf2015">
+<p>4. Graf, L. K. M., &amp; Landwehr, J. R. (2015). A dual-process perspective on fluency-based aesthetics: The pleasure-interest model of aesthetic liking. <em>Personality and Social Psychology Review</em>, <em>19</em>(4), 395–410. <a href="https://doi.org/10.1177/1088868315574978" class="external-link">https://doi.org/10.1177/1088868315574978</a></p>
 </div>
-<div id="ref-Schwarz2004" class="csl-entry">
-<div class="csl-left-margin">3. </div>
-<div class="csl-right-inline">Schwarz, N. (2004). Metacognitive experiences in consumer judgment and decision making. <em>Journal of Consumer Psychology</em>, <em>14</em>(4), 332–348. <a href="https://doi.org/10.1207/s15327663jcp1404_2" class="external-link">https://doi.org/10.1207/s15327663jcp1404_2</a>
+<div id="ref-Winkielman2001">
+<p>5. Winkielman, P., &amp; Cacioppo, J. T. (2001). Mind at ease puts a smile on the face: Psychophysiological evidence that processing facilitation elicits positive affect. <em>Journal of Personality and Social Psychology</em>, <em>81</em>(6), 989. <a href="https://doi.org/10.1037//0022-3514.81.6.989" class="external-link">https://doi.org/10.1037//0022-3514.81.6.989</a></p>
 </div>
+<div id="ref-Alter2009">
+<p>6. Alter, A. L., &amp; Oppenheimer, D. M. (2009). Uniting the tribes of fluency to form a metacognitive nation. <em>Personality and Social Psychology Review</em>, <em>13</em>(3), 219–235. <a href="https://doi.org/10.1177/1088868309341564" class="external-link">https://doi.org/10.1177/1088868309341564</a></p>
 </div>
-<div id="ref-Graf2015" class="csl-entry">
-<div class="csl-left-margin">4. </div>
-<div class="csl-right-inline">Graf, L. K. M., &amp; Landwehr, J. R. (2015). A dual-process perspective on fluency-based aesthetics: The pleasure-interest model of aesthetic liking. <em>Personality and Social Psychology Review</em>, <em>19</em>(4), 395–410. <a href="https://doi.org/10.1177/1088868315574978" class="external-link">https://doi.org/10.1177/1088868315574978</a>
+<div id="ref-Joye2016">
+<p>7. Joye, Y., Steg, L., Ünal, A. B., &amp; Pals, R. (2016). When complex is easy on the mind: Internal repetition of visual information in complex objects is a source of perceptual fluency. <em>Journal of Experimental Psychology: Human Perception and Performance</em>, <em>42</em>(1), 103–114. <a href="https://doi.org/10.1037/xhp0000105" class="external-link">https://doi.org/10.1037/xhp0000105</a></p>
 </div>
+<div id="ref-MayerPACA2018">
+<p>8. Mayer, S., &amp; Landwehr, J. R. (2018). Quantifying visual aesthetics based on processing fluency theory: Four algorithmic measures for antecedents of aesthetic preferences. <em>Psychology of Aesthetics, Creativity, and the Arts</em>, <em>12</em>(4), 399–431. <a href="https://doi.org/10.1037/aca0000187" class="external-link">https://doi.org/10.1037/aca0000187</a></p>
 </div>
-<div id="ref-Winkielman2001" class="csl-entry">
-<div class="csl-left-margin">5. </div>
-<div class="csl-right-inline">Winkielman, P., &amp; Cacioppo, J. T. (2001). Mind at ease puts a smile on the face: Psychophysiological evidence that processing facilitation elicits positive affect. <em>Journal of Personality and Social Psychology</em>, <em>81</em>(6), 989. <a href="https://doi.org/10.1037//0022-3514.81.6.989" class="external-link">https://doi.org/10.1037//0022-3514.81.6.989</a>
+<div id="ref-Simoncelli2003">
+<p>9. Simoncelli, E. P. (2003). Vision and the statistics of the visual environment. <em>Current Opinion in Neurobiology</em>, <em>13</em>(2), 144–149. <a href="https://doi.org/10.1016/S0959-4388(03)00047-3" class="external-link">https://doi.org/10.1016/S0959-4388(03)00047-3</a></p>
 </div>
+<div id="ref-Peli1990">
+<p>10. Peli, E. (1990). Contrast in complex images. <em>Journal of the Optical Society of America A</em>, <em>7</em>(10), 2032–2040. <a href="https://doi.org/10.1364/JOSAA.7.002032" class="external-link">https://doi.org/10.1364/JOSAA.7.002032</a></p>
 </div>
-<div id="ref-Alter2009" class="csl-entry">
-<div class="csl-left-margin">6. </div>
-<div class="csl-right-inline">Alter, A. L., &amp; Oppenheimer, D. M. (2009). Uniting the tribes of fluency to form a metacognitive nation. <em>Personality and Social Psychology Review</em>, <em>13</em>(3), 219–235. <a href="https://doi.org/10.1177/1088868309341564" class="external-link">https://doi.org/10.1177/1088868309341564</a>
+<div id="ref-Frazor2006">
+<p>11. Frazor, R. A., &amp; Geisler, W. S. (2006). Local luminance and contrast in natural images. <em>Vision Research</em>, <em>46</em>(10), 1585–1598. <a href="https://doi.org/10.1016/j.visres.2005.06.038" class="external-link">https://doi.org/10.1016/j.visres.2005.06.038</a></p>
 </div>
+<div id="ref-Donderi2006">
+<p>12. Donderi, D. C. (2006). Visual complexity: A review. <em>Psychological Bulletin</em>, <em>132</em>(1), 73–97. <a href="https://doi.org/10.1037/0033-2909.132.1.73" class="external-link">https://doi.org/10.1037/0033-2909.132.1.73</a></p>
 </div>
-<div id="ref-Joye2016" class="csl-entry">
-<div class="csl-left-margin">7. </div>
-<div class="csl-right-inline">Joye, Y., Steg, L., Ünal, A. B., &amp; Pals, R. (2016). When complex is easy on the mind: Internal repetition of visual information in complex objects is a source of perceptual fluency. <em>Journal of Experimental Psychology: Human Perception and Performance</em>, <em>42</em>(1), 103–114. <a href="https://doi.org/10.1037/xhp0000105" class="external-link">https://doi.org/10.1037/xhp0000105</a>
+<div id="ref-Landwehr2011">
+<p>13. Landwehr, J. R., Labroo, A. A., &amp; Herrmann, A. (2011). Gut liking for the ordinary: Incorporating design fluency improves automobile sales forecasts. <em>Marketing Science</em>, <em>30</em>(3), 416–429. <a href="https://doi.org/10.1287/mksc.1110.0633" class="external-link">https://doi.org/10.1287/mksc.1110.0633</a></p>
 </div>
+<div id="ref-Simoncelli2001">
+<p>14. Simoncelli, E. P., &amp; Olshausen, B. A. (2001). Natural image statistics and neural representation. <em>Annual Review of Neuroscience</em>, <em>24</em>(1), 1193–1216. <a href="https://doi.org/10.1146/annurev.neuro.24.1.1193" class="external-link">https://doi.org/10.1146/annurev.neuro.24.1.1193</a></p>
 </div>
-<div id="ref-MayerPACA2018" class="csl-entry">
-<div class="csl-left-margin">8. </div>
-<div class="csl-right-inline">Mayer, S., &amp; Landwehr, J. R. (2018). Quantifying visual aesthetics based on processing fluency theory: Four algorithmic measures for antecedents of aesthetic preferences. <em>Psychology of Aesthetics, Creativity, and the Arts</em>, <em>12</em>(4), 399–431. <a href="https://doi.org/10.1037/aca0000187" class="external-link">https://doi.org/10.1037/aca0000187</a>
+<div id="ref-Mayer2014">
+<p>15. Mayer, S., &amp; Landwehr, J. R. (2014). When complexity is symmetric: The interplay of two core determinants of visual aesthetics. In J. Cotte &amp; S. Wood (Eds.), <em>Advances in Consumer Research</em> (Vol. 42, pp. 608–609). Duluth, MN: Association for Consumer Research.</p>
 </div>
+<div id="ref-Perrett1994">
+<p>16. Perrett, D. I., May, K. A., &amp; Yoshikawa, S. (1994). Facial shape and judgements of female attractiveness. <em>Nature</em>, <em>368</em>(6468), 239–242. <a href="https://doi.org/10.1038/368239a0" class="external-link">https://doi.org/10.1038/368239a0</a></p>
 </div>
-<div id="ref-Simoncelli2003" class="csl-entry">
-<div class="csl-left-margin">9. </div>
-<div class="csl-right-inline">Simoncelli, E. P. (2003). Vision and the statistics of the visual environment. <em>Current Opinion in Neurobiology</em>, <em>13</em>(2), 144–149. <a href="https://doi.org/10.1016/S0959-4388(03)00047-3" class="external-link">https://doi.org/10.1016/S0959-4388(03)00047-3</a>
-</div>
-</div>
-<div id="ref-Peli1990" class="csl-entry">
-<div class="csl-left-margin">10. </div>
-<div class="csl-right-inline">Peli, E. (1990). Contrast in complex images. <em>Journal of the Optical Society of America A</em>, <em>7</em>(10), 2032–2040. <a href="https://doi.org/10.1364/JOSAA.7.002032" class="external-link">https://doi.org/10.1364/JOSAA.7.002032</a>
-</div>
-</div>
-<div id="ref-Frazor2006" class="csl-entry">
-<div class="csl-left-margin">11. </div>
-<div class="csl-right-inline">Frazor, R. A., &amp; Geisler, W. S. (2006). Local luminance and contrast in natural images. <em>Vision Research</em>, <em>46</em>(10), 1585–1598. <a href="https://doi.org/10.1016/j.visres.2005.06.038" class="external-link">https://doi.org/10.1016/j.visres.2005.06.038</a>
-</div>
-</div>
-<div id="ref-Donderi2006" class="csl-entry">
-<div class="csl-left-margin">12. </div>
-<div class="csl-right-inline">Donderi, D. C. (2006). Visual complexity: A review. <em>Psychological Bulletin</em>, <em>132</em>(1), 73–97. <a href="https://doi.org/10.1037/0033-2909.132.1.73" class="external-link">https://doi.org/10.1037/0033-2909.132.1.73</a>
-</div>
-</div>
-<div id="ref-Landwehr2011" class="csl-entry">
-<div class="csl-left-margin">13. </div>
-<div class="csl-right-inline">Landwehr, J. R., Labroo, A. A., &amp; Herrmann, A. (2011). Gut liking for the ordinary: Incorporating design fluency improves automobile sales forecasts. <em>Marketing Science</em>, <em>30</em>(3), 416–429. <a href="https://doi.org/10.1287/mksc.1110.0633" class="external-link">https://doi.org/10.1287/mksc.1110.0633</a>
-</div>
-</div>
-<div id="ref-Simoncelli2001" class="csl-entry">
-<div class="csl-left-margin">14. </div>
-<div class="csl-right-inline">Simoncelli, E. P., &amp; Olshausen, B. A. (2001). Natural image statistics and neural representation. <em>Annual Review of Neuroscience</em>, <em>24</em>(1), 1193–1216. <a href="https://doi.org/10.1146/annurev.neuro.24.1.1193" class="external-link">https://doi.org/10.1146/annurev.neuro.24.1.1193</a>
-</div>
-</div>
-<div id="ref-Mayer2014" class="csl-entry">
-<div class="csl-left-margin">15. </div>
-<div class="csl-right-inline">Mayer, S., &amp; Landwehr, J. R. (2014). When complexity is symmetric: The interplay of two core determinants of visual aesthetics. In J. Cotte &amp; S. Wood (Eds.), <em><span class="nocase">Advances in Consumer Research</span></em> (Vol. 42, pp. 608–609). Duluth, MN: Association for Consumer Research.</div>
-</div>
-<div id="ref-Perrett1994" class="csl-entry">
-<div class="csl-left-margin">16. </div>
-<div class="csl-right-inline">Perrett, D. I., May, K. A., &amp; Yoshikawa, S. (1994). Facial shape and judgements of female attractiveness. <em>Nature</em>, <em>368</em>(6468), 239–242. <a href="https://doi.org/10.1038/368239a0" class="external-link">https://doi.org/10.1038/368239a0</a>
-</div>
-</div>
-<div id="ref-MayerDS2018" class="csl-entry">
-<div class="csl-left-margin">17. </div>
-<div class="csl-right-inline">Mayer, S., &amp; Landwehr, J. R. (2018). Objective measures of design typicality. <em>Design Studies</em>, <em>54</em>, 146–161. <a href="https://doi.org/10.1016/j.destud.2017.09.004" class="external-link">https://doi.org/10.1016/j.destud.2017.09.004</a>
-</div>
+<div id="ref-MayerDS2018">
+<p>17. Mayer, S., &amp; Landwehr, J. R. (2018). Objective measures of design typicality. <em>Design Studies</em>, <em>54</em>, 146–161. <a href="https://doi.org/10.1016/j.destud.2017.09.004" class="external-link">https://doi.org/10.1016/j.destud.2017.09.004</a></p>
 </div>
 </div>
 </small><p></p>
