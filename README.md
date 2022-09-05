@@ -2,10 +2,11 @@
 
 <!-- badges: start -->
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/)
-[![R-CMD-check](https://github.com/stm/imagefluency/workflows/R-CMD-check/badge.svg)](https://github.com/stm/imagefluency/actions)
+[![R-CMD-check](https://github.com/stm/imagefluency/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/stm/imagefluency/actions/workflows/R-CMD-check.yaml)
 [![codecov test coverage](https://codecov.io/gh/stm/imagefluency/branch/master/graph/badge.svg)](https://app.codecov.io/gh/stm/imagefluency?branch=main)
 [![CRAN status](https://www.r-pkg.org/badges/version/imagefluency)](https://cran.r-project.org/package=imagefluency)
 [![CRAN downloads](http://cranlogs.r-pkg.org/badges/imagefluency)](https://cran.r-project.org/package=imagefluency)
+[![CRAN downloads](http://cranlogs.r-pkg.org/badges/grand-total/imagefluency)](https://cran.r-project.org/package=imagefluency)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5614666.svg)](https://doi.org/10.5281/zenodo.5614666)
 <!-- badges: end -->
 
