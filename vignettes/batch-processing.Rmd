@@ -228,19 +228,19 @@ cat('Number of images:', length(allImages), '\n')
 ```
 
 ```{r, results='hide'}
-# compute imgagefluency scores using lapply()
+# compute imgagefluency scores using lapply() with progress bar
 tictoc::tic("lapply")
-results_lapply <- pbmcapply::pbmclapply(allImages, img_fluency_scores)
+results_lapply <- pbapply::pblapply(allImages, img_fluency_scores)
 tictoc::toc(log=TRUE)
 ```
 
 ```{eval=F}
-> lapply: 5.03 sec elapsed
+> lapply: 8.73 sec elapsed
 ```
 
 
 ```{r, results='hide'}
-# compute imgagefluency scores using multi-core lapply()
+# compute imgagefluency scores using multi-core lapply() with progress bar
 tictoc::tic("pbmclapply")
 results_pbmclapply <- pbmcapply::pbmclapply(allImages, img_fluency_scores,
                                             mc.cores = ncores)
@@ -259,7 +259,7 @@ We can see that the multi-core approach is
 <!-- # github actions does not support multi-core processing, thus editing result manually
 `r round(times_faster,2)`
 -->
-around 2 times faster (in this single test run) than the single-core approach! Let's see how `furrr::future_map()` compares to this.
+more than three times faster (in this single test run) than the single-core approach! Let's see how `furrr::future_map()` compares to this.
 
 ```{r, message=FALSE, results='hide'}
 library(dplyr)
