@@ -87,7 +87,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Analyzing multiple images at once</h1>
             
-            <h4 data-toc-skip class="date">September 29, 2022</h4>
+            <h4 data-toc-skip class="date">October 23, 2023</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/stm/imagefluency/blob/HEAD/vignettes/batch-processing.Rmd" class="external-link"><code>vignettes/batch-processing.Rmd</code></a></small>
       <div class="hidden name"><code>batch-processing.Rmd</code></div>
@@ -109,12 +109,30 @@ figure figcaption {
     text-align: center;
 }
 </style>
-<p>The <a href="getting-started.html">getting started vignette</a> explains how to apply the core functions of the <code>imagefluency</code> package to an image. However, often you want to analyze several images at once. The following tutorial provides a walkthrough of batch-analyzing images with the <code>imagefluency</code> package.</p>
+<p>The <a href="getting-started.html">getting started vignette</a>
+explains how to apply the core functions of the
+<code>imagefluency</code> package to an image. However, often you want
+to analyze several images at once. The following tutorial provides a
+walkthrough of batch-analyzing images with the <code>imagefluency</code>
+package.</p>
 <div class="section level3">
 <h3 id="reading-all-images-from-a-folder">Reading all images from a folder<a class="anchor" aria-label="anchor" href="#reading-all-images-from-a-folder"></a>
 </h3>
-<p>Before we can start analyzing the images, we need to load them into R. In this example, we choose to read all images that are shipped with the <code>imagefluency</code> package. However, you can replace the file path with any file path on your computer.</p>
-<p>Next, we read the file names of all images that satisfy a specific pattern using <code><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files()</a></code>. In our case, we want the file names of all files that have <code>.jpg</code> as their file extension. Thus, we specify <code>pattern = '*.jpg$'</code>. The <code>$</code> sign at the end ensures that we only find files that <em>end</em> with <code>.jpg</code>, a file like <code>image1.jpg.png</code> would therefore not be listed. Multiple patterns could also be specified (e.g., <code>pattern = '*.jpg$|*.png$')</code>. Note that we do <em>not</em> actually load the images into our R session here. Instead, using <code><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files()</a></code> we just extract the images’ file paths for later use.</p>
+<p>Before we can start analyzing the images, we need to load them into
+R. In this example, we choose to read all images that are shipped with
+the <code>imagefluency</code> package. However, you can replace the file
+path with any file path on your computer.</p>
+<p>Next, we read the file names of all images that satisfy a specific
+pattern using <code><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files()</a></code>. In our case, we want the file
+names of all files that have <code>.jpg</code> as their file extension.
+Thus, we specify <code>pattern = '*.jpg$'</code>. The <code>$</code>
+sign at the end ensures that we only find files that <em>end</em> with
+<code>.jpg</code>, a file like <code>image1.jpg.png</code> would
+therefore not be listed. Multiple patterns could also be specified
+(e.g., <code>pattern = '*.jpg$|*.png$')</code>. Note that we do
+<em>not</em> actually load the images into our R session here. Instead,
+using <code><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files()</a></code> we just extract the images’ file paths
+for later use.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># path to images (here: example images from the imagefluency package)</span></span>
 <span><span class="co"># </span></span>
@@ -129,8 +147,16 @@ figure figcaption {
 <div class="section level3">
 <h3 id="setting-up-the-analysis">Setting up the analysis<a class="anchor" aria-label="anchor" href="#setting-up-the-analysis"></a>
 </h3>
-<p>In the next step, we load the <code>imagefluency</code> package and create a data frame to store the results. In this tutorial, we’ll use a simple for loop to iterate over all images in the folder, get the image fluency scores, and write the results into the data frame. This is the simplest approach if you have many images and might run into memory issues when loading all images at once.</p>
-<p>Of course, it is also possible to run the analyses using <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> or <code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">purrr::map()</a></code> or their parallel counterparts (see <a href="#speeding-up">speeding up your analysis</a>).</p>
+<p>In the next step, we load the <code>imagefluency</code> package and
+create a data frame to store the results. In this tutorial, we’ll use a
+simple for loop to iterate over all images in the folder, get the image
+fluency scores, and write the results into the data frame. This is the
+simplest approach if you have many images and might run into memory
+issues when loading all images at once.</p>
+<p>Of course, it is also possible to run the analyses using
+<code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> or <code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">purrr::map()</a></code> or their parallel
+counterparts (see <a href="#speeding-up">speeding up your
+analysis</a>).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># load imagefluency package</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://stm.github.io/imagefluency/">imagefluency</a></span><span class="op">)</span></span>
@@ -143,8 +169,17 @@ figure figcaption {
 <div class="section level3">
 <h3 id="big-loop">Looping over all images<a class="anchor" aria-label="anchor" href="#big-loop"></a>
 </h3>
-<p>Now it’s time to calculate the image fluency scores! To this end, we create a big loop that iterates over all image files. Within the loop, first, the image is read into R. Next the scores for contrast, self-similarity, simplicity, and symmetry are computed for each image. The results are stored in the <code>results</code> data frame we created before.</p>
-<p>We use <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code> in the loop so that the loop does not break if there are any errors with a specific image. Instead, the result is simply an <code>NA</code> if there is an error. Note that we only compute vertical symmetry in the code below. Optionally, you can also convert all images to grayscale to speed up the computation.</p>
+<p>Now it’s time to calculate the image fluency scores! To this end, we
+create a big loop that iterates over all image files. Within the loop,
+first, the image is read into R. Next the scores for contrast,
+self-similarity, simplicity, and symmetry are computed for each image.
+The results are stored in the <code>results</code> data frame we created
+before.</p>
+<p>We use <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code> in the loop so that the loop does not
+break if there are any errors with a specific image. Instead, the result
+is simply an <code>NA</code> if there is an error. Note that we only
+compute vertical symmetry in the code below. Optionally, you can also
+convert all images to grayscale to speed up the computation.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># big loop over all images</span></span>
 <span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">fileNames</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
@@ -180,7 +215,14 @@ figure figcaption {
 <div class="section level3">
 <h3 id="typ">Special case typicality<a class="anchor" aria-label="anchor" href="#typ"></a>
 </h3>
-<p>You might have noticed that we didn’t compute typicality in the code above. The reason is that typicality is not a characteristic of a single image itself, but can only be computed relative to a <em>set</em> of images. Thus, we cannot use the loop construct from above. Instead, we read all images at once into memory and compute typicality. Note that depending on the number and size of the images, you might run into memory problems. If that’s the case, you either have to use a computer with a larger memory or reduce the image set accordingly.</p>
+<p>You might have noticed that we didn’t compute typicality in the code
+above. The reason is that typicality is not a characteristic of a single
+image itself, but can only be computed relative to a <em>set</em> of
+images. Thus, we cannot use the loop construct from above. Instead, we
+read all images at once into memory and compute typicality. Note that
+depending on the number and size of the images, you might run into
+memory problems. If that’s the case, you either have to use a computer
+with a larger memory or reduce the image set accordingly.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 4. get image typicality scores</span></span>
 <span><span class="co"># --NOTE: image typicality is estimated relative to all other images, hence,</span></span>
@@ -196,10 +238,19 @@ figure figcaption {
 <div class="section level3">
 <h3 id="saving-the-results">Saving the results<a class="anchor" aria-label="anchor" href="#saving-the-results"></a>
 </h3>
-<p>All done! We have now computed all image fluency scores. Let’s have a look at the results.</p>
+<p>All done! We have now computed all image fluency scores. Let’s have a
+look at the results.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">results</span>, digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
+<colgroup>
+<col width="23%">
+<col width="12%">
+<col width="20%">
+<col width="15%">
+<col width="12%">
+<col width="15%">
+</colgroup>
 <thead><tr class="header">
 <th align="left">filename</th>
 <th align="right">contrast</th>
@@ -299,7 +350,8 @@ figure figcaption {
 </tr>
 </tbody>
 </table>
-<p>If everything worked, we can save the results e.g. into a <code>.csv</code> file.</p>
+<p>If everything worked, we can save the results e.g. into a
+<code>.csv</code> file.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># save the results into the image folder</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">write.csv</a></span><span class="op">(</span><span class="va">results</span>, file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">mypath</span>, <span class="st">'imagefluency_scores.csv'</span><span class="op">)</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
@@ -307,16 +359,30 @@ figure figcaption {
 <div class="section level2">
 <h2 id="speeding-up">Speeding up the analysis<a class="anchor" aria-label="anchor" href="#speeding-up"></a>
 </h2>
-<p>If you plan to include typicality in your image analysis next to other metrics, there is no need for the big loop from <a href="#big-loop">before</a>. The reason is that you load all images into memory when computing typicality anyway. Thus, we can also do this step right at the beginning of our analysis and compute all image fluency scores from there.</p>
+<p>If you plan to include typicality in your image analysis next to
+other metrics, there is no need for the big loop from <a href="#big-loop">before</a>. The reason is that you load all images into
+memory when computing typicality anyway. Thus, we can also do this step
+right at the beginning of our analysis and compute all image fluency
+scores from there.</p>
 <div class="section level3">
 <h3 id="reading-all-images-into-memory-using-lapply">Reading all images into memory using lapply()<a class="anchor" aria-label="anchor" href="#reading-all-images-into-memory-using-lapply"></a>
 </h3>
-<p>In the example below, I’ll use base R’s <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> function to read all images. However, you can of course use <code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">purrr::map()</a></code> just as well.</p>
-<p>Using <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> is very simple: We tell R to apply the <code><a href="../reference/img_read.html">img_read()</a></code> function to every element in the <code>fileNames</code> object. The result is a list where every list element contains an image matrix. Thus, this object might be very big!</p>
+<p>In the example below, I’ll use base R’s <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code>
+function to read all images. However, you can of course use
+<code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">purrr::map()</a></code> just as well.</p>
+<p>Using <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> is very simple: We tell R to apply the
+<code><a href="../reference/img_read.html">img_read()</a></code> function to every element in the
+<code>fileNames</code> object. The result is a list where every list
+element contains an image matrix. Thus, this object might be very
+big!</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># read all images at once into memory</span></span>
 <span><span class="va">allImages</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">fileNames</span>, <span class="va">img_read</span><span class="op">)</span></span></code></pre></div>
-<p>The above code works perfectly fine if every image can be read without problems (which is usually the case). However, if we want to have a more robust version, we can also define a custom <code><a href="../reference/img_read.html">img_read()</a></code> function that includes error handling with <code>tryCatch</code>.</p>
+<p>The above code works perfectly fine if every image can be read
+without problems (which is usually the case). However, if we want to
+have a more robust version, we can also define a custom
+<code><a href="../reference/img_read.html">img_read()</a></code> function that includes error handling with
+<code>tryCatch</code>.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># define custom image read function that catches errors and returns NA</span></span>
 <span><span class="va">img_read_no_error</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">img</span><span class="op">)</span> <span class="op">{</span></span>
@@ -329,7 +395,11 @@ figure figcaption {
 <div class="section level3">
 <h3 id="computing-image-fluency-scores-using-lapply">Computing image fluency scores using lapply()<a class="anchor" aria-label="anchor" href="#computing-image-fluency-scores-using-lapply"></a>
 </h3>
-<p>Once we have all images read into memory, we can compute the image fluency scores for all images. To facilitate the process for contrast, self-similarity, simplicity, and symmetry, we define a function that computes the scores for a given image, and then apply the function to all images.</p>
+<p>Once we have all images read into memory, we can compute the image
+fluency scores for all images. To facilitate the process for contrast,
+self-similarity, simplicity, and symmetry, we define a function that
+computes the scores for a given image, and then apply the function to
+all images.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># define function that computes all image fluency scores except typicality</span></span>
 <span><span class="va">img_fluency_scores</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">img</span><span class="op">)</span> <span class="op">{</span></span>
@@ -345,7 +415,8 @@ figure figcaption {
 <span></span>
 <span><span class="co"># apply function to images</span></span>
 <span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">allImages</span>, <span class="va">img_fluency_scores</span><span class="op">)</span></span></code></pre></div>
-<p>Once that’s done, we can convert the results into a data frame and add the images’ file names.</p>
+<p>Once that’s done, we can convert the results into a data frame and
+add the images’ file names.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># convert results to data frame and add file names</span></span>
 <span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">results</span><span class="op">)</span></span>
@@ -358,6 +429,14 @@ figure figcaption {
 <span><span class="co"># print a nicely formatted results table</span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">results</span>, digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
+<colgroup>
+<col width="23%">
+<col width="12%">
+<col width="20%">
+<col width="15%">
+<col width="12%">
+<col width="15%">
+</colgroup>
 <thead><tr class="header">
 <th align="left">filename</th>
 <th align="right">contrast</th>
@@ -462,8 +541,17 @@ figure figcaption {
 <div class="section level2">
 <h2 id="parallel-processing-with-multiple-cores">Parallel processing with multiple cores<a class="anchor" aria-label="anchor" href="#parallel-processing-with-multiple-cores"></a>
 </h2>
-<p>Above code using <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> should be faster than the approach of using first a big loop and then again reading in all images to compute typicality. However, we might gain a much larger increase in speed, by using parallelized versions of <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> or <code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">purrr::map()</a></code>, respectively.</p>
-<p>The following code example demonstrates shortly how to achieve this. Essentially, all you have to do is to replace all instances of <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> from before with <code><a href="https://rdrr.io/r/parallel/mclapply.html" class="external-link">parallel::mclapply()</a></code> (<em>m</em>ulti-<em>c</em>ore lapply). In the example below, however, I’ll use <code><a href="https://rdrr.io/pkg/pbmcapply/man/pbmclapply.html" class="external-link">pbmcapply::pbmclapply</a></code> which adds a progress bar (<em>pb</em>) to the multi-core lapply.</p>
+<p>Above code using <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> should be faster than the
+approach of using first a big loop and then again reading in all images
+to compute typicality. However, we might gain a much larger increase in
+speed, by using parallelized versions of <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> or
+<code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">purrr::map()</a></code>, respectively.</p>
+<p>The following code example demonstrates shortly how to achieve this.
+Essentially, all you have to do is to replace all instances of
+<code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> from before with <code><a href="https://rdrr.io/r/parallel/mclapply.html" class="external-link">parallel::mclapply()</a></code>
+(<em>m</em>ulti-<em>c</em>ore lapply). In the example below, however,
+I’ll use <code><a href="https://rdrr.io/pkg/pbmcapply/man/pbmclapply.html" class="external-link">pbmcapply::pbmclapply</a></code> which adds a progress bar
+(<em>pb</em>) to the multi-core lapply.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># detect cores for multi-core processing</span></span>
 <span><span class="va">ncores</span> <span class="op">&lt;-</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -480,7 +568,10 @@ figure figcaption {
 <span></span>
 <span><span class="co"># compute and add typicality to results</span></span>
 <span><span class="va">results</span><span class="op">$</span><span class="va">typicality</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span><span class="fu"><a href="../reference/img_typicality.html">img_typicality</a></span><span class="op">(</span><span class="va">allImages</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Let’s do a quick comparison of the computing time when computing the four image fluency scores with and without multi-core processing. Note that with increasing file size or number of images, this speed bump will become larger. We ‘simulate’ this by reading in the images 10 times.</p>
+<p>Let’s do a quick comparison of the computing time when computing the
+four image fluency scores with and without multi-core processing. Note
+that with increasing file size or number of images, this speed bump will
+become larger. We ‘simulate’ this by reading in the images 10 times.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># read images 10 times </span></span>
 <span><span class="va">allImages</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">fileNames</span>, <span class="fl">10</span><span class="op">)</span>, <span class="va">img_read_no_error</span><span class="op">)</span></span>
@@ -499,9 +590,12 @@ figure figcaption {
 <span>                                            mc.cores <span class="op">=</span> <span class="va">ncores</span><span class="op">)</span></span>
 <span><span class="fu">tictoc</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span>log<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <pre eval="F"><code>&gt; pbmclapply: 2.44 sec elapsed</code></pre>
-<p>We can see that the multi-core approach is <!-- # github actions does not support multi-core processing, thus editing result manually
-1.94
---> more than three times faster (in this single test run) than the single-core approach! Let’s see how <code><a href="https://furrr.futureverse.org/reference/future_map.html" class="external-link">furrr::future_map()</a></code> compares to this.</p>
+<p>We can see that the multi-core approach is
+<!-- # github actions does not support multi-core processing, thus editing result manually
+1.92
+--> more than three times faster (in this single test run) than the
+single-core approach! Let’s see how <code><a href="https://furrr.futureverse.org/reference/future_map.html" class="external-link">furrr::future_map()</a></code>
+compares to this.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="st">'multisession'</span><span class="op">)</span></span>
@@ -537,7 +631,7 @@ figure figcaption {
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
