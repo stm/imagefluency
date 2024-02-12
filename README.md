@@ -86,25 +86,25 @@ img_symmetry(rails, horizontal = FALSE)
 
 ## Documentation
 
-See the [getting started vignette](https://stm.github.io/imagefluency/articles/getting-started.html) for a detailed introduction and the [reference page](https://stm.github.io/imagefluency/reference/index.html) for details on each function. 
+See the [getting started vignette](https://imagefluency.com/articles/getting-started.html) for a detailed introduction and the [reference page](https://imagefluency.com/reference/index.html) for details on each function. 
 
-If you are analyzing a larger number of images, make sure to read the tutorial on how to [analyze multiple images at once](https://stm.github.io/imagefluency/articles/batch-processing.html).
+If you are analyzing a larger number of images, make sure to read the tutorial on how to [analyze multiple images at once](https://imagefluency.com/articles/batch-processing.html).
 
 ## Citation
 
 To cite **imagefluency** in publications use:
 
-> Mayer, S. (2021). *imagefluency: Image Statistics Based on Processing Fluency*. R package version 0.2.4. doi:  [10.5281/zenodo.5614666](https://doi.org/10.5281/zenodo.5614666)
+> Mayer, S. (2024). *imagefluency: Image Statistics Based on Processing Fluency*. R package version 0.2.5. doi:  [10.5281/zenodo.5614666](https://doi.org/10.5281/zenodo.5614666)
 
 A BibTeX entry is:
 ```
 @software{,
   author       = {Stefan Mayer},
   title        = {imagefluency: Image Statistics Based on Processing Fluency},
-  year         = 2021,
-  version      = {0.2.4},
+  year         = 2024,
+  version      = {0.2.5},
   doi          = {10.5281/zenodo.5614666},
-  url          = {https://github.com/stm/imagefluency}
+  url          = {https://imagefluency.com}
 }
 ```
 ## Dependencies
@@ -126,4 +126,4 @@ doi: [10.1016/j.destud.2017.09.004](https://doi.org/10.1016/j.destud.2017.09.004
 
 ## Code of Conduct
 
-Please note that this project is released with a [Contributor Code of Conduct](https://stm.github.io/imagefluency/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
+Please note that this project is released with a [Contributor Code of Conduct](https://imagefluency.com/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.

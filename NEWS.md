@@ -1,5 +1,9 @@
 # imagefluency
 
+# imagefluency 0.2.5
+
+* bugfixes in internal functions (incorrect parameter name in documentation)
+
 # imagefluency 0.2.4
 
 * fix alpha channel throwing error with typicality

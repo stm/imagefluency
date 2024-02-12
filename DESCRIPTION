@@ -1,7 +1,7 @@
 Package: imagefluency
 Type: Package
 Title: Image Statistics Based on Processing Fluency
-Version: 0.2.4
+Version: 0.2.5
 Authors@R: person(given = "Stefan", family = "Mayer", email = "stefan@mayer-de.com",
     role = c("aut", "cre"), comment = c(ORCID = "0000-0003-0034-7090"))
 Description: Get image statistics based on processing fluency theory. The
@@ -12,12 +12,12 @@ Description: Get image statistics based on processing fluency theory. The
     (2018) <doi:10.31219/osf.io/gtbhw> for the theoretical background of the methods.
 License: GPL-3
 Encoding: UTF-8
-URL: https://stm.github.io/imagefluency/,
+URL: https://imagefluency.com,
     https://github.com/stm/imagefluency/,
     https://doi.org/10.5281/zenodo.5614666
 BugReports: https://github.com/stm/imagefluency/issues/
 Depends:
-    R (>= 3.2.3)
+    R (>= 4.1.0)
 Imports:
     R.utils,
     readbitmap,
@@ -38,7 +38,7 @@ Suggests:
     pbmcapply,
     tictoc,
     dplyr
-RoxygenNote: 7.2.1
+RoxygenNote: 7.3.1
 Collate: 
     'utils.R'
     'complexity.R'
