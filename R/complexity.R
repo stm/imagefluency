@@ -135,7 +135,7 @@ img_complexity <- function(imgfile, algorithm = "zip", rotate = FALSE){
 #'
 #' Returns the complexity of an image array / matrix or path.
 #'
-#' @param imgfile An array or matrix of numeric values or integer values, or the file path to the image.
+#' @param img An array or matrix of numeric values or integer values, or the file path to the image.
 #' @param algorithm character. Which compression algorithm to use.
 #' @param rotate logical. Image rotation by 90 degrees?
 #'

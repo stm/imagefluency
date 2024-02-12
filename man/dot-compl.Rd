@@ -7,11 +7,11 @@
 .compl(img, algorithm, rotate)
 }
 \arguments{
+\item{img}{An array or matrix of numeric values or integer values, or the file path to the image.}
+
 \item{algorithm}{character. Which compression algorithm to use.}
 
 \item{rotate}{logical. Image rotation by 90 degrees?}
-
-\item{imgfile}{An array or matrix of numeric values or integer values, or the file path to the image.}
 }
 \value{
 a numeric value (ratio compressed/uncompressed file size).
