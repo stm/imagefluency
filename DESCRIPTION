@@ -14,7 +14,7 @@ License: GPL-3
 Encoding: UTF-8
 URL: https://imagefluency.com,
     https://github.com/stm/imagefluency/,
-    https://doi.org/10.5281/zenodo.5614666
+    https://doi.org/10.5281/zenodo.5614665
 BugReports: https://github.com/stm/imagefluency/issues/
 Depends:
     R (>= 4.1.0)

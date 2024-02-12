@@ -7,7 +7,7 @@
 [![CRAN status](https://www.r-pkg.org/badges/version/imagefluency)](https://cran.r-project.org/package=imagefluency)
 [![CRAN downloads](http://cranlogs.r-pkg.org/badges/imagefluency)](https://cran.r-project.org/package=imagefluency)
 [![CRAN downloads](http://cranlogs.r-pkg.org/badges/grand-total/imagefluency)](https://cran.r-project.org/package=imagefluency)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5614666.svg)](https://doi.org/10.5281/zenodo.5614666)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5614665.svg)](https://doi.org/10.5281/zenodo.5614665)
 <!-- badges: end -->
 
 ## Overview
@@ -94,7 +94,7 @@ If you are analyzing a larger number of images, make sure to read the tutorial o
 
 To cite **imagefluency** in publications use:
 
-> Mayer, S. (2024). *imagefluency: Image Statistics Based on Processing Fluency*. R package version 0.2.5. doi:  [10.5281/zenodo.5614666](https://doi.org/10.5281/zenodo.5614666)
+> Mayer, S. (2024). *imagefluency: Image Statistics Based on Processing Fluency*. R package version 0.2.5. doi:  [10.5281/zenodo.5614665](https://doi.org/10.5281/zenodo.5614665)
 
 A BibTeX entry is:
 ```
@@ -103,7 +103,7 @@ A BibTeX entry is:
   title        = {imagefluency: Image Statistics Based on Processing Fluency},
   year         = 2024,
   version      = {0.2.5},
-  doi          = {10.5281/zenodo.5614666},
+  doi          = {10.5281/zenodo.5614665},
   url          = {https://imagefluency.com}
 }
 ```
