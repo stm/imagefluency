@@ -50,7 +50,7 @@ NULL
 #'   uncompressed image file size
 #' @export
 #'
-#' @examples
+#' @examplesIf .Platform$OS.type != "windows"
 #' # Example image with high complexity: trees
 #' trees <- img_read(system.file("example_images", "trees.jpg", package = "imagefluency"))
 #' #

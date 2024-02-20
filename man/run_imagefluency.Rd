@@ -11,8 +11,8 @@ Launches a Shiny app that shows a demo of what can be done with
 the \code{imagefluency} package.
 }
 \examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 ## Only run this example in interactive R sessions
-if (interactive()) {
-  run_imagefluency()
-}
+run_imagefluency()
+\dontshow{\}) # examplesIf}
 }

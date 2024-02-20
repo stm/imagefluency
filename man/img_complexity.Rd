@@ -59,6 +59,7 @@ The function returns the visual complexity of an image. Visual
   to write (and read) images.
 }
 \examples{
+\dontshow{if (.Platform$OS.type != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Example image with high complexity: trees
 trees <- img_read(system.file("example_images", "trees.jpg", package = "imagefluency"))
 #
@@ -77,7 +78,7 @@ grid::grid.raster(sky)
 #
 # get complexity
 img_complexity(sky)
-
+\dontshow{\}) # examplesIf}
 }
 \references{
 Donderi, D. C. (2006). Visual complexity: A Review.
