@@ -102,7 +102,7 @@ also be computed? (see details)</p></dd>
     <p>Image simplicity is calculated as 1 minus the ratio between the
   compressed and uncompressed file size (i.e., the compression rate). Values
   can range between 0 (no compression possible, thus extremely complex image)
-  and almost 1 (virtually completely compressed image, thus extremly simple
+  and almost 1 (virtually completely compressed image, thus extremely simple
   image). Different compression algorithms are implemented. For details, see
   <code><a href="img_complexity.html">img_complexity</a></code>.</p>
     </div>
@@ -136,7 +136,7 @@ also be computed? (see details)</p></dd>
 <span class="r-in"><span><span class="co"># display image</span></span></span>
 <span class="r-in"><span><span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/grid.raster.html" class="external-link">grid.raster</a></span><span class="op">(</span><span class="va">trees</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co"># get complexity</span></span></span>
+<span class="r-in"><span><span class="co"># get simplicity</span></span></span>
 <span class="r-in"><span><span class="fu">img_simplicity</span><span class="op">(</span><span class="va">trees</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1050314</span>
 <span class="r-in"><span></span></span>
@@ -147,10 +147,9 @@ also be computed? (see details)</p></dd>
 <span class="r-in"><span><span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/grid.raster.html" class="external-link">grid.raster</a></span><span class="op">(</span><span class="va">sky</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="img_simplicity-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co"># get complexity</span></span></span>
+<span class="r-in"><span><span class="co"># get simplicity</span></span></span>
 <span class="r-in"><span><span class="fu">img_simplicity</span><span class="op">(</span><span class="va">sky</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5800746</span>
-<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
