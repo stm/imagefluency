@@ -1,11 +1,6 @@
 #' @include utils.R
 NULL
 
-# 2do: idea / test: image compression via PCA (for images that are not in an uncompressed format)?
-# see http://www.aaronschlegel.com/image-compression-principal-component-analysis/
-#
-# alternative: entropy as measure
-
 #' Image complexity
 #'
 #' \code{img_complexity} returns the complexity of an image via image
@@ -142,27 +137,30 @@ img_complexity <- function(imgfile, algorithm = "zip", rotate = FALSE){
 #' @return a numeric value (ratio compressed/uncompressed file size).
 #' @keywords internal
 .compl <- function(img, algorithm, rotate) {
-  flname <- file.path(tempdir(), .rand_string())
-
-  # imginfo <- magick::image_info(img)
-
-  # isBMP <- grepl("^BMP", as.character(imginfo[1]))
-  # if (!isBMP) warning("Input image might not be uncompressed. Interpret results with caution.", call. = FALSE)
+  flname <- tempfile()
 
   # write bmp image
   magick::image_write(img, path = paste0(flname, ".bmp"), format = "bmp")
+  # remove original file on exit
+  # (for zip this is done automatically, which is why we suppress warnings here)
+  on.exit(suppressWarnings(file.remove(paste0(flname, ".bmp"))))
+  # get original file size
   orig_size <- file.size(paste0(flname, ".bmp"))
 
   # compress file
   if (algorithm == "zip") {
     if (!requireNamespace("R.utils", quietly = TRUE)) stop("Package 'R.utils' not found but needed. Please install the package first.", call. = FALSE)
     R.utils::gzip(filename = paste0(flname, ".bmp"))
+    on.exit(file.remove(paste0(flname, ".bmp.gz")), add = TRUE)
   } else if (algorithm == "jpg") {
     magick::image_write(img, path = paste0(flname, ".jpg"), format = "jpg")
+    on.exit(file.remove(paste0(flname, ".jpg")), add = TRUE)
   } else if (algorithm == "gif") {
     magick::image_write(img, path = paste0(flname, ".gif"), format = "gif")
+    on.exit(file.remove(paste0(flname, ".gif")), add = TRUE)
   } else if (algorithm == "png") {
     magick::image_write(img, path = paste0(flname, ".png"), format = "png")
+    on.exit(file.remove(paste0(flname, ".png")), add = TRUE)
   }
 
   # read file sizes
@@ -170,15 +168,6 @@ img_complexity <- function(imgfile, algorithm = "zip", rotate = FALSE){
   if (algorithm == "jpg") compressed_size <- file.size(paste0(flname,".jpg"))
   if (algorithm == "gif") compressed_size <- file.size(paste0(flname,".gif"))
   if (algorithm == "png") compressed_size <- file.size(paste0(flname,".png"))
-
-  # remove newly created files
-  # Sys.sleep(0.25) # wait a moment
-  if (algorithm == "zip") file.remove(paste0(flname, ".bmp.gz"))
-  if (algorithm == "jpg") file.remove(paste0(flname, ".jpg"))
-  if (algorithm == "gif") file.remove(paste0(flname, ".gif"))
-  if (algorithm == "png") file.remove(paste0(flname, ".png"))
-  # remove original file (if not zip, where this is done automatically)
-  if (algorithm != "zip")   file.remove(paste0(flname, ".bmp"))
 
   if (!is.logical(rotate)) {
     warning(paste0("rotate = '", rotate, "' is not a logical value (TRUE/FALSE). Skipping rotation ..."), call. = FALSE)
@@ -191,16 +180,21 @@ img_complexity <- function(imgfile, algorithm = "zip", rotate = FALSE){
     # message("... trying to rotate the image ...")
     # write rotated image
     magick::image_write(magick::image_rotate(img, degrees = 90), path = paste0(flname_rot, ".bmp"), format = "bmp")
+    on.exit(suppressWarnings(file.remove(paste0(flname_rot, ".bmp"))), add = TRUE)
 
     # compress rotated image
     if (algorithm == "zip") {
       R.utils::gzip(filename = paste0(flname_rot, ".bmp"))
+      on.exit(file.remove(paste0(flname_rot, ".bmp.gz")), add = TRUE)
     } else if (algorithm == "jpg") {
       magick::image_write(magick::image_rotate(img, degrees = 90), path = paste0(flname_rot, ".jpg"), format = "jpg")
+      on.exit(file.remove(paste0(flname_rot, ".jpg")), add = TRUE)
     } else if (algorithm == "gif") {
       magick::image_write(magick::image_rotate(img, degrees = 90), path = paste0(flname_rot, ".gif"), format = "gif")
+      on.exit(file.remove(paste0(flname_rot, ".gif")), add = TRUE)
     } else if (algorithm == "png") {
       magick::image_write(magick::image_rotate(img, degrees = 90), path = paste0(flname_rot, ".png"), format = "png")
+      on.exit(file.remove(paste0(flname_rot, ".png")), add = TRUE)
     }
 
     # read file size
@@ -209,21 +203,9 @@ img_complexity <- function(imgfile, algorithm = "zip", rotate = FALSE){
     if (algorithm == "gif") compressed_size_rot <- file.size(paste0(flname_rot,".gif"))
     if (algorithm == "png") compressed_size_rot <- file.size(paste0(flname_rot,".png"))
 
-    # remove rotated files
-    # Sys.sleep(0.25) # wait a moment
-    if (algorithm == "zip") file.remove(paste0(flname_rot,".bmp.gz"))
-    if (algorithm == "jpg") file.remove(paste0(flname_rot,".jpg"))
-    if (algorithm == "gif") file.remove(paste0(flname_rot,".gif"))
-    if (algorithm == "png") file.remove(paste0(flname_rot,".png"))
-    # remove original file (if not zip, where this is done automatically)
-    if (algorithm != "zip") file.remove(paste0(flname_rot, ".bmp"))
-
     # update result: minimum of both compressed file sizes of original and rotated img
     compressed_size <- min(compressed_size, compressed_size_rot)
   }
-
-  # remove initial tempfile
-
 
   # return ratio between compressed and original (bmp) size (i.e., compression rate)
   return(compressed_size/orig_size)
