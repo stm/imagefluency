@@ -9,9 +9,11 @@ NULL
 #' @export
 #'
 #'
-#' @examplesIf interactive()
+#' @examples
 #' ## Only run this example in interactive R sessions
-#' run_imagefluency()
+#' if (interactive()) {
+#'   run_imagefluency()
+#' }
 run_imagefluency <- function() {
   appDir <- system.file("imagefluencyApp", package = "imagefluency")
   if (appDir == "") {
