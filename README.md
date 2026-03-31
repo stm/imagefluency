@@ -1,21 +1,21 @@
-## imagefluency: Image Statistics Based on Processing Fluency <img src="man/figures/logo.png" align="right" />
+## imagefluency: Image Statistics Based on Processing Fluency <img src="man/figures/logo.png" align="right" alt="imagefluency logo" style="margin-top: 1rem; margin-left: 0.25rem;" />
 
 <!-- badges: start -->
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/)
 [![R-CMD-check](https://github.com/stm/imagefluency/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/stm/imagefluency/actions/workflows/check-standard.yaml)
 [![codecov test coverage](https://codecov.io/gh/stm/imagefluency/branch/master/graph/badge.svg)](https://app.codecov.io/gh/stm/imagefluency?branch=main)
 [![CRAN status](https://www.r-pkg.org/badges/version/imagefluency)](https://cran.r-project.org/package=imagefluency)
-[![CRAN downloads](http://cranlogs.r-pkg.org/badges/imagefluency)](https://cran.r-project.org/package=imagefluency)
-[![CRAN downloads](http://cranlogs.r-pkg.org/badges/grand-total/imagefluency)](https://cran.r-project.org/package=imagefluency)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5614665.svg)](https://doi.org/10.5281/zenodo.5614665)
+[![CRAN downloads](https://cranlogs.r-pkg.org/badges/imagefluency)](https://cran.r-project.org/package=imagefluency)
+[![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/imagefluency)](https://cran.r-project.org/package=imagefluency)
+<!-- [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5614665.svg)](https://doi.org/10.5281/zenodo.5614665) -->
+[![DOI](https://img.shields.io/badge/doi-10.32614/CRAN.package.imagefluency-blue.svg)](https://doi.org/10.32614/CRAN.package.imagefluency)
 <!-- badges: end -->
 
 ## Overview
 
-**imagefluency** is a simple R package for image fluency scores. The
+**imagefluency** is an R package for image fluency scores. The
 package allows to get scores for several basic aesthetic principles that
 facilitate fluent cognitive processing of images.
-If you want to try it out before installing, you can find an interactive Shiny app [here](https://mayer.shinyapps.io/imagefluency/) (alpha version).
     
 The main functions are:
 
@@ -29,7 +29,7 @@ The main functions are:
    image.
 * `img_typicality()`  to get the visual typicality of a list of images relative
    to each other
-
+   
 Other helpful functions are:
 
 * `img_read()`  wrapper function to read images into R using `read.bitmap()` from the
@@ -40,6 +40,20 @@ Other helpful functions are:
 
 
 The main author is [Stefan Mayer](https://github.com/stm/).
+
+## Interactive Dashboard
+
+There is an interactive dashboard available to analyze images without writing code (see screenshot below).
+The dashboard supports multi-image uploads, side-by-side comparison, and CSV export.
+
+<p align="center">
+  <img src="man/figures/dashboard.png" alt="screenshot imagefluency dashboard" width="95%" />
+</p>
+
+You can run the dashboard locally with `imagefluency::run_imagefluency()` once the package is installed, or try it out
+online [here](https://mayer.shinyapps.io/imagefluency/).
+
+
 
 ## Installation
 
@@ -94,21 +108,21 @@ If you are analyzing a larger number of images, make sure to read the tutorial o
 
 To cite **imagefluency** in publications use:
 
-> Mayer, S. (2024). *imagefluency: Image Statistics Based on Processing Fluency*. R package version 0.2.5. doi:  [10.5281/zenodo.5614665](https://doi.org/10.5281/zenodo.5614665)
+> Mayer, S. (2026). *imagefluency: Image Statistics Based on Processing Fluency*. R package version 1.0.0. doi:  [10.32614/CRAN.package.imagefluency](https://doi.org/10.32614/CRAN.package.imagefluency)
 
 A BibTeX entry is:
 ```
 @software{,
   author       = {Stefan Mayer},
   title        = {imagefluency: Image Statistics Based on Processing Fluency},
-  year         = 2024,
-  version      = {0.2.5},
-  doi          = {10.5281/zenodo.5614665},
+  year         = 2026,
+  version      = {1.0.0},
+  doi          = {10.32614/CRAN.package.imagefluency},
   url          = {https://imagefluency.com}
 }
 ```
 ## Dependencies
-The `img_complexity` function relies on the packages [R.utils](https://cran.r-project.org/package=R.utils) and [magick](https://github.com/ropensci/magick). The `img_self_similarity` function relies on the packages [OpenImageR](https://github.com/mlampros/OpenImageR), [pracma](https://cran.r-project.org/package=pracma), and [quadprog](https://cran.r-project.org/package=quadprog). The `img_read` function relies on the [readbitmap](https://github.com/jefferis/readbitmap) package. The `run_imagefluency` shiny app depends on [shiny](https://github.com/rstudio/shiny).
+The `img_complexity` function relies on the packages [R.utils](https://cran.r-project.org/package=R.utils) and [magick](https://github.com/ropensci/magick). The `img_self_similarity` function relies on the packages [OpenImageR](https://github.com/mlampros/OpenImageR), [pracma](https://cran.r-project.org/package=pracma), and [quadprog](https://cran.r-project.org/package=quadprog). The `img_read` function relies on the [readbitmap](https://github.com/jefferis/readbitmap) package. The `run_imagefluency` shiny app depends on [shiny](https://github.com/rstudio/shiny) and uses [bslib](https://rstudio.github.io/bslib/) when available, with a fallback UI otherwise.
 
 ## Further references
 

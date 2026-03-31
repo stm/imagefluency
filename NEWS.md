@@ -1,5 +1,17 @@
 # imagefluency
 
+# imagefluency 1.0.0
+
+* redesigned the local Shiny dashboard with multi-image upload, integrated
+  results, image comparison, and CSV export
+* added optional `collapse`-based speedups for self-similarity, symmetry, and
+  typicality computations, while retaining base R fallbacks
+* made the complexity tests more robust across platforms and updated the test
+  suite to modern `testthat` conventions
+* fixed `img_complexity()` normalization for array inputs outside the `[0, 1]`
+  range to avoid platform-dependent results
+
+
 # imagefluency 0.2.5
 
 * bugfixes in internal functions (incorrect parameter name in documentation)

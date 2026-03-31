@@ -45,13 +45,12 @@ Mayer, S. & Landwehr, J, R. (2018). Quantifying Visual Aesthetics
 
 Mayer, S. & Landwehr, J. R. (2018). Objective measures of design
   typicality. \emph{Design Studies}, \emph{54}, 146--161.
-  \doi{10.31219/osf.io/gtbhw}
+  \doi{10.1016/j.destud.2017.09.004}
 }
 \seealso{
 Useful links:
 \itemize{
   \item \url{https://imagefluency.com}
-  \item \url{https://stm.github.io/imagefluency/}
   \item \url{https://github.com/stm/imagefluency/}
   \item \doi{10.5281/zenodo.5614665}
   \item Report bugs at \url{https://github.com/stm/imagefluency/issues/}
