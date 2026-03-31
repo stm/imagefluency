@@ -2,7 +2,7 @@
 
 # imagefluency 1.0.0
 
-* redesigned the local Shiny dashboard with multi-image upload, integrated
+* redesigned the Shiny dashboard with multi-image upload, integrated
   results, image comparison, and CSV export
 * added optional `collapse`-based speedups for self-similarity, symmetry, and
   typicality computations, while retaining base R fallbacks
