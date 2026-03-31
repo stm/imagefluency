@@ -156,7 +156,7 @@ knitr::kable(results, digits = 3)
 | sky.jpg          |    0.081 |         -1.562 |      0.580 |    0.647 |      0.053 |
 | trees.jpg        |    0.189 |         -0.551 |      0.105 |    0.191 |      0.281 |
 | valley_green.jpg |    0.246 |         -0.507 |      0.252 |    0.803 |      0.633 |
-| valley_white.jpg |    0.188 |         -0.590 |      0.191 |    0.601 |      0.579 |
+| valley_white.jpg |    0.188 |         -0.590 |      0.192 |    0.601 |      0.579 |
 
 If everything worked, we can save the results e.g. into a `.csv` file.
 
