@@ -43,3 +43,5 @@ docs
 /doc/
 /Meta/
 /ideas/
+# Mac files
+.DS_Store
