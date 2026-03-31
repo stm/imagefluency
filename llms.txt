@@ -48,7 +48,7 @@ uploads, side-by-side comparison, and CSV export.
 You can run the dashboard locally with
 [`imagefluency::run_imagefluency()`](https://imagefluency.com/reference/run_imagefluency.md)
 once the package is installed, or try it out online
-[here](https://mayer.shinyapps.io/imagefluency/).
+[here](https://019d45ea-53cc-6381-9ecf-5151194cda1f.share.connect.posit.cloud/).
 
 ## Installation
 

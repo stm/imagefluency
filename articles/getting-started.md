@@ -98,9 +98,9 @@ symmetry, and typicality therefore constitute the core purpose of the
 - [`rgb2gray()`](https://imagefluency.com/reference/rgb2gray.md)
   converts images from RGB into grayscale (might speed up computation)
 - [`run_imagefluency()`](https://imagefluency.com/reference/run_imagefluency.md)
-  launches a (preliminary) Shiny app for an interactive demo of the main
-  functions (alternatively, visit the online version at
-  [shinyapps.io](https://mayer.shinyapps.io/imagefluency/))
+  to launch a Shiny app locally on your computer for an interactive demo
+  of the main functions (alternatively, visit the online version at
+  [posit.cloud](https://019d45ea-53cc-6381-9ecf-5151194cda1f.share.connect.posit.cloud/))
 
 ### Installation
 
