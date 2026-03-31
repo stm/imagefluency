@@ -1,10 +1,11 @@
-url: https://stm.github.io/imagefluency/
+url: https://imagefluency.com/
 
 authors:
   Stefan Mayer:
     href: https://github.com/stm/
 
 template:
+  bootstrap: 5
   bootswatch: lumen
 
 reference:
@@ -41,6 +42,7 @@ navbar:
     articles: ~
     home:
       icon: fas fa-home fa-lg
+      aria-label: Home
       href: index.html
     intro:
       text: Getting started
@@ -56,4 +58,5 @@ navbar:
       href: news/index.html
     github:
       icon: fab fa-github fa-lg
+      aria-label: GitHub
       href: https://github.com/stm/imagefluency/

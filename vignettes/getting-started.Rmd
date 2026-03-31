@@ -69,7 +69,7 @@ At the same time, vision research and research in psychology shows that even sim
 As an example, a statement like "Nut bread is healthier than potato bread" is more likely to be perceived as true when presented in a color that is easy to read against a white background (high contrast) instead of being presented in a color that is difficult to read against a white background (low contrast; cf. @Hansen2008).
 Thus, it might be useful to estimate and control for differences in such low-level visual features in any research that includes visual stimuli.
 
-**imagefluency** is an simple `R` package for such low-level image scores based on processing fluency theory.
+**imagefluency** is an `R` package for such low-level image scores based on processing fluency theory.
 The package allows to get scores for several basic aesthetic principles that facilitate fluent cognitive processing of images:
 contrast, complexity / simplicity, self-similarity, symmetry, and typicality.
 
