@@ -3,7 +3,7 @@
 <!-- badges: start -->
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/)
 [![R-CMD-check](https://github.com/stm/imagefluency/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/stm/imagefluency/actions/workflows/check-standard.yaml)
-[![codecov test coverage](https://codecov.io/gh/stm/imagefluency/branch/master/graph/badge.svg)](https://app.codecov.io/gh/stm/imagefluency?branch=main)
+[![Codecov test coverage](https://codecov.io/gh/stm/imagefluency/graph/badge.svg)](https://app.codecov.io/gh/stm/imagefluency)
 [![CRAN status](https://www.r-pkg.org/badges/version/imagefluency)](https://cran.r-project.org/package=imagefluency)
 [![CRAN downloads](https://cranlogs.r-pkg.org/badges/imagefluency)](https://cran.r-project.org/package=imagefluency)
 [![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/imagefluency)](https://cran.r-project.org/package=imagefluency)
