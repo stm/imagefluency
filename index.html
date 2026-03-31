@@ -4,94 +4,56 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Image Statistics Based on Processing Fluency • imagefluency</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
-<script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Image Statistics Based on Processing Fluency">
-<meta property="og:description" content="Get image statistics based on processing fluency theory. The
-    functions provide scores for several basic aesthetic principles that
-    facilitate fluent cognitive processing of images: contrast,
-    complexity / simplicity, self-similarity, symmetry, and typicality.
-    See Mayer &amp; Landwehr (2018) &lt;doi:10.1037/aca0000187&gt; and Mayer &amp; Landwehr
-    (2018) &lt;doi:10.31219/osf.io/gtbhw&gt; for the theoretical background of the methods.">
-<meta property="og:image" content="https://stm.github.io/imagefluency/logo.png">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" sizes="any" href="favicon.ico">
+<link rel="manifest" href="site.webmanifest">
+<script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Image Statistics Based on Processing Fluency">
+<meta name="description" content="Get image statistics based on processing fluency theory. The functions provide scores for several basic aesthetic principles that facilitate fluent cognitive processing of images: contrast, complexity / simplicity, self-similarity, symmetry, and typicality. See Mayer &amp; Landwehr (2018) &lt;doi:10.1037/aca0000187&gt; and Mayer &amp; Landwehr (2018) &lt;doi:10.31219/osf.io/gtbhw&gt; for the theoretical background of the methods.">
+<meta property="og:description" content="Get image statistics based on processing fluency theory. The functions provide scores for several basic aesthetic principles that facilitate fluent cognitive processing of images: contrast, complexity / simplicity, self-similarity, symmetry, and typicality. See Mayer &amp; Landwehr (2018) &lt;doi:10.1037/aca0000187&gt; and Mayer &amp; Landwehr (2018) &lt;doi:10.31219/osf.io/gtbhw&gt; for the theoretical background of the methods.">
+<meta property="og:image" content="https://imagefluency.com/logo.png">
 </head>
-<body data-spy="scroll" data-target="#toc">
-    
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
-    <div class="container template-home">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="index.html">imagefluency</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.5</span>
-      </span>
-    </div>
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
-  <a href="articles/getting-started.html">Getting started</a>
-</li>
-<li>
-  <a href="articles/batch-processing.html">Analyzing multiple images</a>
-</li>
-<li>
-  <a href="reference/index.html">Reference</a>
-</li>
-<li>
-  <a href="news/index.html">Changelog</a>
-</li>
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+
+    <a class="navbar-brand me-2" href="index.html">imagefluency</a>
+
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-3">
+      <ul class="navbar-nav me-auto">
+<li class="active nav-item"><a class="nav-link" href="index.html" aria-label="Home"><span class="fa fas fa-home fa-lg"></span></a></li>
+<li class="nav-item"><a class="nav-link" href="articles/getting-started.html">Getting started</a></li>
+<li class="nav-item"><a class="nav-link" href="articles/batch-processing.html">Analyzing multiple images</a></li>
+<li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+<li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/stm/imagefluency/" class="external-link">
-    <span class="fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+<ul class="navbar-nav">
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/stm/imagefluency/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
-<!--/.nav-collapse -->
+
+
   </div>
-<!--/.container -->
-</div>
-<!--/.navbar -->
-
-      
-
-      </header><div class="row">
-  <div class="contents col-md-9">
-
-<div class="section level2">
-<h2 id="imagefluency-image-statistics-based-on-processing-fluency-">imagefluency: Image Statistics Based on Processing Fluency <img src="reference/figures/logo.png" align="right"><a class="anchor" aria-label="anchor" href="#imagefluency-image-statistics-based-on-processing-fluency-"></a>
+</nav><div class="container template-home">
+<div class="row">
+  <main id="main" class="col-md-9"><div class="section level2">
+<h2 id="imagefluency-image-statistics-based-on-processing-fluency-">imagefluency: Image Statistics Based on Processing Fluency <img src="reference/figures/logo.png" align="right" alt="imagefluency logo" style="margin-top: 1rem; margin-left: 0.25rem;"><a class="anchor" aria-label="anchor" href="#imagefluency-image-statistics-based-on-processing-fluency-"></a>
 </h2>
 <!-- badges: start -->
 
@@ -99,7 +61,7 @@
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
-<p><strong>imagefluency</strong> is a simple R package for image fluency scores. The package allows to get scores for several basic aesthetic principles that facilitate fluent cognitive processing of images. If you want to try it out before installing, you can find an interactive Shiny app <a href="https://mayer.shinyapps.io/imagefluency/" class="external-link">here</a> (alpha version).</p>
+<p><strong>imagefluency</strong> is an R package for image fluency scores. The package allows to get scores for several basic aesthetic principles that facilitate fluent cognitive processing of images.</p>
 <p>The main functions are:</p>
 <ul>
 <li>
@@ -125,6 +87,14 @@
 <code><a href="reference/run_imagefluency.html">run_imagefluency()</a></code> to launch a Shiny app locally on your computer for an interactive demo of the main functions</li>
 </ul>
 <p>The main author is <a href="https://github.com/stm/" class="external-link">Stefan Mayer</a>.</p>
+</div>
+<div class="section level2">
+<h2 id="interactive-dashboard">Interactive Dashboard<a class="anchor" aria-label="anchor" href="#interactive-dashboard"></a>
+</h2>
+<p>There is an interactive dashboard available to analyze images without writing code (see screenshot below). The dashboard supports multi-image uploads, side-by-side comparison, and CSV export.</p>
+<p align="center">
+<img src="reference/figures/dashboard.png" alt="screenshot imagefluency dashboard" width="95%"></p>
+<p>You can run the dashboard locally with <code><a href="reference/run_imagefluency.html">imagefluency::run_imagefluency()</a></code> once the package is installed, or try it out online <a href="https://mayer.shinyapps.io/imagefluency/" class="external-link">here</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -167,30 +137,30 @@
 <div class="section level2">
 <h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
 </h2>
-<p>See the <a href="https://imagefluency.com/articles/getting-started.html" class="external-link">getting started vignette</a> for a detailed introduction and the <a href="https://imagefluency.com/reference/index.html" class="external-link">reference page</a> for details on each function.</p>
-<p>If you are analyzing a larger number of images, make sure to read the tutorial on how to <a href="https://imagefluency.com/articles/batch-processing.html" class="external-link">analyze multiple images at once</a>.</p>
+<p>See the <a href="https://imagefluency.com/articles/getting-started.html">getting started vignette</a> for a detailed introduction and the <a href="https://imagefluency.com/reference/index.html">reference page</a> for details on each function.</p>
+<p>If you are analyzing a larger number of images, make sure to read the tutorial on how to <a href="https://imagefluency.com/articles/batch-processing.html">analyze multiple images at once</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
 </h2>
 <p>To cite <strong>imagefluency</strong> in publications use:</p>
 <blockquote>
-<p>Mayer, S. (2024). <em>imagefluency: Image Statistics Based on Processing Fluency</em>. R package version 0.2.5. doi: <a href="https://doi.org/10.5281/zenodo.5614665" class="external-link">10.5281/zenodo.5614665</a></p>
+<p>Mayer, S. (2026). <em>imagefluency: Image Statistics Based on Processing Fluency</em>. R package version 1.0.0. doi: <a href="https://doi.org/10.32614/CRAN.package.imagefluency" class="external-link">10.32614/CRAN.package.imagefluency</a></p>
 </blockquote>
 <p>A BibTeX entry is:</p>
 <pre><code>@software{,
   author       = {Stefan Mayer},
   title        = {imagefluency: Image Statistics Based on Processing Fluency},
-  year         = 2024,
-  version      = {0.2.5},
-  doi          = {10.5281/zenodo.5614665},
+  year         = 2026,
+  version      = {1.0.0},
+  doi          = {10.32614/CRAN.package.imagefluency},
   url          = {https://imagefluency.com}
 }</code></pre>
 </div>
 <div class="section level2">
 <h2 id="dependencies">Dependencies<a class="anchor" aria-label="anchor" href="#dependencies"></a>
 </h2>
-<p>The <code>img_complexity</code> function relies on the packages <a href="https://cran.r-project.org/package=R.utils" class="external-link">R.utils</a> and <a href="https://github.com/ropensci/magick" class="external-link">magick</a>. The <code>img_self_similarity</code> function relies on the packages <a href="https://github.com/mlampros/OpenImageR" class="external-link">OpenImageR</a>, <a href="https://cran.r-project.org/package=pracma" class="external-link">pracma</a>, and <a href="https://cran.r-project.org/package=quadprog" class="external-link">quadprog</a>. The <code>img_read</code> function relies on the <a href="https://github.com/jefferis/readbitmap" class="external-link">readbitmap</a> package. The <code>run_imagefluency</code> shiny app depends on <a href="https://github.com/rstudio/shiny" class="external-link">shiny</a>.</p>
+<p>The <code>img_complexity</code> function relies on the packages <a href="https://cran.r-project.org/package=R.utils" class="external-link">R.utils</a> and <a href="https://github.com/ropensci/magick" class="external-link">magick</a>. The <code>img_self_similarity</code> function relies on the packages <a href="https://github.com/mlampros/OpenImageR" class="external-link">OpenImageR</a>, <a href="https://cran.r-project.org/package=pracma" class="external-link">pracma</a>, and <a href="https://cran.r-project.org/package=quadprog" class="external-link">quadprog</a>. The <code>img_read</code> function relies on the <a href="https://github.com/jefferis/readbitmap" class="external-link">readbitmap</a> package. The <code>run_imagefluency</code> shiny app depends on <a href="https://github.com/rstudio/shiny" class="external-link">shiny</a> and uses <a href="https://rstudio.github.io/bslib/" class="external-link">bslib</a> when available, with a fallback UI otherwise.</p>
 </div>
 <div class="section level2">
 <h2 id="further-references">Further references<a class="anchor" aria-label="anchor" href="#further-references"></a>
@@ -204,13 +174,10 @@
 <div class="section level2">
 <h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
 </h2>
-<p>Please note that this project is released with a <a href="https://imagefluency.com/CODE_OF_CONDUCT.html" class="external-link">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
+<p>Please note that this project is released with a <a href="https://imagefluency.com/CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 </div>
 
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <div class="links">
+  </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li><a href="https://cloud.r-project.org/package=imagefluency" class="external-link">View on CRAN</a></li>
@@ -244,7 +211,7 @@
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>
-<a href="https://github.com/stm/" class="external-link">Stefan Mayer</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-0034-7090" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<a href="https://github.com/stm/" class="external-link">Stefan Mayer</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-0034-7090" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
 </ul>
 </div>
 
@@ -255,33 +222,30 @@
 <li><a href="https://github.com/stm/imagefluency/actions/workflows/check-standard.yaml" class="external-link"><img src="https://github.com/stm/imagefluency/actions/workflows/check-standard.yaml/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://app.codecov.io/gh/stm/imagefluency?branch=main" class="external-link"><img src="https://codecov.io/gh/stm/imagefluency/branch/master/graph/badge.svg" alt="codecov test coverage"></a></li>
 <li><a href="https://cran.r-project.org/package=imagefluency" class="external-link"><img src="https://www.r-pkg.org/badges/version/imagefluency" alt="CRAN status"></a></li>
-<li><a href="https://cran.r-project.org/package=imagefluency" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/imagefluency" alt="CRAN downloads"></a></li>
-<li><a href="https://cran.r-project.org/package=imagefluency" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/grand-total/imagefluency" alt="CRAN downloads"></a></li>
-<li><a href="https://doi.org/10.5281/zenodo.5614665" class="external-link"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.5614665.svg" alt="DOI"></a></li>
+<li><a href="https://cran.r-project.org/package=imagefluency" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/imagefluency" alt="CRAN downloads"></a></li>
+<li><a href="https://cran.r-project.org/package=imagefluency" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/imagefluency" alt="CRAN downloads"></a></li>
+<li><a href="https://doi.org/10.32614/CRAN.package.imagefluency" class="external-link"><img src="https://img.shields.io/badge/doi-10.32614/CRAN.package.imagefluency-blue.svg" alt="DOI"></a></li>
 </ul>
 </div>
 
-  </div>
+  </aside>
 </div>
 
 
-      <footer><div class="copyright">
-  <p></p>
-<p>Developed by <a href="https://github.com/stm/" class="external-link">Stefan Mayer</a>.</p>
+    <footer><div class="pkgdown-footer-left">
+  <p>Developed by <a href="https://github.com/stm/" class="external-link">Stefan Mayer</a>.</p>
 </div>
 
-<div class="pkgdown">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<div class="pkgdown-footer-right">
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
-      </footer>
+    </footer>
 </div>
 
-  
 
 
-  
+
 
   </body>
 </html>
