@@ -7,7 +7,6 @@
 [![CRAN status](https://www.r-pkg.org/badges/version/imagefluency)](https://cran.r-project.org/package=imagefluency)
 [![CRAN downloads](https://cranlogs.r-pkg.org/badges/imagefluency)](https://cran.r-project.org/package=imagefluency)
 [![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/imagefluency)](https://cran.r-project.org/package=imagefluency)
-<!-- [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5614665.svg)](https://doi.org/10.5281/zenodo.5614665) -->
 [![DOI](https://img.shields.io/badge/doi-10.32614/CRAN.package.imagefluency-blue.svg)](https://doi.org/10.32614/CRAN.package.imagefluency)
 <!-- badges: end -->
 
