@@ -81,8 +81,6 @@ img_typicality <- function(imglist, rescale = NULL){
     warning("The function needs at least 2 images in the input list. Returning NA.", call. = FALSE)
     return(list(typicality = NA))
   }
-  #tryCatch(lapply(imglist, .check_input, "typicality"), error = function(err) {stop("errorinside", call. = FALSE)})
-  #
   #
   for (elmnt in seq_along(imglist)) {
     # input not matrix or array?
@@ -121,7 +119,7 @@ img_typicality <- function(imglist, rescale = NULL){
   # check whether all images already have the same dimension, otherwise resize
   if (!(all(dims[-3, ] == c(minH, minW)))) {
     # Resizing requires package "OpenImageR"
-    if (requireNamespace("OpenImageR", quietly = TRUE)) {
+    if (.pkg_avail("OpenImageR")) {
       imglist <- lapply(imglist, OpenImageR::resizeImage,
                                   width = minW, height = minH, method = "bilinear")
     } else {
@@ -136,7 +134,7 @@ img_typicality <- function(imglist, rescale = NULL){
     }
     if (rescale != 1) {
       # Rescaling requires package "OpenImageR"
-      if (requireNamespace("OpenImageR", quietly = TRUE)) {
+      if (.pkg_avail("OpenImageR")) {
         # image dimensions of first element (assumes the same for all elements)
         img_h <- dim(imglist[[1]])[1] # image height
         img_w <- dim(imglist[[1]])[2] # image width
@@ -170,12 +168,17 @@ img_typicality <- function(imglist, rescale = NULL){
 #' @param imglist  A list of matrices with numeric values or
 #'   integer values.
 #'
-#' @return a numeric value (RMS contrast)
+#' @return a named matrix of numeric values (typicality scores)
 #' @keywords internal
 .typ <- function(imglist){
   imglist <- matrix(unlist(imglist), ncol = length(imglist), byrow = FALSE)
   img_mean <- rowMeans(imglist)
-  output <- stats::cor(imglist, img_mean)
+  if (.pkg_avail("collapse")) {
+    output <- collapse::pwcor(imglist, img_mean)
+  } else {
+    output <- stats::cor(imglist, img_mean)
+    .info_collapse()
+  }
   rownames(output) <- paste0("img", seq_len(nrow(output)))
   return(typicality = output)
 }

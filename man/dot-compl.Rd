@@ -14,7 +14,7 @@
 \item{rotate}{logical. Image rotation by 90 degrees?}
 }
 \value{
-a numeric value (ratio compressed/uncompressed file size).
+a numeric value (ratio compressed/uncompressed file size)
 }
 \description{
 Returns the complexity of an image array / matrix or path.

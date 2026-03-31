@@ -11,7 +11,7 @@
 integer values.}
 }
 \value{
-a numeric value (RMS contrast)
+a named matrix of numeric values (typicality scores)
 }
 \description{
 Returns the typicality of a list of images as the correlation with the mean image.

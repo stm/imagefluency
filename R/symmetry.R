@@ -235,21 +235,26 @@ img_symmetry <- function(img, vertical = TRUE, horizontal = TRUE, ...) {
   stimR <- img[, imgW:(1 + ceiling(imgW / 2))]
 
   # vectorize matrices
-  pixL <- as.vector(stimL)
-  pixR <- as.vector(stimR)
+  dim(stimL) <- NULL
+  dim(stimR) <- NULL
 
   # check whether sd in one of the halves is zero
-  if (stats::sd(pixL) == 0) {
+  if (stats::sd(stimL) == 0) {
     stop("No variation in left image half. Computation not possible.", call. = FALSE)
     # return(NA)
   }
-  if (stats::sd(pixR) == 0) {
+  if (stats::sd(stimR) == 0) {
     stop("No variation in right image half. Computation not possible.", call. = FALSE)
     # return(NA)
   }
 
   # correlation of image halves
-  corrLR <- stats::cor(pixL, pixR)
+  if (.pkg_avail("collapse")) {
+    corrLR <- collapse::pwcor(stimL, stimR)
+  } else {
+    corrLR <- stats::cor(stimL, stimR)
+    .info_collapse()
+  }
 
   # final symmetry: vertical (absolute correlation)
   return(abs(corrLR))

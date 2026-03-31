@@ -142,7 +142,7 @@ img_self_similarity <- function(img, full = FALSE, logplot = FALSE, raw=FALSE){
       yvals <- outGray$yvals
       coord1 <- outGray$coord1
       coord2 <- outGray$coord2
-      if (requireNamespace("ggplot2", quietly = TRUE) & requireNamespace("scales", quietly = TRUE)) {
+      if (.pkg_avail("ggplot2") & .pkg_avail("scales")) {
         g <- ggplot2::ggplot(data = data.frame(xvals, yvals), ggplot2::aes(xvals, yvals)) +
           ggplot2::geom_line() +
           # ggplot2::geom_smooth(method = stats::lm, se = FALSE) +
@@ -192,6 +192,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".x"))
 #' @return a numeric value (self-similarity)
 #' @keywords internal
 .selfsim <- function(img, full, raw, logplot){
+  # check image dimensions
   if (min(dim(img)) < 22) {
     stop(paste0("Image has to be at least 22 pixels in each dimension. Input image has ",
                 dim(img)[2], " (width) x ", dim(img)[1], " (height)."),
@@ -200,9 +201,9 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".x"))
   xs <- dim(img)[1] # image height
   ys <- dim(img)[2] # image width
 
-  # check for squared matrix
+  # ensure the image is square; if not, resize using OpenImageR
   if (xs != ys) {
-    if (requireNamespace("OpenImageR", quietly = TRUE)) {
+    if (.pkg_avail("OpenImageR")) {
       square_dim <- min(xs, ys)
       if (square_dim %% 2 == 1) { # odd size
         square_dim <- square_dim - 1
@@ -213,43 +214,52 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".x"))
       xs <- dim(img)[1]
       ys <- dim(img)[2]
 
-      # warning("The input image was not squared. Rescaling to a squared matrix was performed.",
-      #        call. = FALSE)
     } else {
       stop("Package 'OpenImageR' is required but not installed on your system.", call. = FALSE)
     }
   }
 
-  # apply fft2
+  # compute FFT and shift zero frequency to center
   img_fft <- stats::fft(img)
-  # shift center
   img_fft_shifted <- pracma::circshift(img_fft, floor(dim(img_fft)/2))
   img_fft_shifted <- abs(img_fft_shifted)^2
 
+  # generate frequency grids
   f2 <- seq(-xs/2, xs/2 - 1)
   f1 <- seq(-ys/2, ys/2 - 1)
-
-  # create meshgrid
   XXYY <- pracma::meshgrid(f1, f2)
   XX <- XXYY[[1]]
   YY <- XXYY[[2]]
 
-  # transform coordinates
+  # convert Cartesian coordinates to polar coordinates (angle, radius)
   rtmatrix <- pracma::cart2pol(cbind(as.vector(XX), as.vector(YY)))
-  # tmatrix <- matrix(rtmatrix[, 1], nrow = xs, ncol = ys)
+  # extract radius and reshape to image dimensions
   rmatrix <- matrix(rtmatrix[, 2], nrow = xs, ncol = ys)
-
   if (xs %% 2 == 1 || ys %% 2 == 1) {
     rmatrix <- round(rmatrix) - 1
   } else {
     rmatrix <- round(rmatrix)
   }
 
-  # compute rotational average (power spectrum)
-  power_spec <- pracma::accumarray(as.vector(rmatrix) + 1, as.vector(img_fft_shifted)) / pracma::accumarray(as.vector(rmatrix) + 1, rep(1, length(as.vector(rmatrix))))
-  power_spec <- power_spec[seq(2, floor(min(xs,ys)/2) + 1)]
+  if (.pkg_avail("collapse")) {
+    # group FFT power values by rounded radius
+    dim(rmatrix) <- NULL
+    rmatrix <- rmatrix + 1  # make groups start at 1
+    dim(img_fft_shifted) <- NULL
 
+    # compute sums and counts per group using collapse::fsum
+    sums <- unname(collapse::fsum(img_fft_shifted, rmatrix))
+    counts <- unname(collapse::fsum(rep(1, length(img_fft_shifted)), rmatrix))
+    power_spec <- sums / counts
+    power_spec <- power_spec[seq(2, floor(min(xs, ys) / 2) + 1)]
+  } else {
+    .info_collapse()
+    # compute power spectrum
+    power_spec <- pracma::accumarray(as.vector(rmatrix) + 1, as.vector(img_fft_shifted)) / pracma::accumarray(as.vector(rmatrix) + 1, rep(1, length(as.vector(rmatrix))))
+    power_spec <- power_spec[seq(2, floor(min(xs,ys)/2) + 1)]
+  }
 
+  # determine the frequency range for regression
   if (!full) {
     if (min(dim(img))/2 < 256) {
       lmrange <- c( 10, floor( min(dim(img)) / 2 ) )
@@ -260,29 +270,29 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".x"))
     lmrange <- c( 1, floor( min(dim(img)) / 2 ) )
   }
 
-  # overall possible frequencies (i.e., all frequencies)
   spat_freq <-  seq( 1, floor( min(dim(img)) / 2 ) )
-
   Xt <- spat_freq[seq(lmrange[1], lmrange[2])]
   Xt_log <- log(Xt)
   Yt <- power_spec[seq(lmrange[1], lmrange[2])]
   Yt_log <- log(Yt)
 
-  # calculate slope of regression
-  regr <- stats::lm(Yt_log ~ Xt_log)
-  slope <- unname(stats::coefficients(regr)[2])
-  # sprintf("%.4f",slope)
-  coord1 <- unname(c(lmrange[1], exp(stats::fitted(regr)[1])))
-  coord2 <- unname(c(lmrange[2], exp(utils::tail(stats::fitted(regr),1))))
-
-  # self-similarity is the degree to which slope is -2
-  if (raw == TRUE) {
-    self_sim <- slope
+  # linear regression on the log-log data
+  if (.pkg_avail("collapse")) {
+    regr <- collapse::flm(Yt_log ~ Xt_log, method = "lm")
+    slope <- regr[2]
   } else {
-    self_sim <- abs(slope + 2)*(-1)
+    regr <- stats::lm(Yt_log ~ Xt_log)
+    slope <- unname(stats::coefficients(regr)[2])
   }
+  self_sim <- if (raw) slope else abs(slope + 2) * (-1)
 
-  # return results
-  if(logplot) return(list(self_sim = self_sim, xvals=spat_freq, yvals=power_spec, coord1=coord1, coord2=coord2))
-  if(!logplot) return(list(self_sim = self_sim))
+  if (logplot) {
+    fitted_vals <- cbind(1, Xt_log) %*% regr
+    coord1 <- unname(c(lmrange[1], exp(fitted_vals[1])))
+    coord2 <- unname(c(lmrange[2], exp(utils::tail(fitted_vals, 1))))
+    return(list(self_sim = self_sim, xvals = spat_freq, yvals = power_spec,
+                coord1 = coord1, coord2 = coord2))
+  } else {
+    return(list(self_sim = self_sim))
+  }
 }

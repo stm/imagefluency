@@ -59,7 +59,7 @@ The function returns the visual complexity of an image. Visual
   to write (and read) images.
 }
 \examples{
-\dontshow{if (.Platform$OS.type != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (.Platform$OS.type != "windows") withAutoprint(\{ # examplesIf}
 # Example image with high complexity: trees
 trees <- img_read(system.file("example_images", "trees.jpg", package = "imagefluency"))
 #

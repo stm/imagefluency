@@ -83,6 +83,7 @@ img_contrast <- function(img){
   ##      rms contrast
   ## -----------------------
 
+  # vectorize matrix
   pixAll <- as.vector(img)
 
   # check range of input values
@@ -102,11 +103,4 @@ img_contrast <- function(img){
 
   # RMS via built-in sd function
   return(stats::sd(pixAll))
-
-  # # alternative 1: via normalization
-  # pixAllMean <- pixAll - mean(pixAll)
-  # norm(pixAllMean,'2')/sqrt(length(pixAllMean))
-
-  # # alternative 2: direct formula
-  # sqrt(sum((pixAll - mean(pixAll))^2)/length(pixAll))
 }

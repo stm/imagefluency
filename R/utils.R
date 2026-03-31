@@ -179,6 +179,50 @@ rotate90 <- function(img, direction = "positive") {
 
 
 #' @keywords internal
-.rand_string <- function(n = 6){
-  paste0(letters[round(stats::runif(n, min = 1, max = 26))], collapse = "")
+.pkg_avail <- function(pkg){
+  requireNamespace(pkg, quietly = TRUE) == TRUE
+}
+
+
+#' @keywords internal
+.normalize_img <- function(img) {
+  # compute range
+  rng <- range(img, na.rm = TRUE)
+  # check for non-finite values
+  if (!all(is.finite(rng))) {
+    stop("Input image contains non-finite values.", call. = FALSE)
+  }
+  # if values are already in [0, 1] range, return image
+  if (rng[1] >= 0 && rng[2] <= 1) {
+    return(img)
+  }
+  # check if values are in 0-255 range (8-bit format)
+  if (rng[1] >= 0 && rng[2] <= 255) {
+    return(img / 255)
+  }
+  # check for constant image
+  if (rng[1] == rng[2]) {
+    fill <- if (rng[1] <= 0) 0 else 1
+    return(array(fill, dim = dim(img), dimnames = dimnames(img)))
+  }
+  # normalize to [0, 1] (min-max)
+  (img - rng[1]) / diff(rng)
+}
+
+
+#' @keywords internal
+.info_collapse <- function(){
+  if (getOption("imagefluency.warning.0.3", TRUE)) {
+    # transition message for 0.2.5 to 0.3
+    # message("Package 'collapse' not available. Using base R functions.")
+    message(paste0(
+            'As of v0.3, ', sQuote('imagefluency'),' uses the ', sQuote('collapse'),
+            ' package to speed up computations if available. We therefore recommend ',
+            'installing the ', sQuote('collapse'), ' package.\n',
+            'In future versions of ', sQuote('imagefluency'), ', ', sQuote('collapse'),
+            ' will be a required dependency.\n\n',
+            'This message is shown once per session and may be disabled by setting:\n',
+            'options("imagefluency.warning.0.3"=FALSE)'))
+    options("imagefluency.warning.0.3" = FALSE)
+  }
 }
