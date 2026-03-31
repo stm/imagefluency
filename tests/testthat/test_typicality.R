@@ -1,5 +1,3 @@
-context("typicality")
-
 test_that("img_typicality only handles lists of matrices with numeric values", {
   expect_error(img_typicality(matrix("foo", nrow = 10, ncol = 10)),
                "Input has to be a \\*list\\* of image matrices")
@@ -70,7 +68,7 @@ test_that("img_typicality checks whether parameter rescale is numeric and has Op
   expect_error(img_typicality(imgs, rescale = .5), NA)
 
   # OpenImageR package has to be installed
-  mockery::stub(img_typicality, 'requireNamespace', FALSE)
+  mockery::stub(img_typicality, '.pkg_avail', FALSE)
   expect_error(img_typicality(imgs, rescale = .5),
                "Package \\'OpenImageR\\' is required for rescaling but not installed on your system\\.")
 })
@@ -116,7 +114,7 @@ test_that("Different image sizes are resized using OpenImageR", {
 
 
   # OpenImageR package has to be installed
-  mockery::stub(img_typicality, 'requireNamespace', FALSE)
+  mockery::stub(img_typicality, '.pkg_avail', FALSE)
   expect_error(img_typicality(imgs),
                "Package \\'OpenImageR\\' is required but not installed on your system\\.")
 })

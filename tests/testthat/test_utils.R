@@ -1,5 +1,3 @@
-context("rgb2gray")
-
 test_that("rgb2gray only handles numeric arrays", {
   expect_error(rgb2gray(matrix("foo", nrow = 10, ncol = 10)),
                "Invalid input \\(should be a 3-dimensional array of numeric or integer values\\)")
@@ -26,8 +24,6 @@ test_that("rgb2gray correctly converts RGB values to Gray", {
   expect_equal(rgb2gray(imgRGB), imgGray)
 })
 
-
-context("rotate90")
 
 test_that("rotate90 only handles arrays or matrices", {
   expect_error(rotate90(1:10),
@@ -65,8 +61,6 @@ test_that("rotate90 correctly rotates clockwise and counterclockwise", {
     , dim = c(2, 2, 3)))
 })
 
-context("img_read")
-
 test_that("img_read loads demo image without error", {
   expect_error({
     path <- system.file("example_images", "rails.jpg", package = "imagefluency")
@@ -74,8 +68,6 @@ test_that("img_read loads demo image without error", {
   }, NA)
 })
 
-
-context(".check_input")
 
 test_that(".check_input gives results only for known function calls", {
   img <- matrix(1:4, 2)

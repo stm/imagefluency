@@ -1,5 +1,3 @@
-context("shiny app")
-
 test_that("shiny package is installed", {
   mockery::stub(run_imagefluency, 'requireNamespace', FALSE)
   expect_error(run_imagefluency(),

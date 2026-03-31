@@ -1,5 +1,3 @@
-context("img_symmetry")
-
 test_that("img_symmetry checks all options to be correct", {
   expect_warning(img_symmetry(0, vertical = FALSE, horizontal = FALSE),
                "Both optional arguments cannot be FALSE\\. Try setting option \\'vertical\\' or \\'horizontal\\' to TRUE\\. Returning NA\\.")
@@ -106,4 +104,3 @@ test_that("img_symmetry detects symmetry for inverted image", {
 
   expect_equal(img_symmetry(img1), img_symmetry(img2))
 })
-

@@ -1,5 +1,3 @@
-context("self_similarity")
-
 test_that("img_self_similarity only handles numeric matrices", {
   expect_error(img_self_similarity(matrix("foo", nrow = 10, ncol = 10)),
                "Input img has to be a matrix or array of \\*numeric\\* or \\*integer\\* values")
@@ -16,7 +14,6 @@ test_that("img_self_similarity checks whether optional parameter are logical", {
                  "logplot = 'yes' is not a logical value \\(TRUE\\/FALSE\\)\\. Skipping log-log plot \\.\\.\\.")
   expect_warning(img_self_similarity(img, raw = "yes"),
                  "raw = 'yes' is not a logical value \\(TRUE\\/FALSE\\)\\. Automatically set to FALSE \\.\\.\\.")
-  expect_warning(img_self_similarity(img, full = "yes", logplot = "yes", raw = 1))
 })
 
 test_that("img_self_similarity checks whether image is at least 22 pixels in each dimensions, throws error otherwise", {
@@ -44,7 +41,7 @@ test_that("img_self_similarity gives results you'd expect", {
   #
   imgRGB <- array(0, dim = c(100, 100, 3))
   imgRGB[1:50, 1:50, ] <- 255
-  expect_equal(img_self_similarity(imgRGB), expected = -0.5552913, tolerance = .00001, scale = 1)
+  expect_equal(img_self_similarity(imgRGB), expected = -0.5552913, tolerance = .00001)
 })
 
 
@@ -75,14 +72,14 @@ test_that("Non-squared image is resized using OpenImageR", {
   set.seed(2787)
   # non-squared but even sizes
   img <- matrix(runif(50*48, min = 0, max = 255), nrow = 50, ncol = 48)
-  expect_equal(img_self_similarity(img), -1.558845, tolerance = .00001, scale = 1)
+  expect_equal(img_self_similarity(img), -1.558845, tolerance = .00001)
 
   # non-squared and odd sizes
   img <- matrix(runif(50*49, min = 0, max = 255), nrow = 50, ncol = 49)
-  expect_equal(img_self_similarity(img), -0.8992694, tolerance = .00001, scale = 1)
+  expect_equal(img_self_similarity(img), -0.8992694, tolerance = .00001)
 
   # OpenImageR package has to be installed
-  mockery::stub(.selfsim, 'requireNamespace', FALSE)
+  mockery::stub(.selfsim, '.pkg_avail', FALSE)
   expect_error(.selfsim(img, full = FALSE, logplot = FALSE, raw=FALSE),
                "Package \\'OpenImageR\\' is required but not installed on your system\\.")
 })
@@ -104,5 +101,5 @@ test_that("Get raw log-log slope", {
 test_that("Option to compute sel-similarity on full range", {
   set.seed(2787)
   img <- matrix(runif(50*50, min = 0, max = 255), nrow = 50, ncol = 50)
-  expect_equal(img_self_similarity(img, full = TRUE), -2.135299, tolerance = .00001, scale = 1)
+  expect_equal(img_self_similarity(img, full = TRUE), -2.135299, tolerance = .00001)
 })

@@ -1,5 +1,3 @@
-context("contrast")
-
 test_that("img_contrast only handles numeric matrices", {
   expect_error(img_contrast(matrix("foo", nrow = 10, ncol = 10)),
                "Input img has to be a matrix or array of \\*numeric\\* or \\*integer\\* values")
@@ -25,7 +23,7 @@ test_that("img_contrast gives results you'd expect (grayscale)", {
   expect_equal(img_contrast(img), expected = 0)
 
   img <- matrix(rnorm(1000*1000) + 100, nrow = 1000, ncol = 1000)
-  expect_equal(img_contrast(img), expected = 1/255, tolerance = .01, scale = 1)
+  expect_equal(img_contrast(img), expected = 1/255, tolerance = .01)
 })
 
 test_that("img_contrast gives results you'd expect", {
@@ -41,5 +39,5 @@ test_that("img_contrast gives results you'd expect", {
   green <- matrix(c(rnorm(5*5)+50,rnorm(5*5)+200), nrow = 50, ncol = 50)
   blue <- matrix(c(rnorm(5*5)+50,rnorm(5*5)+200), nrow = 50, ncol = 50)
   imgRGB <- array(c(red, green, blue), dim = c(50, 20, 3))
-  expect_equal(img_contrast(imgRGB), expected = 0.2936195, tolerance = .0001, scale = 1)
+  expect_equal(img_contrast(imgRGB), expected = 0.2936195, tolerance = .0001)
 })

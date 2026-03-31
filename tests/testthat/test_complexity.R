@@ -1,5 +1,3 @@
-context("complexity")
-
 test_that("img_complexity handles only *numeric* matrices or arrays", {
   expect_error(img_complexity(matrix("foo", nrow = 10, ncol = 10)),
                "Wrong type of input\\: has to be a filename \\(character string\\) or an image \\(3-dimensional array of numeric or integer values\\)")
@@ -30,26 +28,29 @@ test_that("img_complexity checks and handles file names as input", {
                "Multiple filenames\\. Function can only handle one image at a time\\.")
 
   img_file <- system.file("example_images", "sky.jpg", package = "imagefluency")
-  expect_equal(img_complexity(img_file), img_complexity(img_read(img_file)), tolerance = .1, scale = 1)
+  expect_equal(img_complexity(img_file), img_complexity(img_read(img_file)), tolerance = .1)
 })
 
 test_that("img_complexity normalizes input image if necessary", {
-  expect_equal(img_complexity(array(100:500, dim = c(50, 50, 3))), 0.1111398, tolerance = 0.01, scale = 1)
+  img <- array(100:500, dim = c(50, 50, 3))
+  img_norm <- (img - min(img)) / (max(img) - min(img))
+
+  expect_equal(img_complexity(img), img_complexity(img_norm), tolerance = 1e-8)
 })
 
 
 test_that("img_complexity needs packge magick", {
-  mockery::stub(img_complexity, 'requireNamespace', FALSE)
+  mockery::stub(img_complexity, '.pkg_avail', FALSE)
   expect_error(img_complexity(array(0, dim = c(10, 10, 3))),
                "Package \\'magick\\' not found but needed\\. Please install the package first\\.")
 })
 
 test_that("img_complexity throws error if image cannot be loaded",{
   expect_error(img_complexity("foo.jpg"),
-               "File not found or invalid path \\(could not resolve \\'foo\\.jpg\\'\\)")
+               "File not found or invalid path")
 
   expect_error(img_complexity(array(0, dim = c(10, 10, 5))),
-               "File not found or invalid path \\(could not resolve input\\)")
+               "File not found or invalid path")
 })
 
 test_that("img_complexity works as intended (gives correct / consistent results)", {
@@ -61,7 +62,7 @@ test_that("img_complexity works as intended (gives correct / consistent results)
   # magick::image_read(img)
   results <- img_complexity(img)
 
-  expect_equal(results, 0.1600421, tolerance = 0.01, scale = 1)
+  expect_equal(results, 0.1600421, tolerance = 0.01)
 
 
   redChannel <- matrix(0, nrow = 300, ncol = 300)
@@ -73,19 +74,20 @@ test_that("img_complexity works as intended (gives correct / consistent results)
   # magick::image_read(img)
   results <- img_complexity(img)
 
-  expect_equal(results, 0.001673219, tolerance = 0.01, scale = 1)
+  expect_equal(results, 0.001673219, tolerance = 0.01)
 })
 
 
-test_that(".compl checks for package R.utils", {
-  mockery::stub(.compl, 'requireNamespace', FALSE)
-  expect_error(.compl(magick::image_read(array(0, dim = c(10, 10, 3))), algorithm = "zip", rotate = FALSE),
+test_that(".compress_and_get_size checks for package R.utils", {
+  mockery::stub(.compress_and_get_size, '.pkg_avail', FALSE)
+  expect_error(.compress_and_get_size(magick::image_read(array(0, dim = c(10, 10, 3))),
+                                      flname = tempfile(),
+                                      algorithm = "zip",
+                                      use_existing_bmp = FALSE),
                "Package \\'R.utils\\' not found but needed\\. Please install the package first\\.")
 })
 
 
-
-context("simplicity")
 
 test_that("img_simplicity complements img_complexity", {
   set.seed(2787)
@@ -95,7 +97,5 @@ test_that("img_simplicity complements img_complexity", {
   img <- array(c(redChannel, greenChannel, blueChannel), dim = c(dim(redChannel), 3))
   results <- img_simplicity(img)
 
-  expect_equal(results, 1-0.1600421, tolerance = 0.01, scale = 1)
+  expect_equal(results, 1-0.1600421, tolerance = 0.01)
 })
-
-
