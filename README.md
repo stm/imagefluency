@@ -50,7 +50,7 @@ The dashboard supports multi-image uploads, side-by-side comparison, and CSV exp
 </p>
 
 You can run the dashboard locally with `imagefluency::run_imagefluency()` once the package is installed, or try it out
-online [here](https://mayer.shinyapps.io/imagefluency/).
+online [here](https://019d45ea-53cc-6381-9ecf-5151194cda1f.share.connect.posit.cloud/).
 
 
 
