@@ -97,17 +97,21 @@ img_complexity <- function(imgfile, algorithm = "zip", rotate = FALSE){
 
   if (is.character(imgfile) & !is.array(imgfile)) {
     if (length(imgfile) == 1) {
-      input <- "image_path"
+      img_from_path <- tryCatch(img_read(imgfile), error = function(err) err)
+      if (!inherits(img_from_path, "error")) {
+        imgfile <- img_from_path
+      }
     } else {
       stop("Multiple filenames. Function can only handle one image at a time.", call. = FALSE)
     }
-  } else if (is.array(imgfile) & (is.numeric(imgfile) | is.integer(imgfile))) {
-    input <- "image"
+  }
+
+  if (is.array(imgfile) & (is.numeric(imgfile) | is.integer(imgfile))) {
     # normalize image if necessary
     if (min(imgfile) < 0 || max(imgfile) > 1) {
       imgfile <- .normalize_img(imgfile)
     }
-  } else {
+  } else if (!is.character(imgfile) || is.array(imgfile)) {
     stop("Wrong type of input: has to be a filename (character string) or an image (3-dimensional array of numeric or integer values)", call. = FALSE)
   }
 
