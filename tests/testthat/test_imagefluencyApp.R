@@ -9,3 +9,11 @@ test_that("empty shiny app directory (likely error on install)", {
   expect_error(run_imagefluency(),
                "Could not find shiny app directory\\. Try re-installing \\`imagefluency\\`\\.")
 })
+
+test_that("run_imagefluency launches shiny app when available", {
+  mockery::stub(run_imagefluency, "system.file", "/tmp/imagefluencyApp")
+  mockery::stub(run_imagefluency, "requireNamespace", TRUE)
+  mockery::stub(run_imagefluency, "shiny::runApp", "launched")
+
+  expect_identical(run_imagefluency(), "launched")
+})

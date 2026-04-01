@@ -104,3 +104,20 @@ test_that("img_symmetry detects symmetry for inverted image", {
 
   expect_equal(img_symmetry(img1), img_symmetry(img2))
 })
+
+test_that(".sym_mirror falls back to stats::cor when collapse is unavailable", {
+  img <- matrix(1:36, nrow = 6, ncol = 6)
+  old_warning_opt <- getOption("imagefluency.warning.1.0.0")
+  on.exit(options("imagefluency.warning.1.0.0" = old_warning_opt), add = TRUE)
+  options("imagefluency.warning.1.0.0" = TRUE)
+
+  mockery::stub(.sym_mirror, ".pkg_avail", FALSE)
+
+  expect_message(
+    symmetry <- .sym_mirror(img),
+    "As of v1\\.0\\.0"
+  )
+  expect_true(is.numeric(symmetry))
+  expect_gte(symmetry, 0)
+  expect_lte(symmetry, 1)
+})

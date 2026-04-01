@@ -103,3 +103,35 @@ test_that("Option to compute sel-similarity on full range", {
   img <- matrix(runif(50*50, min = 0, max = 255), nrow = 50, ncol = 50)
   expect_equal(img_self_similarity(img, full = TRUE), -2.135299, tolerance = .00001)
 })
+
+test_that("img_self_similarity falls back to base plotting when ggplot2/scales are unavailable", {
+  set.seed(2787)
+  img <- matrix(runif(50 * 50, min = 0, max = 255), nrow = 50, ncol = 50)
+  mockery::stub(img_self_similarity, ".pkg_avail", FALSE)
+
+  expect_error(img_self_similarity(img, logplot = TRUE), NA)
+})
+
+test_that(".selfsim falls back to base implementations when collapse is unavailable", {
+  set.seed(2787)
+  img <- matrix(runif(50 * 50, min = 0, max = 255), nrow = 50, ncol = 50)
+  old_warning_opt <- getOption("imagefluency.warning.1.0.0")
+  on.exit(options("imagefluency.warning.1.0.0" = old_warning_opt), add = TRUE)
+  options("imagefluency.warning.1.0.0" = TRUE)
+
+  mockery::stub(
+    .selfsim,
+    ".pkg_avail",
+    function(pkg) {
+      if (identical(pkg, "collapse")) return(FALSE)
+      TRUE
+    }
+  )
+
+  expect_message(
+    out <- .selfsim(img, full = FALSE, raw = FALSE, logplot = FALSE),
+    "As of v1\\.0\\.0"
+  )
+  expect_true(is.list(out))
+  expect_true(is.numeric(out$self_sim))
+})

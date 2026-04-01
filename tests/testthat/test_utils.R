@@ -107,3 +107,32 @@ test_that(".check_input returns rgb for arrays", {
     "rgb"
     )
 })
+
+test_that(".normalize_img handles edge cases and all normalization branches", {
+  expect_error(
+    .normalize_img(matrix(c(0, 1, Inf, 2), nrow = 2)),
+    "Input image contains non-finite values\\."
+  )
+
+  img_01 <- matrix(c(0, 0.25, 0.5, 1), nrow = 2)
+  expect_identical(.normalize_img(img_01), img_01)
+
+  img_255 <- matrix(c(0, 64, 128, 255), nrow = 2)
+  expect_equal(.normalize_img(img_255), img_255 / 255)
+
+  img_const_negative <- matrix(-2, nrow = 2, ncol = 2)
+  expect_equal(.normalize_img(img_const_negative), matrix(0, nrow = 2, ncol = 2))
+
+  img_const_high <- matrix(300, nrow = 2, ncol = 2)
+  expect_equal(.normalize_img(img_const_high), matrix(1, nrow = 2, ncol = 2))
+})
+
+test_that(".info_collapse displays transition message once per session option", {
+  old_warning_opt <- getOption("imagefluency.warning.1.0.0")
+  on.exit(options("imagefluency.warning.1.0.0" = old_warning_opt), add = TRUE)
+  options("imagefluency.warning.1.0.0" = TRUE)
+
+  expect_message(.info_collapse(), "As of v1\\.0\\.0")
+  expect_false(getOption("imagefluency.warning.1.0.0"))
+  expect_message(.info_collapse(), NA)
+})

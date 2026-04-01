@@ -118,3 +118,24 @@ test_that("Different image sizes are resized using OpenImageR", {
   expect_error(img_typicality(imgs),
                "Package \\'OpenImageR\\' is required but not installed on your system\\.")
 })
+
+test_that(".typ falls back to stats::cor when collapse is unavailable", {
+  set.seed(2787)
+  imgs <- replicate(
+    3,
+    matrix(runif(100, min = 0, max = 255), nrow = 10, ncol = 10),
+    simplify = FALSE
+  )
+  old_warning_opt <- getOption("imagefluency.warning.1.0.0")
+  on.exit(options("imagefluency.warning.1.0.0" = old_warning_opt), add = TRUE)
+  options("imagefluency.warning.1.0.0" = TRUE)
+
+  mockery::stub(.typ, ".pkg_avail", FALSE)
+
+  expect_message(
+    out <- .typ(imgs),
+    "As of v1\\.0\\.0"
+  )
+  expect_true(is.numeric(out))
+  expect_equal(length(out), 3)
+})
