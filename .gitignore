@@ -14,7 +14,7 @@ shinyapps_io/
 # RStudio files
 .Rproj.user/
 # Project file name
-imagefluency_devel.Rproj
+*.Rproj
 # raw example files
 /data-raw/
 # test files
@@ -45,3 +45,5 @@ docs
 /ideas/
 # Mac files
 .DS_Store
+# CRAN submission log
+CRAN-SUBMISSION
