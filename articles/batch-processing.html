@@ -59,9 +59,9 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Analyzing multiple images at once</h1>
             
-            <h4 data-toc-skip class="date">March 31, 2026</h4>
+            <h4 data-toc-skip class="date">April 01, 2026</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/stm/imagefluency/blob/v1.0.0/vignettes/batch-processing.Rmd" class="external-link"><code>vignettes/batch-processing.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/stm/imagefluency/blob/master/vignettes/batch-processing.Rmd" class="external-link"><code>vignettes/batch-processing.Rmd</code></a></small>
       <div class="d-none name"><code>batch-processing.Rmd</code></div>
     </div>
 
@@ -563,7 +563,7 @@ become larger. We ‘simulate’ this by reading in the images 10 times.</p>
 <pre eval="F"><code>&gt; pbmclapply: 2.44 sec elapsed</code></pre>
 <p>We can see that the multi-core approach is
 <!-- # github actions does not support multi-core processing, thus editing result manually
-2.48
+2.51
 --> more than three times faster (in this single test run) than the
 single-core approach! Let’s see how <code><a href="https://furrr.futureverse.org/reference/future_map.html" class="external-link">furrr::future_map()</a></code>
 compares to this.</p>

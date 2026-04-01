@@ -2,6 +2,8 @@
 
 ## imagefluency 1.0.0
 
+CRAN release: 2026-03-31
+
 - redesigned the Shiny dashboard with multi-image upload, integrated
   results, image comparison, and CSV export
 - added optional `collapse`-based speedups for self-similarity,

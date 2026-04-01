@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/stm/imagefluency/blob/v1.0.0/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/stm/imagefluency/blob/master/DESCRIPTION)
 
 Mayer S (2026). *imagefluency: Image Statistics Based on Processing
 Fluency*. R package version 1.0.0, <https://imagefluency.com>.
