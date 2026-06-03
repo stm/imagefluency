@@ -17,3 +17,10 @@ test_that("run_imagefluency launches shiny app when available", {
 
   expect_identical(run_imagefluency(), "launched")
 })
+
+test_that("run_imagefluency errors on invalid max_images", {
+  expect_error(run_imagefluency(max_images = 0),
+               "`max_images` must be a positive number\\.")
+  expect_error(run_imagefluency(max_images = "ten"),
+               "`max_images` must be a positive number\\.")
+})

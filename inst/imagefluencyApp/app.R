@@ -2,7 +2,7 @@
 NULL
 
 # Configuration
-MAX_IMAGES <- 100
+MAX_IMAGES <- getOption("imagefluency.max_images", default = 100L)
 
 # Default (demo) image
 defaultimage <- system.file("imagefluencyApp", "www", "rails.jpg", package = "imagefluency")

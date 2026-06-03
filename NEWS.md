@@ -1,5 +1,9 @@
 # imagefluency
 
+# imagefluency 1.0.1
+
+* `run_imagefluency()` gains a `max_images` parameter to control the maximum number of images that can be uploaded in the Shiny app (default: 100).
+
 # imagefluency 1.0.0
 
 * redesigned the Shiny dashboard with multi-image upload, integrated

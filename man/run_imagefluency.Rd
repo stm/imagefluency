@@ -2,17 +2,27 @@
 % Please edit documentation in R/imagefluencyApp.R
 \name{run_imagefluency}
 \alias{run_imagefluency}
-\title{Run imagefluency app}
+\title{Interactive dashboard for \code{imagefluency}}
 \usage{
-run_imagefluency()
+run_imagefluency(max_images = 100)
+}
+\arguments{
+\item{max_images}{Integer. Maximum number of images that can be uploaded.
+Defaults to 100.}
 }
 \description{
-Launches a Shiny app that shows a demo of what can be done with
-the \code{imagefluency} package.
+Launches a dashboard to interactively use the functions of the
+\code{imagefluency} package. The dashboard is built using the \code{shiny}
+package and provides a user-friendly interface for uploading images,
+analyzing them, and exporting the results. The dashboard supports
+multi-image uploads and side-by-side comparisons of image fluency scores.
 }
 \examples{
 ## Only run this example in interactive R sessions
 if (interactive()) {
   run_imagefluency()
+
+  # increase the maximum number of uploadable images to 150
+  run_imagefluency(max_images = 150)
 }
 }
