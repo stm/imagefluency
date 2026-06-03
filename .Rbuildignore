@@ -1,9 +1,8 @@
 ^shinyapps_io$
 ^test\.R$
 ^ideas$
-^imagefluency_devel\.Rproj$
-^.*\.Rproj$       # Automatically added by RStudio,
-^\.Rproj\.user$   # used for temporary files.
+^.*\.Rproj$
+^\.Rproj\.user$
 ^CRAN-RELEASE$
 ^docs$
 ^_pkgdown\.yml$
