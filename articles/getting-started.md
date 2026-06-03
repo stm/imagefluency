@@ -107,6 +107,7 @@ symmetry, and typicality therefore constitute the core purpose of the
 You can install the current stable version from CRAN.
 
 ``` r
+
 install.packages('imagefluency')
 ```
 
@@ -114,6 +115,7 @@ To download the latest development version from Github use the
 `install_github` function of the `remotes` package.
 
 ``` r
+
 # install remotes if necessary
 if (!require('remotes')) install.packages('remotes')
 # install imagefluency from github
@@ -141,6 +143,7 @@ simplicity, self-similarity, symmetry, and typicality.
 To use the imagefluency package, first load the library.
 
 ``` r
+
 library(imagefluency)
 ```
 
@@ -152,7 +155,7 @@ returns the contrast of an image. Most research defines contrast in
 images as the root-mean-squared (RMS) contrast which is the standard
 deviation of the normalized pixel intensity values
 \[[10](#ref-Peli1990)\]:
-$\sqrt{\frac{1}{MN}\sum_{i = 0}^{N - 1}\sum_{j = 0}^{M - 1}\left( I_{ij} - \bar{I} \right)^{2}}$.
+$`\sqrt{\frac{1}{M N}\sum_{i=0}^{N-1}\sum_{j=0}^{M - 1}(I_{ij} - \bar{I})^2}`$.
 The RMS of an image as a measure for visual contrast has been shown to
 predict human contrast detection thresholds well
 \[[11](#ref-Frazor2006)\]. Therefore, the function calculates contrast
@@ -167,6 +170,7 @@ are used. Moreover, the images can be displayed using the
 `grid.raster()` function from the `grid` package.
 
 ``` r
+
 # Example image with relatively high contrast: berries
 berries <- img_read(system.file('example_images', 'berries.jpg', package = 'imagefluency'))
 # display image
@@ -176,6 +180,7 @@ img_contrast(berries)
 ```
 
 ``` r
+
 # Example image with relatively low contrast: bike
 bike <- img_read(system.file('example_images', 'bike.jpg', package = 'imagefluency'))
 # display image
@@ -233,6 +238,7 @@ complexity score (i.e., the compression rate). Values can range between
 (virtually completely compressed image, thus extremely simple image).
 
 ``` r
+
 # Example image with high complexity: trees
 trees <- img_read(system.file('example_images', 'trees.jpg', package = 'imagefluency'))
 # display image
@@ -242,6 +248,7 @@ img_complexity(trees)
 ```
 
 ``` r
+
 # Example image with low complexity: sky
 sky <- img_read(system.file('example_images', 'sky.jpg', package = 'imagefluency'))
 # display image
@@ -268,20 +275,19 @@ The function
 returns the self-similarity of an image. Self-similarity can be measured
 with the Fourier power spectrum of an image. Previous research has
 identified that the spectral power of natural scenes falls with spatial
-frequencies ($f$) according to a power law ($\frac{1}{f^{p}}$) with
-values of $p$ near the value 2, which indicates scale invariance (for a
-review, see \[[14](#ref-Simoncelli2001)\]). Therefore, the function
+frequencies ($`f`$) according to a power law ($`\frac{1}{f^p}`$) with
+values of $`p`$ near the value 2, which indicates scale invariance (for
+a review, see \[[14](#ref-Simoncelli2001)\]). Therefore, the function
 computes self-similarity via the slope of the log-log power spectrum of
 the image using OLS.
 
 The value for self-similarity that is returned by the function is
-calculated as
-$\text{self-similarity} = \left| \text{slope} + 2 \right|*( - 1)$. That
-is, the measure reaches its maximum value of 0 for a slope of $- 2$, and
-any deviation from $- 2$ results in negative values that are more
-negative the higher the deviation from $- 2$. Thus, the range of the
-self-similarity scores is $- \infty$ to $0$. For color images, the
-weighted average between each color channel’s values is computed.
+calculated as $`\text{self-similarity} = |\text{slope} + 2| * (-1)`$.
+That is, the measure reaches its maximum value of 0 for a slope of
+$`-2`$, and any deviation from $`-2`$ results in negative values that
+are more negative the higher the deviation from $`-2`$. Thus, the range
+of the self-similarity scores is $`-\infty`$ to $`0`$. For color images,
+the weighted average between each color channel’s values is computed.
 
 It is possible to get the raw regression slope (instead of the
 transformed value which indicates self-similarity) by using the option
@@ -292,6 +298,7 @@ help file for details (i.e.,
 [`?img_self_similarity`](https://imagefluency.com/reference/img_self_similarity.md)).
 
 ``` r
+
 # Example image with high self-similarity: romanesco
 romanesco <- img_read(system.file('example_images', 'romanesco.jpg', package = 'imagefluency'))
 # display image
@@ -301,6 +308,7 @@ img_self_similarity(romanesco)
 ```
 
 ``` r
+
 # Example image with low self-similarity: office
 office <- img_read(system.file('example_images', 'office.jpg', package = 'imagefluency'))
 # display image
@@ -350,6 +358,7 @@ for information about the additional options `shift_range` and
 `per_channel`.
 
 ``` r
+
 # Example image with high vertical symmetry: rails
 rails <- img_read(system.file('example_images', 'rails.jpg', package = 'imagefluency'))
 # display image
@@ -359,6 +368,7 @@ img_symmetry(rails, horizontal = FALSE)
 ```
 
 ``` r
+
 # Example image with low vertical symmetry: bridge
 bridge <- img_read(system.file('example_images', 'bridge.jpg', package = 'imagefluency'))
 # display image
@@ -409,6 +419,7 @@ atypical). It is important to note that an image’s typicality score
 highly depends on the reference set to which the image is compared to.
 
 ``` r
+
 # Example images depicting valleys: valley_white, valley_green
 # Example image depicting fireworks: fireworks
 valley_white <- img_read(system.file('example_images', 'valley_white.jpg', package = 'imagefluency'))

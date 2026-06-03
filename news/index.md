@@ -1,5 +1,11 @@
 # Changelog
 
+## imagefluency 1.0.1
+
+- [`run_imagefluency()`](https://imagefluency.com/reference/run_imagefluency.md)
+  gains a `max_images` parameter to control the maximum number of images
+  that can be uploaded in the Shiny app (default: 100).
+
 ## imagefluency 1.0.0
 
 CRAN release: 2026-03-31

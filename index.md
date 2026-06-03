@@ -55,6 +55,7 @@ once the package is installed, or try it out online
 You can install the current stable version from CRAN.
 
 ``` r
+
 install.packages('imagefluency')
 ```
 
@@ -62,6 +63,7 @@ To download the latest development version from Github use the
 `install_github` function of the `remotes` package.
 
 ``` r
+
 # install remotes if necessary
 if (!require('remotes')) install.packages('remotes')
 # install imagefluency from github
@@ -72,6 +74,7 @@ Optionally, if you have `rmarkdown` installed, you can also have your
 system build the the vignettes when downloading from GitHub.
 
 ``` r
+
 # install from github with vignettes (needs rmarkdown installed)
 remotes::install_github('stm/imagefluency', build_vignettes = TRUE)
 ```
@@ -82,6 +85,7 @@ Use the following link to report bugs/issues:
 ## Example usage
 
 ``` r
+
 # visual contrast
 #
 # example image file (from package): bike.jpg

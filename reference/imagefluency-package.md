@@ -75,3 +75,8 @@ Useful links:
 
 **Maintainer**: Stefan Mayer <stefan@mayer-de.com>
 ([ORCID](https://orcid.org/0000-0003-0034-7090))
+
+Authors:
+
+- Stefan Mayer <stefan@mayer-de.com>
+  ([ORCID](https://orcid.org/0000-0003-0034-7090))

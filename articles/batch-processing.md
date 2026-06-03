@@ -26,6 +26,7 @@ Instead, using [`list.files()`](https://rdrr.io/r/base/list.files.html)
 we just extract the images’ file paths for later use.
 
 ``` r
+
 # path to images (here: example images from the imagefluency package)
 # 
 # --NOTE: replace with your folder of interest, e.g.
@@ -53,6 +54,7 @@ their parallel counterparts (see [speeding up your
 analysis](#speeding-up)).
 
 ``` r
+
 # load imagefluency package
 library(imagefluency)
 
@@ -78,6 +80,7 @@ Optionally, you can also convert all images to grayscale to speed up the
 computation.
 
 ``` r
+
 # big loop over all images
 for(i in seq_along(fileNames)){
   # print loop info
@@ -123,6 +126,7 @@ problems. If that’s the case, you either have to use a computer with a
 larger memory or reduce the image set accordingly.
 
 ``` r
+
 # 4. get image typicality scores
 # --NOTE: image typicality is estimated relative to all other images, hence,
 #         the following might take quite a while
@@ -141,6 +145,7 @@ All done! We have now computed all image fluency scores. Let’s have a
 look at the results.
 
 ``` r
+
 knitr::kable(results, digits = 3)
 ```
 
@@ -161,6 +166,7 @@ knitr::kable(results, digits = 3)
 If everything worked, we can save the results e.g. into a `.csv` file.
 
 ``` r
+
 # save the results into the image folder
 write.csv(results, file = paste0(mypath, 'imagefluency_scores.csv'), row.names = FALSE)
 ```
@@ -189,6 +195,7 @@ every list element contains an image matrix. Thus, this object might be
 very big!
 
 ``` r
+
 # read all images at once into memory
 allImages <- lapply(fileNames, img_read)
 ```
@@ -200,6 +207,7 @@ robust version, we can also define a custom
 that includes error handling with `tryCatch`.
 
 ``` r
+
 # define custom image read function that catches errors and returns NA
 img_read_no_error <- function(img) {
   tryCatch(img_read(img), error=function(e) NA)
@@ -218,6 +226,7 @@ computes the scores for a given image, and then apply the function to
 all images.
 
 ``` r
+
 # define function that computes all image fluency scores except typicality
 img_fluency_scores <- function(img) {
   contr <- tryCatch(img_contrast(img), error = function(e) NA)
@@ -238,6 +247,7 @@ Once that’s done, we can convert the results into a data frame and add
 the images’ file names.
 
 ``` r
+
 # convert results to data frame and add file names
 results <- do.call(rbind, results)
 results <- data.frame(filename = basename(fileNames), results)
@@ -247,6 +257,7 @@ In the final step, we add the typicality scores as in the
 [previous](#typ) section and look at the results.
 
 ``` r
+
 # compute and add typicality to results
 results$typicality <- as.vector(img_typicality(allImages))
 
@@ -287,6 +298,7 @@ Essentially, all you have to do is to replace all instances of
 which adds a progress bar (*pb*) to the multi-core lapply.
 
 ``` r
+
 # detect cores for multi-core processing
 ncores <- parallel::detectCores()
 
@@ -310,6 +322,7 @@ that with increasing file size or number of images, this speed bump will
 become larger. We ‘simulate’ this by reading in the images 10 times.
 
 ``` r
+
 # read images 10 times 
 allImages <- lapply(rep(fileNames, 10), img_read_no_error)
 cat('Number of images:', length(allImages), '\n')
@@ -318,6 +331,7 @@ cat('Number of images:', length(allImages), '\n')
     > Number of images: 110
 
 ``` r
+
 # compute imgagefluency scores using lapply() with progress bar
 tictoc::tic("lapply")
 results_lapply <- pbapply::pblapply(allImages, img_fluency_scores)
@@ -329,6 +343,7 @@ tictoc::toc(log=TRUE)
 ```
 
 ``` r
+
 # compute imgagefluency scores using multi-core lapply() with progress bar
 tictoc::tic("pbmclapply")
 results_pbmclapply <- pbmcapply::pbmclapply(allImages, img_fluency_scores,
@@ -346,6 +361,7 @@ We can see that the multi-core approach is more than three times faster
 compares to this.
 
 ``` r
+
 library(dplyr)
 future::plan('multisession')
 

@@ -11,12 +11,12 @@ Source:
 [`DESCRIPTION`](https://github.com/stm/imagefluency/blob/master/DESCRIPTION)
 
 Mayer S (2026). *imagefluency: Image Statistics Based on Processing
-Fluency*. R package version 1.0.0, <https://imagefluency.com>.
+Fluency*. R package version 1.0.1, <https://imagefluency.com>.
 
     @Manual{,
       title = {imagefluency: Image Statistics Based on Processing Fluency},
       author = {Stefan Mayer},
       year = {2026},
-      note = {R package version 1.0.0},
+      note = {R package version 1.0.1},
       url = {https://imagefluency.com},
     }

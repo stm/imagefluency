@@ -24,7 +24,9 @@
 - [`rotate90()`](https://imagefluency.com/reference/rotate90.md) :
   Matrix or Array Rotation by 90 Degrees
 
-## Shiny app (alpha)
+## Interactive Dashboard
 
 - [`run_imagefluency()`](https://imagefluency.com/reference/run_imagefluency.md)
-  : Run imagefluency app
+  :
+
+  Interactive dashboard for `imagefluency`
