@@ -24,7 +24,7 @@ reference:
   - rgb2gray
   - rotate90
 
-- title: Shiny app (alpha)
+- title: Interactive Dashboard
   contents:
   - run_imagefluency
 
