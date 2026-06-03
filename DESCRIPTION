@@ -40,9 +40,8 @@ Suggests:
     tictoc,
     dplyr,
     collapse
-RoxygenNote: 7.3.3
 Config/testthat/edition: 3
-Collate: 
+Collate:
     'utils.R'
     'complexity.R'
     'contrast.R'
@@ -53,3 +52,4 @@ Collate:
     'symmetry.R'
     'typicality.R'
 VignetteBuilder: knitr
+Config/roxygen2/version: 8.0.0

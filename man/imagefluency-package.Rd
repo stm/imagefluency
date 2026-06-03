@@ -60,5 +60,10 @@ Useful links:
 \author{
 \strong{Maintainer}: Stefan Mayer \email{stefan@mayer-de.com} (\href{https://orcid.org/0000-0003-0034-7090}{ORCID})
 
+Authors:
+\itemize{
+  \item Stefan Mayer \email{stefan@mayer-de.com} (\href{https://orcid.org/0000-0003-0034-7090}{ORCID})
+}
+
 }
 \keyword{internal}
