@@ -17,4 +17,5 @@
 ^CODE_OF_CONDUCT\.md$
 ^vignettes/batch-processing\.Rmd$
 ^CRAN-SUBMISSION$
+^tests/testthat/Rplots\.pdf$
 ^data-raw$

@@ -33,7 +33,8 @@ Suggests:
     testthat,
     mockery,
     knitr,
-    rmarkdown,
+    rmarkdown
+Config/Needs/website:
     furrr,
     future,
     pbmcapply,

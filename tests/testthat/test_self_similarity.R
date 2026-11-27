@@ -57,15 +57,21 @@ test_that("img_self_similarity logplot works as intended
   set.seed(2787)
   img <- matrix(runif(50*50, min = 0, max = 255), nrow = 50, ncol = 50)
 
+  # do not write plots to a file (Rplots.pdf)
+  grDevices::pdf(NULL)
+  on.exit(grDevices::dev.off(), add = TRUE)
+
   # should return no errors when plotting succeeds
   #
   # use case: all packages are installed (i.e., ggplot2 is used
   expect_silent(img_self_similarity(img, logplot = TRUE))
   expect_error(img_self_similarity(img, logplot = TRUE), NA)
 
-  # use case: base plot is used (requireNamespace returns false)
-  mockery::stub(img_self_similarity, 'requireNamespace', FALSE)
-  expect_error(img_self_similarity(img, logplot = TRUE), NA)
+  # use case: base plot is used (ggplot2 and scales are not available)
+  mockery::stub(img_self_similarity, '.pkg_avail', FALSE)
+  expect_error(result <- img_self_similarity(img, logplot = TRUE), NA)
+  # the plot does not change the result
+  expect_equal(result, img_self_similarity(img, logplot = FALSE))
 })
 
 test_that("Non-squared image is resized using OpenImageR", {
@@ -102,39 +108,6 @@ test_that("Option to compute self-similarity on full range", {
   set.seed(2787)
   img <- matrix(runif(50*50, min = 0, max = 255), nrow = 50, ncol = 50)
   expect_equal(img_self_similarity(img, full = TRUE), -2.135299, tolerance = .00001)
-})
-
-test_that("img_self_similarity falls back to base plotting when ggplot2/scales are unavailable", {
-  set.seed(2787)
-  img <- matrix(runif(50 * 50, min = 0, max = 255), nrow = 50, ncol = 50)
-  mockery::stub(img_self_similarity, ".pkg_avail", FALSE)
-
-  expect_error(img_self_similarity(img, logplot = TRUE), NA)
-})
-
-test_that("img_self_similarity checks the input", {
-  img <- matrix(runif(50 * 50), nrow = 50, ncol = 50)
-  expect_error(img_self_similarity(as.data.frame(img)),
-               "Invalid input \\(should be a matrix or a 3-dimensional array of numeric or integer values\\)")
-  expect_warning(result <- img_self_similarity(img, full = NA),
-                 "full = 'NA' is not a logical value \\(TRUE\\/FALSE\\)\\. Automatically set to FALSE \\.\\.\\.")
-  expect_equal(result, img_self_similarity(img))
-  img[1, 1] <- NA
-  expect_error(img_self_similarity(img),
-               "Input image contains missing or non-finite values")
-})
-
-test_that("img_self_similarity returns NA with a warning for images without variation", {
-  expect_warning(result <- img_self_similarity(matrix(0.5, nrow = 64, ncol = 64)),
-                 "No variation in the image\\. Computation of self-similarity not possible\\. Returning NA\\.")
-  expect_identical(result, NA_real_)
-
-  # color image with a color channel without variation
-  set.seed(2787)
-  imgRGB <- array(c(runif(64 * 64 * 2), rep(0, 64 * 64)), dim = c(64, 64, 3))
-  expect_warning(result <- img_self_similarity(imgRGB, logplot = TRUE),
-                 "No variation in the image or in at least one color channel\\. Computation of self-similarity not possible\\. Returning NA\\.")
-  expect_identical(result, NA_real_)
 })
 
 test_that("img_self_similarity warns if resize is not a logical value", {
@@ -190,6 +163,19 @@ test_that("resize = FALSE analyzes non-square images without resizing", {
                img_self_similarity(img_landscape, raw = TRUE, resize = FALSE))
 })
 
+test_that("img_self_similarity returns NA with a warning for images without variation", {
+  expect_warning(result <- img_self_similarity(matrix(0.5, nrow = 64, ncol = 64)),
+                 "No variation in the image\\. Computation of self-similarity not possible\\. Returning NA\\.")
+  expect_identical(result, NA_real_)
+
+  # color image with a color channel without variation
+  set.seed(2787)
+  imgRGB <- array(c(runif(64 * 64 * 2), rep(0, 64 * 64)), dim = c(64, 64, 3))
+  expect_warning(result <- img_self_similarity(imgRGB, logplot = TRUE),
+                 "No variation in the image or in at least one color channel\\. Computation of self-similarity not possible\\. Returning NA\\.")
+  expect_identical(result, NA_real_)
+})
+
 test_that("img_self_similarity warns if the slope is based on only a few frequencies", {
   set.seed(2787)
   img <- matrix(runif(22 * 22), nrow = 22, ncol = 22)
@@ -199,4 +185,16 @@ test_that("img_self_similarity warns if the slope is based on only a few frequen
 
   img <- matrix(runif(38 * 38), nrow = 38, ncol = 38)
   expect_warning(img_self_similarity(img), NA)
+})
+
+test_that("img_self_similarity checks the input", {
+  img <- matrix(runif(50 * 50), nrow = 50, ncol = 50)
+  expect_error(img_self_similarity(as.data.frame(img)),
+               "Invalid input \\(should be a matrix or a 3-dimensional array of numeric or integer values\\)")
+  expect_warning(result <- img_self_similarity(img, full = NA),
+                 "full = 'NA' is not a logical value \\(TRUE\\/FALSE\\)\\. Automatically set to FALSE \\.\\.\\.")
+  expect_equal(result, img_self_similarity(img))
+  img[1, 1] <- NA
+  expect_error(img_self_similarity(img),
+               "Input image contains missing or non-finite values")
 })
