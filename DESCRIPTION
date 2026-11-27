@@ -44,11 +44,12 @@ Collate:
     'utils.R'
     'complexity.R'
     'contrast.R'
+    'typicality.R'
+    'symmetry.R'
+    'simplicity.R'
+    'self-similarity.R'
+    'fluency.R'
     'imagefluency-package.R'
     'imagefluencyApp.R'
-    'self-similarity.R'
-    'simplicity.R'
-    'symmetry.R'
-    'typicality.R'
 VignetteBuilder: knitr
 Config/roxygen2/version: 8.1.1

@@ -28,6 +28,7 @@ The main functions are:
    image
 * `img_typicality()` to get the visual typicality of a list of images relative
    to each other
+* `img_fluency()` to get the scores of several images at once as a data frame
    
 Other helpful functions are:
 

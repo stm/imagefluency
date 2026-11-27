@@ -229,6 +229,25 @@ rotate90 <- function(img, direction = "positive") {
 }
 
 
+#' .img_names
+#'
+#' Returns the names of the images in a list: the names of the list elements,
+#' and \code{img1}, \code{img2}, ... for list elements without a name.
+#'
+#' @param imglist A list of images.
+#'
+#' @return a character vector
+#' @keywords internal
+.img_names <- function(imglist){
+  imgnames <- paste0("img", seq_along(imglist))
+  if (!is.null(names(imglist))) {
+    has_name <- !is.na(names(imglist)) & names(imglist) != ""
+    imgnames[has_name] <- names(imglist)[has_name]
+  }
+  return(imgnames)
+}
+
+
 #' @keywords internal
 .pkg_avail <- function(pkg){
   requireNamespace(pkg, quietly = TRUE) == TRUE

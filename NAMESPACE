@@ -2,6 +2,7 @@
 
 export(img_complexity)
 export(img_contrast)
+export(img_fluency)
 export(img_read)
 export(img_self_similarity)
 export(img_simplicity)

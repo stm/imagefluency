@@ -52,6 +52,22 @@ mypath <- system.file("example_images", package = "imagefluency")
 fileNames <- list.files(mypath, pattern = '*.jpg$', full.names = TRUE)
 ```
 
+## The quick way: `img_fluency()`
+
+If the default settings of the functions are fine for you, all you need is the `img_fluency()` function. It takes the file paths, computes the scores for one image after the other, and returns the results as a data frame with one row per image. If an image cannot be read or a score cannot be computed, the result is an `NA` (with a warning at the end) instead of an error.
+
+```{r quick-way}
+library(imagefluency)
+
+# contrast, self-similarity, simplicity, and (vertical) symmetry of all images
+results_quick <- img_fluency(fileNames)
+head(results_quick, 3)
+```
+
+Typicality is not computed by default, because it is computed relative to all other images and requires keeping all images in memory at the same time (see [below](#typ)). You can add it via the `metrics` argument (e.g., `metrics = c("contrast", "typicality")`).
+
+The remainder of this tutorial shows how to do the same step by step, which is what you need if you want to change the settings of the individual functions (e.g., to also compute horizontal symmetry) or if you want to speed up the analysis with parallel processing.
+
 ## Setting up the analysis
 
 In the next step, we load the `imagefluency` package and create a data frame to store the results. In this tutorial, we'll use a simple for loop to iterate over all images in the folder, get the image fluency scores, and write the results into the data frame. This is the simplest approach if you have many images and might run into memory issues when loading all images at once.
@@ -64,7 +80,7 @@ library(imagefluency)
 
 # data frame to store results 
 results <- data.frame(filename = basename(fileNames),
-                      contrast = NA, selfsimilarity = NA, simplicity = NA,
+                      contrast = NA, self_similarity = NA, simplicity = NA,
                       symmetry = NA, typicality = NA)
 ```
 
@@ -91,7 +107,7 @@ for(i in seq_along(fileNames)){
   # 3. estimate image fluency scores (except typicality)
   #    and store the results
   results$contrast[i] <- tryCatch(img_contrast(img), error = function(e) NA)
-  results$selfsimilarity[i] <- tryCatch(img_self_similarity(img), error = function(e) NA)
+  results$self_similarity[i] <- tryCatch(img_self_similarity(img), error = function(e) NA)
   results$simplicity[i] <- tryCatch(img_simplicity(fileNames[i]), error = function(e) NA)
   results$symmetry[i] <- tryCatch(img_symmetry(img, horizontal = FALSE), error = function(e) NA)
 }
@@ -168,7 +184,7 @@ img_fluency_scores <- function(img) {
   simpl <- tryCatch(img_simplicity(img), error = function(e) NA)
   sym <- tryCatch(img_symmetry(img, horizontal = FALSE), error = function(e) NA)
   return(c(contrast = contr, 
-              selfsimilarity = selfsim,
+              self_similarity = selfsim,
               simplicity = simpl,
               symmetry = unname(sym)))
 }

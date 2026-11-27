@@ -90,11 +90,7 @@ img_typicality <- function(imglist, rescale = NULL){
   }
   #
   # names of the images (names of the list, otherwise img1, img2, ...)
-  imgnames <- paste0("img", seq_along(imglist))
-  if (!is.null(names(imglist))) {
-    has_name <- !is.na(names(imglist)) & names(imglist) != ""
-    imgnames[has_name] <- names(imglist)[has_name]
-  }
+  imgnames <- .img_names(imglist)
   #
   # at least 2 images?
   if (length(imglist) < 2) {

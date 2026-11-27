@@ -110,6 +110,7 @@ Extracting image features for contrast, self-similarity, simplicity, symmetry, a
 * `img_simplicity()` visual simplicity of an image (opposite of complexity)
 * `img_symmetry()` vertical and horizontal symmetry of an image
 * `img_typicality()` visual typicality of a list of images relative to each other
+* `img_fluency()` scores of several images at once as a data frame
 
 ### Other helpful functions
 
