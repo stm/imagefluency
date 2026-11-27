@@ -34,7 +34,10 @@ NULL
 #'   Pre-loaded images with pixel intensity values outside the range [0, 1]
 #'   are normalized: values between 0 and 255 are divided by 255, any other
 #'   range of values is rescaled to the range [0, 1]. An alpha channel is
-#'   ignored.
+#'   ignored. A grayscale image is treated as a color image with three
+#'   identical color channels. Thus, the uncompressed file size is the same for
+#'   grayscale and color images of the same size, which keeps the complexity
+#'   scores of grayscale and color images comparable.
 #'
 #'   As \code{R}'s built-in \code{bmp} device creates (a) indexed instead of
 #'   True Color images and (b) files with different file sizes depending
@@ -117,6 +120,15 @@ img_complexity <- function(imgfile, algorithm = "zip", rotate = FALSE){
     # normalize image if necessary
     if (min(imgfile) < 0 || max(imgfile) > 1) {
       imgfile <- .normalize_img(imgfile)
+    }
+    # values have to be of type double (integer matrices would otherwise be
+    # interpreted as raster images by magick)
+    storage.mode(imgfile) <- "double"
+    # grayscale image: treated as a color image with three identical color
+    # channels (magick needs a 3-dimensional array; moreover, the uncompressed
+    # file size is then the same as for a color image of the same size)
+    if (is.matrix(imgfile)) {
+      imgfile <- array(imgfile, dim = c(dim(imgfile), 3))
     }
   } else if (!is.character(imgfile) || is.array(imgfile)) {
     stop("Wrong type of input: has to be a filename (character string) or an image (matrix or 3-dimensional array of numeric or integer values)", call. = FALSE)

@@ -65,6 +65,41 @@ test_that("img_complexity checks the options algorithm and rotate", {
                  "rotate = 'NA' is not a logical value \\(TRUE\\/FALSE\\)\\. Skipping rotation \\.\\.\\.")
 })
 
+test_that("img_complexity handles grayscale images", {
+  set.seed(2787)
+  img <- matrix(runif(60 * 40), nrow = 60, ncol = 40)
+
+  # grayscale image = color image with three identical color channels
+  for (algorithm in c("zip", "jpg", "gif", "png")) {
+    expect_equal(img_complexity(img, algorithm = algorithm),
+                 img_complexity(array(img, dim = c(60, 40, 3)), algorithm = algorithm))
+  }
+  expect_equal(img_simplicity(img), 1 - img_complexity(img))
+  expect_error(img_complexity(img, rotate = TRUE), NA)
+
+  # grayscale image as array with one layer
+  expect_equal(img_complexity(array(img, dim = c(60, 40, 1))), img_complexity(img))
+
+  # values between 0 and 255, integer values
+  img255 <- round(img * 255)
+  expect_equal(img_complexity(img255), img_complexity(img255 / 255))
+  img_int <- img255
+  storage.mode(img_int) <- "integer"
+  expect_equal(img_complexity(img_int), img_complexity(img255 / 255))
+  # integer matrix that only contains the values 0 and 1
+  img01 <- matrix(rep(0:1, 1200), nrow = 60, ncol = 40)
+  expect_equal(img_complexity(img01), img_complexity(img01 + 0))
+
+  # path to a grayscale image file
+  img_file <- tempfile(fileext = ".png")
+  on.exit(unlink(img_file), add = TRUE)
+  magick::image_write(magick::image_read(array(img, dim = c(60, 40, 1))),
+                      path = img_file, format = "png")
+  expect_true(is.matrix(img_read(img_file)))
+  expect_equal(img_complexity(img_file), img_complexity(img_read(img_file)))
+  expect_equal(img_complexity(img_file), img_complexity(img), tolerance = .05)
+})
+
 test_that("img_complexity ignores an alpha channel", {
   set.seed(2787)
   img <- array(runif(30 * 30 * 3), dim = c(30, 30, 3))

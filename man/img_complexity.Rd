@@ -56,7 +56,10 @@ The function returns the visual complexity of an image. Visual
   Pre-loaded images with pixel intensity values outside the range [0, 1]
   are normalized: values between 0 and 255 are divided by 255, any other
   range of values is rescaled to the range [0, 1]. An alpha channel is
-  ignored.
+  ignored. A grayscale image is treated as a color image with three
+  identical color channels. Thus, the uncompressed file size is the same for
+  grayscale and color images of the same size, which keeps the complexity
+  scores of grayscale and color images comparable.
 
   As \code{R}'s built-in \code{bmp} device creates (a) indexed instead of
   True Color images and (b) files with different file sizes depending
