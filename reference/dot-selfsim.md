@@ -7,14 +7,14 @@ the value of 2.
 ## Usage
 
 ``` r
-.selfsim(img, full, raw, logplot)
+.selfsim(img, full, raw, logplot, resize = TRUE)
 ```
 
 ## Arguments
 
 - img:
 
-  A matrix of numeric values or integer values, preferably by square
+  A matrix of numeric values or integer values, preferably of square
   size.
 
 - full:
@@ -29,6 +29,14 @@ the value of 2.
 
   logical. Should the log-log power spectrum of the image be plotted?
 
+- resize:
+
+  logical. Should an image that is not square be resized to a square? If
+  `FALSE`, the power spectrum of the original image is cropped to a
+  square instead.
+
 ## Value
 
-a numeric value (self-similarity)
+a list with the self-similarity (`self_sim`), the number of spatial
+frequencies used for the regression (`n_freq`), and, if
+`logplot = TRUE`, the values for the log-log plot

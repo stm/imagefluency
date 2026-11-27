@@ -1,8 +1,7 @@
 # Image simplicity
 
 `img_simplicity` returns the simplicity of an image as 1 minus the
-complexity of the image. Higher values indicated higher image
-simplicity.
+complexity of the image. Higher values indicate higher image simplicity.
 
 ## Usage
 
@@ -15,10 +14,9 @@ img_simplicity(imgfile, algorithm = "zip", rotate = FALSE)
 - imgfile:
 
   Either a character string containing the path to the image file (or
-  URL) or an an image in form of a matrix (grayscale image) or array
-  (color image) of numeric values representing the pre-loaded image
-  (e.g. by using
-  [`img_read()`](https://imagefluency.com/reference/img_read.md)).
+  URL) or an image in form of a matrix (grayscale image) or array (color
+  image) of numeric values representing the pre-loaded image (e.g. by
+  using [`img_read()`](https://imagefluency.com/reference/img_read.md)).
 
 - algorithm:
 
@@ -57,7 +55,7 @@ Forsythe, A., Nadal, M., Sheehy, N., Cela-Conde, C. J., & Sawey, M.
 Art. *British Journal of Psychology*, *102*, 49–70.
 [doi:10.1348/000712610X498958](https://doi.org/10.1348/000712610X498958)
 
-Mayer, S. & Landwehr, J, R. (2018). Quantifying Visual Aesthetics Based
+Mayer, S. & Landwehr, J. R. (2018). Quantifying Visual Aesthetics Based
 on Processing Fluency Theory: Four Algorithmic Measures for Antecedents
 of Aesthetic Preferences. *Psychology of Aesthetics, Creativity, and the
 Arts*, *12*(4), 399–431.
@@ -70,7 +68,7 @@ Arts*, *12*(4), 399–431.
 [`img_contrast`](https://imagefluency.com/reference/img_contrast.md),
 [`img_self_similarity`](https://imagefluency.com/reference/img_self_similarity.md),
 [`img_symmetry`](https://imagefluency.com/reference/img_symmetry.md),
-[`img_typicality`](https://imagefluency.com/reference/img_typicality.md),
+[`img_typicality`](https://imagefluency.com/reference/img_typicality.md)
 
 ## Examples
 
@@ -83,7 +81,7 @@ grid::grid.raster(trees)
 #
 # get simplicity
 img_simplicity(trees)
-#> [1] 0.1050314
+#> [1] 0.1045811
 
 # Example image with high simplicity: sky
 sky <- img_read(system.file("example_images", "sky.jpg", package = "imagefluency"))
@@ -94,5 +92,5 @@ grid::grid.raster(sky)
 #
 # get simplicity
 img_simplicity(sky)
-#> [1] 0.5800746
+#> [1] 0.5792614
 ```

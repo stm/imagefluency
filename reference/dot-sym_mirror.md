@@ -17,4 +17,5 @@ this end, the left and right image halves are correlated.
 
 ## Value
 
-a numeric value between 0 and 1
+a numeric value between 0 and 1 (`NA` if there is no variation in one of
+the image halves)

@@ -14,6 +14,8 @@
   : Image symmetry
 - [`img_typicality()`](https://imagefluency.com/reference/img_typicality.md)
   : Typicality of images relative to each other
+- [`img_fluency()`](https://imagefluency.com/reference/img_fluency.md) :
+  Image fluency scores for several images at once
 
 ## Other helpful functions
 

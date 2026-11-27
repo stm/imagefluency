@@ -3,34 +3,36 @@
 ## Overview
 
 **imagefluency** is an R package for image fluency scores. The package
-allows to get scores for several basic aesthetic principles that
-facilitate fluent cognitive processing of images.
+provides scores for several basic aesthetic principles that facilitate
+fluent cognitive processing of images.
 
 The main functions are:
 
 - [`img_contrast()`](https://imagefluency.com/reference/img_contrast.md)
-  to get the visual contrast of an image.
+  to get the visual contrast of an image
 - [`img_complexity()`](https://imagefluency.com/reference/img_complexity.md)
   to get the visual complexity of an image (equals 1 minus image
   simplicity)
 - [`img_self_similarity()`](https://imagefluency.com/reference/img_self_similarity.md)
   to get the visual self-similarity of an image
 - [`img_simplicity()`](https://imagefluency.com/reference/img_simplicity.md)
-  function to get the visual simplicity of an image (equals 1 minus
-  image complexity).
+  to get the visual simplicity of an image (equals 1 minus image
+  complexity)
 - [`img_symmetry()`](https://imagefluency.com/reference/img_symmetry.md)
-  to get the vertical and horizontal symmetry of an image.
+  to get the vertical and horizontal symmetry of an image
 - [`img_typicality()`](https://imagefluency.com/reference/img_typicality.md)
   to get the visual typicality of a list of images relative to each
   other
+- [`img_fluency()`](https://imagefluency.com/reference/img_fluency.md)
+  to get the scores of several images at once as a data frame
 
 Other helpful functions are:
 
 - [`img_read()`](https://imagefluency.com/reference/img_read.md) wrapper
   function to read images into R using `read.bitmap()` from the
   [readbitmap](https://github.com/jefferis/readbitmap) package
-- [`rgb2gray()`](https://imagefluency.com/reference/rgb2gray.md) convert
-  images from RGB into grayscale (might speed up computation)
+- [`rgb2gray()`](https://imagefluency.com/reference/rgb2gray.md) to
+  convert images from RGB into grayscale (might speed up computation)
 - [`run_imagefluency()`](https://imagefluency.com/reference/run_imagefluency.md)
   to launch a Shiny app locally on your computer for an interactive demo
   of the main functions
@@ -59,24 +61,15 @@ You can install the current stable version from CRAN.
 install.packages('imagefluency')
 ```
 
-To download the latest development version from Github use the
-`install_github` function of the `remotes` package.
+To download the latest development version from GitHub, use the `pak`
+function of the `pak` package.
 
 ``` r
 
-# install remotes if necessary
-if (!require('remotes')) install.packages('remotes')
+# install pak if necessary
+if (!require('pak')) install.packages('pak')
 # install imagefluency from github
-remotes::install_github('stm/imagefluency')
-```
-
-Optionally, if you have `rmarkdown` installed, you can also have your
-system build the the vignettes when downloading from GitHub.
-
-``` r
-
-# install from github with vignettes (needs rmarkdown installed)
-remotes::install_github('stm/imagefluency', build_vignettes = TRUE)
+pak::pak('stm/imagefluency')
 ```
 
 Use the following link to report bugs/issues:
@@ -120,7 +113,7 @@ once](https://imagefluency.com/articles/batch-processing.html).
 To cite **imagefluency** in publications use:
 
 > Mayer, S. (2026). *imagefluency: Image Statistics Based on Processing
-> Fluency*. R package version 1.0.0. doi:
+> Fluency*. R package version 1.1.0. doi:
 > [10.32614/CRAN.package.imagefluency](https://doi.org/10.32614/CRAN.package.imagefluency)
 
 A BibTeX entry is:
@@ -129,7 +122,7 @@ A BibTeX entry is:
       author       = {Stefan Mayer},
       title        = {imagefluency: Image Statistics Based on Processing Fluency},
       year         = 2026,
-      version      = {1.0.0},
+      version      = {1.1.0},
       doi          = {10.32614/CRAN.package.imagefluency},
       url          = {https://imagefluency.com}
     }
@@ -140,9 +133,8 @@ The `img_complexity` function relies on the packages
 [R.utils](https://cran.r-project.org/package=R.utils) and
 [magick](https://github.com/ropensci/magick). The `img_self_similarity`
 function relies on the packages
-[OpenImageR](https://github.com/mlampros/OpenImageR),
-[pracma](https://cran.r-project.org/package=pracma), and
-[quadprog](https://cran.r-project.org/package=quadprog). The `img_read`
+[OpenImageR](https://github.com/mlampros/OpenImageR) and
+[pracma](https://cran.r-project.org/package=pracma). The `img_read`
 function relies on the
 [readbitmap](https://github.com/jefferis/readbitmap) package. The
 `run_imagefluency` shiny app depends on
@@ -155,7 +147,7 @@ fallback UI otherwise.
 To learn more about the different image fluency metrics, see the
 following publications:
 
-- Mayer, S. & Landwehr, J, R. (2018). Quantifying Visual Aesthetics
+- Mayer, S. & Landwehr, J. R. (2018). Quantifying Visual Aesthetics
   Based on Processing Fluency Theory: Four Algorithmic Measures for
   Antecedents of Aesthetic Preferences. *Psychology of Aesthetics,
   Creativity, and the Arts*, *12*(4), 399–431. doi:

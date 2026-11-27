@@ -20,27 +20,37 @@ img_typicality(imglist, rescale = NULL)
 - rescale:
 
   numeric. Rescales the images prior to computing the typicality scores
-  (per default no rescaling is performed). Rescaling is performed by
+  (by default, no rescaling is performed). Rescaling is performed by
   `OpenImageR`'s
   [`resizeImage`](https://rdrr.io/pkg/OpenImageR/man/resizeImage.html)
-  function (bilinear rescaling)
+  function (bilinear rescaling).
 
 ## Value
 
-a named matrix of numeric values (typicality scores)
+a matrix of numeric values (typicality scores) with one row per image
+and one column. The rows are named after the names of the input list
+(`img1`, `img2`, ... for images without a name). If the list contains
+fewer than two images, the scores are `NA`.
 
 ## Details
 
 The function returns the visual typicality of a *list* of image arrays
-or matrices `imglist` relative to each other. Values can range between
--1 (inversely typical) over 0 (not typical) to 1 (perfectly typical).
+or matrices `imglist` relative to each other. Values can range from -1
+(inversely typical) through 0 (not typical) to 1 (perfectly typical).
 That is, higher absolute values indicate a larger typicality.
 
 The typicality score is computed as the correlation of a particular
-image with the average representation of all images, i.e. the mean of
+image with the average representation of all images, i.e., the mean of
 all images. For color images, the weighted average between each color
 channel's values is computed. If the images have different dimensions
-they are automatically resized to the smallest height and width.
+they are automatically resized to the smallest height and width. If the
+list contains both grayscale and color images, the grayscale images are
+treated as color images with three identical color channels (with a
+warning).
+
+Typicality cannot be computed for an image without any variation (e.g.,
+an image with only one color). For such an image, the function returns
+`NA` and throws a warning.
 
 Rescaling of the images prior to computing the typicality scores can be
 specified with the optional rescaling parameter (must be a numeric
@@ -58,7 +68,7 @@ typicality. *Design Studies*, *54*, 146–161.
 [`img_read`](https://imagefluency.com/reference/img_read.md),
 [`img_contrast`](https://imagefluency.com/reference/img_contrast.md),
 [`img_complexity`](https://imagefluency.com/reference/img_complexity.md),
-[`img_self_similarity`](https://imagefluency.com/reference/img_self_similarity.md)
+[`img_self_similarity`](https://imagefluency.com/reference/img_self_similarity.md),
 [`img_simplicity`](https://imagefluency.com/reference/img_simplicity.md),
 [`img_symmetry`](https://imagefluency.com/reference/img_symmetry.md)
 
@@ -88,8 +98,16 @@ imglist <- list(fireworks, valley_green, valley_white)
 
 # get typicality
 img_typicality(imglist)
-#>      [,1]
-#> img1  .40
-#> img2  .72
-#> img3  .75
+#>           [,1]
+#> img1 0.3990119
+#> img2 0.7216385
+#> img3 0.7459005
+
+# named list: scores are labeled with the names of the images
+img_typicality(list(fireworks = fireworks, valley_green = valley_green,
+                    valley_white = valley_white))
+#>                   [,1]
+#> fireworks    0.3990119
+#> valley_green 0.7216385
+#> valley_white 0.7459005
 ```

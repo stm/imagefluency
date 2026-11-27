@@ -49,7 +49,7 @@ the theoretical background of the methods.
 
 ## References
 
-Mayer, S. & Landwehr, J, R. (2018). Quantifying Visual Aesthetics Based
+Mayer, S. & Landwehr, J. R. (2018). Quantifying Visual Aesthetics Based
 on Processing Fluency Theory: Four Algorithmic Measures for Antecedents
 of Aesthetic Preferences. *Psychology of Aesthetics, Creativity, and the
 Arts*, *12*(4), 399–431.

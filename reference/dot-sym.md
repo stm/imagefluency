@@ -5,7 +5,7 @@ Calculates the mirror symmetry of an image by correlating image halves.
 ## Usage
 
 ``` r
-.sym(img, color, per_channel = TRUE, shift_range = 0.05)
+.sym(img, color, per_channel = TRUE, shift_range = 0.05, exact = FALSE)
 ```
 
 ## Arguments
@@ -26,6 +26,12 @@ Calculates the mirror symmetry of an image by correlating image halves.
 
   numeric. Percentage of axis shift.
 
+- exact:
+
+  logical. Compute the correlation directly for every position of the
+  mirror axis?
+
 ## Value
 
-one numeric value as the symmetry
+one numeric value as the symmetry (`NA` if there is no variation in the
+image halves)

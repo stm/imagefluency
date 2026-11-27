@@ -27,7 +27,7 @@ an array or a matrix (rotated by 90 degrees)
 ## Details
 
 The function takes an array or matrix as input object (`img`) and
-returns the object rotated by 90 degrees. Per default, the rotation is
+returns the object rotated by 90 degrees. By default, the rotation is
 done in the mathematically positive direction (i.e., counterclockwise).
 Clockwise rotation (i.e., mathematically negative) can be specified by
 passing the value `"negative"` to the `direction` argument.

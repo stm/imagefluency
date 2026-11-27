@@ -27,7 +27,10 @@ The function returns the RMS contrast of an image `img`. The RMS
 contrast is defined as the standard deviation of the normalized pixel
 intensity values. A higher value indicates higher contrast. The image is
 automatically normalized if necessary (i.e., normalization into range
-\[0, 1\]).
+\[0, 1\]): if the image contains values larger than 1, the pixel
+intensity values are assumed to range from 0 to 255 and are divided by
+255. This is decided for the image as a whole, i.e., all color channels
+of an image are treated the same.
 
 For color images, the weighted average between each color channel's
 values is computed.
@@ -45,7 +48,7 @@ Society of America A*, *7*, 2032–2040.
 [`img_self_similarity`](https://imagefluency.com/reference/img_self_similarity.md),
 [`img_simplicity`](https://imagefluency.com/reference/img_simplicity.md),
 [`img_symmetry`](https://imagefluency.com/reference/img_symmetry.md),
-[`img_typicality`](https://imagefluency.com/reference/img_typicality.md),
+[`img_typicality`](https://imagefluency.com/reference/img_typicality.md)
 
 ## Examples
 
@@ -58,7 +61,7 @@ grid::grid.raster(berries)
 #
 # get contrast
 img_contrast(berries)
-#> [1] 0.2872886
+#> [1] 0.2873117
 
 # Example image with relatively low contrast: bike
 bike <- img_read(system.file("example_images", "bike.jpg", package = "imagefluency"))
@@ -69,5 +72,5 @@ grid::grid.raster(bike)
 #
 # get contrast
 img_contrast(bike)
-#> [1] 0.08188639
+#> [1] 0.08189308
 ```

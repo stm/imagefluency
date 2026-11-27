@@ -9,9 +9,9 @@ predominantly due to digitalization. Most of today’s data is
 unstructured, and this share is increasing. Given that unstructured data
 is rich, these data could provide rich insights for scientific research
 from a variety of fields and practice alike. Especially images (i.e.,
-visual stimuli) are recognized as valuable source of information.
+visual stimuli) are recognized as a valuable source of information.
 
-At the same time, vision research and research in psychology shows that
+At the same time, vision research and research in psychology show that
 even simple changes in low-level image features (like symmetry,
 contrast, or complexity) can have a tremendous effect on a variety of
 human judgments. As an example, a statement like “Nut bread is healthier
@@ -24,21 +24,21 @@ control for differences in such low-level visual features in any
 research that includes visual stimuli.
 
 **imagefluency** is an `R` package for such low-level image scores based
-on processing fluency theory. The package allows to get scores for
-several basic aesthetic principles that facilitate fluent cognitive
-processing of images: contrast, complexity / simplicity,
-self-similarity, symmetry, and typicality.
+on processing fluency theory. The package provides scores for several
+basic aesthetic principles that facilitate fluent cognitive processing
+of images: contrast, complexity / simplicity, self-similarity, symmetry,
+and typicality.
 
 ### Why and when to use the package
 
 Possible applications include:
 
-- stimulus selection in experiments (e.g., testing brand logos, evaluate
-  product designs, online display ads)
+- stimulus selection in experiments (e.g., testing brand logos,
+  evaluating product designs, online display ads)
 - as control variables in statistical or prediction models
-- linking image fluency scores to outcomes of interest (e.g., how should
-  a typical product packaging look like, do simpler images get more or
-  less attention on a website, …)
+- linking image fluency scores to outcomes of interest (e.g., what
+  should a typical product packaging look like, do simpler images get
+  more or less attention on a website, …)
 - (interpretable) image features in simple machine learning models,
   e.g. SVM image classifier
 
@@ -71,7 +71,7 @@ invariance). Another prominent example is romanesco broccoli with its
 self-similar surface.
 
 Extracting image features for contrast, self-similarity, simplicity,
-symmetry, and typicality therefore constitute the core purpose of the
+symmetry, and typicality therefore constitutes the core purpose of the
 `imagefluency` package.
 
 ## Package overview
@@ -90,6 +90,8 @@ symmetry, and typicality therefore constitute the core purpose of the
   vertical and horizontal symmetry of an image
 - [`img_typicality()`](https://imagefluency.com/reference/img_typicality.md)
   visual typicality of a list of images relative to each other
+- [`img_fluency()`](https://imagefluency.com/reference/img_fluency.md)
+  scores of several images at once as a data frame
 
 ### Other helpful functions
 
@@ -111,15 +113,15 @@ You can install the current stable version from CRAN.
 install.packages('imagefluency')
 ```
 
-To download the latest development version from Github use the
-`install_github` function of the `remotes` package.
+To download the latest development version from GitHub, use the `pak`
+function of the `pak` package.
 
 ``` r
 
-# install remotes if necessary
-if (!require('remotes')) install.packages('remotes')
+# install pak if necessary
+if (!require('pak')) install.packages('pak')
 # install imagefluency from github
-remotes::install_github('stm/imagefluency')
+pak::pak('stm/imagefluency')
 ```
 
 After installation, the `imagefluency` package is loaded the usual way
@@ -136,9 +138,9 @@ Use the following link to report bugs/issues:
 
 ## Using imagefluency
 
-`imagefluency` allows to get scores for five image features that
-facilitate fluent processing of images: contrast, complexity /
-simplicity, self-similarity, symmetry, and typicality.
+`imagefluency` provides scores for five image features that facilitate
+fluent processing of images: contrast, complexity / simplicity,
+self-similarity, symmetry, and typicality.
 
 To use the imagefluency package, first load the library.
 
@@ -152,7 +154,7 @@ library(imagefluency)
 The function
 [`img_contrast()`](https://imagefluency.com/reference/img_contrast.md)
 returns the contrast of an image. Most research defines contrast in
-images as the root-mean-squared (RMS) contrast which is the standard
+images as the root-mean-squared (RMS) contrast, which is the standard
 deviation of the normalized pixel intensity values
 \[[10](#ref-Peli1990)\]:
 $`\sqrt{\frac{1}{M N}\sum_{i=0}^{N-1}\sum_{j=0}^{M - 1}(I_{ij} - \bar{I})^2}`$.
@@ -162,7 +164,7 @@ predict human contrast detection thresholds well
 by computing the RMS contrast of the input image. Consequently, a higher
 value indicates higher contrast. The image is normalized if necessary
 (i.e., normalization into range \[0, 1\]). For color images, a weighted
-average between color the channels is computed (cf.
+average between the color channels is computed (cf.
 \[[8](#ref-MayerPACA2018)\]).
 
 Note that in the following, example images that come with the package
@@ -262,7 +264,7 @@ result:
 
 ![](example_images/trees.jpg)
 
-score: 0.89
+score: 0.90
 
 ![](example_images/sky.jpg)
 
@@ -293,8 +295,11 @@ It is possible to get the raw regression slope (instead of the
 transformed value which indicates self-similarity) by using the option
 `raw = TRUE`. More options include the possibility to plot the log-log
 power spectrum (`logplot = TRUE`) and to base the computation of the
-slope on the full frequency spectrum (`full = TRUE`). See the function’s
-help file for details (i.e.,
+slope on the full frequency spectrum (`full = TRUE`). Images that are
+not square are by default resized to a square before the power spectrum
+is computed; with `resize = FALSE`, the power spectrum is computed from
+the original image without resizing. See the function’s help file for
+details (i.e.,
 [`?img_self_similarity`](https://imagefluency.com/reference/img_self_similarity.md)).
 
 ``` r
@@ -341,21 +346,31 @@ Symmetry is computed as the correlation of corresponding image halves
 \[[15](#ref-Mayer2014)\]). As the perceptual mirror axis is not
 necessarily exactly in the middle of a picture, the function detects in
 a first step the ‘optimal’ mirror axis by estimating several symmetry
-values with different positions for the mirror axis. To this end, the
-mirror axis is automatically shifted up to 5% and to the right (in the
-case of vertical symmetry; analogously for horizontal symmetry). In the
-second step, the overall symmetry score is computed as the maximum of
-the symmetry scores given the different mirror axes. For color images,
-the weighted average between each color channel’s values is computed.
-See \[[8](#ref-MayerPACA2018)\] for details.
+values with different positions for the mirror axis. To this end, up to
+5% of the image width is cut off on the left or on the right side of the
+image (in the case of vertical symmetry; analogously for horizontal
+symmetry), which shifts the mirror axis (i.e., the middle of the
+remaining image part) by up to 2.5% of the image width to the right or
+to the left. In the second step, the overall symmetry score is computed
+as the maximum of the symmetry scores given the different mirror axes.
+For color images, the weighted average between each color channel’s
+values is computed. See \[[8](#ref-MayerPACA2018)\] for details.
 
 The function further has two optional logical parameters: `vertical` and
-`horizontal` (both `TRUE` by default). If one of the parameter is set to
-`FALSE`, the vertical or horizontal symmetry is not computed,
+`horizontal` (both `TRUE` by default). If one of the parameters is set
+to `FALSE`, the vertical or horizontal symmetry is not computed,
 respectively. See the function’s help file (i.e.,
 [`?img_symmetry`](https://imagefluency.com/reference/img_symmetry.md))
 for information about the additional options `shift_range` and
 `per_channel`.
+
+To speed up the computation, the best position of the mirror axis is
+located with a fast Fourier transform, and the symmetry score for this
+position is then computed directly as the correlation of the image
+halves. With the option `exact = TRUE`, the correlation is instead
+computed directly for every position of the mirror axis. This is
+considerably slower and only rarely leads to a (minimally) different
+result (see the function’s help file).
 
 ``` r
 
@@ -393,15 +408,15 @@ score: 0.48
 The function
 [`img_typicality()`](https://imagefluency.com/reference/img_typicality.md)
 returns the visual typicality of a *set* of images relative to each
-other. Values can range between -1 (inversely typical) over 0 (not
+other. Values can range from -1 (inversely typical) through 0 (not
 typical) to 1 (perfectly typical). That is, higher absolute values
 indicate a larger typicality.
 
 The typicality score is computed as the correlation of a particular
 image with the average representation of all images, i.e., the mean of
 all images \[[16](#ref-Perrett1994)\]. That is, the typicality of an
-image can not be assessed in isolation, but only in comparison to set of
-images from the same category.
+image cannot be assessed in isolation, but only in comparison to a set
+of images from the same category.
 
 For color images, the weighted average between each color channel’s
 values is computed. If the images have different dimensions they are
@@ -416,7 +431,7 @@ The following example shows three images of which two depict valleys in
 the mountains and one depicts fireworks. Therefore, the fireworks image
 is in comparison rather low in typicality in this set of images (i.e.,
 atypical). It is important to note that an image’s typicality score
-highly depends on the reference set to which the image is compared to.
+highly depends on the reference set to which the image is compared.
 
 ``` r
 
@@ -450,10 +465,10 @@ score: 0.72
 
 ## Summary
 
-`imagefluency` is an simple `R` package for image fluency scores. The
-package allows to get scores for several basic aesthetic principles that
-facilitate fluent cognitive processing of images. It straightforward to
-use and allows for an easy conversion of unstructured data into
+`imagefluency` is a simple `R` package for image fluency scores. The
+package provides scores for several basic aesthetic principles that
+facilitate fluent cognitive processing of images. It is straightforward
+to use and allows for an easy conversion of unstructured data into
 structured image features. These structured image features are naturally
 interpretable (i.e., no black-box-model). Finally, including such image
 information in statistical models might increase a model’s statistical

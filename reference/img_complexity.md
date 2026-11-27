@@ -14,10 +14,9 @@ img_complexity(imgfile, algorithm = "zip", rotate = FALSE)
 - imgfile:
 
   Either a character string containing the path to the image file (or
-  URL) or an an image in form of a matrix (grayscale image) or array
-  (color image) of numeric values representing the pre-loaded image
-  (e.g. by using
-  [`img_read()`](https://imagefluency.com/reference/img_read.md)).
+  URL) or an image in form of a matrix (grayscale image) or array (color
+  image) of numeric values representing the pre-loaded image (e.g. by
+  using [`img_read()`](https://imagefluency.com/reference/img_read.md)).
 
 - algorithm:
 
@@ -38,7 +37,7 @@ image file size
 ## Details
 
 The function returns the visual complexity of an image. Visual
-complexity is calculated as ratio between the compressed and
+complexity is calculated as the ratio between the compressed and
 uncompressed image file size. Preferably, the original image is an
 uncompressed image file.
 
@@ -62,8 +61,16 @@ compressed version of the rotated image is created. Finally, the overall
 compressed image's file size is computed as the minimum of the original
 image's file size and the file size of the rotated image.
 
+Pre-loaded images with pixel intensity values outside the range \[0, 1\]
+are normalized: values between 0 and 255 are divided by 255, any other
+range of values is rescaled to the range \[0, 1\]. An alpha channel is
+ignored. A grayscale image is treated as a color image with three
+identical color channels. Thus, the uncompressed file size is the same
+for grayscale and color images of the same size, which keeps the
+complexity scores of grayscale and color images comparable.
+
 As `R`'s built-in `bmp` device creates (a) indexed instead of True Color
-images and (b) creates files with different file sizes depending on the
+images and (b) files with different file sizes depending on the
 operating system, the function relies on the `magick` package to write
 (and read) images.
 
@@ -78,7 +85,7 @@ Forsythe, A., Nadal, M., Sheehy, N., Cela-Conde, C. J., & Sawey, M.
 Art. *British Journal of Psychology*, *102*, 49–70.
 [doi:10.1348/000712610X498958](https://doi.org/10.1348/000712610X498958)
 
-Mayer, S. & Landwehr, J, R. (2018). Quantifying Visual Aesthetics Based
+Mayer, S. & Landwehr, J. R. (2018). Quantifying Visual Aesthetics Based
 on Processing Fluency Theory: Four Algorithmic Measures for Antecedents
 of Aesthetic Preferences. *Psychology of Aesthetics, Creativity, and the
 Arts*, *12*(4), 399–431.
@@ -91,7 +98,7 @@ Arts*, *12*(4), 399–431.
 [`img_self_similarity`](https://imagefluency.com/reference/img_self_similarity.md),
 [`img_simplicity`](https://imagefluency.com/reference/img_simplicity.md),
 [`img_symmetry`](https://imagefluency.com/reference/img_symmetry.md),
-[`img_typicality`](https://imagefluency.com/reference/img_typicality.md),
+[`img_typicality`](https://imagefluency.com/reference/img_typicality.md)
 
 ## Examples
 
@@ -104,7 +111,7 @@ grid::grid.raster(trees)
 #
 # get complexity
 img_complexity(trees)
-#> [1] 0.8949686
+#> [1] 0.8954189
 
 
 # Example image with low complexity: sky
@@ -116,5 +123,5 @@ grid::grid.raster(sky)
 #
 # get complexity
 img_complexity(sky)
-#> [1] 0.4199254
+#> [1] 0.4207386
 ```

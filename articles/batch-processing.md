@@ -18,9 +18,9 @@ Next, we read the file names of all images that satisfy a specific
 pattern using [`list.files()`](https://rdrr.io/r/base/list.files.html).
 In our case, we want the file names of all files that have `.jpg` as
 their file extension. Thus, we specify `pattern = '*.jpg$'`. The `$`
-sign at the end ensures that we only find files that *end* with `.jpg`,
+sign at the end ensures that we only find files that *end* with `.jpg`;
 a file like `image1.jpg.png` would therefore not be listed. Multiple
-patterns could also be specified (e.g., `pattern = '*.jpg$|*.png$')`.
+patterns could also be specified (e.g., `pattern = '*.jpg$|*.png$'`).
 Note that we do *not* actually load the images into our R session here.
 Instead, using [`list.files()`](https://rdrr.io/r/base/list.files.html)
 we just extract the images’ file paths for later use.
@@ -37,6 +37,40 @@ mypath <- system.file("example_images", package = "imagefluency")
 # --NOTE: change file ending accordingly!
 fileNames <- list.files(mypath, pattern = '*.jpg$', full.names = TRUE)
 ```
+
+### The quick way: `img_fluency()`
+
+If the default settings of the functions are fine for you, all you need
+is the
+[`img_fluency()`](https://imagefluency.com/reference/img_fluency.md)
+function. It takes the file paths, computes the scores for one image
+after the other, and returns the results as a data frame with one row
+per image. If an image cannot be read or a score cannot be computed, the
+result is an `NA` (with a warning at the end) instead of an error.
+
+``` r
+
+library(imagefluency)
+
+# contrast, self-similarity, simplicity, and (vertical) symmetry of all images
+results_quick <- img_fluency(fileNames)
+head(results_quick, 3)
+```
+
+    >      filename   contrast self_similarity simplicity  symmetry
+    > 1 berries.jpg 0.28731166      -1.7841182  0.1862383 0.5240408
+    > 2    bike.jpg 0.08189308      -0.1593396  0.3987109 0.4189694
+    > 3  bridge.jpg 0.25577566      -1.1125133  0.2332683 0.4803173
+
+Typicality is not computed by default, because it is computed relative
+to all other images and requires keeping all images in memory at the
+same time (see [below](#typ)). You can add it via the `metrics` argument
+(e.g., `metrics = c("contrast", "typicality")`).
+
+The remainder of this tutorial shows how to do the same step by step,
+which is what you need if you want to change the settings of the
+individual functions (e.g., to also compute horizontal symmetry) or if
+you want to speed up the analysis with parallel processing.
 
 ### Setting up the analysis
 
@@ -60,7 +94,7 @@ library(imagefluency)
 
 # data frame to store results 
 results <- data.frame(filename = basename(fileNames),
-                      contrast = NA, selfsimilarity = NA, simplicity = NA,
+                      contrast = NA, self_similarity = NA, simplicity = NA,
                       symmetry = NA, typicality = NA)
 ```
 
@@ -68,7 +102,7 @@ results <- data.frame(filename = basename(fileNames),
 
 Now it’s time to calculate the image fluency scores! To this end, we
 create a big loop that iterates over all image files. Within the loop,
-first, the image is read into R. Next the scores for contrast,
+first, the image is read into R. Next, the scores for contrast,
 self-similarity, simplicity, and symmetry are computed for each image.
 The results are stored in the `results` data frame we created before.
 
@@ -96,7 +130,7 @@ for(i in seq_along(fileNames)){
   # 3. estimate image fluency scores (except typicality)
   #    and store the results
   results$contrast[i] <- tryCatch(img_contrast(img), error = function(e) NA)
-  results$selfsimilarity[i] <- tryCatch(img_self_similarity(img), error = function(e) NA)
+  results$self_similarity[i] <- tryCatch(img_self_similarity(img), error = function(e) NA)
   results$simplicity[i] <- tryCatch(img_simplicity(fileNames[i]), error = function(e) NA)
   results$symmetry[i] <- tryCatch(img_symmetry(img, horizontal = FALSE), error = function(e) NA)
 }
@@ -149,19 +183,19 @@ look at the results.
 knitr::kable(results, digits = 3)
 ```
 
-| filename         | contrast | selfsimilarity | simplicity | symmetry | typicality |
-|:-----------------|---------:|---------------:|-----------:|---------:|-----------:|
-| berries.jpg      |    0.287 |         -1.784 |      0.187 |    0.524 |      0.478 |
-| bike.jpg         |    0.082 |         -0.159 |      0.399 |    0.419 |      0.234 |
-| bridge.jpg       |    0.256 |         -1.112 |      0.234 |    0.480 |      0.437 |
-| fireworks.jpg    |    0.175 |         -1.036 |      0.431 |    0.658 |     -0.130 |
-| office.jpg       |    0.227 |         -1.217 |      0.188 |    0.171 |      0.347 |
-| rails.jpg        |    0.364 |         -0.578 |      0.536 |    0.955 |      0.797 |
-| romanesco.jpg    |    0.292 |         -0.032 |      0.363 |    0.825 |      0.281 |
-| sky.jpg          |    0.081 |         -1.562 |      0.580 |    0.647 |      0.053 |
-| trees.jpg        |    0.189 |         -0.551 |      0.105 |    0.191 |      0.281 |
-| valley_green.jpg |    0.246 |         -0.507 |      0.252 |    0.803 |      0.633 |
-| valley_white.jpg |    0.188 |         -0.590 |      0.192 |    0.601 |      0.579 |
+| filename         | contrast | self_similarity | simplicity | symmetry | typicality |
+|:-----------------|---------:|----------------:|-----------:|---------:|-----------:|
+| berries.jpg      |    0.287 |          -1.784 |      0.186 |    0.524 |      0.474 |
+| bike.jpg         |    0.082 |          -0.159 |      0.399 |    0.419 |      0.225 |
+| bridge.jpg       |    0.256 |          -1.113 |      0.233 |    0.480 |      0.435 |
+| fireworks.jpg    |    0.175 |          -1.036 |      0.431 |    0.658 |     -0.118 |
+| office.jpg       |    0.227 |          -1.218 |      0.188 |    0.171 |      0.346 |
+| rails.jpg        |    0.364 |          -0.578 |      0.536 |    0.955 |      0.791 |
+| romanesco.jpg    |    0.292 |          -0.032 |      0.362 |    0.825 |      0.282 |
+| sky.jpg          |    0.081 |          -1.562 |      0.579 |    0.647 |      0.055 |
+| trees.jpg        |    0.189 |          -0.551 |      0.105 |    0.191 |      0.283 |
+| valley_green.jpg |    0.246 |          -0.507 |      0.251 |    0.803 |      0.626 |
+| valley_white.jpg |    0.188 |          -0.590 |      0.191 |    0.601 |      0.568 |
 
 If everything worked, we can save the results e.g. into a `.csv` file.
 
@@ -234,7 +268,7 @@ img_fluency_scores <- function(img) {
   simpl <- tryCatch(img_simplicity(img), error = function(e) NA)
   sym <- tryCatch(img_symmetry(img, horizontal = FALSE), error = function(e) NA)
   return(c(contrast = contr, 
-              selfsimilarity = selfsim,
+              self_similarity = selfsim,
               simplicity = simpl,
               symmetry = unname(sym)))
 }
@@ -265,31 +299,31 @@ results$typicality <- as.vector(img_typicality(allImages))
 knitr::kable(results, digits = 3)
 ```
 
-| filename         | contrast | selfsimilarity | simplicity | symmetry | typicality |
-|:-----------------|---------:|---------------:|-----------:|---------:|-----------:|
-| berries.jpg      |    0.287 |         -1.784 |      0.187 |    0.524 |      0.478 |
-| bike.jpg         |    0.082 |         -0.159 |      0.399 |    0.419 |      0.234 |
-| bridge.jpg       |    0.256 |         -1.112 |      0.234 |    0.480 |      0.437 |
-| fireworks.jpg    |    0.175 |         -1.036 |      0.431 |    0.658 |     -0.130 |
-| office.jpg       |    0.227 |         -1.217 |      0.188 |    0.171 |      0.347 |
-| rails.jpg        |    0.364 |         -0.578 |      0.536 |    0.955 |      0.797 |
-| romanesco.jpg    |    0.292 |         -0.032 |      0.363 |    0.825 |      0.281 |
-| sky.jpg          |    0.081 |         -1.562 |      0.580 |    0.647 |      0.053 |
-| trees.jpg        |    0.189 |         -0.551 |      0.105 |    0.191 |      0.281 |
-| valley_green.jpg |    0.246 |         -0.507 |      0.252 |    0.803 |      0.633 |
-| valley_white.jpg |    0.188 |         -0.590 |      0.192 |    0.601 |      0.579 |
+| filename         | contrast | self_similarity | simplicity | symmetry | typicality |
+|:-----------------|---------:|----------------:|-----------:|---------:|-----------:|
+| berries.jpg      |    0.287 |          -1.784 |      0.186 |    0.524 |      0.474 |
+| bike.jpg         |    0.082 |          -0.159 |      0.399 |    0.419 |      0.225 |
+| bridge.jpg       |    0.256 |          -1.113 |      0.233 |    0.480 |      0.435 |
+| fireworks.jpg    |    0.175 |          -1.036 |      0.431 |    0.658 |     -0.118 |
+| office.jpg       |    0.227 |          -1.218 |      0.188 |    0.171 |      0.346 |
+| rails.jpg        |    0.364 |          -0.578 |      0.536 |    0.955 |      0.791 |
+| romanesco.jpg    |    0.292 |          -0.032 |      0.362 |    0.825 |      0.282 |
+| sky.jpg          |    0.081 |          -1.562 |      0.579 |    0.647 |      0.055 |
+| trees.jpg        |    0.189 |          -0.551 |      0.105 |    0.191 |      0.283 |
+| valley_green.jpg |    0.246 |          -0.507 |      0.251 |    0.803 |      0.626 |
+| valley_white.jpg |    0.188 |          -0.590 |      0.191 |    0.601 |      0.568 |
 
 ## Parallel processing with multiple cores
 
-Above code using [`lapply()`](https://rdrr.io/r/base/lapply.html) should
-be faster than the approach of using first a big loop and then again
-reading in all images to compute typicality. However, we might gain a
-much larger increase in speed, by using parallelized versions of
+The above code using [`lapply()`](https://rdrr.io/r/base/lapply.html)
+should be faster than the approach of using first a big loop and then
+again reading in all images to compute typicality. However, we might
+gain a much larger increase in speed by using parallelized versions of
 [`lapply()`](https://rdrr.io/r/base/lapply.html) or
 [`purrr::map()`](https://purrr.tidyverse.org/reference/map.html),
 respectively.
 
-The following code example demonstrates shortly how to achieve this.
+The following code example briefly demonstrates how to achieve this.
 Essentially, all you have to do is to replace all instances of
 [`lapply()`](https://rdrr.io/r/base/lapply.html) from before with
 [`parallel::mclapply()`](https://rdrr.io/r/parallel/mclapply.html)
@@ -318,7 +352,7 @@ results$typicality <- as.vector(img_typicality(allImages))
 
 Let’s do a quick comparison of the computing time when computing the
 four image fluency scores with and without multi-core processing. Note
-that with increasing file size or number of images, this speed bump will
+that with increasing file size or number of images, this speed-up will
 become larger. We ‘simulate’ this by reading in the images 10 times.
 
 ``` r
@@ -332,7 +366,7 @@ cat('Number of images:', length(allImages), '\n')
 
 ``` r
 
-# compute imgagefluency scores using lapply() with progress bar
+# compute imagefluency scores using lapply() with progress bar
 tictoc::tic("lapply")
 results_lapply <- pbapply::pblapply(allImages, img_fluency_scores)
 tictoc::toc(log=TRUE)
@@ -344,7 +378,7 @@ tictoc::toc(log=TRUE)
 
 ``` r
 
-# compute imgagefluency scores using multi-core lapply() with progress bar
+# compute imagefluency scores using multi-core lapply() with progress bar
 tictoc::tic("pbmclapply")
 results_pbmclapply <- pbmcapply::pbmclapply(allImages, img_fluency_scores,
                                             mc.cores = ncores)

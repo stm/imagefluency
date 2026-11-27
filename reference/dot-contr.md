@@ -12,7 +12,8 @@ Returns the RMS contrast of an image matrix.
 
 - img:
 
-  A matrix of numeric values or integer values.
+  A matrix of numeric values or integer values (normalized pixel
+  intensity values).
 
 ## Value
 
