@@ -12,7 +12,10 @@ test_that("img_typicality only handles lists of matrices with numeric values", {
 test_that("img_typicality warns if only 1 image is in the list, returns NA", {
   expect_warning(x <- img_typicality(list(matrix(1, 10))),
                  "The function needs at least 2 images in the input list\\. Returning NA\\.")
-  expect_equal(x, list(typicality = NA))
+  expect_equal(x, matrix(NA_real_, nrow = 1, ncol = 1, dimnames = list("img1", NULL)))
+  expect_warning(x <- img_typicality(list(only = matrix(1, 10))),
+                 "The function needs at least 2 images in the input list\\. Returning NA\\.")
+  expect_equal(rownames(x), "only")
 })
 
 
@@ -182,4 +185,39 @@ test_that("img_typicality checks the input list and the parameter rescale", {
                "parameter 'rescale' must be a single positive number")
   expect_error(img_typicality(imgs, rescale = -1),
                "parameter 'rescale' must be a single positive number")
+})
+
+test_that("img_typicality returns a plain matrix named after the images", {
+  set.seed(2787)
+  imgs <- replicate(3, matrix(runif(100), nrow = 10, ncol = 10), simplify = FALSE)
+
+  out <- img_typicality(imgs)
+  expect_identical(class(out), c("matrix", "array"))
+  expect_equal(dimnames(out), list(c("img1", "img2", "img3"), NULL))
+
+  # names of the list are used
+  names(imgs) <- c("first", "second", "third")
+  expect_equal(rownames(img_typicality(imgs)), c("first", "second", "third"))
+  names(imgs) <- c("first", "", NA)
+  expect_equal(rownames(img_typicality(imgs)), c("first", "img2", "img3"))
+  expect_equal(unname(img_typicality(imgs)), unname(out))
+})
+
+test_that("img_typicality handles lists with grayscale and color images", {
+  set.seed(2787)
+  img_gray <- matrix(runif(100), nrow = 10, ncol = 10)
+  imgs <- list(img_gray,
+               array(runif(300), dim = c(10, 10, 3)),
+               array(runif(300), dim = c(10, 10, 3)))
+
+  expect_warning(out <- img_typicality(imgs),
+                 "The input list contains both grayscale and color images\\. Grayscale images are treated as color images with three identical color channels\\.")
+  # same result as with the grayscale image converted by hand
+  imgs[[1]] <- array(img_gray, dim = c(10, 10, 3))
+  expect_equal(out, img_typicality(imgs))
+
+  # grayscale images stored as arrays with one layer
+  imgs_gray <- replicate(3, matrix(runif(100), nrow = 10, ncol = 10), simplify = FALSE)
+  imgs_array <- lapply(imgs_gray, function(x) array(x, dim = c(10, 10, 1)))
+  expect_equal(img_typicality(imgs_array), img_typicality(imgs_gray))
 })

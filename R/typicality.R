@@ -15,7 +15,9 @@ NULL
 #'   with the average representation of all images, i.e., the mean of all images.
 #'   For color images, the weighted average between each color channel's values
 #'   is computed. If the images have different dimensions they are automatically
-#'   resized to the smallest height and width.
+#'   resized to the smallest height and width. If the list contains both
+#'   grayscale and color images, the grayscale images are treated as color
+#'   images with three identical color channels (with a warning).
 #'
 #'   Rescaling of the images prior to computing the typicality scores can be
 #'   specified with the optional rescaling parameter (must be a numeric value).
@@ -31,7 +33,10 @@ NULL
 #'   \code{OpenImageR}'s \code{\link[OpenImageR]{resizeImage}} function
 #'   (bilinear rescaling).
 #'
-#' @return a named matrix of numeric values (typicality scores)
+#' @return a matrix of numeric values (typicality scores) with one row per
+#'   image and one column. The rows are named after the names of the input list
+#'   (\code{img1}, \code{img2}, ... for images without a name). If the list
+#'   contains fewer than two images, the scores are \code{NA}.
 #' @export
 #'
 #' @examples
@@ -58,6 +63,10 @@ NULL
 #' # get typicality
 #' img_typicality(imglist)
 #'
+#' # named list: scores are labeled with the names of the images
+#' img_typicality(list(fireworks = fireworks, valley_green = valley_green,
+#'                     valley_white = valley_white))
+#'
 #' @references Mayer, S. & Landwehr, J. R. (2018). Objective measures of design
 #'   typicality. \emph{Design Studies}, \emph{54}, 146--161.
 #'   \doi{10.1016/j.destud.2017.09.004}
@@ -76,13 +85,22 @@ img_typicality <- function(imglist, rescale = NULL){
     stop("Input has to be a *list* of image matrices", call. = FALSE)
   }
   #
+  # names of the images (names of the list, otherwise img1, img2, ...)
+  imgnames <- paste0("img", seq_along(imglist))
+  if (!is.null(names(imglist))) {
+    has_name <- !is.na(names(imglist)) & names(imglist) != ""
+    imgnames[has_name] <- names(imglist)[has_name]
+  }
+  #
   # at least 2 images?
   if (length(imglist) < 2) {
     warning("The function needs at least 2 images in the input list. Returning NA.", call. = FALSE)
-    return(list(typicality = NA))
+    return(matrix(NA_real_, nrow = length(imglist), ncol = 1,
+                  dimnames = list(imgnames, NULL)))
   }
   #
   # check each image (same check as in all other functions)
+  imgtypes <- character(length(imglist))
   for (elmnt in seq_along(imglist)) {
     checked <- withCallingHandlers(
       tryCatch(.prepare_img(imglist[[elmnt]]),
@@ -94,7 +112,15 @@ img_typicality <- function(imglist, rescale = NULL){
         invokeRestart("muffleWarning")
       })
     imglist[[elmnt]] <- checked$img
-    imgtype <- checked$type
+    imgtypes[elmnt] <- checked$type
+  }
+  #
+  # grayscale and color images in the same list?
+  imgtype <- if (any(imgtypes == "rgb")) "rgb" else "gray"
+  if (imgtype == "rgb" && any(imgtypes == "gray")) {
+    warning("The input list contains both grayscale and color images. Grayscale images are treated as color images with three identical color channels.", call. = FALSE)
+    imglist[imgtypes == "gray"] <- lapply(imglist[imgtypes == "gray"],
+                                          function(x) array(x, dim = c(dim(x), 3)))
   }
 
   # resize images to the same image dimension
@@ -151,9 +177,12 @@ img_typicality <- function(imglist, rescale = NULL){
     blueChannels <- lapply(imglist, function(x) x[, , 3])
     #
     out <- 0.299 * .typ(redChannels) + 0.587 * .typ(greenChannels) + 0.114 * .typ(blueChannels)
-    return(out)
-    #
-  } else return(.typ(imglist))
+  } else {
+    out <- .typ(imglist)
+  }
+
+  rownames(out) <- imgnames
+  return(out)
 }
 
 

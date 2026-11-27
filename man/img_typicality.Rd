@@ -17,7 +17,10 @@ scores (by default, no rescaling is performed). Rescaling is performed by
 (bilinear rescaling).}
 }
 \value{
-a named matrix of numeric values (typicality scores)
+a matrix of numeric values (typicality scores) with one row per
+  image and one column. The rows are named after the names of the input list
+  (\code{img1}, \code{img2}, ... for images without a name). If the list
+  contains fewer than two images, the scores are \code{NA}.
 }
 \description{
 \code{img_typicality} returns the visual typicality of a list of images
@@ -33,7 +36,9 @@ The function returns the visual typicality of a \emph{list} of image
   with the average representation of all images, i.e., the mean of all images.
   For color images, the weighted average between each color channel's values
   is computed. If the images have different dimensions they are automatically
-  resized to the smallest height and width.
+  resized to the smallest height and width. If the list contains both
+  grayscale and color images, the grayscale images are treated as color
+  images with three identical color channels (with a warning).
 
   Rescaling of the images prior to computing the typicality scores can be
   specified with the optional rescaling parameter (must be a numeric value).
@@ -63,6 +68,10 @@ imglist <- list(fireworks, valley_green, valley_white)
 
 # get typicality
 img_typicality(imglist)
+
+# named list: scores are labeled with the names of the images
+img_typicality(list(fireworks = fireworks, valley_green = valley_green,
+                    valley_white = valley_white))
 
 }
 \references{
