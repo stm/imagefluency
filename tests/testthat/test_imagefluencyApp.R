@@ -95,3 +95,23 @@ test_that("dashboard handles grayscale images", {
     expect_false(anyNA(rv$results))
   })
 })
+
+test_that("dashboard compares the selected images (also with identical file names)", {
+  skip_if_not_installed("shiny")
+  files <- upload(example_image(c("rails.jpg", "sky.jpg", "trees.jpg")),
+                  c("img.jpg", "img.jpg", "other.jpg"))
+
+  shiny::testServer(app_dir(), {
+    session$setInputs(file = files)
+    session$setInputs(select_all_metrics = FALSE, statistic = c("contr", "typ"))
+    session$setInputs(calcfluency = 1)
+    session$setInputs(compare_images = c("1", "3"))
+
+    html <- as.character(output$comparison_display$html)
+    expect_equal(lengths(regmatches(html, gregexpr("comparison-item", html))), 2)
+    expect_true(grepl("other.jpg", html, fixed = TRUE))
+    expect_true(grepl("Typicality", html, fixed = TRUE))
+    expect_true(grepl(sprintf("%.3f", rv$results$Contrast[3]), html, fixed = TRUE))
+    expect_false(grepl(sprintf("%.3f", rv$results$Contrast[2]), html, fixed = TRUE))
+  })
+})

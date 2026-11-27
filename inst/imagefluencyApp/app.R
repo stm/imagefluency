@@ -23,8 +23,8 @@ metric_info <- list(
   ),
   selfsim = list(
     name = "Self-Similarity",
-    description = "Quantifies fractal-like patterns and repetitive structures across different scales. Higher values indicate more self-similar, fractal-like patterns. Uses quadtree decomposition to analyze similarity at different levels.",
-    reference = "Quadtree decomposition"
+    description = "Quantifies fractal-like patterns and repetitive structures across different scales. Computed from the slope of the image's log-log power spectrum: natural, fractal-like (scale-invariant) images have a slope near -2. The score is the negative absolute deviation of the slope from -2, so values range up to a maximum of 0 and higher values indicate more self-similar images.",
+    reference = "Slope of the log-log power spectrum"
   ),
   simpl = list(
     name = "Simplicity",
@@ -993,11 +993,12 @@ shiny::shinyApp(
         ))
       }
 
+      # images are identified by their row number, as file names can be duplicated
       shiny::selectInput(
         "compare_images",
         "Select images to compare:",
-        choices = rv$results$Image,
-        selected = rv$results$Image[1:min(2, nrow(rv$results))],
+        choices = stats::setNames(seq_len(nrow(rv$results)), make.unique(rv$results$Image)),
+        selected = 1:2,
         multiple = TRUE
       )
     })
@@ -1010,25 +1011,21 @@ shiny::shinyApp(
         return(shiny::p("Select at least 2 images."))
       }
 
-      compare_data <- rv$results[rv$results$Image %in% input$compare_images, ]
-      img_indices <- which(rv$image_names %in% input$compare_images)
+      img_indices <- as.integer(input$compare_images)
+      img_indices <- img_indices[img_indices %in% seq_len(nrow(rv$results))]
+      metric_labels <- c(Contrast = "Contrast", Self_Similarity = "Self-Similarity",
+                         Simplicity = "Simplicity", Symmetry = "Symmetry",
+                         Typicality = "Typicality")
 
-      comparison_items <- lapply(seq_len(nrow(compare_data)), function(i) {
-        img_idx <- img_indices[i]
+      comparison_items <- lapply(img_indices, function(img_idx) {
+        result_row <- rv$results[img_idx, ]
 
         metrics_html <- shiny::tags$ul(
-          if ("Contrast" %in% names(compare_data))
-            shiny::tags$li(shiny::tags$strong("Contrast: "),
-                    sprintf("%.3f", compare_data$Contrast[i])),
-          if ("Self_Similarity" %in% names(compare_data))
-            shiny::tags$li(shiny::tags$strong("Self-Similarity: "),
-                    sprintf("%.3f", compare_data$Self_Similarity[i])),
-          if ("Simplicity" %in% names(compare_data))
-            shiny::tags$li(shiny::tags$strong("Simplicity: "),
-                    sprintf("%.3f", compare_data$Simplicity[i])),
-          if ("Symmetry" %in% names(compare_data))
-            shiny::tags$li(shiny::tags$strong("Symmetry: "),
-                    sprintf("%.3f", compare_data$Symmetry[i]))
+          lapply(intersect(names(metric_labels), names(result_row)), function(col_name) {
+            value <- result_row[[col_name]]
+            shiny::tags$li(shiny::tags$strong(paste0(metric_labels[[col_name]], ": ")),
+                    if (is.na(value)) "Error" else sprintf("%.3f", value))
+          })
         )
 
         shiny::div(
@@ -1036,7 +1033,7 @@ shiny::shinyApp(
           style = "display: inline-block; width: 300px; margin: 10px;
                    border: 1px solid #d8d8d8; padding: 10px; border-radius: 4px;
                    background: #ffffff;",
-          shiny::h6(compare_data$Image[i]),
+          shiny::h6(result_row$Image),
           shiny::img(
             src = session$fileUrl(basename(rv$image_paths[img_idx]), rv$image_paths[img_idx]),
             style = "width: 100%; max-height: 250px; object-fit: contain;"
