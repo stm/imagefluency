@@ -118,7 +118,10 @@ test_that("img_complexity works as intended (gives correct / consistent results)
   # magick::image_read(img)
   results <- img_complexity(img)
 
-  expect_equal(results, 0.1600421, tolerance = 0.01)
+  # the compressed file size (and thus the result) differs slightly between
+  # platforms because it depends on the compression library that is installed,
+  # hence the tolerance of 5%
+  expect_equal(results, 0.1600421, tolerance = 0.05)
 
 
   redChannel <- matrix(0, nrow = 300, ncol = 300)
