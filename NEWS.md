@@ -1,9 +1,8 @@
-# imagefluency
-
 # imagefluency 1.1.0
 
 * color images are now converted with the exact Rec. 601 weights (0.299, 0.587, 0.114) instead of rounded weights that summed to 0.9999. Scores for color images change in about the fourth significant digit (e.g., a perfectly symmetric color image now has a symmetry of 1 instead of 0.9999); scores for grayscale images and complexity scores are unchanged
 * fixed `img_self_similarity()` failing with `logplot = TRUE` when the `collapse` package is not installed
+* fixed typos and grammar in the documentation and vignettes
 
 # imagefluency 1.0.1
 
@@ -23,7 +22,7 @@
 
 # imagefluency 0.2.5
 
-* bugfixes in internal functions (incorrect parameter name in documentation)
+* bug fixes in internal functions (incorrect parameter name in documentation)
 
 # imagefluency 0.2.4
 
@@ -41,7 +40,7 @@
 
 # imagefluency 0.2.2
 
-* under-the-hood-changes in preparation for upcoming R 4.0.0 release
+* under-the-hood changes in preparation for upcoming R 4.0.0 release
 
 # imagefluency 0.2.1
 
@@ -69,4 +68,4 @@ Major update
 
 # imagefluency 0.1.0
 
-* first version on github
+* first version on GitHub

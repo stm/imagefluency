@@ -76,7 +76,7 @@ img_symmetry(bridge)
 
 }
 \references{
-Mayer, S. & Landwehr, J, R. (2018). Quantifying Visual Aesthetics
+Mayer, S. & Landwehr, J. R. (2018). Quantifying Visual Aesthetics
   Based on Processing Fluency Theory: Four Algorithmic Measures for
   Antecedents of Aesthetic Preferences. \emph{Psychology of Aesthetics,
   Creativity, and the Arts}, \emph{12}(4), 399--431.
@@ -84,6 +84,6 @@ Mayer, S. & Landwehr, J, R. (2018). Quantifying Visual Aesthetics
 }
 \seealso{
 \code{\link{img_read}}, \code{\link{img_complexity}},
-  \code{\link{img_contrast}}, \code{\link{img_self_similarity}}
+  \code{\link{img_contrast}}, \code{\link{img_self_similarity}},
   \code{\link{img_simplicity}}, \code{\link{img_typicality}}
 }

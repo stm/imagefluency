@@ -67,10 +67,10 @@ NULL
 #' img_symmetry(bridge)
 #'
 #' @seealso \code{\link{img_read}}, \code{\link{img_complexity}},
-#'   \code{\link{img_contrast}}, \code{\link{img_self_similarity}}
+#'   \code{\link{img_contrast}}, \code{\link{img_self_similarity}},
 #'   \code{\link{img_simplicity}}, \code{\link{img_typicality}}
 #'
-#' @references Mayer, S. & Landwehr, J, R. (2018). Quantifying Visual Aesthetics
+#' @references Mayer, S. & Landwehr, J. R. (2018). Quantifying Visual Aesthetics
 #'   Based on Processing Fluency Theory: Four Algorithmic Measures for
 #'   Antecedents of Aesthetic Preferences. \emph{Psychology of Aesthetics,
 #'   Creativity, and the Arts}, \emph{12}(4), 399--431.
@@ -227,9 +227,9 @@ img_symmetry <- function(img, vertical = TRUE, horizontal = TRUE, ...) {
 
   # Cut image into 2 equal pieces (row-wise / vertically,
   # that means across the y axis) with flipped right half.
-  # Note: floor and ceiling control for images with a height
+  # Note: floor and ceiling control for images with a width
   # that is not a multiple of 2; if that's the case, the
-  # syntax below just eliminates the most middle row;
+  # syntax below just eliminates the most middle column;
   # otherwise, all data points are analyzed.
   stimL <- img[, 1:floor(imgW / 2)]
   stimR <- img[, imgW:(1 + ceiling(imgW / 2))]

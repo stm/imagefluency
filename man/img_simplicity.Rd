@@ -8,7 +8,7 @@ img_simplicity(imgfile, algorithm = "zip", rotate = FALSE)
 }
 \arguments{
 \item{imgfile}{Either a character string containing the path to the image
-file (or URL) or an an image in form of a matrix (grayscale image) or array
+file (or URL) or an image in form of a matrix (grayscale image) or array
 (color image) of numeric values representing the pre-loaded image (e.g. by
 using \code{\link{img_read}()}).}
 
@@ -25,7 +25,7 @@ a numeric value: 1 minus the ratio of compressed divided by
 }
 \description{
 \code{img_simplicity} returns the simplicity of an image as 1 minus the
-complexity of the image. Higher values indicated higher image simplicity.
+complexity of the image. Higher values indicate higher image simplicity.
 }
 \details{
 Image simplicity is calculated as 1 minus the ratio between the
@@ -66,7 +66,7 @@ Forsythe, A., Nadal, M., Sheehy, N., Cela-Conde, C. J., & Sawey,
   Art. \emph{British Journal of Psychology}, \emph{102}, 49--70.
   \doi{10.1348/000712610X498958}
 
-Mayer, S. & Landwehr, J, R. (2018). Quantifying Visual Aesthetics
+Mayer, S. & Landwehr, J. R. (2018). Quantifying Visual Aesthetics
   Based on Processing Fluency Theory: Four Algorithmic Measures for
   Antecedents of Aesthetic Preferences. \emph{Psychology of Aesthetics,
   Creativity, and the Arts}, \emph{12}(4), 399--431.
@@ -75,5 +75,5 @@ Mayer, S. & Landwehr, J, R. (2018). Quantifying Visual Aesthetics
 \seealso{
 \code{\link{img_read}}, \code{\link{img_complexity}},
   \code{\link{img_contrast}}, \code{\link{img_self_similarity}},
-  \code{\link{img_symmetry}}, \code{\link{img_typicality}},
+  \code{\link{img_symmetry}}, \code{\link{img_typicality}}
 }

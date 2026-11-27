@@ -8,7 +8,7 @@
 }
 \arguments{
 \item{img}{A matrix of numeric values or integer values, preferably
-by square size.}
+of square size.}
 
 \item{full}{logical. Should the full frequency range be used for
 interpolation?}

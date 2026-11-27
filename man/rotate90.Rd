@@ -24,7 +24,7 @@ Matrix or Array Rotation by 90 Degrees
 \details{
 The function takes an array or matrix as input
   object (\code{img}) and returns the object rotated by
-  90 degrees. Per default, the rotation is done in the
+  90 degrees. By default, the rotation is done in the
   mathematically positive direction (i.e.,
   counterclockwise). Clockwise rotation (i.e.,
   mathematically negative) can be specified by passing

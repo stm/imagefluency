@@ -48,7 +48,7 @@ NULL
 #'
 #' @seealso \code{\link{img_read}}, \code{\link{img_complexity}},
 #'   \code{\link{img_self_similarity}}, \code{\link{img_simplicity}},
-#'   \code{\link{img_symmetry}}, \code{\link{img_typicality}},
+#'   \code{\link{img_symmetry}}, \code{\link{img_typicality}}
 #'
 #'
 img_contrast <- function(img){

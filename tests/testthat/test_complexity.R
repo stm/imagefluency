@@ -39,7 +39,7 @@ test_that("img_complexity normalizes input image if necessary", {
 })
 
 
-test_that("img_complexity needs packge magick", {
+test_that("img_complexity needs package magick", {
   mockery::stub(img_complexity, '.pkg_avail', FALSE)
   expect_error(img_complexity(array(0, dim = c(10, 10, 3))),
                "Package \\'magick\\' not found but needed\\. Please install the package first\\.")

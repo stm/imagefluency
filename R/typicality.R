@@ -8,11 +8,11 @@ NULL
 #'
 #' @details The function returns the visual typicality of a \emph{list} of image
 #'   arrays or matrices \code{imglist} relative to each other. Values can range
-#'   between -1 (inversely typical) over 0 (not typical) to 1 (perfectly typical).
+#'   from -1 (inversely typical) through 0 (not typical) to 1 (perfectly typical).
 #'   That is, higher absolute values indicate a larger typicality.
 #'
 #'   The typicality score is computed as the correlation of a particular image
-#'   with the average representation of all images, i.e. the mean of all images.
+#'   with the average representation of all images, i.e., the mean of all images.
 #'   For color images, the weighted average between each color channel's values
 #'   is computed. If the images have different dimensions they are automatically
 #'   resized to the smallest height and width.
@@ -27,9 +27,9 @@ NULL
 #'   e.g. \code{\link{img_read}()} to read image files into \code{R} (see
 #'   example).
 #' @param rescale numeric. Rescales the images prior to computing the typicality
-#'   scores (per default no rescaling is performed). Rescaling is performed by
+#'   scores (by default, no rescaling is performed). Rescaling is performed by
 #'   \code{OpenImageR}'s \code{\link[OpenImageR]{resizeImage}} function
-#'   (bilinear rescaling)
+#'   (bilinear rescaling).
 #'
 #' @return a named matrix of numeric values (typicality scores)
 #' @export
@@ -65,7 +65,7 @@ NULL
 #'
 #'
 #' @seealso \code{\link{img_read}}, \code{\link{img_contrast}},
-#'    \code{\link{img_complexity}}, \code{\link{img_self_similarity}}
+#'    \code{\link{img_complexity}}, \code{\link{img_self_similarity}},
 #'   \code{\link{img_simplicity}}, \code{\link{img_symmetry}}
 img_typicality <- function(imglist, rescale = NULL){
 
@@ -107,7 +107,7 @@ img_typicality <- function(imglist, rescale = NULL){
     }
   }
 
-  # resize images same image dimension
+  # resize images to the same image dimension
   # using the smallest width and height over all pics
   if (imgtype == "gray") {
     dims <- vapply(imglist, dim, numeric(2))

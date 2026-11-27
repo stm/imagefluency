@@ -38,7 +38,7 @@ The [getting started vignette](getting-started.html) explains how to apply the c
 
 Before we can start analyzing the images, we need to load them into R. In this example, we choose to read all images that are shipped with the `imagefluency` package. However, you can replace the file path with any file path on your computer.
 
-Next, we read the file names of all images that satisfy a specific pattern using `list.files()`. In our case, we want the file names of all files that have `.jpg` as their file extension. Thus, we specify `pattern = '*.jpg$'`. The `$` sign at the end ensures that we only find files that _end_ with `.jpg`, a file like `image1.jpg.png` would therefore not be listed. Multiple patterns could also be specified (e.g., `pattern = '*.jpg$|*.png$')`. Note that we do _not_ actually load the images into our R session here. Instead, using `list.files()` we just extract the images' file paths for later use.
+Next, we read the file names of all images that satisfy a specific pattern using `list.files()`. In our case, we want the file names of all files that have `.jpg` as their file extension. Thus, we specify `pattern = '*.jpg$'`. The `$` sign at the end ensures that we only find files that _end_ with `.jpg`; a file like `image1.jpg.png` would therefore not be listed. Multiple patterns could also be specified (e.g., `pattern = '*.jpg$|*.png$'`). Note that we do _not_ actually load the images into our R session here. Instead, using `list.files()` we just extract the images' file paths for later use.
 
 ```{r file path}
 # path to images (here: example images from the imagefluency package)
@@ -71,7 +71,7 @@ results <- data.frame(filename = basename(fileNames),
 
 ## Looping over all images {#big-loop}
 
-Now it's time to calculate the image fluency scores! To this end, we create a big loop that iterates over all image files. Within the loop, first, the image is read into R. Next the scores for contrast, self-similarity, simplicity, and symmetry are computed for each image. The results are stored in the `results` data frame we created before.
+Now it's time to calculate the image fluency scores! To this end, we create a big loop that iterates over all image files. Within the loop, first, the image is read into R. Next, the scores for contrast, self-similarity, simplicity, and symmetry are computed for each image. The results are stored in the `results` data frame we created before.
 
 We use `tryCatch()` in the loop so that the loop does not break if there are any errors with a specific image. Instead, the result is simply an `NA` if there is an error. Note that we only compute vertical symmetry in the code below. Optionally, you can also convert all images to grayscale to speed up the computation.
 
@@ -197,9 +197,9 @@ knitr::kable(results, digits = 3)
 
 # Parallel processing with multiple cores
 
-Above code using `lapply()` should be faster than the approach of using first a big loop and then again reading in all images to compute typicality. However, we might gain a much larger increase in speed, by using parallelized versions of `lapply()` or `purrr::map()`, respectively.
+The above code using `lapply()` should be faster than the approach of using first a big loop and then again reading in all images to compute typicality. However, we might gain a much larger increase in speed by using parallelized versions of `lapply()` or `purrr::map()`, respectively.
 
-The following code example demonstrates shortly how to achieve this. Essentially, all you have to do is to replace all instances of `lapply()` from before with `parallel::mclapply()` (*m*ulti-*c*ore lapply). In the example below, however, I'll use `pbmcapply::pbmclapply` which adds a progress bar (*pb*) to the multi-core lapply.
+The following code example briefly demonstrates how to achieve this. Essentially, all you have to do is to replace all instances of `lapply()` from before with `parallel::mclapply()` (*m*ulti-*c*ore lapply). In the example below, however, I'll use `pbmcapply::pbmclapply` which adds a progress bar (*pb*) to the multi-core lapply.
 
 ```{r}
 # detect cores for multi-core processing
@@ -219,7 +219,7 @@ results <- data.frame(filename = basename(fileNames), results)
 results$typicality <- as.vector(img_typicality(allImages))
 ```
 
-Let's do a quick comparison of the computing time when computing the four image fluency scores with and without multi-core processing. Note that with increasing file size or number of images, this speed bump will become larger. We 'simulate' this by reading in the images 10 times.
+Let's do a quick comparison of the computing time when computing the four image fluency scores with and without multi-core processing. Note that with increasing file size or number of images, this speed-up will become larger. We 'simulate' this by reading in the images 10 times.
 
 ```{r}
 # read images 10 times 
@@ -228,7 +228,7 @@ cat('Number of images:', length(allImages), '\n')
 ```
 
 ```{r, results='hide'}
-# compute imgagefluency scores using lapply() with progress bar
+# compute imagefluency scores using lapply() with progress bar
 tictoc::tic("lapply")
 results_lapply <- pbapply::pblapply(allImages, img_fluency_scores)
 tictoc::toc(log=TRUE)
@@ -240,7 +240,7 @@ tictoc::toc(log=TRUE)
 
 
 ```{r, results='hide'}
-# compute imgagefluency scores using multi-core lapply() with progress bar
+# compute imagefluency scores using multi-core lapply() with progress bar
 tictoc::tic("pbmclapply")
 results_pbmclapply <- pbmcapply::pbmclapply(allImages, img_fluency_scores,
                                             mc.cores = ncores)

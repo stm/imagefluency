@@ -7,7 +7,7 @@ NULL
 #' compression. Higher values indicate higher image complexity.
 #'
 #' @details The function returns the visual complexity of an image. Visual
-#'   complexity is calculated as ratio between the compressed and uncompressed
+#'   complexity is calculated as the ratio between the compressed and uncompressed
 #'   image file size. Preferably, the original image is an uncompressed image
 #'   file.
 #'
@@ -32,12 +32,12 @@ NULL
 #'   the original image's file size and the file size of the rotated image.
 #'
 #'   As \code{R}'s built-in \code{bmp} device creates (a) indexed instead of
-#'   True Color images and (b) creates files with different file sizes depending
+#'   True Color images and (b) files with different file sizes depending
 #'   on the operating system, the function relies on the \code{magick} package
 #'   to write (and read) images.
 #'
 #' @param imgfile Either a character string containing the path to the image
-#'   file (or URL) or an an image in form of a matrix (grayscale image) or array
+#'   file (or URL) or an image in form of a matrix (grayscale image) or array
 #'   (color image) of numeric values representing the pre-loaded image (e.g. by
 #'   using \code{\link{img_read}()}).
 #' @param algorithm Character string that specifies which image compression
@@ -79,7 +79,7 @@ NULL
 #'   Art. \emph{British Journal of Psychology}, \emph{102}, 49--70.
 #'   \doi{10.1348/000712610X498958}
 #'
-#' @references Mayer, S. & Landwehr, J, R. (2018). Quantifying Visual Aesthetics
+#' @references Mayer, S. & Landwehr, J. R. (2018). Quantifying Visual Aesthetics
 #'   Based on Processing Fluency Theory: Four Algorithmic Measures for
 #'   Antecedents of Aesthetic Preferences. \emph{Psychology of Aesthetics,
 #'   Creativity, and the Arts}, \emph{12}(4), 399--431.
@@ -88,7 +88,7 @@ NULL
 #'
 #' @seealso \code{\link{img_read}}, \code{\link{img_contrast}},
 #'   \code{\link{img_self_similarity}}, \code{\link{img_simplicity}},
-#'   \code{\link{img_symmetry}}, \code{\link{img_typicality}},
+#'   \code{\link{img_symmetry}}, \code{\link{img_typicality}}
 img_complexity <- function(imgfile, algorithm = "zip", rotate = FALSE){
 
   if (!(algorithm %in% c("zip", "jpg", "gif", "png"))) {

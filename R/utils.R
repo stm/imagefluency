@@ -32,7 +32,7 @@ img_read <- function(path, ...){
 #' RGB to Gray Conversion
 #'
 #' \code{rgb2gray} transforms colors from RGB space
-#' (red/green/blue) into an matrix of grayscale values.
+#' (red/green/blue) into a matrix of grayscale values.
 #'
 #' @param img 3-dimensional array of numeric or integer
 #'   values
@@ -87,7 +87,7 @@ rgb2gray <- function(img) {
 #'
 #' @details The function takes an array or matrix as input
 #'   object (\code{img}) and returns the object rotated by
-#'   90 degrees. Per default, the rotation is done in the
+#'   90 degrees. By default, the rotation is done in the
 #'   mathematically positive direction (i.e.,
 #'   counterclockwise). Clockwise rotation (i.e.,
 #'   mathematically negative) can be specified by passing
@@ -113,7 +113,7 @@ rotate90 <- function(img, direction = "positive") {
       return(A[width:1, ]) # flip matrix rows
     }
     if (dir == "negative" | dir == "clockwise") {
-      return(A[, height:1]) # flip matrix rows
+      return(A[, height:1]) # flip matrix columns
     }
   }
   #
@@ -141,11 +141,11 @@ rotate90 <- function(img, direction = "positive") {
 #' .check_input
 #'
 #' \code{.check_input} is a helper function of the
-#' \code{rquantae} package that checks whether the input is
-#' a matrix of numeric or integer values. Error message are
+#' \code{imagefluency} package that checks whether the input is
+#' a matrix of numeric or integer values. Error messages are
 #' thrown if that is not the case.
 #'
-#' @param img An object that needs to checked.
+#' @param img An object that needs to be checked.
 #' @param f_call The name of the function inside which the
 #'   \code{.check_input} is called.
 #'

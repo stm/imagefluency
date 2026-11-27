@@ -5,7 +5,7 @@ test_that("img_self_similarity only handles numeric matrices", {
                "Invalid input \\(should be a matrix or a 3-dimensional array of numeric or integer values\\)")
 })
 
-test_that("img_self_similarity checks whether optional parameter are logical", {
+test_that("img_self_similarity checks whether optional parameters are logical", {
   set.seed(2787)
   img <- matrix(runif(100*100, min = 0, max = 255), nrow = 100, ncol = 100)
   expect_warning(img_self_similarity(img, full = "yes"),
@@ -16,7 +16,7 @@ test_that("img_self_similarity checks whether optional parameter are logical", {
                  "raw = 'yes' is not a logical value \\(TRUE\\/FALSE\\)\\. Automatically set to FALSE \\.\\.\\.")
 })
 
-test_that("img_self_similarity checks whether image is at least 22 pixels in each dimensions, throws error otherwise", {
+test_that("img_self_similarity checks whether image is at least 22 pixels in each dimension, throws error otherwise", {
   img <- matrix(1, nrow = 21, ncol = 100)
   expect_error(img_self_similarity(img),
                "Image has to be at least 22 pixels in each dimension\\. Input image has 100 \\(width\\) x 21 \\(height\\)\\.")
@@ -98,7 +98,7 @@ test_that("Get raw log-log slope", {
 })
 
 
-test_that("Option to compute sel-similarity on full range", {
+test_that("Option to compute self-similarity on full range", {
   set.seed(2787)
   img <- matrix(runif(50*50, min = 0, max = 255), nrow = 50, ncol = 50)
   expect_equal(img_self_similarity(img, full = TRUE), -2.135299, tolerance = .00001)

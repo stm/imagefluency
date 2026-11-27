@@ -32,7 +32,7 @@ test_that("img_symmetry needs variance in the image",{
   expect_error(img_symmetry(img),
                "No variation in left image half\\. Computation not possible\\.")
 
-  # no variation in left half
+  # no variation in right half
   img[,1:5]<-img[,6:10]
   img[,6:10]<-0
   expect_error(img_symmetry(img),

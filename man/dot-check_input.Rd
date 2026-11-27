@@ -7,7 +7,7 @@
 .check_input(img, f_call = NULL)
 }
 \arguments{
-\item{img}{An object that needs to checked.}
+\item{img}{An object that needs to be checked.}
 
 \item{f_call}{The name of the function inside which the
 \code{.check_input} is called.}
@@ -17,8 +17,8 @@ An error message if the check fails.
 }
 \description{
 \code{.check_input} is a helper function of the
-\code{rquantae} package that checks whether the input is
-a matrix of numeric or integer values. Error message are
+\code{imagefluency} package that checks whether the input is
+a matrix of numeric or integer values. Error messages are
 thrown if that is not the case.
 }
 \keyword{internal}

@@ -15,7 +15,7 @@ A matrix of grayscale values.
 }
 \description{
 \code{rgb2gray} transforms colors from RGB space
-(red/green/blue) into an matrix of grayscale values.
+(red/green/blue) into a matrix of grayscale values.
 }
 \details{
 The function takes a 3-dimensional array of

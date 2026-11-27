@@ -1,7 +1,7 @@
 ## imagefluency: Image Statistics Based on Processing Fluency <img src="man/figures/logo.png" align="right" alt="imagefluency logo" style="margin-top: 1rem; margin-left: 0.25rem;" />
 
 <!-- badges: start -->
-[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/)
 [![R-CMD-check](https://github.com/stm/imagefluency/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/stm/imagefluency/actions/workflows/check-standard.yaml)
 [![Codecov test coverage](https://codecov.io/gh/stm/imagefluency/graph/badge.svg)](https://app.codecov.io/gh/stm/imagefluency)
 [![CRAN status](https://www.r-pkg.org/badges/version/imagefluency)](https://cran.r-project.org/package=imagefluency)
@@ -13,28 +13,28 @@
 ## Overview
 
 **imagefluency** is an R package for image fluency scores. The
-package allows to get scores for several basic aesthetic principles that
+package provides scores for several basic aesthetic principles that
 facilitate fluent cognitive processing of images.
     
 The main functions are:
 
-* `img_contrast()`  to get the visual contrast of an image.
-* `img_complexity()`  to get the visual complexity of an image (equals
+* `img_contrast()` to get the visual contrast of an image
+* `img_complexity()` to get the visual complexity of an image (equals
    1 minus image simplicity)
-* `img_self_similarity()`  to get the visual self-similarity of an image
-* `img_simplicity()`  function to get the visual simplicity of an image (equals
-   1 minus image complexity).
-* `img_symmetry()`  to get the vertical and horizontal symmetry of an
-   image.
-* `img_typicality()`  to get the visual typicality of a list of images relative
+* `img_self_similarity()` to get the visual self-similarity of an image
+* `img_simplicity()` to get the visual simplicity of an image (equals
+   1 minus image complexity)
+* `img_symmetry()` to get the vertical and horizontal symmetry of an
+   image
+* `img_typicality()` to get the visual typicality of a list of images relative
    to each other
    
 Other helpful functions are:
 
-* `img_read()`  wrapper function to read images into R using `read.bitmap()` from the
+* `img_read()` wrapper function to read images into R using `read.bitmap()` from the
   [readbitmap](https://github.com/jefferis/readbitmap) package
-* `rgb2gray()`  convert images from RGB into grayscale (might speed up computation)
-* `run_imagefluency()`  to launch a Shiny app locally on your computer for an interactive demo of the
+* `rgb2gray()` to convert images from RGB into grayscale (might speed up computation)
+* `run_imagefluency()` to launch a Shiny app locally on your computer for an interactive demo of the
    main functions
 
 
@@ -61,7 +61,7 @@ You can install the current stable version from CRAN.
 install.packages('imagefluency')
 ```
 
-To download the latest development version from Github use the `install_github` function of the `remotes` package.
+To download the latest development version from GitHub, use the `install_github` function of the `remotes` package.
 ```r
 # install remotes if necessary
 if (!require('remotes')) install.packages('remotes')
@@ -69,7 +69,7 @@ if (!require('remotes')) install.packages('remotes')
 remotes::install_github('stm/imagefluency')
 ```
 
-Optionally, if you have `rmarkdown` installed, you can also have your system build the the vignettes when downloading from GitHub.
+Optionally, if you have `rmarkdown` installed, you can also have your system build the vignettes when downloading from GitHub.
 ```r
 # install from github with vignettes (needs rmarkdown installed)
 remotes::install_github('stm/imagefluency', build_vignettes = TRUE)
@@ -127,7 +127,7 @@ The `img_complexity` function relies on the packages [R.utils](https://cran.r-pr
 
 To learn more about the different image fluency metrics, see the following publications:
 
-* Mayer, S. & Landwehr, J, R. (2018). Quantifying Visual Aesthetics
+* Mayer, S. & Landwehr, J. R. (2018). Quantifying Visual Aesthetics
 Based on Processing Fluency Theory: Four Algorithmic Measures for
 Antecedents of Aesthetic Preferences. *Psychology of Aesthetics,
 Creativity, and the Arts*, *12*(4), 399--431. 

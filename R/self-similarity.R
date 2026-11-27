@@ -19,32 +19,29 @@ NULL
 #'   the image. Self-similarity is computed via the slope of the log-log power
 #'   spectrum using OLS. A slope near \code{-2} indicates fractal-like
 #'   properties (see Redies et al., 2007; Simoncelli & Olshausen, 2001). Thus,
-#'   value for self-similarity that is return by the function calculated as
-#'   \code{self-similarity = abs(slope + 2) * (-1)}. That is, the measure
+#'   the value for self-similarity that is returned by the function is
+#'   calculated as \code{self-similarity = abs(slope + 2) * (-1)}. That is, the measure
 #'   reaches its maximum value of 0 for a slope of -2, and any deviation from -2
 #'   results in negative values that are more negative the higher the deviation
 #'   from -2. For color images, the weighted average between each color channel's
-#'   values is computed (cf. Mayer & Landwehr 2018).
+#'   values is computed (cf. Mayer & Landwehr, 2018).
 #'
-#'   Per default, only the frequency range betwen 10 and 256 cycles per image is
+#'   By default, only the frequency range between 10 and 256 cycles per image is
 #'   used for interpolation. Computation for the full range can be set via the
 #'   parameter \code{full = TRUE}.
 #'
 #'   If \code{logplot} is set to \code{TRUE} then a log-log plot of the power
 #'   spectrum is additionally shown. If the package \code{ggplot2} is installed
 #'   the plot includes the slope of the OLS regression. Note that this option is
-#'   currently implemented for grayscale images.
+#'   currently only implemented for grayscale images.
 #'
 #'   It is possible to get the raw regression slope (instead of the transformed
 #'   value which indicates self-similarity) by using the option \code{raw =
 #'   TRUE}.
 #'
-#'   For color images, the weighed average between each color channel's values
-#'   is computed.
-#'
 #'
 #' @param img An image in form of a matrix or array of numeric values,
-#'   preferably by square size. If the input is not square, bilinear resizing to
+#'   preferably of square size. If the input is not square, bilinear resizing to
 #'   a square size is performed using the
 #'   \code{\link[OpenImageR:resizeImage]{OpenImageR}} package. Use e.g.
 #'   \code{\link{img_read}()} to read an image file into \code{R}.
@@ -58,10 +55,10 @@ NULL
 #' @return a numeric value (self-similarity)
 #' @export
 #'
-#' @note The function inspired by Matlab's sfPlot (by Diederick C. Niehorster).
+#' @note The function is inspired by Matlab's sfPlot (by Diederick C. Niehorster).
 #'
 #'
-#' @references Mayer, S. & Landwehr, J, R. (2018). Quantifying Visual Aesthetics
+#' @references Mayer, S. & Landwehr, J. R. (2018). Quantifying Visual Aesthetics
 #'   Based on Processing Fluency Theory: Four Algorithmic Measures for
 #'   Antecedents of Aesthetic Preferences. \emph{Psychology of Aesthetics,
 #'   Creativity, and the Arts}, \emph{12}(4), 399--431.
@@ -99,7 +96,7 @@ NULL
 #'
 #' @seealso \code{\link{img_read}}, \code{\link{img_contrast}},
 #'   \code{\link{img_complexity}}, \code{\link{img_simplicity}},
-#'   \code{\link{img_symmetry}}, \code{\link{img_typicality}},
+#'   \code{\link{img_symmetry}}, \code{\link{img_typicality}}
 img_self_similarity <- function(img, full = FALSE, logplot = FALSE, raw=FALSE){
 
   # check input
@@ -181,7 +178,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".x"))
 #' Returns the self-similarity of an image matrix as the degree to which the slope of the log-log power spectrum falls with power according to the value of 2.
 #'
 #' @param img A matrix of numeric values or integer values, preferably
-#'   by square size.
+#'   of square size.
 #' @param full logical. Should the full frequency range be used for
 #'   interpolation?
 #' @param logplot logical. Should the log-log power spectrum of the image be
