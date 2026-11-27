@@ -14,7 +14,7 @@
 * the `collapse` package is no longer used: the computations now use equally fast base R code, so that all users get the same speed and results, and the message recommending to install `collapse` is gone
 * optional arguments that are not `TRUE` or `FALSE` (e.g., `NA`) now consistently result in a warning and the default value instead of an error
 * fixed `rotate90()` returning a vector instead of a matrix for images with only one row or column
-* dashboard: now works when started with `imagefluency::run_imagefluency()` without attaching the package
+* dashboard: now works when started with `imagefluency::run_imagefluency()` without attaching the package, and unticking a single metric after "Select all metrics" no longer clears all metrics
 * fixed `img_typicality()` swapping height and width when resizing images with different image sizes or when using `rescale` (images that are not square were resized to a distorted aspect ratio)
 * fixed `img_self_similarity()` failing with `logplot = TRUE` when the `collapse` package is not installed
 * fixed typos and grammar in the documentation and vignettes

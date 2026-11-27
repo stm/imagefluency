@@ -631,31 +631,27 @@ shiny::shinyApp(
       processing = FALSE
     )
 
+    all_metrics <- c("contr", "selfsim", "simpl", "sym", "typ")
+
     # Handle Select All checkbox
+    # (only acts if the checkbox does not match the selected metrics, i.e., if
+    # the user clicked on it; not if it was updated by the sync below)
     shiny::observeEvent(input$select_all_metrics, {
-      if (input$select_all_metrics) {
-        all_choices <- c("contr", "selfsim", "simpl", "sym", "typ")
-        shiny::updateCheckboxGroupInput(session, "statistic", selected = all_choices)
-      } else {
+      all_selected <- setequal(input$statistic, all_metrics)
+      if (input$select_all_metrics && !all_selected) {
+        shiny::updateCheckboxGroupInput(session, "statistic", selected = all_metrics)
+      } else if (!input$select_all_metrics && all_selected) {
         shiny::updateCheckboxGroupInput(session, "statistic", selected = character(0))
       }
-    })
+    }, ignoreInit = TRUE)
 
-    # Sync individual checkboxes with Select All
-    shiny::observe({
-      shiny::req(input$statistic)  # Wait for input to be available
-      all_choices <- c("contr", "selfsim", "simpl", "sym", "typ")
-
-      all_selected <- length(input$statistic) == length(all_choices) &&
-                      all(all_choices %in% input$statistic)
-
-      # Only update if there's a mismatch to avoid loops
-      if (all_selected && !isTRUE(input$select_all_metrics)) {
-        shiny::updateCheckboxInput(session, "select_all_metrics", value = TRUE)
-      } else if (!all_selected && isTRUE(input$select_all_metrics)) {
-        shiny::updateCheckboxInput(session, "select_all_metrics", value = FALSE)
+    # Sync Select All checkbox with individual checkboxes
+    shiny::observeEvent(input$statistic, {
+      all_selected <- setequal(input$statistic, all_metrics)
+      if (all_selected != isTRUE(input$select_all_metrics)) {
+        shiny::updateCheckboxInput(session, "select_all_metrics", value = all_selected)
       }
-    })
+    }, ignoreNULL = FALSE, ignoreInit = TRUE)
 
     # Handle file upload
     shiny::observeEvent(input$file, {
