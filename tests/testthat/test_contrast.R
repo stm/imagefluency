@@ -42,6 +42,19 @@ test_that("img_contrast gives results you'd expect", {
   expect_equal(img_contrast(imgRGB), expected = 0.2936489, tolerance = .0001)
 })
 
+test_that("img_contrast normalizes the image as a whole (not per color channel)", {
+  set.seed(2787)
+  # image with values between 0 and 255 with one channel that only has values 0 and 1
+  red <- matrix(sample(0:255, 400, replace = TRUE), nrow = 20, ncol = 20)
+  green <- matrix(sample(0:255, 400, replace = TRUE), nrow = 20, ncol = 20)
+  blue <- matrix(sample(0:1, 400, replace = TRUE), nrow = 20, ncol = 20)
+  imgRGB <- array(c(red, green, blue), dim = c(20, 20, 3))
+
+  expect_equal(img_contrast(imgRGB), img_contrast(imgRGB / 255))
+  expect_equal(img_contrast(imgRGB),
+               0.299 * sd(red / 255) + 0.587 * sd(green / 255) + 0.114 * sd(blue / 255))
+})
+
 test_that("img_contrast checks the input", {
   img <- matrix(runif(100), nrow = 10, ncol = 10)
   expect_error(img_contrast(as.data.frame(img)),

@@ -7,7 +7,8 @@
 .contr(img)
 }
 \arguments{
-\item{img}{A matrix of numeric values or integer values.}
+\item{img}{A matrix of numeric values or integer values (normalized pixel
+intensity values).}
 }
 \value{
 a numeric value (RMS contrast)

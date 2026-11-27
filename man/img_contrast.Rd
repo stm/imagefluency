@@ -22,7 +22,10 @@ The function returns the RMS contrast of an image \code{img}. The
   RMS contrast is defined as the standard deviation of the normalized pixel
   intensity values. A higher value indicates higher contrast. The image is
   automatically normalized if necessary (i.e., normalization into range [0,
-  1]).
+  1]): if the image contains values larger than 1, the pixel intensity values
+  are assumed to range from 0 to 255 and are divided by 255. This is decided
+  for the image as a whole, i.e., all color channels of an image are treated
+  the same.
 
   For color images, the weighted average between each color channel's values
   is computed.

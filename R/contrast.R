@@ -10,7 +10,10 @@ NULL
 #'   RMS contrast is defined as the standard deviation of the normalized pixel
 #'   intensity values. A higher value indicates higher contrast. The image is
 #'   automatically normalized if necessary (i.e., normalization into range [0,
-#'   1]).
+#'   1]): if the image contains values larger than 1, the pixel intensity values
+#'   are assumed to range from 0 to 255 and are divided by 255. This is decided
+#'   for the image as a whole, i.e., all color channels of an image are treated
+#'   the same.
 #'
 #'   For color images, the weighted average between each color channel's values
 #'   is computed.
@@ -58,6 +61,22 @@ img_contrast <- function(img){
   imgtype <- img$type
   img <- img$img
 
+  # check range of input values
+  # (for the image as a whole, i.e., all color channels are treated the same)
+  if (min(img) < 0) {
+    warning("Negative pixel intensity values in your image. Corresponding pixels set to 0.", call. = FALSE)
+    img[img < 0] <- 0
+  }
+  if (max(img) > 255) {
+    warning("Pixel intensity values > 255 in your image. Corresponding pixels set to 255.", call. = FALSE)
+    img[img > 255] <- 255
+  }
+
+  # normalize image if necessary
+  if (max(img) > 1) {
+    img <- img / 255
+  }
+
   # compute and return contrast
   if (imgtype == "rgb") {
     # split image into channels
@@ -75,7 +94,8 @@ img_contrast <- function(img){
 #'
 #' Returns the RMS contrast of an image matrix.
 #'
-#' @param img A matrix of numeric values or integer values.
+#' @param img A matrix of numeric values or integer values (normalized pixel
+#'   intensity values).
 #'
 #' @return a numeric value (RMS contrast)
 #' @keywords internal
@@ -85,24 +105,6 @@ img_contrast <- function(img){
   ##      rms contrast
   ## -----------------------
 
-  # vectorize matrix
-  pixAll <- as.vector(img)
-
-  # check range of input values
-  if (min(pixAll) < 0) {
-    warning("Negative pixel intensity values in your image. Corresponding pixels set to 0.", call. = FALSE)
-    pixAll[pixAll < 0] <- 0
-  }
-  if (max(pixAll) > 255) {
-    warning("Pixel intensity values > 255 in your image. Corresponding pixels set to 255.", call. = FALSE)
-    pixAll[pixAll > 255] <- 255
-  }
-
-  # normalize image if necessary
-  if (max(pixAll) > 1) {
-    pixAll <- pixAll / 255
-  }
-
   # RMS via built-in sd function
-  return(stats::sd(pixAll))
+  return(stats::sd(as.vector(img)))
 }
