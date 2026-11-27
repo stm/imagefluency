@@ -47,6 +47,14 @@ The function returns the vertical and horizontal mirror symmetry of
   \code{shift_range}, which takes a numeric decimal as input. The default
   \code{shift_range = 0.05} (i.e., 5\%).
 
+  Symmetry cannot be computed if one of the image halves has no variation
+  (e.g., an image half that has only one color; for color images, this
+  applies to each color channel). In this case, the function returns
+  \code{NA} for the respective symmetry and throws a warning. For color
+  images with a color channel that has no variation (e.g., an image that
+  only consists of black and red), consider converting the image into
+  grayscale first (see \code{\link{rgb2gray}}).
+
   For color images, the default is that first a maximal symmetry score (as
   explained above) is obtained per color channel (parameter \code{per_channel
   = TRUE}). Subsequently, a weighted average between each color channel's

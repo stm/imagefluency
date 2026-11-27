@@ -123,3 +123,16 @@ test_that("img_self_similarity checks the input", {
   expect_error(img_self_similarity(img),
                "Input image contains missing or non-finite values")
 })
+
+test_that("img_self_similarity returns NA with a warning for images without variation", {
+  expect_warning(result <- img_self_similarity(matrix(0.5, nrow = 64, ncol = 64)),
+                 "No variation in the image\\. Computation of self-similarity not possible\\. Returning NA\\.")
+  expect_identical(result, NA_real_)
+
+  # color image with a color channel without variation
+  set.seed(2787)
+  imgRGB <- array(c(runif(64 * 64 * 2), rep(0, 64 * 64)), dim = c(64, 64, 3))
+  expect_warning(result <- img_self_similarity(imgRGB, logplot = TRUE),
+                 "No variation in the image or in at least one color channel\\. Computation of self-similarity not possible\\. Returning NA\\.")
+  expect_identical(result, NA_real_)
+})

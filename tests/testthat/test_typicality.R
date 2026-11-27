@@ -138,55 +138,6 @@ test_that(".typ returns the correlation with the mean image", {
                vapply(imgs, function(x) cor(as.vector(x), as.vector(img_mean)), numeric(1)))
 })
 
-test_that("images are resized to the smallest height and width", {
-  set.seed(2787)
-  # non-square images with different image sizes
-  imgs <- list(matrix(runif(40 * 60), nrow = 40, ncol = 60),
-               matrix(runif(50 * 80), nrow = 50, ncol = 80),
-               matrix(runif(40 * 60), nrow = 40, ncol = 60))
-  # resized by hand to height (rows) = 40 and width (columns) = 60
-  # (OpenImageR's 'width' is the number of rows, 'height' the number of columns)
-  imgs_resized <- lapply(imgs, OpenImageR::resizeImage,
-                         width = 40, height = 60, method = "bilinear")
-  expect_equal(dim(imgs_resized[[2]]), c(40, 60))
-  expect_equal(img_typicality(imgs), img_typicality(imgs_resized))
-
-  # same for color images
-  imgsRGB <- list(array(runif(40 * 60 * 3), dim = c(40, 60, 3)),
-                  array(runif(50 * 80 * 3), dim = c(50, 80, 3)))
-  imgsRGB_resized <- lapply(imgsRGB, OpenImageR::resizeImage,
-                            width = 40, height = 60, method = "bilinear")
-  expect_equal(img_typicality(imgsRGB), img_typicality(imgsRGB_resized))
-})
-
-test_that("rescale keeps the aspect ratio of the images", {
-  set.seed(2787)
-  imgs <- replicate(3, matrix(runif(40 * 60), nrow = 40, ncol = 60), simplify = FALSE)
-  # rescaled by hand to height (rows) = 20 and width (columns) = 30
-  imgs_rescaled <- lapply(imgs, OpenImageR::resizeImage,
-                          width = 20, height = 30, method = "bilinear")
-  expect_equal(img_typicality(imgs, rescale = 0.5), img_typicality(imgs_rescaled))
-})
-
-test_that("img_typicality checks the input list and the parameter rescale", {
-  set.seed(2787)
-  imgs <- replicate(3, matrix(runif(100), nrow = 10, ncol = 10), simplify = FALSE)
-
-  expect_error(img_typicality(as.data.frame(imgs[[1]])),
-               "Input has to be a \\*list\\* of image matrices")
-  expect_error(img_typicality(list(imgs[[1]], as.data.frame(imgs[[2]]))),
-               "List element 2: Invalid input")
-  imgs_na <- imgs
-  imgs_na[[3]][1, 1] <- NA
-  expect_error(img_typicality(imgs_na),
-               "List element 3: Input image contains missing or non-finite values")
-
-  expect_error(img_typicality(imgs, rescale = c(0.5, 0.5)),
-               "parameter 'rescale' must be a single positive number")
-  expect_error(img_typicality(imgs, rescale = -1),
-               "parameter 'rescale' must be a single positive number")
-})
-
 test_that("img_typicality returns a plain matrix named after the images", {
   set.seed(2787)
   imgs <- replicate(3, matrix(runif(100), nrow = 10, ncol = 10), simplify = FALSE)
@@ -220,4 +171,63 @@ test_that("img_typicality handles lists with grayscale and color images", {
   imgs_gray <- replicate(3, matrix(runif(100), nrow = 10, ncol = 10), simplify = FALSE)
   imgs_array <- lapply(imgs_gray, function(x) array(x, dim = c(10, 10, 1)))
   expect_equal(img_typicality(imgs_array), img_typicality(imgs_gray))
+})
+
+test_that("img_typicality returns NA with a warning for images without variation", {
+  set.seed(2787)
+  imgs <- replicate(3, matrix(runif(100), nrow = 10, ncol = 10), simplify = FALSE)
+  imgs[[2]] <- matrix(0.5, nrow = 10, ncol = 10)
+
+  expect_warning(out <- img_typicality(imgs),
+                 "No variation in image img2\\. Computation of typicality not possible for this image\\. Returning NA\\.")
+  expect_equal(is.na(as.vector(out)), c(FALSE, TRUE, FALSE))
+})
+
+test_that("img_typicality checks the input list and the parameter rescale", {
+  set.seed(2787)
+  imgs <- replicate(3, matrix(runif(100), nrow = 10, ncol = 10), simplify = FALSE)
+
+  expect_error(img_typicality(as.data.frame(imgs[[1]])),
+               "Input has to be a \\*list\\* of image matrices")
+  expect_error(img_typicality(list(imgs[[1]], as.data.frame(imgs[[2]]))),
+               "List element 2: Invalid input")
+  imgs_na <- imgs
+  imgs_na[[3]][1, 1] <- NA
+  expect_error(img_typicality(imgs_na),
+               "List element 3: Input image contains missing or non-finite values")
+
+  expect_error(img_typicality(imgs, rescale = c(0.5, 0.5)),
+               "parameter 'rescale' must be a single positive number")
+  expect_error(img_typicality(imgs, rescale = -1),
+               "parameter 'rescale' must be a single positive number")
+})
+
+test_that("images are resized to the smallest height and width", {
+  set.seed(2787)
+  # non-square images with different image sizes
+  imgs <- list(matrix(runif(40 * 60), nrow = 40, ncol = 60),
+               matrix(runif(50 * 80), nrow = 50, ncol = 80),
+               matrix(runif(40 * 60), nrow = 40, ncol = 60))
+  # resized by hand to height (rows) = 40 and width (columns) = 60
+  # (OpenImageR's 'width' is the number of rows, 'height' the number of columns)
+  imgs_resized <- lapply(imgs, OpenImageR::resizeImage,
+                         width = 40, height = 60, method = "bilinear")
+  expect_equal(dim(imgs_resized[[2]]), c(40, 60))
+  expect_equal(img_typicality(imgs), img_typicality(imgs_resized))
+
+  # same for color images
+  imgsRGB <- list(array(runif(40 * 60 * 3), dim = c(40, 60, 3)),
+                  array(runif(50 * 80 * 3), dim = c(50, 80, 3)))
+  imgsRGB_resized <- lapply(imgsRGB, OpenImageR::resizeImage,
+                            width = 40, height = 60, method = "bilinear")
+  expect_equal(img_typicality(imgsRGB), img_typicality(imgsRGB_resized))
+})
+
+test_that("rescale keeps the aspect ratio of the images", {
+  set.seed(2787)
+  imgs <- replicate(3, matrix(runif(40 * 60), nrow = 40, ncol = 60), simplify = FALSE)
+  # rescaled by hand to height (rows) = 20 and width (columns) = 30
+  imgs_rescaled <- lapply(imgs, OpenImageR::resizeImage,
+                          width = 20, height = 30, method = "bilinear")
+  expect_equal(img_typicality(imgs, rescale = 0.5), img_typicality(imgs_rescaled))
 })

@@ -10,7 +10,8 @@
 \item{img}{A matrix of numeric values or integer values.}
 }
 \value{
-a numeric value between 0 and 1
+a numeric value between 0 and 1 (\code{NA} if there is no variation
+  in one of the image halves)
 }
 \description{
 sym_mirror returns the mirror symmetry of a grayscale

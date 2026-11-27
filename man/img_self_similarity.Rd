@@ -47,6 +47,11 @@ The function takes a (square) array or matrix of numeric or integer
   used for interpolation. Computation for the full range can be set via the
   parameter \code{full = TRUE}.
 
+  Self-similarity cannot be computed for an image without any variation
+  (e.g., an image with only one color; for color images, this applies to
+  each color channel). In this case, the function returns \code{NA} and
+  throws a warning.
+
   If \code{logplot} is set to \code{TRUE} then a log-log plot of the power
   spectrum is additionally shown. If the package \code{ggplot2} is installed
   the plot includes the slope of the OLS regression. Note that this option is

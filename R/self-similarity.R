@@ -30,6 +30,11 @@ NULL
 #'   used for interpolation. Computation for the full range can be set via the
 #'   parameter \code{full = TRUE}.
 #'
+#'   Self-similarity cannot be computed for an image without any variation
+#'   (e.g., an image with only one color; for color images, this applies to
+#'   each color channel). In this case, the function returns \code{NA} and
+#'   throws a warning.
+#'
 #'   If \code{logplot} is set to \code{TRUE} then a log-log plot of the power
 #'   spectrum is additionally shown. If the package \code{ggplot2} is installed
 #'   the plot includes the slope of the OLS regression. Note that this option is
@@ -124,6 +129,15 @@ img_self_similarity <- function(img, full = FALSE, logplot = FALSE, raw=FALSE){
     out <- outGray$self_sim
   }
 
+  # self-similarity cannot be computed without variation in the image
+  if (is.na(out)) {
+    warning(paste0("No variation in the image",
+                   if (imgtype == "rgb") " or in at least one color channel" else "",
+                   ". Computation of self-similarity not possible. Returning NA."),
+            call. = FALSE)
+    return(NA_real_)
+  }
+
   # plot
   if (logplot) {
     # currently only supported for grayscale images
@@ -191,6 +205,11 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".x"))
   xs <- dim(img)[1] # image height
   ys <- dim(img)[2] # image width
 
+  # no variation in the image: computation not possible
+  if (min(img) == max(img)) {
+    return(list(self_sim = NA_real_))
+  }
+
   # ensure the image is square; if not, resize using OpenImageR
   if (xs != ys) {
     if (.pkg_avail("OpenImageR")) {
@@ -256,6 +275,11 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".x"))
   Xt_log <- log(Xt)
   Yt <- power_spec[seq(lmrange[1], lmrange[2])]
   Yt_log <- log(Yt)
+
+  # no variation in the image: computation not possible
+  if (!all(is.finite(Yt_log))) {
+    return(list(self_sim = NA_real_))
+  }
 
   # linear regression on the log-log data
   regr <- unname(stats::coefficients(stats::lm(Yt_log ~ Xt_log)))

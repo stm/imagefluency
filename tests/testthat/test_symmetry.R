@@ -24,20 +24,46 @@ test_that("img_symmetry needs at least 4x4 pixels",{
 })
 
 
-test_that("img_symmetry needs variance in the image",{
+test_that("img_symmetry returns NA with a warning if an image half has no variation",{
   img <- matrix(1:100, nrow = 10, ncol = 10)
+  msg_vertical <- "No variation in at least one image half\\. Computation of vertical symmetry not possible\\. Returning NA\\."
 
-  # no variation in left half
-  img[,1:5]<-0
-  expect_error(img_symmetry(img),
-               "No variation in left image half\\. Computation not possible\\.")
+    # no variation in left half
+    img_left <- img
+    img_left[, 1:5] <- 0
+    expect_warning(result <- img_symmetry(img_left, horizontal = FALSE), msg_vertical)
+    expect_identical(result, c(vertical = NA_real_))
 
-  # no variation in right half
-  img[,1:5]<-img[,6:10]
-  img[,6:10]<-0
-  expect_error(img_symmetry(img),
-               "No variation in right image half\\. Computation not possible\\.")
+    # no variation in right half
+    img_right <- img
+    img_right[, 6:10] <- 0
+    expect_warning(result <- img_symmetry(img_right, horizontal = FALSE), msg_vertical)
+    expect_identical(result, c(vertical = NA_real_))
 
+    # no variation in upper half (horizontal symmetry); vertical symmetry is computed
+    img_upper <- matrix(runif(100), nrow = 10, ncol = 10)
+    img_upper[1:5, ] <- 0
+    expect_warning(result <- img_symmetry(img_upper),
+                   "No variation in at least one image half\\. Computation of horizontal symmetry not possible\\. Returning NA\\.")
+    expect_false(is.na(result[["vertical"]]))
+    expect_true(is.na(result[["horizontal"]]))
+
+  # color image with a color channel without variation
+  imgRGB <- array(0, dim = c(20, 20, 3))
+  imgRGB[5:15, 3:9, 1] <- 1
+  expect_warning(result <- img_symmetry(imgRGB, horizontal = FALSE),
+                 "No variation in at least one image half of at least one color channel\\. Computation of vertical symmetry not possible\\. Returning NA\\.")
+  expect_identical(result, c(vertical = NA_real_))
+})
+
+
+test_that("img_symmetry ignores positions of the mirror axis without variation in an image half", {
+  set.seed(2787)
+  # no variation in the left image half only if the mirror axis is not shifted
+  img <- matrix(runif(50 * 50), nrow = 50, ncol = 50)
+  img[, 1:24] <- 0
+  expect_warning(result <- img_symmetry(img, horizontal = FALSE, shift_range = 0.1), NA)
+  expect_false(is.na(result))
 })
 
 
@@ -108,6 +134,10 @@ test_that("img_symmetry detects symmetry for inverted image", {
 test_that(".sym_mirror returns the absolute correlation of the image halves", {
   img <- matrix(c(1, 5, 2, 8, 3, 9, 4, 7, 6, 2, 9, 1), nrow = 2)
   expect_equal(.sym_mirror(img), abs(cor(as.vector(img[, 1:3]), as.vector(img[, 6:4]))))
+
+  # no variation in an image half
+  img[, 1:3] <- 0
+  expect_identical(.sym_mirror(img), NA_real_)
 })
 
 test_that("img_symmetry checks the options", {

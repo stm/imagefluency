@@ -19,6 +19,10 @@ NULL
 #'   grayscale and color images, the grayscale images are treated as color
 #'   images with three identical color channels (with a warning).
 #'
+#'   Typicality cannot be computed for an image without any variation (e.g., an
+#'   image with only one color). For such an image, the function returns
+#'   \code{NA} and throws a warning.
+#'
 #'   Rescaling of the images prior to computing the typicality scores can be
 #'   specified with the optional rescaling parameter (must be a numeric value).
 #'   Most users won't need any rescaling and can use the default (\code{rescale
@@ -181,6 +185,14 @@ img_typicality <- function(imglist, rescale = NULL){
     out <- .typ(imglist)
   }
 
+  # images without variation: typicality cannot be computed
+  if (anyNA(out)) {
+    warning(paste0("No variation in image ", paste(imgnames[is.na(out[, 1])], collapse = ", "),
+                   if (imgtype == "rgb") " (or in at least one of its color channels)" else "",
+                   ". Computation of typicality not possible for this image. Returning NA."),
+            call. = FALSE)
+  }
+
   rownames(out) <- imgnames
   return(out)
 }
@@ -199,8 +211,9 @@ img_typicality <- function(imglist, rescale = NULL){
   imglist <- matrix(unlist(imglist), ncol = length(imglist), byrow = FALSE)
   img_mean <- rowMeans(imglist)
   # (use = "pairwise.complete.obs" is considerably faster than the default;
-  # the images contain no missing values at this point)
-  output <- stats::cor(imglist, img_mean, use = "pairwise.complete.obs")
+  # the images contain no missing values at this point; images without
+  # variation result in NA)
+  output <- suppressWarnings(stats::cor(imglist, img_mean, use = "pairwise.complete.obs"))
   rownames(output) <- paste0("img", seq_len(nrow(output)))
   return(output)
 }

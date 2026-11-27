@@ -25,6 +25,14 @@ NULL
 #'   \code{shift_range}, which takes a numeric decimal as input. The default
 #'   \code{shift_range = 0.05} (i.e., 5\%).
 #'
+#'   Symmetry cannot be computed if one of the image halves has no variation
+#'   (e.g., an image half that has only one color; for color images, this
+#'   applies to each color channel). In this case, the function returns
+#'   \code{NA} for the respective symmetry and throws a warning. For color
+#'   images with a color channel that has no variation (e.g., an image that
+#'   only consists of black and red), consider converting the image into
+#'   grayscale first (see \code{\link{rgb2gray}}).
+#'
 #'   For color images, the default is that first a maximal symmetry score (as
 #'   explained above) is obtained per color channel (parameter \code{per_channel
 #'   = TRUE}). Subsequently, a weighted average between each color channel's
@@ -103,6 +111,14 @@ img_symmetry <- function(img, vertical = TRUE, horizontal = TRUE, ...) {
     out <- c(out, horizontal = .sym(rotate90(img), color = color, ...))
   }
 
+  # symmetry cannot be computed without variation in the image halves
+  for (direction in names(out)[is.na(out)]) {
+    warning(paste0("No variation in at least one image half",
+                   if (color) " of at least one color channel" else "",
+                   ". Computation of ", direction, " symmetry not possible. Returning NA."),
+            call. = FALSE)
+  }
+
   # return symmetry
   return(out)
 }
@@ -117,7 +133,8 @@ img_symmetry <- function(img, vertical = TRUE, horizontal = TRUE, ...) {
 #' @param per_channel logical. Channel-wise maximum symmetry?
 #' @param shift_range numeric. Percentage of axis shift.
 #'
-#' @return one numeric value as the symmetry
+#' @return one numeric value as the symmetry (\code{NA} if there is no
+#'   variation in the image halves)
 #' @keywords internal
 .sym <- function(img, color, per_channel = TRUE, shift_range = 0.05) {
 
@@ -137,11 +154,17 @@ img_symmetry <- function(img, vertical = TRUE, horizontal = TRUE, ...) {
   # symmetry shift range (default: 5%)
   xrange <- 0:floor(imgW * shift_range)
 
+  # maximal symmetry (positions of the mirror axis without variation in an
+  # image half are ignored)
+  max_sym <- function(x) {
+    if (all(is.na(x))) NA_real_ else max(x, na.rm = TRUE)
+  }
+
   if (color == FALSE) {
     # grayscale image
     #
     # find symmetries
-    return(max(.shift_axis(img, imgW, xrange)))
+    return(max_sym(.shift_axis(img, imgW, xrange)))
   } else {
     # colored image
     redChannel <- img[, , 1]
@@ -151,13 +174,13 @@ img_symmetry <- function(img, vertical = TRUE, horizontal = TRUE, ...) {
     #
     if (per_channel) {
       return(#
-        0.299 * max(.shift_axis(redChannel, imgW, xrange)) +
-          0.587 * max(.shift_axis(greenChannel, imgW, xrange)) +
-          0.114 * max(.shift_axis(blueChannel, imgW, xrange))
+        0.299 * max_sym(.shift_axis(redChannel, imgW, xrange)) +
+          0.587 * max_sym(.shift_axis(greenChannel, imgW, xrange)) +
+          0.114 * max_sym(.shift_axis(blueChannel, imgW, xrange))
       )
     } else {
       return(#
-        max(#
+        max_sym(#
           0.299 * .shift_axis(redChannel, imgW, xrange) +
             0.587 * .shift_axis(greenChannel, imgW, xrange) +
             0.114 * .shift_axis(blueChannel, imgW, xrange)
@@ -200,7 +223,8 @@ img_symmetry <- function(img, vertical = TRUE, horizontal = TRUE, ...) {
 #'
 #' @param img A matrix of numeric values or integer values.
 #'
-#' @return a numeric value between 0 and 1
+#' @return a numeric value between 0 and 1 (\code{NA} if there is no variation
+#'   in one of the image halves)
 #' @keywords internal
 .sym_mirror <- function(img) {
   ## -------------------------------
@@ -227,13 +251,9 @@ img_symmetry <- function(img, vertical = TRUE, horizontal = TRUE, ...) {
   dim(stimR) <- NULL
 
   # check whether sd in one of the halves is zero
-  if (stats::sd(stimL) == 0) {
-    stop("No variation in left image half. Computation not possible.", call. = FALSE)
-    # return(NA)
-  }
-  if (stats::sd(stimR) == 0) {
-    stop("No variation in right image half. Computation not possible.", call. = FALSE)
-    # return(NA)
+  # (computation not possible without variation)
+  if (stats::sd(stimL) == 0 || stats::sd(stimR) == 0) {
+    return(NA_real_)
   }
 
   # correlation of image halves

@@ -16,7 +16,8 @@
 \item{shift_range}{numeric. Percentage of axis shift.}
 }
 \value{
-one numeric value as the symmetry
+one numeric value as the symmetry (\code{NA} if there is no
+  variation in the image halves)
 }
 \description{
 Calculates the mirror symmetry of an
