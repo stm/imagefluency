@@ -38,8 +38,7 @@ Suggests:
     future,
     pbmcapply,
     tictoc,
-    dplyr,
-    collapse
+    dplyr
 Config/testthat/edition: 3
 Collate:
     'utils.R'

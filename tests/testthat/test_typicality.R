@@ -119,25 +119,20 @@ test_that("Different image sizes are resized using OpenImageR", {
                "Package \\'OpenImageR\\' is required but not installed on your system\\.")
 })
 
-test_that(".typ falls back to stats::cor when collapse is unavailable", {
+test_that(".typ returns the correlation with the mean image", {
   set.seed(2787)
   imgs <- replicate(
     3,
     matrix(runif(100, min = 0, max = 255), nrow = 10, ncol = 10),
     simplify = FALSE
   )
-  old_warning_opt <- getOption("imagefluency.warning.1.0.0")
-  on.exit(options("imagefluency.warning.1.0.0" = old_warning_opt), add = TRUE)
-  options("imagefluency.warning.1.0.0" = TRUE)
+  img_mean <- (imgs[[1]] + imgs[[2]] + imgs[[3]]) / 3
 
-  mockery::stub(.typ, ".pkg_avail", FALSE)
-
-  expect_message(
-    out <- .typ(imgs),
-    "As of v1\\.0\\.0"
-  )
-  expect_true(is.numeric(out))
-  expect_equal(length(out), 3)
+  out <- .typ(imgs)
+  expect_true(is.matrix(out))
+  expect_equal(dim(out), c(3, 1))
+  expect_equal(as.vector(out),
+               vapply(imgs, function(x) cor(as.vector(x), as.vector(img_mean)), numeric(1)))
 })
 
 test_that("images are resized to the smallest height and width", {

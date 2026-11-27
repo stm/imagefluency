@@ -259,21 +259,3 @@ rotate90 <- function(img, direction = "positive") {
   # normalize to [0, 1] (min-max)
   (img - rng[1]) / diff(rng)
 }
-
-
-#' @keywords internal
-.info_collapse <- function(){
-  if (getOption("imagefluency.warning.1.0.0", TRUE)) {
-    # transition message for 1.0.0
-    # message("Package 'collapse' not available. Using base R functions.")
-    message(paste0(
-            'As of v1.0.0, ', sQuote('imagefluency'),' uses the ', sQuote('collapse'),
-            ' package to speed up computations if available. We therefore recommend ',
-            'installing the ', sQuote('collapse'), ' package.\n',
-            'In future versions of ', sQuote('imagefluency'), ', ', sQuote('collapse'),
-            ' will be a required dependency.\n\n',
-            'This message is shown once per session and may be disabled by setting:\n',
-            'options("imagefluency.warning.1.0.0"=FALSE)'))
-    options("imagefluency.warning.1.0.0" = FALSE)
-  }
-}

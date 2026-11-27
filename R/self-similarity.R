@@ -231,23 +231,14 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".x"))
     rmatrix <- round(rmatrix)
   }
 
-  if (.pkg_avail("collapse")) {
-    # group FFT power values by rounded radius
-    dim(rmatrix) <- NULL
-    rmatrix <- rmatrix + 1  # make groups start at 1
-    dim(img_fft_shifted) <- NULL
-
-    # compute sums and counts per group using collapse::fsum
-    sums <- unname(collapse::fsum(img_fft_shifted, rmatrix))
-    counts <- unname(collapse::fsum(rep(1, length(img_fft_shifted)), rmatrix))
-    power_spec <- sums / counts
-    power_spec <- power_spec[seq(2, floor(min(xs, ys) / 2) + 1)]
-  } else {
-    .info_collapse()
-    # compute power spectrum
-    power_spec <- pracma::accumarray(as.vector(rmatrix) + 1, as.vector(img_fft_shifted)) / pracma::accumarray(as.vector(rmatrix) + 1, rep(1, length(as.vector(rmatrix))))
-    power_spec <- power_spec[seq(2, floor(min(xs,ys)/2) + 1)]
-  }
+  # compute power spectrum: mean of the FFT power values grouped by rounded
+  # radius (groups start at 1)
+  dim(rmatrix) <- NULL
+  rmatrix <- rmatrix + 1
+  dim(img_fft_shifted) <- NULL
+  power_sums <- rowsum(img_fft_shifted, rmatrix)
+  power_spec <- power_sums[, 1] / tabulate(rmatrix)[as.integer(rownames(power_sums))]
+  power_spec <- unname(power_spec[seq(2, floor(min(xs, ys) / 2) + 1)])
 
   # determine the frequency range for regression
   if (!full) {
@@ -267,13 +258,8 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".x"))
   Yt_log <- log(Yt)
 
   # linear regression on the log-log data
-  if (.pkg_avail("collapse")) {
-    regr <- collapse::flm(Yt_log ~ Xt_log, method = "lm")
-    slope <- regr[2]
-  } else {
-    regr <- unname(stats::coefficients(stats::lm(Yt_log ~ Xt_log)))
-    slope <- regr[2]
-  }
+  regr <- unname(stats::coefficients(stats::lm(Yt_log ~ Xt_log)))
+  slope <- regr[2]
   self_sim <- if (raw) slope else abs(slope + 2) * (-1)
 
   if (logplot) {

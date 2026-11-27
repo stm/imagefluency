@@ -165,13 +165,3 @@ test_that(".normalize_img handles edge cases and all normalization branches", {
   img_const_high <- matrix(300, nrow = 2, ncol = 2)
   expect_equal(.normalize_img(img_const_high), matrix(1, nrow = 2, ncol = 2))
 })
-
-test_that(".info_collapse displays transition message once per session option", {
-  old_warning_opt <- getOption("imagefluency.warning.1.0.0")
-  on.exit(options("imagefluency.warning.1.0.0" = old_warning_opt), add = TRUE)
-  options("imagefluency.warning.1.0.0" = TRUE)
-
-  expect_message(.info_collapse(), "As of v1\\.0\\.0")
-  expect_false(getOption("imagefluency.warning.1.0.0"))
-  expect_message(.info_collapse(), NA)
-})

@@ -169,13 +169,9 @@ img_typicality <- function(imglist, rescale = NULL){
 .typ <- function(imglist){
   imglist <- matrix(unlist(imglist), ncol = length(imglist), byrow = FALSE)
   img_mean <- rowMeans(imglist)
-  if (.pkg_avail("collapse")) {
-    output <- collapse::pwcor(imglist, img_mean)
-  } else {
-    output <- stats::cor(imglist, img_mean)
-    .info_collapse()
-  }
+  # (use = "pairwise.complete.obs" is considerably faster than the default;
+  # the images contain no missing values at this point)
+  output <- stats::cor(imglist, img_mean, use = "pairwise.complete.obs")
   rownames(output) <- paste0("img", seq_len(nrow(output)))
-  return(typicality = output)
+  return(output)
 }
-

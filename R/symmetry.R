@@ -237,12 +237,9 @@ img_symmetry <- function(img, vertical = TRUE, horizontal = TRUE, ...) {
   }
 
   # correlation of image halves
-  if (.pkg_avail("collapse")) {
-    corrLR <- collapse::pwcor(stimL, stimR)
-  } else {
-    corrLR <- stats::cor(stimL, stimR)
-    .info_collapse()
-  }
+  # (use = "pairwise.complete.obs" is considerably faster than the default;
+  # the image contains no missing values at this point)
+  corrLR <- stats::cor(stimL, stimR, use = "pairwise.complete.obs")
 
   # final symmetry: vertical (absolute correlation)
   return(abs(corrLR))
