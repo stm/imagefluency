@@ -1,5 +1,9 @@
 # imagefluency
 
+# imagefluency 1.1.0
+
+* fixed `img_self_similarity()` failing with `logplot = TRUE` when the `collapse` package is not installed
+
 # imagefluency 1.0.1
 
 * `run_imagefluency()` gains a `max_images` parameter to control the maximum number of images that can be uploaded in the Shiny app (default: 100).

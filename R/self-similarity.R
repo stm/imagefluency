@@ -281,8 +281,8 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".x"))
     regr <- collapse::flm(Yt_log ~ Xt_log, method = "lm")
     slope <- regr[2]
   } else {
-    regr <- stats::lm(Yt_log ~ Xt_log)
-    slope <- unname(stats::coefficients(regr)[2])
+    regr <- unname(stats::coefficients(stats::lm(Yt_log ~ Xt_log)))
+    slope <- regr[2]
   }
   self_sim <- if (raw) slope else abs(slope + 2) * (-1)
 

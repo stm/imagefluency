@@ -135,3 +135,25 @@ test_that(".selfsim falls back to base implementations when collapse is unavaila
   expect_true(is.list(out))
   expect_true(is.numeric(out$self_sim))
 })
+
+test_that("img_self_similarity logplot works when collapse is unavailable", {
+  set.seed(2787)
+  img <- matrix(runif(50 * 50, min = 0, max = 255), nrow = 50, ncol = 50)
+  old_warning_opt <- getOption("imagefluency.warning.1.0.0")
+  on.exit(options("imagefluency.warning.1.0.0" = old_warning_opt), add = TRUE)
+  options("imagefluency.warning.1.0.0" = FALSE)
+
+  selfsim_no_collapse <- .selfsim
+  mockery::stub(
+    selfsim_no_collapse,
+    ".pkg_avail",
+    function(pkg) {
+      if (identical(pkg, "collapse")) return(FALSE)
+      TRUE
+    }
+  )
+  mockery::stub(img_self_similarity, ".selfsim", selfsim_no_collapse)
+
+  expect_error(out_plot <- img_self_similarity(img, logplot = TRUE), NA)
+  expect_equal(out_plot, img_self_similarity(img, logplot = FALSE))
+})
