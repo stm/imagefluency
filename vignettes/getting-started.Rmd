@@ -306,6 +306,8 @@ See @MayerPACA2018 for details.
 
 The function further has two optional logical parameters: `vertical` and `horizontal` (both `TRUE` by default). If one of the parameters is set to `FALSE`, the vertical or horizontal symmetry is not computed, respectively. See the function's help file (i.e., `?img_symmetry`) for information about the additional options `shift_range` and `per_channel`.
 
+To speed up the computation, the best position of the mirror axis is located with a fast Fourier transform, and the symmetry score for this position is then computed directly as the correlation of the image halves. With the option `exact = TRUE`, the correlation is instead computed directly for every position of the mirror axis. This is considerably slower and only rarely leads to a (minimally) different result (see the function's help file).
+
 ```{r, eval=FALSE}
 # Example image with high vertical symmetry: rails
 rails <- img_read(system.file('example_images', 'rails.jpg', package = 'imagefluency'))

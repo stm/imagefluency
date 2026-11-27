@@ -4,7 +4,7 @@
 \alias{.sym}
 \title{.sym}
 \usage{
-.sym(img, color, per_channel = TRUE, shift_range = 0.05)
+.sym(img, color, per_channel = TRUE, shift_range = 0.05, exact = FALSE)
 }
 \arguments{
 \item{img}{A matrix of numeric values or integer values.}
@@ -14,6 +14,9 @@
 \item{per_channel}{logical. Channel-wise maximum symmetry?}
 
 \item{shift_range}{numeric. Percentage of axis shift.}
+
+\item{exact}{logical. Compute the correlation directly for every position
+of the mirror axis?}
 }
 \value{
 one numeric value as the symmetry (\code{NA} if there is no

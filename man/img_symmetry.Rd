@@ -4,7 +4,7 @@
 \alias{img_symmetry}
 \title{Image symmetry}
 \usage{
-img_symmetry(img, vertical = TRUE, horizontal = TRUE, ...)
+img_symmetry(img, vertical = TRUE, horizontal = TRUE, exact = FALSE, ...)
 }
 \arguments{
 \item{img}{An image in form of a matrix or array of numeric values. Use e.g.
@@ -15,6 +15,11 @@ TRUE)}
 
 \item{horizontal}{logical. Should the horizontal symmetry be computed?
 (default: TRUE)}
+
+\item{exact}{logical. Should the correlation be computed directly for every
+position of the mirror axis instead of locating the best position with a
+fast Fourier transform? This is considerably slower and only rarely leads
+to a (minimally) different result (see details). (default: FALSE)}
 
 \item{...}{Further options: \code{shift_range} to shift the mirror axis,
 \code{per_channel} to switch between a maximal per channel vs. per image
@@ -62,6 +67,23 @@ The function returns the vertical and horizontal mirror symmetry of
   can reverse this order by setting \code{per_channel = FALSE}. This results
   in first computing the weighted averages for each position of the mirror
   axis separately, and afterwards finding the maximal overall symmetry score.
+
+  To keep the computation fast, the best position of the mirror axis is
+  located with a fast Fourier transform (FFT), which yields the symmetry
+  values of all positions of the mirror axis at once. The symmetry score
+  for this best position is then computed directly as the correlation
+  between the two image halves. The result is the same as when the
+  correlation is computed directly for every position of the mirror axis,
+  unless the symmetry values of two positions are practically tied
+  (difference smaller than about 1e-10). In this rare case, the score might
+  differ by a correspondingly small amount. Setting \code{exact = TRUE}
+  computes the correlation directly for every position of the mirror axis
+  (the method used up to version 1.0.1), which avoids this at the expense of
+  speed (the computation takes several times longer; for large images, more
+  than ten times longer).
+
+  A perfectly symmetric image (i.e., the two image halves are identical
+  mirror images of each other) always receives a score of exactly 1.
 }
 \examples{
 # Example image with high vertical symmetry: rails
@@ -81,6 +103,10 @@ grid::grid.raster(bridge)
 #
 # get symmetry
 img_symmetry(bridge)
+
+# compute the correlation directly for every position of the mirror axis
+# (slower)
+img_symmetry(bridge, exact = TRUE)
 
 }
 \references{
