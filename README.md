@@ -1,4 +1,4 @@
-## imagefluency: Image Statistics Based on Processing Fluency <img src="man/figures/logo.png" align="right" alt="imagefluency logo" style="margin-top: 1rem; margin-left: 0.25rem;" />
+## imagefluency: Image Statistics Based on Processing Fluency <img src="man/figures/logo.png" align="right" alt="imagefluency logo" width="120" height="139" style="margin-top: 2.25rem; margin-left: 0.25rem;" />
 
 <!-- badges: start -->
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/)
