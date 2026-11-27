@@ -51,3 +51,47 @@ test_that("dashboard computes the metrics for the demo image", {
     expect_equal(rv$results$Symmetry, unname(img_symmetry(rails, horizontal = FALSE)))
   })
 })
+
+test_that("dashboard keeps results and images aligned if an image cannot be read", {
+  skip_if_not_installed("shiny")
+  broken <- tempfile(fileext = ".jpg")
+  on.exit(unlink(broken), add = TRUE)
+  writeLines("this is not an image", broken)
+  files <- upload(c(example_image("rails.jpg"), broken, example_image("sky.jpg"), example_image("trees.jpg")),
+                  c("rails.jpg", "broken.jpg", "sky.jpg", "trees.jpg"))
+
+  shiny::testServer(app_dir(), {
+    session$setInputs(file = files)
+    session$setInputs(select_all_metrics = FALSE, statistic = c("contr", "typ"))
+    session$setInputs(calcfluency = 1)
+
+    # one row per uploaded image, in the same order
+    expect_equal(rv$results$Image, rv$image_names)
+    expect_equal(is.na(rv$results$Contrast), c(FALSE, TRUE, FALSE, FALSE))
+    expect_equal(rv$results$Contrast[3], img_contrast(img_read(example_image("sky.jpg"))))
+
+    # typicality is computed for the readable images
+    typicality <- img_typicality(lapply(example_image(c("rails.jpg", "sky.jpg", "trees.jpg")), img_read))
+    expect_equal(rv$results$Typicality, c(typicality[1], NA, typicality[2:3]))
+  })
+})
+
+test_that("dashboard handles grayscale images", {
+  skip_if_not_installed("shiny")
+  gray_file <- tempfile(fileext = ".png")
+  on.exit(unlink(gray_file), add = TRUE)
+  gray <- rgb2gray(img_read(example_image("rails.jpg")))
+  magick::image_write(magick::image_read(array(gray, dim = c(dim(gray), 1))),
+                      path = gray_file, format = "png")
+  files <- upload(c(example_image("rails.jpg"), gray_file), c("rails.jpg", "rails_gray.png"))
+
+  shiny::testServer(app_dir(), {
+    session$setInputs(file = files)
+    session$setInputs(select_all_metrics = TRUE,
+                      statistic = c("contr", "selfsim", "simpl", "sym", "typ"))
+    session$setInputs(calcfluency = 1)
+
+    expect_equal(dim(rv$results), c(2, 6))
+    expect_false(anyNA(rv$results))
+  })
+})

@@ -786,7 +786,12 @@ shiny::shinyApp(
       current_step <- 0
 
       # Process images
-      results_list <- list()
+      # (one row per uploaded image, also for images that cannot be read, so
+      # that the rows of the results always match the uploaded images)
+      results_list <- vector("list", n_images)
+      img_list <- vector("list", n_images)
+      metric_cols <- c(contr = "Contrast", selfsim = "Self_Similarity",
+                       simpl = "Simplicity", sym = "Symmetry")
 
       for (i in seq_along(rv$image_paths)) {
         img_path <- rv$image_paths[i]
@@ -808,8 +813,8 @@ shiny::shinyApp(
             return(NULL)
           }
         )
-
-        if (is.null(img)) next
+        # keep the image for the typicality calculation (if selected)
+        if (!is.null(img) && "typ" %in% input$statistic) img_list[[i]] <- img
 
         result_row <- data.frame(Image = img_name, stringsAsFactors = FALSE)
 
@@ -818,26 +823,19 @@ shiny::shinyApp(
           if (metric == "typ") next
 
           current_step <- current_step + 1
-          progress$inc(1/total_steps)
+          progress$set(value = current_step / total_steps)
 
-          value <- tryCatch({
-            switch(metric,
+          value <- if (is.null(img)) NA_real_ else tryCatch({
+            suppressWarnings(as.numeric(switch(metric,
               "contr" = imagefluency::img_contrast(img),
-              "selfsim" = as.numeric(imagefluency::img_self_similarity(img)),
+              "selfsim" = imagefluency::img_self_similarity(img),
               "simpl" = imagefluency::img_simplicity(img),
               "sym" = imagefluency::img_symmetry(img, horizontal = FALSE),
-              NA
-            )
-          }, error = function(e) NA)
+              NA_real_
+            )))
+          }, error = function(e) NA_real_)
 
-          col_name <- switch(metric,
-            "contr" = "Contrast",
-            "selfsim" = "Self_Similarity",
-            "simpl" = "Simplicity",
-            "sym" = "Symmetry"
-          )
-
-          result_row[[col_name]] <- value
+          result_row[[metric_cols[[metric]]]] <- value
         }
 
         results_list[[i]] <- result_row
@@ -845,44 +843,41 @@ shiny::shinyApp(
 
       # Calculate typicality if selected and we have 2+ images
       if ("typ" %in% input$statistic) {
-        if (n_images >= 2) {
-          progress$set(message = "Calculating typicality...", value = 0.95)
+        typ_values <- rep(NA_real_, n_images)
+        readable <- which(!vapply(img_list, is.null, logical(1)))
 
-          # Read all images into list
-          img_list <- lapply(rv$image_paths, function(path) {
-            tryCatch(imagefluency::img_read(path), error = function(e) NULL)
-          })
-
-          # Remove any NULL images
-          img_list <- img_list[!sapply(img_list, is.null)]
-
-          if (length(img_list) >= 2) {
-            typ_scores <- tryCatch({
-              imagefluency::img_typicality(img_list)
-            }, error = function(e) {
-              shiny::showNotification(
-                paste("Error calculating typicality:", e$message),
-                type = "error"
-              )
-              return(NULL)
-            })
-
-            if (!is.null(typ_scores)) {
-              # Add typicality scores to results
-              for (i in seq_along(results_list)) {
-                results_list[[i]]$Typicality <- as.numeric(typ_scores[i])
-              }
-            }
-          }
-        } else {
+        if (n_images < 2) {
           shiny::showNotification(
             "Typicality requires at least 2 images. Skipping.",
             type = "warning"
           )
-          # Add NA column for typicality
-          for (i in seq_along(results_list)) {
-            results_list[[i]]$Typicality <- NA
+          typ_values <- NA  # displayed as "NA" (not as an error)
+        } else if (length(readable) < 2) {
+          shiny::showNotification(
+            "Typicality requires at least 2 readable images. Skipping.",
+            type = "warning"
+          )
+        } else {
+          progress$set(message = "Calculating typicality...", value = 0.95)
+
+          typ_scores <- tryCatch({
+            suppressWarnings(imagefluency::img_typicality(img_list[readable]))
+          }, error = function(e) {
+            shiny::showNotification(
+              paste("Error calculating typicality:", e$message),
+              type = "error"
+            )
+            return(NULL)
+          })
+
+          if (!is.null(typ_scores)) {
+            typ_values[readable] <- as.numeric(typ_scores)
           }
+        }
+
+        # Add typicality scores to results
+        for (i in seq_along(results_list)) {
+          results_list[[i]]$Typicality <- typ_values[i]
         }
       }
 
