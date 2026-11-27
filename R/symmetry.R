@@ -14,16 +14,20 @@ NULL
 #'
 #'   As the perceptual mirror axis is not necessarily exactly in the middle of a
 #'   picture, the function estimates in a first step several symmetry values
-#'   with different positions for the mirror axis. To this end, the mirror axis
-#'   is automatically shifted up to 5\% (default) of the image width to the left
-#'   and to the right (in the case of vertical symmetry; analogously for
-#'   horizontal symmetry). In the second step, the overall symmetry score is
-#'   computed as the maximum of the symmetry scores given the different mirror
-#'   axes. See Mayer & Landwehr (2018) for details.
+#'   with different positions for the mirror axis. To this end, up to 5\%
+#'   (default) of the image width is cut off on the left or on the right side of
+#'   the image (in the case of vertical symmetry; analogously for horizontal
+#'   symmetry), and the symmetry of the remaining image part is computed. As the
+#'   mirror axis is always in the middle of the remaining image part, cutting
+#'   off 5\% of the image width shifts the mirror axis by up to 2.5\% of the
+#'   image width to the right or to the left. In the second step, the overall
+#'   symmetry score is computed as the maximum of the symmetry scores given the
+#'   different mirror axes. See Mayer & Landwehr (2018) for details.
 #'
 #'   Advanced users can change the shift range with the optional parameter
-#'   \code{shift_range}, which takes a numeric decimal as input. The default
-#'   \code{shift_range = 0.05} (i.e., 5\%).
+#'   \code{shift_range}, which takes a numeric decimal between 0 and 1 as
+#'   input (the maximum share of the image width that is cut off). The default
+#'   is \code{shift_range = 0.05} (i.e., 5\%).
 #'
 #'   Symmetry cannot be computed if one of the image halves has no variation
 #'   (e.g., an image half that has only one color; for color images, this

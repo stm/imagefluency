@@ -299,7 +299,7 @@ The function `img_symmetry()` returns the vertical and horizontal symmetry of an
 
 Symmetry is computed as the correlation of corresponding image halves (i.e., the pairwise correlation of the corresponding pixels, cf. @Mayer2014).
 As the perceptual mirror axis is not necessarily exactly in the middle of a picture, the function detects in a first step the 'optimal' mirror axis by estimating several symmetry values with different positions for the mirror axis.
-To this end, the mirror axis is automatically shifted up to 5% of the image width to the left and to the right (in the case of vertical symmetry; analogously for horizontal symmetry).
+To this end, up to 5% of the image width is cut off on the left or on the right side of the image (in the case of vertical symmetry; analogously for horizontal symmetry), which shifts the mirror axis (i.e., the middle of the remaining image part) by up to 2.5% of the image width to the right or to the left.
 In the second step, the overall symmetry score is computed as the maximum of the symmetry scores given the different mirror axes.
 For color images, the weighted average between each color channel's values is computed.
 See @MayerPACA2018 for details.
