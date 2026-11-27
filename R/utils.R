@@ -141,44 +141,91 @@ rotate90 <- function(img, direction = "positive") {
 }
 
 
-#' .check_input
+#' .prepare_img
 #'
-#' \code{.check_input} is a helper function of the
-#' \code{imagefluency} package that checks whether the input is
-#' a matrix of numeric or integer values. Error messages are
-#' thrown if that is not the case.
+#' \code{.prepare_img} is a helper function of the \code{imagefluency} package
+#' that checks whether the input is a valid image and returns the image in a
+#' standard form. All \code{img_*} functions use this function so that the same
+#' input is handled in the same way by every function.
+#'
+#' The following is checked: (1) the input is a matrix or an array (not, e.g.,
+#' a vector or a data frame), (2) the values are numeric or integer, (3) the
+#' input is a matrix (grayscale image) or a 3-dimensional array with 1
+#' (grayscale), 2 (grayscale with alpha channel), 3 (color), or 4 (color with
+#' alpha channel) layers in the third dimension, and (4) the input contains no
+#' missing or non-finite values. An alpha channel is removed with a warning.
 #'
 #' @param img An object that needs to be checked.
-#' @param f_call The name of the function inside which the
-#'   \code{.check_input} is called.
 #'
-#' @return An error message if the check fails.
+#' @return A list with the elements \code{img} (a matrix for grayscale images
+#'   or a 3-dimensional array with 3 layers for color images) and \code{type}
+#'   (\code{"gray"} or \code{"rgb"}). An error is thrown if the check fails.
 #' @keywords internal
-.check_input <- function(img, f_call = NULL){
-  if (is.null(f_call)) stop("You have to specify a function for the f_call argument.", call. = FALSE)
-  if (f_call == "symmetry" | f_call == "contrast" | f_call == "self-similarity") {
-    # input not matrix or array?
-    if (is.null(dim(img))) {
-      stop("Invalid input (should be a matrix or a 3-dimensional array of numeric or integer values)", call. = FALSE)
+.prepare_img <- function(img){
+  # input not matrix or array?
+  if (is.null(dim(img)) || is.data.frame(img)) {
+    stop("Invalid input (should be a matrix or a 3-dimensional array of numeric or integer values)", call. = FALSE)
+  }
+  n_dim <- length(dim(img))
+
+  if (is.matrix(img)) {
+    # must be numeric or integer
+    if (!is.numeric(img)) {
+      stop("Input img has to be a matrix or array of *numeric* or *integer* values", call. = FALSE)
     }
-    # input a matrix?
-    if (is.matrix(img)) {
-      # must be numeric or integer
-      if (!(is.numeric(img) | is.integer(img))) {
-        stop("Input img has to be a matrix or array of *numeric* or *integer* values", call. = FALSE)
-      }
-      return("gray")
-    } else if (is.array(img)) {
-      # must be 3-dimensional array of integers or numeric values
-      if (!is.numeric(img) | length(dim(img)) != 3 | !(dim(img)[3] == 3 | dim(img)[3] == 4)) {
-        stop("Invalid array (should be a 3-dimensional array of numeric or integer values)", call. = FALSE)
-      }
-      if (dim(img)[3] == 4) {
-        warning("Array with 4 dimensions, presumably with alpha channel. 4th dimension is ignored ...", call. = FALSE)
-      }
-      return("rgb")
+    type <- "gray"
+  } else {
+    # must be 3-dimensional array of integers or numeric values
+    if (!is.array(img) || !is.numeric(img) || n_dim != 3 || !(dim(img)[3] %in% 1:4)) {
+      stop("Invalid array (should be a 3-dimensional array of numeric or integer values)", call. = FALSE)
     }
-  } else stop("unknown input to f_call argument", call. = FALSE)
+    n_layers <- dim(img)[3]
+    if (n_layers == 4) {
+      warning("Array with 4 dimensions, presumably with alpha channel. 4th dimension is ignored ...", call. = FALSE)
+      img <- img[, , 1:3, drop = FALSE]
+    }
+    if (n_layers == 2) {
+      warning("Array with 2 dimensions, presumably grayscale with alpha channel. 2nd dimension is ignored ...", call. = FALSE)
+    }
+    if (n_layers <= 2) {
+      # grayscale image stored as array: convert to matrix
+      img <- matrix(img[, , 1], nrow = dim(img)[1], ncol = dim(img)[2])
+      type <- "gray"
+    } else {
+      type <- "rgb"
+    }
+  }
+
+  # missing or non-finite values?
+  if (anyNA(img) || !all(is.finite(range(img)))) {
+    stop("Input image contains missing or non-finite values (NA, NaN, or Inf)", call. = FALSE)
+  }
+
+  return(list(img = img, type = type))
+}
+
+
+#' .check_flag
+#'
+#' \code{.check_flag} is a helper function of the \code{imagefluency} package
+#' that checks whether an optional parameter is a single logical value
+#' (\code{TRUE} or \code{FALSE}). If that is not the case, a warning is thrown
+#' and the default value is returned.
+#'
+#' @param x The value of the parameter.
+#' @param name The name of the parameter.
+#' @param default The default value that is used if the check fails.
+#' @param action Character string. End of the warning message.
+#'
+#' @return \code{x} if the check is passed, otherwise \code{default}.
+#' @keywords internal
+.check_flag <- function(x, name, default = FALSE,
+                        action = paste0("Automatically set to ", default, " ...")){
+  if (is.logical(x) && length(x) == 1 && !is.na(x)) {
+    return(x)
+  }
+  warning(paste0(name, " = '", paste(x, collapse = ", "), "' is not a logical value (TRUE/FALSE). ", action), call. = FALSE)
+  return(default)
 }
 
 

@@ -121,3 +121,25 @@ test_that(".sym_mirror falls back to stats::cor when collapse is unavailable", {
   expect_gte(symmetry, 0)
   expect_lte(symmetry, 1)
 })
+
+test_that("img_symmetry checks the options", {
+  img <- matrix(0, nrow = 20, ncol = 20)
+  img[5:15, 8:13] <- 1
+
+  msg_shift <- "'shift_range' has to be a single number between 0 and 1"
+  expect_error(img_symmetry(img, shift_range = -0.1), msg_shift)
+  expect_error(img_symmetry(img, shift_range = 1), msg_shift)
+  expect_error(img_symmetry(img, shift_range = "a"), msg_shift)
+  expect_error(img_symmetry(img, shift_range = c(0.05, 0.1)), msg_shift)
+
+  expect_warning(result <- img_symmetry(img, vertical = NA),
+                 "vertical = 'NA' is not a logical value \\(TRUE\\/FALSE\\)\\. Automatically set to TRUE \\.\\.\\.")
+  expect_equal(result, img_symmetry(img))
+  expect_warning(img_symmetry(img, horizontal = "no"),
+                 "horizontal = 'no' is not a logical value \\(TRUE\\/FALSE\\)\\. Automatically set to TRUE \\.\\.\\.")
+  expect_warning(img_symmetry(array(img, dim = c(20, 20, 3)), horizontal = FALSE, per_channel = "no"),
+                 "per_channel = 'no' is not a logical value \\(TRUE\\/FALSE\\)\\. Automatically set to TRUE \\.\\.\\.")
+
+  expect_error(img_symmetry(as.data.frame(img)),
+               "Invalid input \\(should be a matrix or a 3-dimensional array of numeric or integer values\\)")
+})

@@ -54,7 +54,9 @@ NULL
 img_contrast <- function(img){
 
   # check input
-  imgtype <- .check_input(img, f_call = "contrast")
+  img <- .prepare_img(img)
+  imgtype <- img$type
+  img <- img$img
 
   # compute and return contrast
   if (imgtype == "rgb") {

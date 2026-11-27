@@ -83,43 +83,68 @@ test_that("img_read loads demo image without error", {
 })
 
 
-test_that(".check_input gives results only for known function calls", {
+test_that(".prepare_img only accepts numeric matrices or 3-dimensional arrays", {
+  msg_input <- "Invalid input \\(should be a matrix or a 3-dimensional array of numeric or integer values\\)"
+  msg_array <- "Invalid array \\(should be a 3-dimensional array of numeric or integer values\\)"
+
+  expect_error(.prepare_img(1:10), msg_input)
+  expect_error(.prepare_img("image.jpg"), msg_input)
+  expect_error(.prepare_img(as.data.frame(matrix(1:4, 2))), msg_input)
+  expect_error(.prepare_img(matrix("foo", nrow = 2, ncol = 2)),
+               "Input img has to be a matrix or array of \\*numeric\\* or \\*integer\\* values")
+  expect_error(.prepare_img(array(1:24, dim = c(2, 2, 3, 2))), msg_array)
+  expect_error(.prepare_img(array(1:20, dim = c(2, 2, 5))), msg_array)
+  expect_error(.prepare_img(array("1", dim = c(2, 2, 3))), msg_array)
+})
+
+test_that(".prepare_img does not accept missing or non-finite values", {
+  msg <- "Input image contains missing or non-finite values \\(NA, NaN, or Inf\\)"
+  expect_error(.prepare_img(matrix(c(1, NA, 3, 4), 2)), msg)
+  expect_error(.prepare_img(matrix(c(1, NaN, 3, 4), 2)), msg)
+  expect_error(.prepare_img(array(c(1, Inf, 3), dim = c(2, 2, 3))), msg)
+})
+
+test_that(".prepare_img returns the image in a standard form", {
+  # grayscale: matrix
   img <- matrix(1:4, 2)
-  expect_error(
-    .check_input(img),
-    "You have to specify a function for the f_call argument\\."
-  )
-  expect_error(
-    .check_input(img, f_call = "foo"),
-    "unknown input to f_call argument"
-  )
+  expect_equal(.prepare_img(img), list(img = img, type = "gray"))
+  # grayscale: array with one layer
+  expect_equal(.prepare_img(array(1:4, dim = c(2, 2, 1))), list(img = img, type = "gray"))
+  # color
+  img <- array(1:12, dim = c(2, 2, 3))
+  expect_equal(.prepare_img(img), list(img = img, type = "rgb"))
 })
 
-
-
-test_that(".check_input returns error for non 3-dimensional arrays", {
-  img <- array(1:24, dim = c(2, 2, 3, 2))
-  expect_error(
-    .check_input(img, f_call = "contrast"),
-    "Invalid array \\(should be a 3-dimensional array of numeric or integer values\\)"
-  )
-})
-
-test_that(".check_input warns if presumed alpha channel is present", {
+test_that(".prepare_img removes a presumed alpha channel with a warning", {
+  # color with alpha channel
   img <- array(1:16, dim = c(2, 2, 4))
   expect_warning(
-    .check_input(img, f_call = "contrast"),
+    out <- .prepare_img(img),
     "Array with 4 dimensions, presumably with alpha channel\\. 4th dimension is ignored \\.\\.\\."
   )
+  expect_equal(out, list(img = img[, , 1:3], type = "rgb"))
+
+  # grayscale with alpha channel
+  img <- array(1:8, dim = c(2, 2, 2))
+  expect_warning(
+    out <- .prepare_img(img),
+    "Array with 2 dimensions, presumably grayscale with alpha channel\\. 2nd dimension is ignored \\.\\.\\."
+  )
+  expect_equal(out, list(img = matrix(1:4, 2), type = "gray"))
 })
 
+test_that(".check_flag returns the default with a warning for invalid values", {
+  expect_true(.check_flag(TRUE, "foo"))
+  expect_false(.check_flag(FALSE, "foo", default = TRUE))
 
-test_that(".check_input returns rgb for arrays", {
-  img <- array(c(matrix(1:4, 2), matrix(5:8, 2), matrix(9:12, 2)), dim = c(2, 2, 3))
-  expect_equal(
-    .check_input(img, f_call="contrast"),
-    "rgb"
-    )
+  expect_warning(out <- .check_flag("yes", "foo"),
+                 "foo = 'yes' is not a logical value \\(TRUE\\/FALSE\\)\\. Automatically set to FALSE \\.\\.\\.")
+  expect_false(out)
+  expect_warning(out <- .check_flag(NA, "foo", default = TRUE),
+                 "foo = 'NA' is not a logical value \\(TRUE\\/FALSE\\)\\. Automatically set to TRUE \\.\\.\\.")
+  expect_true(out)
+  expect_warning(.check_flag(c(TRUE, FALSE), "foo", action = "Skipping ..."),
+                 "foo = 'TRUE, FALSE' is not a logical value \\(TRUE\\/FALSE\\)\\. Skipping \\.\\.\\.")
 })
 
 test_that(".normalize_img handles edge cases and all normalization branches", {

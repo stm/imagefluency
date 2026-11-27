@@ -100,19 +100,12 @@ NULL
 img_self_similarity <- function(img, full = FALSE, logplot = FALSE, raw=FALSE){
 
   # check input
-  imgtype <- .check_input(img, f_call = "self-similarity")
-  if (!is.logical(full)) {
-    warning(paste0("full = '", full, "' is not a logical value (TRUE/FALSE). Automatically set to FALSE ..."), call. = FALSE)
-    full <- FALSE
-  }
-  if (!is.logical(logplot)) {
-    warning(paste0("logplot = '", logplot, "' is not a logical value (TRUE/FALSE). Skipping log-log plot ..."), call. = FALSE)
-    logplot <- FALSE
-  }
-  if (!is.logical(raw)) {
-    warning(paste0("raw = '", raw, "' is not a logical value (TRUE/FALSE). Automatically set to FALSE ..."), call. = FALSE)
-    raw <- FALSE
-  }
+  img <- .prepare_img(img)
+  imgtype <- img$type
+  img <- img$img
+  full <- .check_flag(full, "full", default = FALSE)
+  logplot <- .check_flag(logplot, "logplot", default = FALSE, action = "Skipping log-log plot ...")
+  raw <- .check_flag(raw, "raw", default = FALSE)
 
   # compute self-similarity
   if (imgtype == "rgb") {

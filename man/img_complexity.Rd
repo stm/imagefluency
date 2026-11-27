@@ -53,6 +53,11 @@ The function returns the visual complexity of an image. Visual
   the overall compressed image's file size is computed as the minimum of
   the original image's file size and the file size of the rotated image.
 
+  Pre-loaded images with pixel intensity values outside the range [0, 1]
+  are normalized: values between 0 and 255 are divided by 255, any other
+  range of values is rescaled to the range [0, 1]. An alpha channel is
+  ignored.
+
   As \code{R}'s built-in \code{bmp} device creates (a) indexed instead of
   True Color images and (b) files with different file sizes depending
   on the operating system, the function relies on the \code{magick} package

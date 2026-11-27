@@ -23,13 +23,13 @@ test_that("input is matrix or array, numeric or integer", {
   # not a matrix
   imgs[[2]] <- "I'm not a matrix"
   expect_error(img_typicality(imgs),
-               "List element 2 has to be a \\*matrix\\* or a 3-dimensional \\*array\\* of numeric or integer values")
+               "List element 2: Invalid input \\(should be a matrix or a 3-dimensional array of numeric or integer values\\)")
 
   # not numeric
   imgs[[2]] <- matrix(letters[round(stats::runif(100, min = 1, max = 26))]
                       , nrow = 10, ncol = 10)
   expect_error(img_typicality(imgs),
-               "List element 2 has to be a matrix or a 3-dimensional array of \\*numeric\\* or \\*integer\\* values")
+               "List element 2: Input img has to be a matrix or array of \\*numeric\\* or \\*integer\\* values")
 
   # construct RGB image
   imgs <- replicate(3, array(runif(100*3, min = 0, max = 255), dim = c(100, 100, 3)),
@@ -38,12 +38,12 @@ test_that("input is matrix or array, numeric or integer", {
   # RGB not numeric
   imgs[[2]] <- array("0", dim = c(100, 100, 3))
   expect_error(img_typicality(imgs),
-               "List element 2 is an invalid array \\(should be a 3-dimensional array of numeric or integer values\\)")
+               "List element 2: Invalid array \\(should be a 3-dimensional array of numeric or integer values\\)")
 
   # RGB wrong dimensions of array
-  imgs[[2]] <- array(0, dim = c(100, 100, 2))
+  imgs[[2]] <- array(0, dim = c(100, 100, 5))
   expect_error(img_typicality(imgs),
-               "List element 2 is an invalid array \\(should be a 3-dimensional array of numeric or integer values\\)")
+               "List element 2: Invalid array \\(should be a 3-dimensional array of numeric or integer values\\)")
 })
 
 
@@ -53,7 +53,7 @@ test_that("input presumably has alpha channel", {
                     simplify = FALSE)
   imgs[[2]] <- array(1:100, c(100, 100, 4))
   expect_warning(img_typicality(imgs),
-                 "List element 2 is an array with 4 dimensions, presumably with alpha channel\\. 4th dimension is ignored \\.\\.\\.")
+                 "List element 2: Array with 4 dimensions, presumably with alpha channel\\. 4th dimension is ignored \\.\\.\\.")
 })
 
 
@@ -168,4 +168,23 @@ test_that("rescale keeps the aspect ratio of the images", {
   imgs_rescaled <- lapply(imgs, OpenImageR::resizeImage,
                           width = 20, height = 30, method = "bilinear")
   expect_equal(img_typicality(imgs, rescale = 0.5), img_typicality(imgs_rescaled))
+})
+
+test_that("img_typicality checks the input list and the parameter rescale", {
+  set.seed(2787)
+  imgs <- replicate(3, matrix(runif(100), nrow = 10, ncol = 10), simplify = FALSE)
+
+  expect_error(img_typicality(as.data.frame(imgs[[1]])),
+               "Input has to be a \\*list\\* of image matrices")
+  expect_error(img_typicality(list(imgs[[1]], as.data.frame(imgs[[2]]))),
+               "List element 2: Invalid input")
+  imgs_na <- imgs
+  imgs_na[[3]][1, 1] <- NA
+  expect_error(img_typicality(imgs_na),
+               "List element 3: Input image contains missing or non-finite values")
+
+  expect_error(img_typicality(imgs, rescale = c(0.5, 0.5)),
+               "parameter 'rescale' must be a single positive number")
+  expect_error(img_typicality(imgs, rescale = -1),
+               "parameter 'rescale' must be a single positive number")
 })

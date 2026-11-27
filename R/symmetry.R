@@ -78,52 +78,33 @@ NULL
 img_symmetry <- function(img, vertical = TRUE, horizontal = TRUE, ...) {
 
   # check options
-  if (vertical == FALSE & horizontal == FALSE) {
+  vertical <- .check_flag(vertical, "vertical", default = TRUE)
+  horizontal <- .check_flag(horizontal, "horizontal", default = TRUE)
+  if (!vertical & !horizontal) {
     warning("Both optional arguments cannot be FALSE. Try setting option 'vertical' or 'horizontal' to TRUE. Returning NA.", call. = FALSE)
     return(NA)
   }
 
   # check input
-  imgtype <- .check_input(img, f_call = "symmetry")
+  img <- .prepare_img(img)
+  color <- img$type == "rgb"
+  img <- img$img
 
   # Note: the default is vertical symmetry.
   # If horizontal symmetry should also be computed, the image is simply rotated
   # by 90 degrees and then again "horizontal" symmetry is computed.
 
-  # compute and return symmetry
-  if (imgtype == "rgb") {
-    # colored image
-    #
-    # only vertical symmetry
-    if (!horizontal) {
-      return(c(vertical = .sym(img, color=TRUE, ...)))
-    }
-    # only horizontal symmetry
-    if (!vertical) {
-      return(c(horizontal = .sym(rotate90(img), color=TRUE, ...)))
-    }
-    # both horizontal and vertical symmetry
-    if (vertical & horizontal) {
-      return(c(vertical = c(.sym(img, color=TRUE, ...)),
-               horizontal = .sym(rotate90(img), color=TRUE, ...)))
-    }
-  } else {
-    # grayscale image
-    #
-    # only vertical symmetry
-    if (!horizontal) {
-      return(c(vertical = .sym(img, color=FALSE, ...)))
-    }
-    # only horizontal symmetry
-    if (!vertical) {
-      return(c(horizontal = .sym(rotate90(img), color=FALSE, ...)))
-    }
-    # both horizontal and vertical symmetry
-    if (vertical & horizontal) {
-      return(c(vertical = c(.sym(img, color=FALSE, ...)),
-               horizontal = .sym(rotate90(img), color=FALSE, ...)))
-    }
+  # compute symmetry
+  out <- c()
+  if (vertical) {
+    out <- c(out, vertical = .sym(img, color = color, ...))
   }
+  if (horizontal) {
+    out <- c(out, horizontal = .sym(rotate90(img), color = color, ...))
+  }
+
+  # return symmetry
+  return(out)
 }
 
 #' .sym
@@ -139,6 +120,13 @@ img_symmetry <- function(img, vertical = TRUE, horizontal = TRUE, ...) {
 #' @return one numeric value as the symmetry
 #' @keywords internal
 .sym <- function(img, color, per_channel = TRUE, shift_range = 0.05) {
+
+  # check options
+  if (!is.numeric(shift_range) || length(shift_range) != 1 || is.na(shift_range) ||
+      shift_range < 0 || shift_range >= 1) {
+    stop("'shift_range' has to be a single number between 0 and 1 (e.g., 0.05 for 5%)", call. = FALSE)
+  }
+  per_channel <- .check_flag(per_channel, "per_channel", default = TRUE)
 
   # image dimensions
   # imgH <- dim(img)[1] # image height

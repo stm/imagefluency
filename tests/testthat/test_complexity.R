@@ -1,8 +1,8 @@
 test_that("img_complexity handles only *numeric* matrices or arrays", {
   expect_error(img_complexity(matrix("foo", nrow = 10, ncol = 10)),
-               "Wrong type of input\\: has to be a filename \\(character string\\) or an image \\(3-dimensional array of numeric or integer values\\)")
+               "Wrong type of input\\: has to be a filename \\(character string\\) or an image \\(matrix or 3-dimensional array of numeric or integer values\\)")
   expect_error(img_complexity(1:10),
-               "Wrong type of input\\: has to be a filename \\(character string\\) or an image \\(3-dimensional array of numeric or integer values\\)")
+               "Wrong type of input\\: has to be a filename \\(character string\\) or an image \\(matrix or 3-dimensional array of numeric or integer values\\)")
 })
 
 
@@ -50,7 +50,28 @@ test_that("img_complexity throws error if image cannot be loaded",{
                "File not found or invalid path")
 
   expect_error(img_complexity(array(0, dim = c(10, 10, 5))),
-               "File not found or invalid path")
+               "Invalid array \\(should be a 3-dimensional array of numeric or integer values\\)")
+  expect_error(img_complexity(as.data.frame(matrix(0, 10, 10))),
+               "Wrong type of input")
+  expect_error(img_complexity(matrix(c(NA, 1:99), 10, 10)),
+               "Input image contains missing or non-finite values")
+})
+
+test_that("img_complexity checks the options algorithm and rotate", {
+  img <- array(0, dim = c(10, 10, 3))
+  expect_error(img_complexity(img, algorithm = c("zip", "png")),
+               "Unknown image compression algorithm requested")
+  expect_warning(img_complexity(img, rotate = NA),
+                 "rotate = 'NA' is not a logical value \\(TRUE\\/FALSE\\)\\. Skipping rotation \\.\\.\\.")
+})
+
+test_that("img_complexity ignores an alpha channel", {
+  set.seed(2787)
+  img <- array(runif(30 * 30 * 3), dim = c(30, 30, 3))
+  img_alpha <- array(c(img, runif(30 * 30)), dim = c(30, 30, 4))
+  expect_warning(result <- img_complexity(img_alpha),
+                 "Array with 4 dimensions, presumably with alpha channel\\. 4th dimension is ignored \\.\\.\\.")
+  expect_equal(result, img_complexity(img))
 })
 
 test_that("img_complexity works as intended (gives correct / consistent results)", {

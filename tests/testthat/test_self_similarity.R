@@ -157,3 +157,15 @@ test_that("img_self_similarity logplot works when collapse is unavailable", {
   expect_error(out_plot <- img_self_similarity(img, logplot = TRUE), NA)
   expect_equal(out_plot, img_self_similarity(img, logplot = FALSE))
 })
+
+test_that("img_self_similarity checks the input", {
+  img <- matrix(runif(50 * 50), nrow = 50, ncol = 50)
+  expect_error(img_self_similarity(as.data.frame(img)),
+               "Invalid input \\(should be a matrix or a 3-dimensional array of numeric or integer values\\)")
+  expect_warning(result <- img_self_similarity(img, full = NA),
+                 "full = 'NA' is not a logical value \\(TRUE\\/FALSE\\)\\. Automatically set to FALSE \\.\\.\\.")
+  expect_equal(result, img_self_similarity(img))
+  img[1, 1] <- NA
+  expect_error(img_self_similarity(img),
+               "Input image contains missing or non-finite values")
+})

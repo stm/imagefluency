@@ -31,6 +31,11 @@ NULL
 #'   the overall compressed image's file size is computed as the minimum of
 #'   the original image's file size and the file size of the rotated image.
 #'
+#'   Pre-loaded images with pixel intensity values outside the range [0, 1]
+#'   are normalized: values between 0 and 255 are divided by 255, any other
+#'   range of values is rescaled to the range [0, 1]. An alpha channel is
+#'   ignored.
+#'
 #'   As \code{R}'s built-in \code{bmp} device creates (a) indexed instead of
 #'   True Color images and (b) files with different file sizes depending
 #'   on the operating system, the function relies on the \code{magick} package
@@ -91,7 +96,7 @@ NULL
 #'   \code{\link{img_symmetry}}, \code{\link{img_typicality}}
 img_complexity <- function(imgfile, algorithm = "zip", rotate = FALSE){
 
-  if (!(algorithm %in% c("zip", "jpg", "gif", "png"))) {
+  if (!is.character(algorithm) || length(algorithm) != 1 || !(algorithm %in% c("zip", "jpg", "gif", "png"))) {
     stop("Unknown image compression algorithm requested. Use one of the following: zip, jpg, gif, png", call. = FALSE)
   }
 
@@ -107,19 +112,24 @@ img_complexity <- function(imgfile, algorithm = "zip", rotate = FALSE){
   }
 
   if (is.array(imgfile) & (is.numeric(imgfile) | is.integer(imgfile))) {
+    # check input (same check as in all other functions)
+    imgfile <- .prepare_img(imgfile)$img
     # normalize image if necessary
     if (min(imgfile) < 0 || max(imgfile) > 1) {
       imgfile <- .normalize_img(imgfile)
     }
   } else if (!is.character(imgfile) || is.array(imgfile)) {
-    stop("Wrong type of input: has to be a filename (character string) or an image (3-dimensional array of numeric or integer values)", call. = FALSE)
+    stop("Wrong type of input: has to be a filename (character string) or an image (matrix or 3-dimensional array of numeric or integer values)", call. = FALSE)
   }
 
   if (!.pkg_avail("magick")) stop("Package 'magick' not found but needed. Please install the package first.", call. = FALSE)
 
   img <- tryCatch(magick::image_read(imgfile), error = function(err) err)
   if (inherits(img, "error")) {
-    stop("File not found or invalid path", call. = FALSE)
+    if (is.character(imgfile)) {
+      stop("File not found or invalid path", call. = FALSE)
+    }
+    stop(paste0("Image could not be processed (", conditionMessage(img), ")"), call. = FALSE)
   }
 
   .compl(img, algorithm, rotate)
@@ -151,10 +161,7 @@ img_complexity <- function(imgfile, algorithm = "zip", rotate = FALSE){
   # compress file
   compressed_size <- .compress_and_get_size(img, flname, algorithm, use_existing_bmp = TRUE)
 
-  if (!is.logical(rotate)) {
-    warning(paste0("rotate = '", rotate, "' is not a logical value (TRUE/FALSE). Skipping rotation ..."), call. = FALSE)
-    rotate <- FALSE
-  }
+  rotate <- .check_flag(rotate, "rotate", default = FALSE, action = "Skipping rotation ...")
 
   if (rotate) {
     # rotate image, compress, and get size

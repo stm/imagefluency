@@ -72,7 +72,7 @@ img_typicality <- function(imglist, rescale = NULL){
   # check input
   #
   # input list?
-  if (!is.list(imglist)) {
+  if (!is.list(imglist) || is.data.frame(imglist)) {
     stop("Input has to be a *list* of image matrices", call. = FALSE)
   }
   #
@@ -82,29 +82,19 @@ img_typicality <- function(imglist, rescale = NULL){
     return(list(typicality = NA))
   }
   #
+  # check each image (same check as in all other functions)
   for (elmnt in seq_along(imglist)) {
-    # input not matrix or array?
-    if (is.null(dim( imglist[[elmnt]] ))) {
-      stop(paste("List element",elmnt,"has to be a *matrix* or a 3-dimensional *array* of numeric or integer values"))
-    }
-    # input a matrix?
-    if (is.matrix( imglist[[elmnt]] )) {
-      # must be numeric or integer
-      if (!(is.numeric( imglist[[elmnt]] ) | is.integer( imglist[[elmnt]] ))) {
-        stop(paste("List element",elmnt,"has to be a matrix or a 3-dimensional array of *numeric* or *integer* values"))
-      }
-      imgtype <- "gray"
-    } else if (is.array( imglist[[elmnt]] )) {
-      # must be 3-dimensional array of integers or numeric values
-      if (!is.numeric( imglist[[elmnt]] ) | length(dim( imglist[[elmnt]] )) != 3 | !(dim( imglist[[elmnt]] )[3] == 3 | dim( imglist[[elmnt]] )[3] == 4)) {
-        stop(paste("List element",elmnt,"is an invalid array (should be a 3-dimensional array of numeric or integer values)"))
-      }
-      if (dim( imglist[[elmnt]] )[3] == 4) {
-        warning(paste("List element",elmnt,"is an array with 4 dimensions, presumably with alpha channel. 4th dimension is ignored ..."), call. = FALSE)
-        imglist[[elmnt]] <- imglist[[elmnt]][,,-4]
-      }
-      imgtype <- "rgb"
-    }
+    checked <- withCallingHandlers(
+      tryCatch(.prepare_img(imglist[[elmnt]]),
+               error = function(err) {
+                 stop(paste0("List element ", elmnt, ": ", conditionMessage(err)), call. = FALSE)
+               }),
+      warning = function(wrn) {
+        warning(paste0("List element ", elmnt, ": ", conditionMessage(wrn)), call. = FALSE)
+        invokeRestart("muffleWarning")
+      })
+    imglist[[elmnt]] <- checked$img
+    imgtype <- checked$type
   }
 
   # resize images to the same image dimension
@@ -134,6 +124,9 @@ img_typicality <- function(imglist, rescale = NULL){
     if (!is.numeric(rescale)) {
       stop("parameter 'rescale' must be numeric", call. = FALSE)
     }
+    if (length(rescale) != 1 || is.na(rescale) || rescale <= 0) {
+      stop("parameter 'rescale' must be a single positive number", call. = FALSE)
+    }
     if (rescale != 1) {
       # Rescaling requires package "OpenImageR"
       if (.pkg_avail("OpenImageR")) {
@@ -142,8 +135,8 @@ img_typicality <- function(imglist, rescale = NULL){
         img_w <- dim(imglist[[1]])[2] # image width
         # note: OpenImageR's 'width' = rows, 'height' = columns (see above)
         imglist <- lapply(imglist, OpenImageR::resizeImage,
-                          width = rescale*img_h,
-                          height = rescale*img_w,
+                          width = max(1, rescale*img_h),
+                          height = max(1, rescale*img_w),
                           method = "bilinear")
       } else {
         stop("Package 'OpenImageR' is required for rescaling but not installed on your system.", call. = FALSE)
