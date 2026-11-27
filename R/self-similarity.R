@@ -28,7 +28,12 @@ NULL
 #'
 #'   By default, only the frequency range between 10 and 256 cycles per image is
 #'   used for interpolation. Computation for the full range can be set via the
-#'   parameter \code{full = TRUE}.
+#'   parameter \code{full = TRUE}. Note that the highest frequency of an image
+#'   is half of its (smaller) side length in pixels. For small images, the slope
+#'   is therefore estimated from only a few frequencies (e.g., only from the
+#'   frequencies 10 and 11 for an image with 22 pixels). The function throws a
+#'   warning if the slope is estimated from fewer than 10 frequencies (i.e., for
+#'   images with a side length of less than 38 pixels if \code{full = FALSE}).
 #'
 #'   Self-similarity cannot be computed for an image without any variation
 #'   (e.g., an image with only one color; for color images, this applies to
@@ -44,18 +49,38 @@ NULL
 #'   value which indicates self-similarity) by using the option \code{raw =
 #'   TRUE}.
 #'
+#'   The power spectrum is computed for a square image. By default, an image
+#'   that is not square is therefore first resized to a square (bilinear
+#'   resizing of the longer image side to the length of the shorter side, so
+#'   that the complete image content is kept). Note, however, that the
+#'   interpolation smooths the image: fine details are attenuated more strongly
+#'   than coarse structures, which makes the slope of the power spectrum
+#'   steeper. The size of this effect depends on the image size and on the
+#'   aspect ratio, and it is larger for small images. With \code{resize =
+#'   FALSE}, the image is not resized. Instead, the power spectrum is computed
+#'   from the complete, original image, and the same spatial frequencies (in
+#'   cycles per image, in both the horizontal and the vertical direction) that
+#'   the resized image would contain are analyzed. This also uses the complete
+#'   image content but avoids the smoothing. For square images, \code{resize}
+#'   has no effect.
+#'
 #'
 #' @param img An image in form of a matrix or array of numeric values,
 #'   preferably of square size. If the input is not square, bilinear resizing to
-#'   a square size is performed using the
-#'   \code{\link[OpenImageR:resizeImage]{OpenImageR}} package. Use e.g.
-#'   \code{\link{img_read}()} to read an image file into \code{R}.
+#'   a square size is performed by default using the
+#'   \code{\link[OpenImageR:resizeImage]{OpenImageR}} package (see parameter
+#'   \code{resize}). Use e.g. \code{\link{img_read}()} to read an image file
+#'   into \code{R}.
 #' @param full logical. Should the full frequency range be used for
 #'   interpolation? (default: \code{FALSE})
 #' @param logplot logical. Should the log-log power spectrum of the image be
 #'   plotted? (default: \code{FALSE})
 #' @param raw logical. Should the raw value of the regression slope be returned?
 #'   (default: \code{FALSE})
+#' @param resize logical. Should an image that is not square be resized to a
+#'   square before the power spectrum is computed? If \code{FALSE}, the power
+#'   spectrum is computed from the original image without resizing (see
+#'   details). (default: \code{TRUE})
 #'
 #' @return a numeric value (self-similarity)
 #' @export
@@ -99,10 +124,13 @@ NULL
 #' # get self-similarity
 #' img_self_similarity(office)
 #'
+#' # the example images are not square: get self-similarity without resizing
+#' img_self_similarity(office, resize = FALSE)
+#'
 #' @seealso \code{\link{img_read}}, \code{\link{img_contrast}},
 #'   \code{\link{img_complexity}}, \code{\link{img_simplicity}},
 #'   \code{\link{img_symmetry}}, \code{\link{img_typicality}}
-img_self_similarity <- function(img, full = FALSE, logplot = FALSE, raw=FALSE){
+img_self_similarity <- function(img, full = FALSE, logplot = FALSE, raw=FALSE, resize = TRUE){
 
   # check input
   img <- .prepare_img(img)
@@ -111,6 +139,7 @@ img_self_similarity <- function(img, full = FALSE, logplot = FALSE, raw=FALSE){
   full <- .check_flag(full, "full", default = FALSE)
   logplot <- .check_flag(logplot, "logplot", default = FALSE, action = "Skipping log-log plot ...")
   raw <- .check_flag(raw, "raw", default = FALSE)
+  resize <- .check_flag(resize, "resize", default = TRUE)
 
   # compute self-similarity
   if (imgtype == "rgb") {
@@ -119,14 +148,16 @@ img_self_similarity <- function(img, full = FALSE, logplot = FALSE, raw=FALSE){
     greenChannel <- img[, , 2]
     blueChannel <- img[, , 3]
     #
-    outR <- .selfsim(redChannel, full, raw, logplot)
-    outG <- .selfsim(greenChannel, full, raw, logplot)
-    outB <- .selfsim(blueChannel, full, raw, logplot)
+    outR <- .selfsim(redChannel, full, raw, logplot, resize)
+    outG <- .selfsim(greenChannel, full, raw, logplot, resize)
+    outB <- .selfsim(blueChannel, full, raw, logplot, resize)
 
     out <- 0.299 * outR$self_sim + 0.587 * outG$self_sim + 0.114 * outB$self_sim
+    n_freq <- outR$n_freq
   } else {
-    outGray <- .selfsim(img, full, raw, logplot)
+    outGray <- .selfsim(img, full, raw, logplot, resize)
     out <- outGray$self_sim
+    n_freq <- outGray$n_freq
   }
 
   # self-similarity cannot be computed without variation in the image
@@ -136,6 +167,14 @@ img_self_similarity <- function(img, full = FALSE, logplot = FALSE, raw=FALSE){
                    ". Computation of self-similarity not possible. Returning NA."),
             call. = FALSE)
     return(NA_real_)
+  }
+
+  # small images: slope is based on only a few spatial frequencies
+  if (n_freq < 10) {
+    warning(paste0("Small image: the slope of the log-log power spectrum is estimated from only ",
+                   n_freq, " spatial frequencies. The result might be unreliable",
+                   if (!full) " (consider using 'full = TRUE')" else "", "."),
+            call. = FALSE)
   }
 
   # plot
@@ -191,11 +230,16 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".x"))
 #' @param logplot logical. Should the log-log power spectrum of the image be
 #'   plotted?
 #' @param raw logical. Should the raw value of the regression slope be returned?
+#' @param resize logical. Should an image that is not square be resized to a
+#'   square? If \code{FALSE}, the power spectrum of the original image is
+#'   cropped to a square instead.
 #'
 #'
-#' @return a numeric value (self-similarity)
+#' @return a list with the self-similarity (\code{self_sim}), the number of
+#'   spatial frequencies used for the regression (\code{n_freq}), and, if
+#'   \code{logplot = TRUE}, the values for the log-log plot
 #' @keywords internal
-.selfsim <- function(img, full, raw, logplot){
+.selfsim <- function(img, full, raw, logplot, resize = TRUE){
   # check image dimensions
   if (min(dim(img)) < 22) {
     stop(paste0("Image has to be at least 22 pixels in each dimension. Input image has ",
@@ -207,16 +251,20 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".x"))
 
   # no variation in the image: computation not possible
   if (min(img) == max(img)) {
-    return(list(self_sim = NA_real_))
+    return(list(self_sim = NA_real_, n_freq = NA_integer_))
   }
 
-  # ensure the image is square; if not, resize using OpenImageR
+  # ensure the image is square; if not, resize using OpenImageR (default) or
+  # keep the image as is and crop its power spectrum to a square instead
+  crop_spectrum <- FALSE
   if (xs != ys) {
-    if (.pkg_avail("OpenImageR")) {
-      square_dim <- min(xs, ys)
-      if (square_dim %% 2 == 1) { # odd size
-        square_dim <- square_dim - 1
-      }
+    square_dim <- min(xs, ys)
+    if (square_dim %% 2 == 1) { # odd size
+      square_dim <- square_dim - 1
+    }
+    if (!resize) {
+      crop_spectrum <- TRUE # see below
+    } else if (.pkg_avail("OpenImageR")) {
       img <- OpenImageR::resizeImage(img, width = square_dim,
                                      height = square_dim,
                                      method = "bilinear")
@@ -232,6 +280,17 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".x"))
   img_fft <- stats::fft(img)
   img_fft_shifted <- pracma::circshift(img_fft, floor(dim(img_fft)/2))
   img_fft_shifted <- abs(img_fft_shifted)^2
+
+  if (crop_spectrum) {
+    # keep the central square of the power spectrum, i.e., the spatial
+    # frequencies from -square_dim/2 to square_dim/2 - 1 cycles per image in
+    # both directions (the zero frequency is at position floor(n/2) + 1)
+    keep <- seq(-square_dim/2, square_dim/2 - 1)
+    img_fft_shifted <- img_fft_shifted[floor(xs/2) + 1 + keep,
+                                       floor(ys/2) + 1 + keep]
+    xs <- square_dim
+    ys <- square_dim
+  }
 
   # generate frequency grids
   f2 <- seq(-xs/2, xs/2 - 1)
@@ -261,16 +320,16 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".x"))
 
   # determine the frequency range for regression
   if (!full) {
-    if (min(dim(img))/2 < 256) {
-      lmrange <- c( 10, floor( min(dim(img)) / 2 ) )
+    if (min(xs, ys)/2 < 256) {
+      lmrange <- c( 10, floor( min(xs, ys) / 2 ) )
     } else {
       lmrange <- c( 10, 256 )
     }
   } else {
-    lmrange <- c( 1, floor( min(dim(img)) / 2 ) )
+    lmrange <- c( 1, floor( min(xs, ys) / 2 ) )
   }
 
-  spat_freq <-  seq( 1, floor( min(dim(img)) / 2 ) )
+  spat_freq <-  seq( 1, floor( min(xs, ys) / 2 ) )
   Xt <- spat_freq[seq(lmrange[1], lmrange[2])]
   Xt_log <- log(Xt)
   Yt <- power_spec[seq(lmrange[1], lmrange[2])]
@@ -278,7 +337,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".x"))
 
   # no variation in the image: computation not possible
   if (!all(is.finite(Yt_log))) {
-    return(list(self_sim = NA_real_))
+    return(list(self_sim = NA_real_, n_freq = length(Xt)))
   }
 
   # linear regression on the log-log data
@@ -290,9 +349,10 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".x"))
     fitted_vals <- cbind(1, Xt_log) %*% regr
     coord1 <- unname(c(lmrange[1], exp(fitted_vals[1])))
     coord2 <- unname(c(lmrange[2], exp(utils::tail(fitted_vals, 1))))
-    return(list(self_sim = self_sim, xvals = spat_freq, yvals = power_spec,
+    return(list(self_sim = self_sim, n_freq = length(Xt),
+                xvals = spat_freq, yvals = power_spec,
                 coord1 = coord1, coord2 = coord2))
   } else {
-    return(list(self_sim = self_sim))
+    return(list(self_sim = self_sim, n_freq = length(Xt)))
   }
 }

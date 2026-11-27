@@ -258,7 +258,7 @@ The value for self-similarity that is returned by the function is calculated as 
 That is, the measure reaches its maximum value of 0 for a slope of $-2$, and any deviation from $-2$ results in negative values that are more negative the higher the deviation from $-2$.
 Thus, the range of the self-similarity scores is $-\infty$ to $0$. For color images, the weighted average between each color channel's values is computed.
 
-It is possible to get the raw regression slope (instead of the transformed value which indicates self-similarity) by using the option `raw = TRUE`. More options include the possibility to plot the log-log power spectrum (`logplot = TRUE`) and to base the computation of the slope on the full frequency spectrum (`full = TRUE`). See the function's help file for details (i.e., `?img_self_similarity`).
+It is possible to get the raw regression slope (instead of the transformed value which indicates self-similarity) by using the option `raw = TRUE`. More options include the possibility to plot the log-log power spectrum (`logplot = TRUE`) and to base the computation of the slope on the full frequency spectrum (`full = TRUE`). Images that are not square are by default resized to a square before the power spectrum is computed; with `resize = FALSE`, the power spectrum is computed from the original image without resizing. See the function's help file for details (i.e., `?img_self_similarity`).
 
 
 ```{r, eval=FALSE}

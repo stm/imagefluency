@@ -136,3 +136,67 @@ test_that("img_self_similarity returns NA with a warning for images without vari
                  "No variation in the image or in at least one color channel\\. Computation of self-similarity not possible\\. Returning NA\\.")
   expect_identical(result, NA_real_)
 })
+
+test_that("img_self_similarity warns if resize is not a logical value", {
+  set.seed(2787)
+  img <- matrix(runif(50 * 60, min = 0, max = 255), nrow = 50, ncol = 60)
+  expect_warning(result <- img_self_similarity(img, resize = "no"),
+                 "resize = 'no' is not a logical value \\(TRUE\\/FALSE\\)\\. Automatically set to TRUE \\.\\.\\.")
+  expect_equal(result, img_self_similarity(img))
+})
+
+test_that("resize = FALSE has no effect for square images", {
+  set.seed(2787)
+  img <- matrix(runif(50 * 50, min = 0, max = 255), nrow = 50, ncol = 50)
+  expect_identical(img_self_similarity(img, resize = FALSE), img_self_similarity(img))
+
+  imgRGB <- array(runif(49 * 49 * 3, min = 0, max = 255), dim = c(49, 49, 3))
+  expect_identical(img_self_similarity(imgRGB, resize = FALSE), img_self_similarity(imgRGB))
+})
+
+test_that("resize = FALSE analyzes non-square images without resizing", {
+  # image with a known slope of the log-log power spectrum of -2
+  set.seed(2787)
+  n <- 256
+  freq <- c(0:(n / 2), -(n / 2 - 1):-1)
+  radius <- sqrt(outer(freq^2, freq^2, "+"))
+  radius[1, 1] <- 1
+  phase <- matrix(runif(n * n, min = 0, max = 2 * pi), nrow = n, ncol = n)
+  img <- Re(stats::fft(radius^(-1) * exp(1i * phase), inverse = TRUE))
+
+  # landscape, portrait, and odd image sizes
+  img_landscape <- img[1:120, 1:180]
+  expect_equal(img_self_similarity(img_landscape, raw = TRUE, resize = FALSE), -2,
+               tolerance = 0.05)
+  expect_equal(img_self_similarity(t(img_landscape), raw = TRUE, resize = FALSE), -2,
+               tolerance = 0.05)
+  expect_equal(img_self_similarity(img[1:121, 1:179], raw = TRUE, resize = FALSE), -2,
+               tolerance = 0.05)
+
+  # resizing makes the slope steeper
+  expect_lt(img_self_similarity(img_landscape, raw = TRUE),
+            img_self_similarity(img_landscape, raw = TRUE, resize = FALSE))
+
+  # OpenImageR is not needed
+  mockery::stub(.selfsim, ".pkg_avail", function(pkg) !identical(pkg, "OpenImageR") && requireNamespace(pkg, quietly = TRUE))
+  expect_error(.selfsim(img_landscape, full = FALSE, raw = TRUE, logplot = FALSE, resize = FALSE), NA)
+
+  # log-log plot and color images work as well
+  grDevices::pdf(NULL)
+  on.exit(grDevices::dev.off(), add = TRUE)
+  expect_error(img_self_similarity(img_landscape, logplot = TRUE, resize = FALSE), NA)
+  imgRGB <- array(img_landscape, dim = c(120, 180, 3))
+  expect_equal(img_self_similarity(imgRGB, raw = TRUE, resize = FALSE),
+               img_self_similarity(img_landscape, raw = TRUE, resize = FALSE))
+})
+
+test_that("img_self_similarity warns if the slope is based on only a few frequencies", {
+  set.seed(2787)
+  img <- matrix(runif(22 * 22), nrow = 22, ncol = 22)
+  expect_warning(img_self_similarity(img),
+                 "Small image: the slope of the log-log power spectrum is estimated from only 2 spatial frequencies\\. The result might be unreliable \\(consider using 'full = TRUE'\\)\\.")
+  expect_warning(img_self_similarity(img, full = TRUE), NA)
+
+  img <- matrix(runif(38 * 38), nrow = 38, ncol = 38)
+  expect_warning(img_self_similarity(img), NA)
+})

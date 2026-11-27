@@ -4,14 +4,21 @@
 \alias{img_self_similarity}
 \title{Image self-similarity}
 \usage{
-img_self_similarity(img, full = FALSE, logplot = FALSE, raw = FALSE)
+img_self_similarity(
+  img,
+  full = FALSE,
+  logplot = FALSE,
+  raw = FALSE,
+  resize = TRUE
+)
 }
 \arguments{
 \item{img}{An image in form of a matrix or array of numeric values,
 preferably of square size. If the input is not square, bilinear resizing to
-a square size is performed using the
-\code{\link[OpenImageR:resizeImage]{OpenImageR}} package. Use e.g.
-\code{\link{img_read}()} to read an image file into \code{R}.}
+a square size is performed by default using the
+\code{\link[OpenImageR:resizeImage]{OpenImageR}} package (see parameter
+\code{resize}). Use e.g. \code{\link{img_read}()} to read an image file
+into \code{R}.}
 
 \item{full}{logical. Should the full frequency range be used for
 interpolation? (default: \code{FALSE})}
@@ -21,6 +28,11 @@ plotted? (default: \code{FALSE})}
 
 \item{raw}{logical. Should the raw value of the regression slope be returned?
 (default: \code{FALSE})}
+
+\item{resize}{logical. Should an image that is not square be resized to a
+square before the power spectrum is computed? If \code{FALSE}, the power
+spectrum is computed from the original image without resizing (see
+details). (default: \code{TRUE})}
 }
 \value{
 a numeric value (self-similarity)
@@ -45,7 +57,12 @@ The function takes a (square) array or matrix of numeric or integer
 
   By default, only the frequency range between 10 and 256 cycles per image is
   used for interpolation. Computation for the full range can be set via the
-  parameter \code{full = TRUE}.
+  parameter \code{full = TRUE}. Note that the highest frequency of an image
+  is half of its (smaller) side length in pixels. For small images, the slope
+  is therefore estimated from only a few frequencies (e.g., only from the
+  frequencies 10 and 11 for an image with 22 pixels). The function throws a
+  warning if the slope is estimated from fewer than 10 frequencies (i.e., for
+  images with a side length of less than 38 pixels if \code{full = FALSE}).
 
   Self-similarity cannot be computed for an image without any variation
   (e.g., an image with only one color; for color images, this applies to
@@ -60,6 +77,21 @@ The function takes a (square) array or matrix of numeric or integer
   It is possible to get the raw regression slope (instead of the transformed
   value which indicates self-similarity) by using the option \code{raw =
   TRUE}.
+
+  The power spectrum is computed for a square image. By default, an image
+  that is not square is therefore first resized to a square (bilinear
+  resizing of the longer image side to the length of the shorter side, so
+  that the complete image content is kept). Note, however, that the
+  interpolation smooths the image: fine details are attenuated more strongly
+  than coarse structures, which makes the slope of the power spectrum
+  steeper. The size of this effect depends on the image size and on the
+  aspect ratio, and it is larger for small images. With \code{resize =
+  FALSE}, the image is not resized. Instead, the power spectrum is computed
+  from the complete, original image, and the same spatial frequencies (in
+  cycles per image, in both the horizontal and the vertical direction) that
+  the resized image would contain are analyzed. This also uses the complete
+  image content but avoids the smoothing. For square images, \code{resize}
+  has no effect.
 }
 \note{
 The function is inspired by Matlab's sfPlot (by Diederick C. Niehorster).
@@ -82,6 +114,9 @@ grid::grid.raster(office)
 #
 # get self-similarity
 img_self_similarity(office)
+
+# the example images are not square: get self-similarity without resizing
+img_self_similarity(office, resize = FALSE)
 
 }
 \references{
