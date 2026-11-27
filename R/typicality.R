@@ -120,8 +120,10 @@ img_typicality <- function(imglist, rescale = NULL){
   if (!(all(dims[-3, ] == c(minH, minW)))) {
     # Resizing requires package "OpenImageR"
     if (.pkg_avail("OpenImageR")) {
+      # note: in OpenImageR, 'width' = number of rows and 'height' = number of
+      # columns, i.e., the opposite of the image's width and height
       imglist <- lapply(imglist, OpenImageR::resizeImage,
-                                  width = minW, height = minH, method = "bilinear")
+                                  width = minH, height = minW, method = "bilinear")
     } else {
       stop("Package 'OpenImageR' is required but not installed on your system.", call. = FALSE)
     }
@@ -138,9 +140,10 @@ img_typicality <- function(imglist, rescale = NULL){
         # image dimensions of first element (assumes the same for all elements)
         img_h <- dim(imglist[[1]])[1] # image height
         img_w <- dim(imglist[[1]])[2] # image width
+        # note: OpenImageR's 'width' = rows, 'height' = columns (see above)
         imglist <- lapply(imglist, OpenImageR::resizeImage,
-                          width = rescale*img_w,
-                          height = rescale*img_h,
+                          width = rescale*img_h,
+                          height = rescale*img_w,
                           method = "bilinear")
       } else {
         stop("Package 'OpenImageR' is required for rescaling but not installed on your system.", call. = FALSE)

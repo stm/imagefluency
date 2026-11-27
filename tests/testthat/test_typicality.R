@@ -139,3 +139,33 @@ test_that(".typ falls back to stats::cor when collapse is unavailable", {
   expect_true(is.numeric(out))
   expect_equal(length(out), 3)
 })
+
+test_that("images are resized to the smallest height and width", {
+  set.seed(2787)
+  # non-square images with different image sizes
+  imgs <- list(matrix(runif(40 * 60), nrow = 40, ncol = 60),
+               matrix(runif(50 * 80), nrow = 50, ncol = 80),
+               matrix(runif(40 * 60), nrow = 40, ncol = 60))
+  # resized by hand to height (rows) = 40 and width (columns) = 60
+  # (OpenImageR's 'width' is the number of rows, 'height' the number of columns)
+  imgs_resized <- lapply(imgs, OpenImageR::resizeImage,
+                         width = 40, height = 60, method = "bilinear")
+  expect_equal(dim(imgs_resized[[2]]), c(40, 60))
+  expect_equal(img_typicality(imgs), img_typicality(imgs_resized))
+
+  # same for color images
+  imgsRGB <- list(array(runif(40 * 60 * 3), dim = c(40, 60, 3)),
+                  array(runif(50 * 80 * 3), dim = c(50, 80, 3)))
+  imgsRGB_resized <- lapply(imgsRGB, OpenImageR::resizeImage,
+                            width = 40, height = 60, method = "bilinear")
+  expect_equal(img_typicality(imgsRGB), img_typicality(imgsRGB_resized))
+})
+
+test_that("rescale keeps the aspect ratio of the images", {
+  set.seed(2787)
+  imgs <- replicate(3, matrix(runif(40 * 60), nrow = 40, ncol = 60), simplify = FALSE)
+  # rescaled by hand to height (rows) = 20 and width (columns) = 30
+  imgs_rescaled <- lapply(imgs, OpenImageR::resizeImage,
+                          width = 20, height = 30, method = "bilinear")
+  expect_equal(img_typicality(imgs, rescale = 0.5), img_typicality(imgs_rescaled))
+})
