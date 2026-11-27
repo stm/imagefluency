@@ -110,25 +110,28 @@ rotate90 <- function(img, direction = "positive") {
     width <- dim(A)[2] # ncols / width
     A <- t(A) # transpose matrix
     if (dir == "positive" | dir == "counterclockwise") {
-      return(A[width:1, ]) # flip matrix rows
+      return(A[width:1, , drop = FALSE]) # flip matrix rows
     }
     if (dir == "negative" | dir == "clockwise") {
-      return(A[, height:1]) # flip matrix columns
+      return(A[, height:1, drop = FALSE]) # flip matrix columns
     }
   }
   #
-  if (!(direction == "positive" | direction == "counterclockwise" | direction == "negative" | direction == "clockwise")) {
-    stop(paste0("'",direction,"' is an unknown input to parameter 'direction'. Try 'direction = positive' or 'direction = negative'."))
+  if (length(direction) != 1 || !(direction %in% c("positive", "counterclockwise", "negative", "clockwise"))) {
+    stop(paste0("'", paste(direction, collapse = ", "), "' is an unknown input to parameter 'direction'. Try 'direction = positive' or 'direction = negative'."))
   }
   if (inherits(img, "matrix")) {
     return(rot90(img, direction))
   } else if (inherits(img, "array")) {
+    if (length(dim(img)) != 3) {
+      stop("Unknown input (has to be a matrix or a 3-dimensional array)", call. = FALSE)
+    }
     # create array with same number of arrays but flipped dimensions
     out <- array(NA, dim = c(dim(img)[2], dim(img)[1], dim(img)[3]))
     #
     for (i in seq_len( dim(img)[3] )) {
       # for each array dimension
-      out[, , i] <- rot90(img[, , i], direction)
+      out[, , i] <- rot90(matrix(img[, , i], nrow = dim(img)[1]), direction)
     }
     return(out)
   }

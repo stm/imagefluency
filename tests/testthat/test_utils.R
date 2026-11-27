@@ -61,6 +61,20 @@ test_that("rotate90 correctly rotates clockwise and counterclockwise", {
     , dim = c(2, 2, 3)))
 })
 
+test_that("rotate90 keeps the dimensions of images with one row or column", {
+  expect_equal(rotate90(matrix(1:5, ncol = 1)), matrix(1:5, nrow = 1))
+  expect_equal(rotate90(matrix(1:5, nrow = 1)), matrix(5:1, ncol = 1))
+  expect_equal(rotate90(matrix(1:5, nrow = 1), direction = "negative"), matrix(1:5, ncol = 1))
+  expect_equal(dim(rotate90(array(1:6, dim = c(1, 2, 3)))), c(2, 1, 3))
+})
+
+test_that("rotate90 only handles 3-dimensional arrays and a single direction", {
+  expect_error(rotate90(array(1:16, dim = c(2, 2, 2, 2))),
+               "Unknown input \\(has to be a matrix or a 3-dimensional array\\)")
+  expect_error(rotate90(matrix(1:4, 2), direction = c("positive", "negative")),
+               "'positive, negative' is an unknown input to parameter 'direction'")
+})
+
 test_that("img_read loads demo image without error", {
   expect_error({
     path <- system.file("example_images", "rails.jpg", package = "imagefluency")
