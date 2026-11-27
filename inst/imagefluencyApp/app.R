@@ -14,10 +14,6 @@ if (!requireNamespace("bslib", quietly = TRUE)) {
 
 use_bslib <- requireNamespace("bslib", quietly = TRUE)
 
-if (use_bslib) {
-  library(bslib)
-}
-
 # Metric descriptions
 metric_info <- list(
   contrast = list(
@@ -807,7 +803,7 @@ shiny::shinyApp(
         )
 
         img <- tryCatch(
-          img_read(img_path),
+          imagefluency::img_read(img_path),
           error = function(e) {
             shiny::showNotification(
               sprintf("Error reading %s", img_name),
@@ -830,10 +826,10 @@ shiny::shinyApp(
 
           value <- tryCatch({
             switch(metric,
-              "contr" = img_contrast(img),
-              "selfsim" = as.numeric(img_self_similarity(img)),
-              "simpl" = img_simplicity(img),
-              "sym" = img_symmetry(img, horizontal = FALSE),
+              "contr" = imagefluency::img_contrast(img),
+              "selfsim" = as.numeric(imagefluency::img_self_similarity(img)),
+              "simpl" = imagefluency::img_simplicity(img),
+              "sym" = imagefluency::img_symmetry(img, horizontal = FALSE),
               NA
             )
           }, error = function(e) NA)
@@ -858,7 +854,7 @@ shiny::shinyApp(
 
           # Read all images into list
           img_list <- lapply(rv$image_paths, function(path) {
-            tryCatch(img_read(path), error = function(e) NULL)
+            tryCatch(imagefluency::img_read(path), error = function(e) NULL)
           })
 
           # Remove any NULL images
@@ -866,7 +862,7 @@ shiny::shinyApp(
 
           if (length(img_list) >= 2) {
             typ_scores <- tryCatch({
-              img_typicality(img_list)
+              imagefluency::img_typicality(img_list)
             }, error = function(e) {
               shiny::showNotification(
                 paste("Error calculating typicality:", e$message),
@@ -991,7 +987,7 @@ shiny::shinyApp(
       },
       content = function(file) {
         shiny::req(rv$results)
-        write.csv(rv$results, file, row.names = FALSE)
+        utils::write.csv(rv$results, file, row.names = FALSE)
       }
     )
 
