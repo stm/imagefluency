@@ -126,12 +126,12 @@ You can install the current stable version from CRAN.
 install.packages('imagefluency')
 ```
 
-To download the latest development version from GitHub, use the `install_github` function of the `remotes` package.
+To download the latest development version from GitHub, use the `pak` function of the `pak` package.
 ```{r, eval=FALSE}
-# install remotes if necessary
-if (!require('remotes')) install.packages('remotes')
+# install pak if necessary
+if (!require('pak')) install.packages('pak')
 # install imagefluency from github
-remotes::install_github('stm/imagefluency')
+pak::pak('stm/imagefluency')
 ```
 
 After installation, the `imagefluency` package is loaded the usual way by calling `library(imagefluency)`.

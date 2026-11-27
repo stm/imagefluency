@@ -62,18 +62,12 @@ You can install the current stable version from CRAN.
 install.packages('imagefluency')
 ```
 
-To download the latest development version from GitHub, use the `install_github` function of the `remotes` package.
+To download the latest development version from GitHub, use the `pak` function of the `pak` package.
 ```r
-# install remotes if necessary
-if (!require('remotes')) install.packages('remotes')
+# install pak if necessary
+if (!require('pak')) install.packages('pak')
 # install imagefluency from github
-remotes::install_github('stm/imagefluency')
-```
-
-Optionally, if you have `rmarkdown` installed, you can also have your system build the vignettes when downloading from GitHub.
-```r
-# install from github with vignettes (needs rmarkdown installed)
-remotes::install_github('stm/imagefluency', build_vignettes = TRUE)
+pak::pak('stm/imagefluency')
 ```
 
 Use the following link to report bugs/issues: <https://github.com/stm/imagefluency/issues>
@@ -108,7 +102,7 @@ If you are analyzing a larger number of images, make sure to read the tutorial o
 
 To cite **imagefluency** in publications use:
 
-> Mayer, S. (2026). *imagefluency: Image Statistics Based on Processing Fluency*. R package version 1.0.0. doi:  [10.32614/CRAN.package.imagefluency](https://doi.org/10.32614/CRAN.package.imagefluency)
+> Mayer, S. (2026). *imagefluency: Image Statistics Based on Processing Fluency*. R package version 1.1.0. doi:  [10.32614/CRAN.package.imagefluency](https://doi.org/10.32614/CRAN.package.imagefluency)
 
 A BibTeX entry is:
 ```
@@ -116,7 +110,7 @@ A BibTeX entry is:
   author       = {Stefan Mayer},
   title        = {imagefluency: Image Statistics Based on Processing Fluency},
   year         = 2026,
-  version      = {1.0.0},
+  version      = {1.1.0},
   doi          = {10.32614/CRAN.package.imagefluency},
   url          = {https://imagefluency.com}
 }
