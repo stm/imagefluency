@@ -2,6 +2,7 @@
 
 # imagefluency 1.1.0
 
+* color images are now converted with the exact Rec. 601 weights (0.299, 0.587, 0.114) instead of rounded weights that summed to 0.9999. Scores for color images change in about the fourth significant digit (e.g., a perfectly symmetric color image now has a symmetry of 1 instead of 0.9999); scores for grayscale images and complexity scores are unchanged
 * fixed `img_self_similarity()` failing with `logplot = TRUE` when the `collapse` package is not installed
 
 # imagefluency 1.0.1

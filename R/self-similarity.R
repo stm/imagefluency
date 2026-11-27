@@ -128,7 +128,7 @@ img_self_similarity <- function(img, full = FALSE, logplot = FALSE, raw=FALSE){
     outG <- .selfsim(greenChannel, full, raw, logplot)
     outB <- .selfsim(blueChannel, full, raw, logplot)
 
-    out <- 0.2989 * outR$self_sim + 0.5870 * outG$self_sim + 0.1140 * outB$self_sim
+    out <- 0.299 * outR$self_sim + 0.587 * outG$self_sim + 0.114 * outB$self_sim
   } else {
     outGray <- .selfsim(img, full, raw, logplot)
     out <- outGray$self_sim

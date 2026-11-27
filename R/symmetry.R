@@ -163,16 +163,16 @@ img_symmetry <- function(img, vertical = TRUE, horizontal = TRUE, ...) {
     #
     if (per_channel) {
       return(#
-        0.2989 * max(.shift_axis(redChannel, imgW, xrange)) +
-          0.5870 * max(.shift_axis(greenChannel, imgW, xrange)) +
-          0.1140 * max(.shift_axis(blueChannel, imgW, xrange))
+        0.299 * max(.shift_axis(redChannel, imgW, xrange)) +
+          0.587 * max(.shift_axis(greenChannel, imgW, xrange)) +
+          0.114 * max(.shift_axis(blueChannel, imgW, xrange))
       )
     } else {
       return(#
         max(#
-          0.2989 * .shift_axis(redChannel, imgW, xrange) +
-            0.5870 * .shift_axis(greenChannel, imgW, xrange) +
-            0.1140 * .shift_axis(blueChannel, imgW, xrange)
+          0.299 * .shift_axis(redChannel, imgW, xrange) +
+            0.587 * .shift_axis(greenChannel, imgW, xrange) +
+            0.114 * .shift_axis(blueChannel, imgW, xrange)
         )
       )
     }

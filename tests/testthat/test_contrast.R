@@ -39,5 +39,5 @@ test_that("img_contrast gives results you'd expect", {
   green <- matrix(c(rnorm(5*5)+50,rnorm(5*5)+200), nrow = 50, ncol = 50)
   blue <- matrix(c(rnorm(5*5)+50,rnorm(5*5)+200), nrow = 50, ncol = 50)
   imgRGB <- array(c(red, green, blue), dim = c(50, 20, 3))
-  expect_equal(img_contrast(imgRGB), expected = 0.2936195, tolerance = .0001)
+  expect_equal(img_contrast(imgRGB), expected = 0.2936489, tolerance = .0001)
 })

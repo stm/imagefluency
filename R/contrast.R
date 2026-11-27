@@ -63,7 +63,7 @@ img_contrast <- function(img){
     greenChannel <- img[, , 2]
     blueChannel <- img[, , 3]
     #
-    out <- 0.2989 * .contr(redChannel) + 0.5870 * .contr(greenChannel) + 0.1140 * .contr(blueChannel)
+    out <- 0.299 * .contr(redChannel) + 0.587 * .contr(greenChannel) + 0.114 * .contr(blueChannel)
     return(out)
     #
   } else return(.contr(img))

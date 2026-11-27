@@ -56,15 +56,15 @@ test_that("img_symmetry detects perfect symmetry", {
   img1 <- array(0, dim = c(9, 9, 3))
   img1[3:7, 3:7, ] <- 1
   expect_equal(img_symmetry(img1),
-               c(vertical = 0.2989 * 1 + 0.5870 * 1 + 0.1140 * 1,
-               horizontal = 0.2989 * 1 + 0.5870 * 1 + 0.1140 * 1))
+               c(vertical = 1,
+               horizontal = 1))
   expect_equal(img_symmetry(img1, horizontal = FALSE),
-               c(vertical = 0.2989 * 1 + 0.5870 * 1 + 0.1140 * 1))
+               c(vertical = 1))
   expect_equal(img_symmetry(img1, vertical = FALSE),
-               c(horizontal = 0.2989 * 1 + 0.5870 * 1 + 0.1140 * 1))
+               c(horizontal = 1))
   expect_equal(img_symmetry(img1, per_channel = FALSE),
-               c(vertical = 0.2989 * 1 + 0.5870 * 1 + 0.1140 * 1,
-                 horizontal = 0.2989 * 1 + 0.5870 * 1 + 0.1140 * 1))
+               c(vertical = 1,
+                 horizontal = 1))
 })
 
 

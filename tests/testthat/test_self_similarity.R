@@ -41,7 +41,7 @@ test_that("img_self_similarity gives results you'd expect", {
   #
   imgRGB <- array(0, dim = c(100, 100, 3))
   imgRGB[1:50, 1:50, ] <- 255
-  expect_equal(img_self_similarity(imgRGB), expected = -0.5552913, tolerance = .00001)
+  expect_equal(img_self_similarity(imgRGB), expected = -0.5553468, tolerance = .00001)
 })
 
 

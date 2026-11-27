@@ -19,7 +19,7 @@ test_that("rgb2gray correctly converts RGB values to Gray", {
   blue <- matrix(255, nrow = 20, ncol = 20)
   imgRGB <- array(c(red, green, blue), dim = c(20, 20, 3))
   # resulting grayscale image
-  imgGray <- 0.2989 * red + 0.5870 * green + 0.1140 * blue
+  imgGray <- 0.299 * red + 0.587 * green + 0.114 * blue
   # check
   expect_equal(rgb2gray(imgRGB), imgGray)
 })

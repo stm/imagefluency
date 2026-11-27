@@ -42,10 +42,10 @@ img_read <- function(path, ...){
 #' @details The function takes a 3-dimensional array of
 #'   numeric or integer values as input (\code{img}) and
 #'   returns a matrix of grayscale values as output. The
-#'   grayscale values are computed as \code{GRAY = 0.2989 *
-#'   RED + 0.5870 * GREEN + 0.1140 * BLUE}. If the array has
-#'   a fourth dimension (i.e., alpha channel), the fourth
-#'   dimension is ignored.
+#'   grayscale values are computed as \code{GRAY = 0.299 *
+#'   RED + 0.587 * GREEN + 0.114 * BLUE} (as recommended in
+#'   ITU-R BT.601). If the array has a fourth dimension
+#'   (i.e., alpha channel), the fourth dimension is ignored.
 #'
 #' @export
 #' @examples
@@ -71,7 +71,8 @@ rgb2gray <- function(img) {
   redChannel <- img[, , 1]
   greenChannel <- img[, , 2]
   blueChannel <- img[, , 3]
-  out <- 0.2989 * redChannel + 0.5870 * greenChannel + 0.1140 * blueChannel
+  # Rec. 601 weights; written so that equal channels return their value exactly
+  out <- blueChannel + 0.299 * (redChannel - blueChannel) + 0.587 * (greenChannel - blueChannel)
   return(out)
 }
 

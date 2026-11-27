@@ -154,7 +154,7 @@ img_typicality <- function(imglist, rescale = NULL){
     greenChannels <- lapply(imglist, function(x) x[, , 2])
     blueChannels <- lapply(imglist, function(x) x[, , 3])
     #
-    out <- 0.2989 * .typ(redChannels) + 0.5870 * .typ(greenChannels) + 0.1140 * .typ(blueChannels)
+    out <- 0.299 * .typ(redChannels) + 0.587 * .typ(greenChannels) + 0.114 * .typ(blueChannels)
     return(out)
     #
   } else return(.typ(imglist))
