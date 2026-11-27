@@ -6,7 +6,7 @@
 \alias{imagefluency-package}
 \title{imagefluency: Image Statistics Based on Processing Fluency}
 \description{
-\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+\if{html}{\figure{logo.svg}{options: style='float: right' alt='logo' width='120'}}
 
 Get image statistics based on processing fluency theory. The functions provide scores for several basic aesthetic principles that facilitate fluent cognitive processing of images: contrast, complexity / simplicity, self-similarity, symmetry, and typicality. See Mayer & Landwehr (2018) \doi{10.1037/aca0000187} and Mayer & Landwehr (2018) \doi{10.31219/osf.io/gtbhw} for the theoretical background of the methods.
 }
